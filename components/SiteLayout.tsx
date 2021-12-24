@@ -1,10 +1,12 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import { ReactElement } from 'react'
+import menus from '~lib/menus'
 
-const Footer = ({menus}) => (
-  <footer className="container py-10 flex flex-row gap-16">
+const Footer = (): JSX.Element => (
+  <footer className="container pt-10 pb-16 flex flex-row gap-16">
     {menus.map(menu => (
-      <div>
+      <div key={menu.name}>
         <p className="font-bold my-4">{menu.name}</p>
         <ul className="flex flex-col gap-2">
           {menu.links?.map(i => (
@@ -20,42 +22,12 @@ const Footer = ({menus}) => (
   </footer>
 )
 
-export default function Layout({ 
+export default function SiteLayout({ 
   image = `/images/sunlo-logo-color.png`,
   description = `Sunlo is a Social Language Learning App. Build a deck of flash cards, or help a friend learn phrases that will be useful from day one.`,
   title = `Sunlo, the Social Language Learning App`,
-  withFooter,
   children 
-}) {
-  const menus = [
-    {
-      name: 'Menu',
-      links: [
-        {
-          name: 'Home',
-          href: '/',
-        },
-        {
-          name: 'Log in or sign up',
-          href: '/auth',
-        },
-      ]
-    },
-    {
-      name: 'App Links',
-      links: [
-        {
-          name: 'Languages',
-          href: '/languages',
-        },
-        {
-          name: 'User Profile',
-          href: '/profile',
-        },
-      ]
-    },
-  ]
-
+}): ReactElement {
   return (
     <>
       <Head>
@@ -67,7 +39,7 @@ export default function Layout({
         <meta name="theme-color" content="#570df8" />
       </Head>
       {children}
-      {withFooter ? <Footer menus={menus} /> : null}
+      <Footer />
     </>
   )
 }
