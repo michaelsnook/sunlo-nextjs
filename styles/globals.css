@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .h1 {
+    @apply lg:text-6xl md:text-5xl sm:text-4xl text-3xl my-4; /* font-display;*/
+  }
+  .h1-sub {
+    @apply md:text-2xl sm:text-xl text-lg;
+  }
+  .h2 {
+    @apply lg:text-4xl md:text-3xl text-2xl my-4 font-bold; /* font-display;*/
+  }
+  .h3 {
+    @apply md:text-2xl text-xl my-3 font-bold; /* font-display;*/
+  }
+  .h4 {
+    @apply md:text-xl text-lg my-2 font-bold; /* font-display;*/
+  }
+  .h5 {
+    @apply text-lg my-2 font-bold;
+  }
+}
