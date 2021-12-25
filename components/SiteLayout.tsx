@@ -11,9 +11,7 @@ const Footer = (): JSX.Element => (
         <ul className="flex flex-col gap-2">
           {menu.links?.map(i => (
             <li key={i.href}>
-              <Link href={i.href}>
-                {i.name}
-              </Link>
+              <Link href={i.href}>{i.name}</Link>
             </li>
           ))}
         </ul>
@@ -22,11 +20,11 @@ const Footer = (): JSX.Element => (
   </footer>
 )
 
-export default function SiteLayout({ 
+export default function SiteLayout({
   image = `/images/sunlo-logo-color.png`,
   description = `Sunlo is a Social Language Learning App. Build a deck of flash cards, or help a friend learn phrases that will be useful from day one.`,
   title = `Sunlo, the Social Language Learning App`,
-  children 
+  children,
 }): ReactElement {
   return (
     <>

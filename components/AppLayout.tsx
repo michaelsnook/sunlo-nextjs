@@ -3,12 +3,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import menus from '~lib/menus'
 
-function Sidebar({
-  user,
-  profile,
-  decks,
-}): ReactElement {
-
+function Sidebar({ user, profile, decks }): ReactElement {
   const [isOpen, setIsOpen] = useState()
 
   return (
@@ -24,9 +19,7 @@ function Sidebar({
           <ul className="flex flex-col gap-2">
             {menu.links?.map(i => (
               <li key={i.href}>
-                <Link href={i.href}>
-                  {i.name}
-                </Link>
+                <Link href={i.href}>{i.name}</Link>
               </li>
             ))}
           </ul>
@@ -41,11 +34,11 @@ function Sidebar({
   )
 }
 
-export default function AppLayout({ 
+export default function AppLayout({
   image = `/images/sunlo-logo-color.png`,
   description = `Sunlo is a Social Language Learning App. Build a deck of flash cards, or help a friend learn phrases that will be useful from day one.`,
   title = `Sunlo, the Social Language Learning App`,
-  children 
+  children,
 }): ReactElement {
   return (
     <>
@@ -59,9 +52,7 @@ export default function AppLayout({
       </Head>
       <div className="flex flex-row">
         <Sidebar />
-        <div className="ml-80 flex-grow py-6 px-6">
-          {children}
-        </div>
+        <div className="ml-80 flex-grow py-6 px-6">{children}</div>
       </div>
     </>
   )

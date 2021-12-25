@@ -1,0 +1,7 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+npx prettier --check .
+npm run lint
+
+echo '\n✅✅✅✅ Everything looks good! I am committing this now. ✅✅✅✅\n'

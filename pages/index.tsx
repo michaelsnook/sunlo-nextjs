@@ -21,7 +21,9 @@ export default function Home(): JSX.Element {
             <ul className="py-10 flex flex-row gap-2">
               <li>
                 <Link href="/auth">
-                  <a className="btn btn-lg btn-outline btn-primary bg-white">Log in or sign up &rarr;</a>
+                  <a className="btn btn-lg btn-outline btn-primary bg-white">
+                    Log in or sign up &rarr;
+                  </a>
                 </Link>
               </li>
             </ul>

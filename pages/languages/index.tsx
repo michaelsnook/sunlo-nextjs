@@ -12,7 +12,9 @@ export default function Posts({ data }: { data: Language[] }): JSX.Element {
         {data.map(({ name, code }) => (
           <li key={code}>
             <Link href={`/languages/${code}`}>
-              <a className="hover:underline">{name} ({code})</a>
+              <a className="hover:underline">
+                {name} ({code})
+              </a>
             </Link>
           </li>
         ))}
@@ -23,5 +25,5 @@ export default function Posts({ data }: { data: Language[] }): JSX.Element {
 
 export const getStaticProps: GetStaticProps = async () => {
   const { data, error } = await supabase.from('language').select()
-  return { props: { data }}
+  return { props: { data } }
 }

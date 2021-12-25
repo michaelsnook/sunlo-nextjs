@@ -23,9 +23,9 @@ type LanguagePageData = {
   phrases: Phrase[]
 }
 
-export default function LanguagePage({ 
-  language, 
-  phrases 
+export default function LanguagePage({
+  language,
+  phrases,
 }: LanguagePageData): JSX.Element {
   console.log(language)
   console.log(phrases)
@@ -34,7 +34,7 @@ export default function LanguagePage({
       <h1 className="h1">
         {language.name} ({language.code})
       </h1>
-      { !phrases.length ? (
+      {!phrases.length ? (
         <p>
           We don&apos;t have any phrases for you to learn {language.name} yet.
           But you can be the first to add one!
@@ -54,7 +54,11 @@ export default function LanguagePage({
   )
 }
 
-export const getStaticProps: GetStaticProps = async ({ params }: { params: { code: string }}): Promise<{ props: LanguagePageData}> => {
+export const getStaticProps: GetStaticProps = async ({
+  params,
+}: {
+  params: { code: string }
+}): Promise<{ props: LanguagePageData }> => {
   const { data: language } = await supabase
     .from('language')
     .select('*')
@@ -66,13 +70,13 @@ export const getStaticProps: GetStaticProps = async ({ params }: { params: { cod
     .select('*')
     .eq('lang', params.code)
 
-  return { props: { language, phrases }}
+  return { props: { language, phrases } }
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const { data } = await supabase.from('language').select('code')
   const paths = data?.map(language => {
-    return { params: { code: language.code }}
+    return { params: { code: language.code } }
   })
   return { paths, fallback: 'blocking' }
 }
