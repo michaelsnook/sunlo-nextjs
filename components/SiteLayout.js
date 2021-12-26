@@ -1,9 +1,8 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { ReactElement } from 'react'
-import menus from '~lib/menus'
+import menus from '../lib/menus'
 
-const Footer = (): JSX.Element => (
+const Footer = () => (
   <footer className="container pt-10 pb-16 flex flex-row gap-16">
     {menus.map(menu => (
       <div key={menu.name}>
@@ -25,7 +24,7 @@ export default function SiteLayout({
   description = `Sunlo is a Social Language Learning App. Build a deck of flash cards, or help a friend learn phrases that will be useful from day one.`,
   title = `Sunlo, the Social Language Learning App`,
   children,
-}: any): ReactElement {
+}) {
   return (
     <>
       <Head>

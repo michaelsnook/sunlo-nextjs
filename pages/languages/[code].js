@@ -1,19 +1,9 @@
 import Link from 'next/link'
-import type { Language } from '~types/language'
-import supabase from '~lib/supabase-client'
-import AppLayout from '~components/AppLayout'
-import PhraseCardSmall from '~components/PhraseCardSmall'
-import type { Phrase } from '~types/phrase'
+import supabase from '../../lib/supabase-client'
+import AppLayout from '../../components/AppLayout'
+import PhraseCardSmall from '../../components/PhraseCardSmall'
 
-type LanguagePageData = {
-  language: Language
-  phrases: Phrase[]
-}
-
-export default function LanguagePage({
-  language,
-  phrases,
-}: LanguagePageData): JSX.Element {
+export default function LanguagePage({ language, phrases }) {
   console.log(language)
   console.log(phrases)
   return (
@@ -45,13 +35,13 @@ export default function LanguagePage({
 
 export const getStaticProps = async ({ params }) => {
   const { data: language } = await supabase
-    .from<Language>('language')
+    .from('language')
     .select('*')
     .eq('code', params.code)
     .single()
 
   const { data: phrases } = await supabase
-    .from<Phrase>('card_phrase')
+    .from('card_phrase')
     .select('*, translations:card_translation(*)')
     .eq('lang', params.code)
 
@@ -60,7 +50,7 @@ export const getStaticProps = async ({ params }) => {
 }
 
 export const getStaticPaths = async () => {
-  const { data } = await supabase.from<Language>('language').select('code')
+  const { data } = await supabase.from('language').select('code')
   const paths = data?.map(language => {
     return { params: { code: language.code } }
   })

@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import SiteLayout from '~components/SiteLayout'
+import SiteLayout from '../components/SiteLayout'
 
-export default function SiteHome(): JSX.Element {
+export default function SiteHome() {
   return (
     <SiteLayout>
       <main className="md:min-h-85vh text-white bg-primary pt-10 pb-10 md:pb-24 grid">

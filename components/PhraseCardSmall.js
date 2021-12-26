@@ -1,14 +1,4 @@
-import { Translation } from '~types/phrase'
-
-export default function PhraseCardSmall({
-  text,
-  lang,
-  translations,
-}: {
-  text: string
-  lang: string
-  translations: Translation[]
-}): JSX.Element {
+export default function PhraseCardSmall({ text, lang, translations }) {
   return (
     <>
       <p lang={lang} className="mb-2 font-bold">

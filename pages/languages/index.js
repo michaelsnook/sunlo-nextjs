@@ -1,17 +1,8 @@
 import Link from 'next/link'
-import { Language } from '~types/language'
-import supabase from '~lib/supabase-client'
-import AppLayout from '~components/AppLayout'
-import { PostgrestError } from '@supabase/supabase-js'
+import supabase from '../../lib/supabase-client'
+import AppLayout from '../../components/AppLayout'
 
-type LanguageIndexProps = {
-  languages: Language[]
-  error?: PostgrestError
-}
-
-export default function Languages({
-  languages,
-}: LanguageIndexProps): JSX.Element {
+export default function Languages({ languages }) {
   return (
     <AppLayout>
       <h1 className="h1">Languages</h1>
@@ -31,9 +22,7 @@ export default function Languages({
 }
 
 export const getStaticProps = async () => {
-  const { data: languages, error } = await supabase
-    .from<Language>('language')
-    .select()
+  const { data: languages, error } = await supabase.from('language').select()
 
   if (error) return { props: { error, languages } }
   return { props: { languages } }

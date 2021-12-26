@@ -1,9 +1,9 @@
-import { ReactElement, useState } from 'react'
+import { useState } from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
-import menus from '~lib/menus'
+import menus from '../lib/menus'
 
-function Sidebar(): ReactElement {
+function Sidebar() {
   const [isOpen, setIsOpen] = useState()
 
   return (
@@ -55,7 +55,7 @@ export default function AppLayout({
   description = `Sunlo is a Social Language Learning App. Build a deck of flash cards, or help a friend learn phrases that will be useful from day one.`,
   title = `Sunlo, the Social Language Learning App`,
   children,
-}: any): ReactElement {
+}) {
   return (
     <>
       <Head>
