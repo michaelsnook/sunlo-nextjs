@@ -3,16 +3,14 @@ import Head from 'next/head'
 import Link from 'next/link'
 import menus from '~lib/menus'
 
-function Sidebar({ user, profile, decks }): ReactElement {
+function Sidebar(): ReactElement {
   const [isOpen, setIsOpen] = useState()
 
   return (
     <nav
       aria-label="Main navigation"
-      className="fixed top-0 left-0 w-80 p-3 bg-blue-10 h-screen shadow-md flex flex-col gap-4"
+      className="sticky top-0 w-80 p-3 bg-blue-10 h-screen shadow-md hidden md:flex flex-col gap-4"
     >
-      <p>{profile?.username}</p>
-      <p>{user?.email}</p>
       {menus.map(menu => (
         <div key={menu.name}>
           <p className="font-bold my-4">{menu.name}</p>
@@ -26,9 +24,7 @@ function Sidebar({ user, profile, decks }): ReactElement {
         </div>
       ))}
       <p>
-        <button type="submit" size="xs" variant="reset">
-          Sign out
-        </button>
+        <button type="submit">Sign out</button>
       </p>
     </nav>
   )
@@ -50,9 +46,9 @@ export default function AppLayout({
         <meta property="og:image" content={image} />
         <meta name="theme-color" content="#570df8" />
       </Head>
-      <div className="flex flex-row">
+      <div className="flex flex-row gap-6 relative">
         <Sidebar />
-        <div className="ml-80 flex-grow py-6 px-6">{children}</div>
+        <div className="flex-grow py-6 px-6">{children}</div>
       </div>
     </>
   )
