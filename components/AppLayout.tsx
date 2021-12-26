@@ -9,8 +9,26 @@ function Sidebar(): ReactElement {
   return (
     <nav
       aria-label="Main navigation"
-      className="sticky top-0 w-80 p-3 bg-blue-10 h-screen shadow-md hidden md:flex flex-col gap-4"
+      className="sticky top-0 w-80 p-6 bg-[#efe9fb] h-screen shadow-md hidden md:flex flex-col gap-4"
     >
+      <span className="h4 flex flex-row items-center">
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2"
+            d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11
+              21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"
+          ></path>
+        </svg>
+        &nbsp; Sunlo
+      </span>
       {menus.map(menu => (
         <div key={menu.name}>
           <p className="font-bold my-4">{menu.name}</p>
@@ -24,7 +42,9 @@ function Sidebar(): ReactElement {
         </div>
       ))}
       <p>
-        <button type="submit">Sign out</button>
+        <button className="btn btn-outline btn-neutral" type="submit">
+          Sign out
+        </button>
       </p>
     </nav>
   )
