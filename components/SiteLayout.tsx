@@ -25,7 +25,7 @@ export default function SiteLayout({
   description = `Sunlo is a Social Language Learning App. Build a deck of flash cards, or help a friend learn phrases that will be useful from day one.`,
   title = `Sunlo, the Social Language Learning App`,
   children,
-}): ReactElement {
+}: any): ReactElement {
   return (
     <>
       <Head>
