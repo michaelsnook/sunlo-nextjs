@@ -20,7 +20,7 @@ export default function SiteHome() {
           <aside className="py-5 px-0 md:px-3 lg:px-5 col-span-3">
             <ul className="py-10 flex flex-row gap-2">
               <li>
-                <Link href="/auth">
+                <Link href="/login">
                   <a className="btn btn-lg btn-outline btn-primary bg-white">
                     Log in or sign up &rarr;
                   </a>
