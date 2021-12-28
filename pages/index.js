@@ -1,11 +1,12 @@
 import Link from 'next/link'
 import SiteLayout from '../components/SiteLayout'
+import Banner from '../components/Banner'
 
 export default function SiteHome() {
   return (
     <SiteLayout>
-      <main className="md:min-h-85vh text-white bg-primary pt-10 pb-10 md:pb-24 grid">
-        <div className="container grid grid-cols-3 md:grid-cols-6 lg:grid-cols-7 gap-8 md:gap-12 lg:gap-20 place-self-center">
+      <Banner>
+        <main className="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-7 gap-8 md:gap-12 lg:gap-20">
           <article className="pt-20 md:pt-4 md:pb-10 grid grid-cols-1 gap-6 col-span-3 lg:col-span-4 place-content-center">
             <h1 className="text-4xl">
               Sunlo is a social
@@ -28,8 +29,8 @@ export default function SiteHome() {
               </li>
             </ul>
           </aside>
-        </div>
-      </main>
+        </main>
+      </Banner>
     </SiteLayout>
   )
 }

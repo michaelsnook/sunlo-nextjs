@@ -21,7 +21,7 @@ export default function Login() {
       .then(({ user, session, error }) => {
         setErrors(error ?? {})
         if (user) {
-          router.push('/app')
+          router.push('/app/profile')
         }
       })
       .catch(e => setErrors(e))

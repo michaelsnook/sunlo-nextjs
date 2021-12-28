@@ -1,11 +1,11 @@
 import Link from 'next/link'
 import supabase from '../../lib/supabase-client'
-import AppLayout from '../../components/AppLayout'
+import SiteLayout from '../../components/SiteLayout'
 import ErrorList from '../../components/ErrorList'
 
 export default function Languages({ languages, error }) {
   return (
-    <AppLayout>
+    <SiteLayout sidebar>
       <h1 className="h1">Languages</h1>
       {!languages ? (
         <ErrorList summary="Can't seem to load languages" error={error} />
@@ -25,7 +25,7 @@ export default function Languages({ languages, error }) {
           ))}
         </ul>
       )}
-    </AppLayout>
+    </SiteLayout>
   )
 }
 

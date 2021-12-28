@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import menus from '../lib/menus'
+import Sidebar from './Sidebar'
 
 const Footer = () => (
   <footer className="container pt-10 pb-16 flex flex-row gap-16">
@@ -24,6 +25,7 @@ export default function SiteLayout({
   description = `Sunlo is a Social Language Learning App. Build a deck of flash cards, or help a friend learn phrases that will be useful from day one.`,
   title = `Sunlo, the Social Language Learning App`,
   children,
+  sidebar,
 }) {
   return (
     <>
@@ -35,8 +37,17 @@ export default function SiteLayout({
         <meta property="og:image" content={image} />
         <meta name="theme-color" content="#570df8" />
       </Head>
-      {children}
-      <Footer />
+      {sidebar ? (
+        <div className="md:flex flex-row gap-6">
+          <Sidebar />
+          <div className="flex-col pb-20">
+            {children}
+          </div>
+        </div>
+      ) : (
+        <>{children}<Footer /></>
+      )}
     </>
+
   )
 }
