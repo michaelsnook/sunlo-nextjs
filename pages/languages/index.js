@@ -1,22 +1,30 @@
 import Link from 'next/link'
 import supabase from '../../lib/supabase-client'
 import AppLayout from '../../components/AppLayout'
+import ErrorList from '../../components/ErrorList'
 
-export default function Languages({ languages }) {
+export default function Languages({ languages, error }) {
   return (
     <AppLayout>
       <h1 className="h1">Languages</h1>
-      <ul>
-        {languages.map(({ name, code }) => (
-          <li key={code}>
-            <Link href={`/languages/${code}`}>
-              <a className="hover:underline">
-                {name} ({code})
-              </a>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      {!languages ? (
+        <ErrorList summary="Can't seem to load languages" error={error} />
+      ) : (
+        <ul className="flex flex-col space-y-4">
+          {languages.map(({ name, code }) => (
+            <li key={code}>
+              <Link href={`/languages/${code}`}>
+                <a className="btn btn-quiet">
+                  <p>
+                    {name} ({code})
+                  </p>
+                  {/*'<p>xx cards, yy users learning</p>'*/}
+                </a>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
     </AppLayout>
   )
 }
@@ -24,6 +32,7 @@ export default function Languages({ languages }) {
 export const getStaticProps = async () => {
   const { data: languages, error } = await supabase.from('language').select()
 
-  if (error) return { props: { error, languages } }
+  // return error condition if languages has no entries
+  if (error || !languages?.length > 0) return { props: { error } }
   return { props: { languages } }
 }

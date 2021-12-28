@@ -50,7 +50,7 @@ export default function Sidebar() {
           </div>
         ))}
         <p>
-          <button className="btn btn-outline btn-neutral" type="submit">
+          <button className="btn btn-quiet" type="submit">
             Sign out
           </button>
         </p>

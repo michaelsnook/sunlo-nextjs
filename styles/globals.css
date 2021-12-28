@@ -2,6 +2,34 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root {
+    --rounded-box: 0.5rem; /* border-radius for cards and other big elements */
+    --rounded-btn: 0.2rem; /* border-radius for buttons and similar elements */
+    --rounded-badge: 0.9rem; /* border-radius for badge and other small elements */
+    --animation-btn: 0.25s; /* bounce animation time for button */
+    --animation-input: 0.2s; /* bounce animation time for checkbox, toggle, etc */
+    --padding-card: 2rem; /* default card-body padding */
+    --btn-text-case: none; /* default text case for buttons */
+    --navbar-padding: 0.5rem; /* default padding for navbar */
+    --border-btn: 2px; /* default border size for button */
+    --btn-focus-scale: 0.5;
+
+    /*
+    font-family: Chalkboard, comic sans ms, sanssecondaryerif;
+    --border-color:var(--b3);
+    --btn-focus-scale:0.95;
+    --tab-border:1px;
+    --tab-radius:0.5rem;
+    */
+  }
+}
+
+@layer components {
+  .btn-quiet {
+    @apply btn-link hover:underline hover:bg-[#efe9fb] border-transparent hover:border-white;
+  }
+}
 @layer utilities {
   .h1 {
     @apply lg:text-6xl md:text-5xl sm:text-4xl text-3xl my-4; /* font-display;*/
