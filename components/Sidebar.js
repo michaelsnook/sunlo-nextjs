@@ -1,9 +1,27 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import menus from '../lib/menus'
+import { useGlobalState } from '../lib/global-store'
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState()
+  const { user, profile } = useGlobalState()
+  const myMenus = user
+    ? [
+        {
+          name: 'Your decks',
+          links:
+            profile?.decks?.map(d => {
+              return {
+                name: d.lang,
+                href: `/app/decks/${d.lang}`,
+              }
+            }) || [],
+        },
+        ...menus,
+      ]
+    : menus
+
   return (
     <>
       <SidebarOpener isOpen={isOpen} setIsOpen={setIsOpen} />
@@ -37,7 +55,9 @@ export default function Sidebar() {
           </svg>
           &nbsp; Sunlo
         </span>
-        {menus.map(menu => (
+        <p>{profile?.username}</p>
+        <p>{user?.email}</p>
+        {myMenus.map(menu => (
           <div key={menu.name}>
             <p className="font-bold my-4">{menu.name}</p>
             <ul className="flex flex-col gap-2">

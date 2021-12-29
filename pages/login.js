@@ -7,7 +7,7 @@ export default function Login() {
     <SiteLayout>
       <main>
         <Banner>
-          <div className="card shadow-lg bg-white max-w-lg py-10">
+          <div className="card shadow-lg bg-white text-gray-800 max-w-lg py-10">
             <LoginForm />
           </div>
         </Banner>

@@ -1,20 +1,7 @@
 // import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import AppLayout from '../../../components/AppLayout'
-import supabase from '../../../lib/supabase-client'
-import DevData from '../../../components/DevData'
-import { useRouter } from 'next/router'
-
-export async function loadProfileData(user, setContext) {
-  // if not auth'd return some error
-  const { data } = await supabase
-    .from('profile')
-    .select(`*, decks:user_deck(*)`)
-    .eq('id', user.id)
-    .single()
-
-  setContext({ user, profile: data })
-}
+import { useGlobalState } from '../../../lib/global-store'
 
 export async function sendPasswordResetEmail() {
   // const { data, error } = supabase.auth.sendPassword whatever whatever
@@ -82,39 +69,33 @@ const ProfileCard = ({ profile, user }) => (
 )
 
 export default function Profile() {
-  const [context, setContext] = useState({})
-  useEffect(() => {
-    const user = supabase.auth.user()
-    loadProfileData(user, setContext)
-  }, [])
+  const { user, profile, profileError: error } = useGlobalState()
+  console.log('Render profile', user, profile)
+
   return (
     <AppLayout>
-      {context.error ? <p>{JSON.stringify(error)}</p> : null}
+      {error !== {} ? <p>{JSON.stringify(error)}</p> : null}
       <div className="avatar relative">
         <label
           className="mb-8 w-36 h-36 mask mask-hexagon shadow-lg bg-gray-200"
           htmlFor="single"
         >
-          <img
-            src={'' /*`/images/avatars/${profile?.avatar_url}`*/}
-            alt={context.profile?.username}
+          <Image
+            src={`/images/avatars/${profile?.avatar_url}`}
+            width="144"
+            height="144"
+            alt={profile?.data?.username}
           />
         </label>
       </div>
       <div>
-        <h2 className="text-4xl mb-1">Hi, {context.profile?.username} 👋</h2>
+        <h2 className="text-4xl mb-1">Hi, {profile?.data?.username} 👋</h2>
         <span className="inline-block px-3 py-2 bg-gray-400 text-white rounded-full">
-          You&apos;re working on {context.profile?.decks?.length || 'zero'}{' '}
-          languages right now.
+          You&apos;re working on {profile?.decks?.length || 'zero'} languages
+          right now.
         </span>
       </div>
-      <ProfileCard profile={context.profile} user={context.user} />
-      <DevData
-        data={[
-          ['User', context.user],
-          ['Profile', context.profile],
-        ]}
-      />
+      <ProfileCard profile={profile} user={user} />
     </AppLayout>
   )
 }

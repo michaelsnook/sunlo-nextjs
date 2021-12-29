@@ -1,16 +1,10 @@
 import AppLayout from '../../../components/AppLayout'
-import supabase from '../../../lib/supabase-client'
-import useSWR from 'swr'
 import Link from 'next/link'
-
-async function deckFetcher() {
-  const { data, error } = await supabase.from('user_deck').select(`*`)
-  if (error) throw error
-  return data || []
-}
+import { useGlobalState } from '../../../lib/global-store'
 
 export default function DeckIndex() {
-  const { data: decks, error } = useSWR(`decks/index`, deckFetcher)
+  const { profile, profileError: error } = useGlobalState()
+  const decks = profile?.decks
   return (
     <AppLayout>
       <h1 className="h1">Your decks</h1>
