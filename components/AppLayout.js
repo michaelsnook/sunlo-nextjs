@@ -19,7 +19,9 @@ export default function AppLayout({
       </Head>
       <div className="md:flex flex-row gap-6">
         <Sidebar />
-        <div className="flex-grow py-6 px-6 min-h-100vh max-w-prose">{children}</div>
+        <div className="flex-grow py-6 px-6 min-h-100vh max-w-prose">
+          {children}
+        </div>
       </div>
     </>
   )
