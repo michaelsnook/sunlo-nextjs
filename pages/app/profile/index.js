@@ -71,24 +71,23 @@ const ProfileCard = () => {
   )
 }
 
-export default function Profile() {
-  const { user, profile, profileError: error } = useGlobalState()
-  console.log('Render profile', user, profile)
-
+const AvatarSection = () => {
+  const { user, profile } = useGlobalState()
   return (
-    <AppLayout>
-      {error !== {} ? <p>{JSON.stringify(error)}</p> : null}
+    <>
       <div className="avatar relative">
         <label
-          className="mb-8 w-36 h-36 mask mask-hexagon shadow-lg bg-gray-200"
+          className="mb-8 w-36 h-36 mask mask-circle shadow-lg bg-gray-200"
           htmlFor="single"
         >
-          <Image
-            src={profile?.avatar_public_url}
-            width="144"
-            height="144"
-            alt={`${profile?.username}'s profile image`}
-          />
+          {profile?.avatar_public_url ? (
+            <Image
+              src={profile?.avatar_public_url}
+              width="144"
+              height="144"
+              alt={`${profile?.username}'s profile image`}
+            />
+          ) : null}
         </label>
       </div>
       <div>
@@ -98,6 +97,14 @@ export default function Profile() {
           right now.
         </span>
       </div>
+    </>
+  )
+}
+
+export default function Profile() {
+  return (
+    <AppLayout>
+      <AvatarSection />
       <ProfileCard />
     </AppLayout>
   )
