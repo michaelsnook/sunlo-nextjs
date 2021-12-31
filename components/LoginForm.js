@@ -17,7 +17,7 @@ export default function Login() {
     const email = event.target.email.value
     const password = event.target.password.value
 
-    const { user, session, error } = supabase.auth
+    supabase.auth
       .signIn({
         email,
         password,
@@ -40,7 +40,7 @@ export default function Login() {
       {user && profile ? (
         <div className="flex flex-col space-y-4">
           <h1 className="h3 text-gray-700">
-            You're logged in as {profile.username}
+            You&apos;re logged in as {profile.username}
           </h1>
           <p>
             <Link href="/app/profile">
