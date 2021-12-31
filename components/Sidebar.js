@@ -5,7 +5,7 @@ import { useGlobalState } from '../lib/global-store'
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState()
-  const { user, profile } = useGlobalState()
+  const { user, profile, signOut } = useGlobalState()
   const myMenus = user
     ? [
         {
@@ -70,7 +70,7 @@ export default function Sidebar() {
           </div>
         ))}
         <p>
-          <button className="btn btn-quiet" type="submit">
+          <button className="btn btn-quiet" onClick={signOut}>
             Sign out
           </button>
         </p>
