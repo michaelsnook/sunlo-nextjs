@@ -1,16 +1,14 @@
 import { useState } from 'react'
-import { useRouter } from 'next/router'
 import Link from 'next/link'
 import supabase from '../lib/supabase-client'
 import ErrorList from './ErrorList'
+import { useGlobalState } from '../lib/global-store'
 
 export default function SetNewPasswordForm() {
+  const { user } = useGlobalState()
   const [errors, setErrors] = useState()
   const [isSubmitting, setIsSubmitting] = useState()
   const [successfulSubmit, setSuccessfulSubmit] = useState()
-  const [yourEmail, setYourEmail] = useState()
-  const router = useRouter()
-  const { token: access_token } = router.query
 
   const onSubmit = event => {
     setErrors()
@@ -19,36 +17,20 @@ export default function SetNewPasswordForm() {
 
     const password = event.target.password.value
 
-    supabase.auth.api
-      .updateUser(access_token, { password })
-      .then(d => {
-        console.log(d)
-        setIsSubmitting(false)
-      })
-      .catch(e => {
-        setErrors(e)
-        console.log(e)
-        setIsSubmitting(false)
-      })
+    supabase.auth.update({ password }).then(({ user, error }) => {
+      console.log(user, error)
+      setIsSubmitting(false)
+      setErrors(error)
+      setSuccessfulSubmit(!error)
+    })
   }
 
   return (
     <div className="mx-auto max-w-lg my-6">
-      {!access_token ? (
-        <div className="flex flex-col space-y-4">
-          <h1 className="h3 text-gray-700">Invalid link</h1>
-          <p>
-            Perhaps you&apos;ve received more than one password reset email? try
-            the most recent one.
-          </p>
-          <p>
-            Or maybe the token has expired; try requesting{' '}
-            <Link href="/forgot-password">
-              <a className="link">another password reset email</a>
-            </Link>
-            .
-          </p>
-        </div>
+      {successfulSubmit ? (
+        <SuccessfulSubmit />
+      ) : !user ? (
+        <InvalidLink />
       ) : (
         <>
           <h1 className="h3 text-gray-700">Choose a new password</h1>
@@ -56,19 +38,19 @@ export default function SetNewPasswordForm() {
             <fieldset className="flex flex-col gap-y-4" disabled={isSubmitting}>
               <div>
                 <p>
-                  <label htmlFor="email">Email</label>
+                  <label htmlFor="password">New password</label>
                 </p>
                 <input
-                  id="email"
-                  name="email"
+                  id="password"
+                  name="password"
                   required="required"
-                  aria-invalid={errors.email ? 'true' : 'false'}
+                  aria-invalid={errors?.password ? 'true' : 'false'}
                   className={`${
-                    errors.email ? 'border-red-600' : ''
+                    errors?.password ? 'border-red-600' : ''
                   } rounded-md`}
                   tabIndex="1"
-                  type="text"
-                  placeholder="email"
+                  type="password"
+                  placeholder="new password"
                 />
               </div>
               <div className="flex flex-row justify-between">
@@ -93,3 +75,33 @@ export default function SetNewPasswordForm() {
     </div>
   )
 }
+
+const InvalidLink = () => (
+  <div className="flex flex-col space-y-4">
+    <h1 className="h3 text-gray-700">Invalid link</h1>
+    <p>
+      Perhaps you&apos;ve received more than one password reset email? try the
+      most recent one.
+    </p>
+    <p>
+      Or maybe the token has expired; try requesting{' '}
+      <Link href="/forgot-password">
+        <a className="link">another password reset email</a>
+      </Link>
+      .
+    </p>
+  </div>
+)
+
+const SuccessfulSubmit = () => (
+  <div className="flex flex-col space-y-4">
+    <h1 className="h3 text-gray-700">Update Successful!</h1>
+    <p>
+      You can close this window or go{' '}
+      <Link href="/app/profile">
+        <a className="link">back to your profile</a>
+      </Link>
+      .
+    </p>
+  </div>
+)

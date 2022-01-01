@@ -3,15 +3,16 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import supabase from '../lib/supabase-client'
 import { useGlobalState } from '../lib/global-store'
+import ErrorList from './ErrorList'
 
 export default function Login() {
-  const [errors, setErrors] = useState({})
+  const [errors, setErrors] = useState()
   const [isSubmitting, setIsSubmitting] = useState()
   const router = useRouter()
   const { user, profile, signOut } = useGlobalState()
 
   const onSubmit = event => {
-    setErrors({})
+    setErrors()
     setIsSubmitting(true)
     event.preventDefault()
     const email = event.target.email.value
@@ -24,7 +25,7 @@ export default function Login() {
       })
       .then(({ user, session, error }) => {
         setIsSubmitting(false)
-        setErrors(error ?? {})
+        setErrors(error)
         if (user) {
           router.push('/app/profile')
         }
@@ -66,9 +67,9 @@ export default function Login() {
                   id="email"
                   name="email"
                   required="required"
-                  aria-invalid={errors.email ? 'true' : 'false'}
+                  aria-invalid={errors?.email ? 'true' : 'false'}
                   className={`${
-                    errors.email ? 'border-red-600' : ''
+                    errors?.email ? 'border-red-600' : ''
                   } rounded-md`}
                   tabIndex="1"
                   type="text"
@@ -83,9 +84,9 @@ export default function Login() {
                   id="password"
                   name="password"
                   required="required"
-                  aria-invalid={errors.password ? 'true' : 'false'}
+                  aria-invalid={errors?.password ? 'true' : 'false'}
                   className={`${
-                    errors.password ? 'border-red-600' : ''
+                    errors?.password ? 'border-red-600' : ''
                   } rounded-md`}
                   tabIndex="2"
                   type="password"
@@ -106,6 +107,7 @@ export default function Login() {
                   <a className="btn btn-quiet">Create account</a>
                 </Link>
               </div>
+              <ErrorList summary="Problem logging in" error={errors?.message} />
               <p>
                 <Link href="/forgot-password">
                   <a className="link text-sm">Forgot password?</a>
