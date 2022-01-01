@@ -96,7 +96,7 @@ const UserAuthCard = () => {
             value={user?.email}
             disabled
           />
-          <Link href="/app/profile/change-password">
+          <Link href="/app/profile/change-email">
             <a className="btn btn-quiet">Change</a>
           </Link>
         </div>
