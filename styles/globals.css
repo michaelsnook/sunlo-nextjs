@@ -29,16 +29,22 @@
   .btn-quiet {
     @apply btn-link hover:underline hover:bg-[#efe9fb] border-transparent hover:border-white;
   }
+  .big-card {
+    @apply card bg-white text-gray-800 p-6 shadow-lg mb-6;
+  }
 }
 @layer utilities {
   .h1 {
     @apply lg:text-6xl md:text-5xl sm:text-4xl text-3xl my-4; /* font-display;*/
   }
+  .d1 {
+    @apply lg:text-8xl md:text-6xl sm:text-5xl text-4xl my-4; /* font-display;*/
+  }
   .h1-sub {
     @apply md:text-2xl sm:text-xl text-lg;
   }
   .h2 {
-    @apply lg:text-4xl md:text-3xl text-2xl my-4 font-bold; /* font-display;*/
+    @apply lg:text-4xl md:text-3xl text-2xl my-4; /* font-display;*/
   }
   .h3 {
     @apply md:text-2xl text-xl my-3 font-bold; /* font-display;*/

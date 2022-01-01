@@ -14,7 +14,7 @@ export default function Sidebar() {
             profile?.decks?.map(d => {
               return {
                 name: d.lang,
-                href: `/app/decks/${d.lang}`,
+                href: `/app/decks/${d.id}`,
               }
             }) || [],
         },
