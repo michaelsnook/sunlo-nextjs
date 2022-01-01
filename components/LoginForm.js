@@ -5,11 +5,15 @@ import supabase from '../lib/supabase-client'
 import { useGlobalState } from '../lib/global-store'
 import ErrorList from './ErrorList'
 
-export default function Login() {
+export default function Login({ signup }) {
   const [errors, setErrors] = useState()
   const [isSubmitting, setIsSubmitting] = useState()
+  const [sentConfirmationEmail, setSentConfirmationEmail] = useState()
+
   const router = useRouter()
   const { user, profile, signOut } = useGlobalState()
+
+  // const [isSignup, setIsSignup] = useState(signup)
 
   const onSubmit = event => {
     setErrors()
@@ -18,27 +22,43 @@ export default function Login() {
     const email = event.target.email.value
     const password = event.target.password.value
 
-    supabase.auth
-      .signIn({
-        email,
-        password,
-      })
-      .then(({ user, session, error }) => {
-        setIsSubmitting(false)
-        setErrors(error)
-        if (user) {
-          router.push('/app/profile')
-        }
-      })
-      .catch(e => {
-        setIsSubmitting(false)
-        setErrors(e)
-      })
+    if (signup) {
+      supabase.auth
+        .signUp({ email, password })
+        .then(({ user, session, error }) => {
+          setIsSubmitting(false)
+          setErrors(error)
+          if (user && session) {
+            router.push('/app/profile/start')
+          } else if (user && !session) {
+            setSentConfirmationEmail(true)
+          }
+        })
+    } else {
+      supabase.auth
+        .signIn({
+          email,
+          password,
+        })
+        .then(({ user, session, error }) => {
+          setIsSubmitting(false)
+          setErrors(error)
+          if (user) {
+            router.push('/app/profile')
+          }
+        })
+        .catch(e => {
+          setIsSubmitting(false)
+          setErrors(e)
+        })
+    }
   }
 
   return (
     <div className="mx-auto max-w-lg my-6">
-      {user && profile ? (
+      {sentConfirmationEmail ? (
+        <SuccessfulSubmit />
+      ) : user && profile ? (
         <div className="flex flex-col space-y-4">
           <h1 className="h3 text-gray-700">
             You&apos;re logged in as {profile.username}
@@ -49,14 +69,21 @@ export default function Login() {
             </Link>
           </p>
           <p>
-            <button className="link" onClick={signOut}>
+            <a
+              className="link"
+              onClick={() => {
+                supabase.auth.signOut()
+              }}
+            >
               Log out and log in as someone new
-            </button>
+            </a>
           </p>
         </div>
       ) : (
         <>
-          <h1 className="h3 text-gray-700">Please log in</h1>
+          <h1 className="h3 text-gray-700">
+            {signup ? 'Create your account' : 'Please log in'}
+          </h1>
           <form role="form" onSubmit={onSubmit} className="form">
             <fieldset className="flex flex-col gap-y-4" disabled={isSubmitting}>
               <div>
@@ -101,10 +128,12 @@ export default function Login() {
                   disabled={isSubmitting}
                   aria-disabled={isSubmitting}
                 >
-                  Log in
+                  {signup ? 'Sign up' : 'Log in'}
                 </button>
-                <Link tabIndex="4" href="/signup">
-                  <a className="btn btn-quiet">Create account</a>
+                <Link tabIndex="4" href={signup ? '/login' : '/signup'}>
+                  <a className="btn btn-quiet">
+                    {signup ? 'Log in' : 'Create account'}
+                  </a>
                 </Link>
               </div>
               <ErrorList summary="Problem logging in" error={errors?.message} />
@@ -120,3 +149,14 @@ export default function Login() {
     </div>
   )
 }
+
+const SuccessfulSubmit = () => (
+  <div className="flex flex-col space-y-4 p-4 sm:p-6 md:p-10">
+    <h1 className="h3 text-gray-700">Please confirm email</h1>
+    <p>
+      We&apos;ve sent a confirmation email to the address you entered. Please
+      click the confirmation link in your email.
+    </p>
+    <p>You can close this tab.</p>
+  </div>
+)
