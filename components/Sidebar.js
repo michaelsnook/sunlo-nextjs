@@ -5,7 +5,7 @@ import { useGlobalState } from 'lib/global-store'
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState()
-  const { user, profile, signOut } = useGlobalState()
+  const { user, profile, signOut, languages } = useGlobalState()
   const myMenus = user
     ? [
         {
@@ -13,7 +13,7 @@ export default function Sidebar() {
           links:
             profile?.decks?.map(d => {
               return {
-                name: d.lang,
+                name: languages ? languages[d.lang] : d.lang,
                 href: `/app/decks/${d.id}`,
               }
             }) || [],
@@ -26,54 +26,56 @@ export default function Sidebar() {
     <>
       <SidebarOpener isOpen={isOpen} setIsOpen={setIsOpen} />
       <div
-        className={`z-20 bg-black bg-opacity-50 px-2 pt-10 ${
+        className={`z-20 bg-black bg-opacity-50 pt-10 ${
           isOpen ? 'fixed' : 'hidden'
         } md:hidden top-0 left-0 right-0 bottom-0`}
         onClick={() => setIsOpen(false)}
       />
       <nav
         aria-label="Main navigation"
-        className={`sticky z-30 top-0 w-80 p-6 bg-[#efe9fb] h-screen shadow-lg ${
+        className={`sticky overflow-y-auto z-30 top-0 w-80 p-6 bg-[#efe9fb] h-screen shadow-lg ${
           isOpen ? 'fixed' : 'hidden'
         } md:flex flex-col gap-4`}
       >
-        <span className="h4 flex flex-row items-center">
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11
+        <div className="scroll-auto">
+          <span className="h4 flex flex-row items-center">
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11
               21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"
-            ></path>
-          </svg>
-          &nbsp; Sunlo
-        </span>
-        <p>{profile?.username}</p>
-        <p>{user?.email}</p>
-        {myMenus.map(menu => (
-          <div key={menu.name}>
-            <p className="font-bold my-4">{menu.name}</p>
-            <ul className="flex flex-col gap-2">
-              {menu.links?.map(i => (
-                <li key={i.href}>
-                  <Link href={i.href}>{i.name}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-        <p>
-          <button className="btn btn-quiet" onClick={signOut}>
-            Sign out
-          </button>
-        </p>
+              ></path>
+            </svg>
+            &nbsp; Sunlo
+          </span>
+          <p>{profile?.username}</p>
+          <p>{user?.email}</p>
+          {myMenus.map(menu => (
+            <div key={menu.name}>
+              <p className="font-bold my-4">{menu.name}</p>
+              <ul className="flex flex-col gap-2">
+                {menu.links?.map(i => (
+                  <li key={i.href}>
+                    <Link href={i.href}>{i.name}</Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+          <p>
+            <button className="btn btn-quiet" onClick={signOut}>
+              Sign out
+            </button>
+          </p>
+        </div>
       </nav>
     </>
   )

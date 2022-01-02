@@ -40,7 +40,7 @@ export default function SiteLayout({
       {sidebar ? (
         <div className="md:flex flex-row gap-6">
           <Sidebar />
-          <div className="flex-col pb-20 px-min">{children}</div>
+          <div className="flex-col pt-6 pb-20 px-min">{children}</div>
         </div>
       ) : (
         <>

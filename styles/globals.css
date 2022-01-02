@@ -59,4 +59,7 @@
   .h5 {
     @apply text-lg my-2 font-bold;
   }
+  .px-min {
+    @apply px-2 sm:px-3 md:px-4 lg:px-6;
+  }
 }
