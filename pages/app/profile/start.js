@@ -6,8 +6,8 @@ import ErrorList from '../../../components/ErrorList'
 import Link from 'next/link'
 
 export default function Start() {
-  const { user, profile, setProfile } = useGlobalState()
-  const [tempLanguagePrimary, setTempLanguagePrimary] = useState('HI')
+  const { user, profile, setProfile, languages } = useGlobalState()
+  const [tempLanguagePrimary, setTempLanguagePrimary] = useState()
   const [tempDeckToAdd, setTempDeckToAdd] = useState()
   const [tempUsername, setTempUsername] = useState()
   const [errors, setErrors] = useState()
@@ -81,24 +81,27 @@ export default function Start() {
             </svg>
             <h1 className="h1">You&apos;re all set!</h1>
           </div>
-          {tempDeckToAdd ? (
-            <Link href={`/app/decks/${tempDeckToAdd}`}>
-              <a className="mx-auto link">
-                Go to your {tempDeckToAdd} deck to start learning &rarr;
+          <div className="flex flex-col space-y-4">
+            {tempDeckToAdd ? (
+              <Link href={`/app/decks/${tempDeckToAdd}`}>
+                <a className="mx-auto btn btn-secondary">
+                  Get started learning {languages[tempDeckToAdd]}
+                  &nbsp;&rarr;
+                </a>
+              </Link>
+            ) : null}
+            <Link href="/app/profile">
+              <a className="mx-auto btn btn-quiet-dark">
+                Go to your profile&nbsp;&rarr;
               </a>
             </Link>
-          ) : null}
-          <Link href="/app/profile">
-            <a className="mx-auto link">Go to your profile now &rarr;</a>
-          </Link>
+          </div>
         </div>
       ) : (
         <div className="text-white p2 md:p-6 lg:p-10">
           <h1 className="d1">Welcome to Sunlo</h1>
           <div className="max-w-prose">
-            <p className="text-2xl my-4 mb-10">
-              Just fill this out page to get started...
-            </p>
+            <p className="text-2xl my-4 mb-10">Let&apos;s get you started!</p>
             <SetPrimaryLanguageStep
               value={tempLanguagePrimary}
               set={setTempLanguagePrimary}
@@ -148,16 +151,15 @@ export default function Start() {
 }
 
 const SetPrimaryLanguageStep = ({ value, set }) => {
+  const { languages } = useGlobalState()
   return value ? (
-    <div className="alert text-gray-800 mb-6 flex flex-row justify-between">
-      <h2 className="h4">Primary language is {value}</h2>
-      <button onClick={() => set()} className="btn btn-quiet">
-        clear
-      </button>
-    </div>
+    <Completed>
+      <h2 className="h4">Primary language is {languages[value]}</h2>
+      <X set={set} />
+    </Completed>
   ) : (
     <form
-      className="big-card"
+      className="big-card mb-16"
       onSubmit={e => {
         e.preventDefault()
         set(e.target.language_primary.value)
@@ -165,38 +167,40 @@ const SetPrimaryLanguageStep = ({ value, set }) => {
     >
       <h2 className="h2">Set primary language</h2>
       <div className="flex flex-col">
-        <label className="font-bold py-2"></label>
-        <input
-          className="border rounded p-3"
+        <label className="font-bold py-2">The language you know best</label>
+        <select
           name="language_primary"
-          type="text"
-          defaultValue={value || 'EN'}
-        />
+          onChange={e => {
+            e.preventDefault()
+            set(e.target.value)
+          }}
+          className="border rounded p-3 mb-6"
+        >
+          <option value="">-- select one --</option>
+          <option value="EN">English</option>
+          {languages &&
+            Object.keys(languages).map(k => {
+              return k === 'EN' ? null : (
+                <option key={`language-dropdown-option-${k}`} value={k}>
+                  {languages[k]}
+                </option>
+              )
+            })}
+        </select>
       </div>
-      <button className="btn btn-quiet my-4" type="submit">
-        Select language
-      </button>
     </form>
   )
 }
 
 const CreateFirstDeckStep = ({ value, previousValues, set }) => {
+  const { languages } = useGlobalState()
   return value ? (
-    <div className="alert text-gray-800 mb-6 flex flex-row justify-between">
-      <h2 className="h4">Working on a deck of {value} cards</h2>
-      <button onClick={() => set()} className="btn btn-quiet">
-        clear
-      </button>
-    </div>
+    <Completed>
+      <h2 className="h4">Working on a deck of {languages[value]} cards</h2>
+      <X set={set} />
+    </Completed>
   ) : (
-    <form
-      className="big-card"
-      onSubmit={e => {
-        e.preventDefault()
-        const lang = e.target.deck_language.value
-        if (lang) set(lang)
-      }}
-    >
+    <form className="big-card mb-16">
       <h2 className="h2">
         Create{' '}
         {previousValues?.length === 0 ? 'your first deck' : 'another deck'}
@@ -204,38 +208,41 @@ const CreateFirstDeckStep = ({ value, previousValues, set }) => {
       {previousValues?.length > 0 ? (
         <p className="py-2">
           FYI you&apos;re already learning{' '}
-          {previousValues.map(v => v.lang).join(', ')}
+          {previousValues.map(v => languages[v.lang]).join(', ')}
         </p>
       ) : null}
       <div className="flex flex-col">
-        <label className="font-bold py-2">
-          What language will you learn next?
-        </label>
-        <input
-          className="border rounded p-3"
-          type="text"
-          name="deck_language"
-          devaultValue={value}
-        />
+        <label className="font-bold py-2">The language you want to learn</label>
+        <select
+          name="language_primary"
+          onChange={e => {
+            e.preventDefault()
+            set(e.target.value)
+          }}
+          className="border rounded p-3 mb-6"
+        >
+          <option value="">-- select one --</option>
+          {languages &&
+            Object.keys(languages).map(k => (
+              <option key={`language-dropdown-option-${k}`} value={k}>
+                {languages[k]}
+              </option>
+            ))}
+        </select>
       </div>
-      <button className="btn btn-quiet my-4" type="submit">
-        Add this deck
-      </button>
     </form>
   )
 }
 
 const SetUsernameStep = ({ value, set }) => {
   return value ? (
-    <div className="alert text-gray-800 mb-6 flex flex-row justify-between">
+    <Completed>
       <h2 className="h4">Your username is {value}</h2>
-      <button onClick={() => set()} className="btn btn-quiet">
-        clear
-      </button>
-    </div>
+      <X set={set} />
+    </Completed>
   ) : (
     <form
-      className="big-card"
+      className="big-card mb-16"
       onSubmit={e => {
         e.preventDefault()
         set(e.target.username.value)
@@ -260,3 +267,28 @@ const SetUsernameStep = ({ value, set }) => {
     </form>
   )
 }
+
+const X = ({ set }) => (
+  <button onClick={() => set()} className="btn btn-quiet-dark rounded-full">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-4 w-4 text-white"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M6 18L18 6M6 6l12 12"
+      />
+    </svg>
+  </button>
+)
+
+const Completed = ({ children }) => (
+  <div className="alert bg-white bg-opacity-10 text-white mb-8 flex flex-row justify-between">
+    {children}
+  </div>
+)

@@ -29,6 +29,10 @@
   .btn-quiet {
     @apply btn-link hover:underline hover:bg-[#efe9fb] border-transparent hover:border-white;
   }
+  .btn-quiet-dark {
+    @apply btn btn-outline border-none text-white hover:btn-secondary;
+    background-color: hsla(var(--p) / var(--tw-bg-opacity, 1));
+  }
   .big-card {
     @apply card bg-white text-gray-800 p-6 shadow-lg mb-6;
   }
