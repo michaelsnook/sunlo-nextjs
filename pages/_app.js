@@ -1,5 +1,5 @@
-import '../styles/globals.css'
-import { GlobalStateProvider } from '../lib/global-store'
+import 'styles/globals.css'
+import { GlobalStateProvider } from 'lib/global-store'
 
 function App({ Component, pageProps }) {
   return (

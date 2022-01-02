@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import supabase from '../../lib/supabase-client'
-import AppLayout from '../../components/AppLayout'
-import PhraseCardSmall from '../../components/PhraseCardSmall'
+import supabase from 'lib/supabase-client'
+import AppLayout from 'components/AppLayout'
+import PhraseCardSmall from 'components/PhraseCardSmall'
 
 export default function LanguagePage({ language, phrases }) {
   console.log(language)

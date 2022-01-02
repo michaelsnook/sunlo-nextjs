@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import supabase from '../../lib/supabase-client'
-import SiteLayout from '../../components/SiteLayout'
-import ErrorList from '../../components/ErrorList'
+import supabase from 'lib/supabase-client'
+import SiteLayout from 'components/SiteLayout'
+import ErrorList from 'components/ErrorList'
 
 export default function Languages({ languages, error }) {
   return (

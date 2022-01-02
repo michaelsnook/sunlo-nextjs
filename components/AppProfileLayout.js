@@ -1,6 +1,6 @@
 import Image from 'next/image'
-import AppLayout from './AppLayout'
-import { useGlobalState } from '../lib/global-store'
+import AppLayout from 'components/AppLayout'
+import { useGlobalState } from 'lib/global-store'
 
 const AvatarSection = () => {
   const { profile } = useGlobalState()

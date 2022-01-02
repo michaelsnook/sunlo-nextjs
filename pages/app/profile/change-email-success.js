@@ -1,5 +1,5 @@
-import AppProfileLayout from '../../../components/AppProfileLayout'
-import { useGlobalState } from '../../../lib/global-store'
+import AppProfileLayout from 'components/AppProfileLayout'
+import { useGlobalState } from 'lib/global-store'
 
 export default function ChangePassword() {
   const { user } = useGlobalState()

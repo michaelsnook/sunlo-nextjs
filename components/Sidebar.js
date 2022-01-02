@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
-import menus from '../lib/menus'
-import { useGlobalState } from '../lib/global-store'
+import menus from 'lib/menus'
+import { useGlobalState } from 'lib/global-store'
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState()

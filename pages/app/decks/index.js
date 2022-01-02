@@ -1,6 +1,6 @@
-import AppLayout from '../../../components/AppLayout'
 import Link from 'next/link'
-import { useGlobalState } from '../../../lib/global-store'
+import AppLayout from 'components/AppLayout'
+import { useGlobalState } from 'lib/global-store'
 
 export default function DeckIndex() {
   const { profile, profileError: error } = useGlobalState()

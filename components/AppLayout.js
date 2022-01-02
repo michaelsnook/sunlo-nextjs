@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import Sidebar from './Sidebar'
+import Sidebar from 'components/Sidebar'
 
 export default function AppLayout({
   image = `/images/sunlo-logo-color.png`,

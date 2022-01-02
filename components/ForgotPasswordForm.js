@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import supabase from '../lib/supabase-client'
-import ErrorList from './ErrorList'
+import supabase from 'lib/supabase-client'
+import ErrorList from 'components/ErrorList'
 
 export default function ForgotPasswordForm() {
   const [errors, setErrors] = useState()

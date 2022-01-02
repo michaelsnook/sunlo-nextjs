@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import BannerLayout from '../../../components/BannerLayout'
-import { useGlobalState } from '../../../lib/global-store'
-import supabase from '../../../lib/supabase-client'
-import ErrorList from '../../../components/ErrorList'
+import BannerLayout from 'components/BannerLayout'
+import { useGlobalState } from 'lib/global-store'
+import supabase from 'lib/supabase-client'
+import ErrorList from 'components/ErrorList'
 import Link from 'next/link'
 
 export default function Start() {

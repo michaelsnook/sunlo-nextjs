@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import Link from 'next/link'
-import supabase from '../lib/supabase-client'
-import ErrorList from './ErrorList'
-import { useGlobalState } from '../lib/global-store'
+import supabase from 'lib/supabase-client'
+import ErrorList from 'components/ErrorList'
+import { useGlobalState } from 'lib/global-store'
 
 export default function SetNewPasswordForm() {
   const { user } = useGlobalState()

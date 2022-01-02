@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import supabase from '../lib/supabase-client'
-import { useGlobalState } from '../lib/global-store'
-import ErrorList from './ErrorList'
+import supabase from 'lib/supabase-client'
+import { useGlobalState } from 'lib/global-store'
+import ErrorList from 'components/ErrorList'
 
 export default function Login({ signup }) {
   const [errors, setErrors] = useState()

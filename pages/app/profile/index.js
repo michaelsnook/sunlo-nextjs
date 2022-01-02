@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import Link from 'next/link'
-import AppProfileLayout from '../../../components/AppProfileLayout'
-import supabase from '../../../lib/supabase-client'
-import { useGlobalState } from '../../../lib/global-store'
-import ErrorList from '../../../components/ErrorList'
+import supabase from 'lib/supabase-client'
+import AppProfileLayout from 'components/AppProfileLayout'
+import { useGlobalState } from 'lib/global-store'
+import ErrorList from 'components/ErrorList'
 
 const ProfileCard = () => {
   const { user, profile, setProfile } = useGlobalState()

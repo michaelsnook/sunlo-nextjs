@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import menus from '../lib/menus'
-import Sidebar from './Sidebar'
+import menus from 'lib/menus'
+import Sidebar from 'components/Sidebar'
 
 const Footer = () => (
   <footer className="container pt-10 pb-16 flex flex-row gap-16">
