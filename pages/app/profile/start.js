@@ -154,7 +154,9 @@ const SetPrimaryLanguageStep = ({ value, set }) => {
   const { languages } = useGlobalState()
   return value ? (
     <Completed>
-      <h2 className="h4">Primary language is {languages[value]}</h2>
+      <p className="h4">
+        Primary language is <Highlight>{languages[value]}</Highlight>
+      </p>
       <X set={set} />
     </Completed>
   ) : (
@@ -196,7 +198,10 @@ const CreateFirstDeckStep = ({ value, previousValues, set }) => {
   const { languages } = useGlobalState()
   return value ? (
     <Completed>
-      <h2 className="h4">Working on a deck of {languages[value]} cards</h2>
+      <h2 className="h4 flex-none">
+        Working on a deck of <Highlight>{languages[value]}</Highlight> cards
+      </h2>
+
       <X set={set} />
     </Completed>
   ) : (
@@ -237,7 +242,9 @@ const CreateFirstDeckStep = ({ value, previousValues, set }) => {
 const SetUsernameStep = ({ value, set }) => {
   return value ? (
     <Completed>
-      <h2 className="h4">Your username is {value}</h2>
+      <p className="h4 block">
+        Your username is <Highlight>{value}</Highlight>
+      </p>
       <X set={set} />
     </Completed>
   ) : (
@@ -269,7 +276,10 @@ const SetUsernameStep = ({ value, set }) => {
 }
 
 const X = ({ set }) => (
-  <button onClick={() => set()} className="btn btn-quiet-dark rounded-full">
+  <button
+    onClick={() => set()}
+    className="btn btn-quiet-dark rounded-full block flex-none"
+  >
     <svg
       xmlns="http://www.w3.org/2000/svg"
       className="h-4 w-4 text-white"
@@ -288,7 +298,14 @@ const X = ({ set }) => (
 )
 
 const Completed = ({ children }) => (
-  <div className="alert bg-white bg-opacity-10 text-white mb-8 flex flex-row justify-between">
-    {children}
+  <div className="py-4 px-6 rounded-xl glass bg-white bg-opacity-10 text-white mb-8 flex flex-row gap-x-4 justify-between">
+    <div>{children[0]}</div>
+    <div className="place-self-center">{children[1]}</div>
   </div>
+)
+
+const Highlight = ({ children }) => (
+  <span className="px-1 -skew-x-6 font-bold bg-accent bg-opacity-60 inline">
+    {children}
+  </span>
 )

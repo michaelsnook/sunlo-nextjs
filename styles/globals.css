@@ -51,10 +51,10 @@
     @apply lg:text-4xl md:text-3xl text-2xl my-4; /* font-display;*/
   }
   .h3 {
-    @apply md:text-2xl text-xl my-3 font-bold; /* font-display;*/
+    @apply md:text-2xl text-xl my-3; /* font-display;*/
   }
   .h4 {
-    @apply md:text-xl text-lg my-2 font-bold; /* font-display;*/
+    @apply md:text-xl text-lg my-2; /* font-display;*/
   }
   .h5 {
     @apply text-lg my-2 font-bold;
