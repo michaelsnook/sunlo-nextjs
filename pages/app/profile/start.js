@@ -69,7 +69,7 @@ export default function Start() {
           <div className="flex flex-row justify-center space-x-4">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-16 w-16 text-accent"
+              className="h-16 w-16 text-accent bg-white rounded-full"
               viewBox="0 0 20 20"
               fill="currentColor"
             >
