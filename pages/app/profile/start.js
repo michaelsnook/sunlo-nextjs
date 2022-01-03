@@ -6,10 +6,13 @@ import ErrorList from 'components/ErrorList'
 import Link from 'next/link'
 
 export default function Start() {
-  const { user, profile, setProfile, languages } = useGlobalState()
-  const [tempLanguagePrimary, setTempLanguagePrimary] = useState()
+  const { user, profile, setProfile, decks, insertDeck, languages } =
+    useGlobalState()
+  const [tempLanguagePrimary, setTempLanguagePrimary] = useState(
+    profile?.language_primary
+  )
   const [tempDeckToAdd, setTempDeckToAdd] = useState()
-  const [tempUsername, setTempUsername] = useState()
+  const [tempUsername, setTempUsername] = useState(profile?.username)
   const [errors, setErrors] = useState()
   const [isSubmitting, setIsSubmitting] = useState()
   const [successfulSetup, setSuccessfulSetup] = useState()
@@ -18,14 +21,19 @@ export default function Start() {
     setErrors()
     setIsSubmitting(true)
 
-    event.preventDefault()
+    // an array with the new item at front, removing dupes of that same item
+    const newLanguagesSpoken = [tempLanguagePrimary].concat(
+      !profile?.languages_spoken?.length > 0
+        ? []
+        : profile?.languages_spoken.filter(i => i !== tempLanguagePrimary)
+    )
     supabase
       .from('profile')
       .upsert({
         id: user.id,
         username: tempUsername,
         language_primary: tempLanguagePrimary,
-        languages_spoken: [tempLanguagePrimary],
+        languages_spoken: newLanguagesSpoken,
       })
       .match({ id: user.id })
       .then(({ data, error }) => {
@@ -44,12 +52,11 @@ export default function Start() {
               .upsert({ lang: tempDeckToAdd, profile_id: user.id })
               .match({ profile_id: user.id, lang: tempDeckToAdd })
               .then(({ data, error }) => {
-                console.log('create decks', data, error)
+                console.log('create new deck', data, error)
                 if (error) {
                   setErrors(error)
                 } else {
-                  const profile_decks = profile?.decks || []
-                  setProfile({ ...profile, decks: [...profile_decks, ...data] })
+                  insertDeck(data)
                   setSuccessfulSetup(true)
                 }
                 setIsSubmitting(false)
@@ -106,15 +113,11 @@ export default function Start() {
               value={tempLanguagePrimary}
               set={setTempLanguagePrimary}
             />
-            <CreateFirstDeckStep
-              value={tempDeckToAdd}
-              previousValues={profile?.decks}
-              set={setTempDeckToAdd}
-            />
+            <CreateFirstDeckStep value={tempDeckToAdd} set={setTempDeckToAdd} />
             <SetUsernameStep value={tempUsername} set={setTempUsername} />
 
             {tempLanguagePrimary &&
-            (tempDeckToAdd || profile?.decks?.length > 0) &&
+            (tempDeckToAdd || decks?.length > 0) &&
             tempUsername ? (
               <div className="my-6 flex flex-row-reverse justify-around items-center">
                 <button
@@ -128,9 +131,9 @@ export default function Start() {
                   onClick={() => {
                     setErrors()
                     setIsSubmitting()
-                    setTempLanguagePrimary()
+                    setTempLanguagePrimary(profile?.language_primary)
                     setTempDeckToAdd()
-                    setTempUsername()
+                    setTempUsername(profile?.username)
                   }}
                   className="btn btn-primary"
                 >
@@ -151,19 +154,21 @@ export default function Start() {
 }
 
 const SetPrimaryLanguageStep = ({ value, set }) => {
+  const [closed, setClosed] = useState(!!value)
   const { languages } = useGlobalState()
-  return value ? (
+  return closed && value?.length > 0 ? (
     <Completed>
       <p className="h4">
-        Primary language is <Highlight>{languages[value]}</Highlight>
+        Your primary language is <Highlight>{languages[value]}</Highlight>
       </p>
-      <X set={set} />
+      <X set={() => setClosed()} />
     </Completed>
   ) : (
     <form
       className="big-card mb-16"
       onSubmit={e => {
         e.preventDefault()
+        setClosed(true)
         set(e.target.language_primary.value)
       }}
     >
@@ -171,10 +176,12 @@ const SetPrimaryLanguageStep = ({ value, set }) => {
       <div className="flex flex-col">
         <label className="font-bold py-2">The language you know best</label>
         <select
+          value={value || ''}
           name="language_primary"
           onChange={e => {
             e.preventDefault()
             set(e.target.value)
+            setClosed(true)
           }}
           className="border rounded p-3 mb-6"
         >
@@ -189,40 +196,72 @@ const SetPrimaryLanguageStep = ({ value, set }) => {
               )
             })}
         </select>
+        {value ? (
+          <a
+            className="link"
+            onClick={e => {
+              e.preventDefault()
+              setClosed(true)
+            }}
+          >
+            Continue with {languages[value]}
+          </a>
+        ) : null}
       </div>
     </form>
   )
 }
 
-const CreateFirstDeckStep = ({ value, previousValues, set }) => {
-  const { languages } = useGlobalState()
-  return value ? (
+const CreateFirstDeckStep = ({ value, set }) => {
+  const { languages, decks } = useGlobalState()
+  const [closed, setClosed] = useState(decks?.length > 0)
+  return closed ? (
     <Completed>
       <h2 className="h4 flex-none">
-        Working on a deck of <Highlight>{languages[value]}</Highlight> cards
+        {!value && decks?.length > 0 ? (
+          <>
+            You&apos;re working on{' '}
+            <Highlight>
+              {decks?.map(v => languages[v.lang]).join(', ')}
+            </Highlight>
+          </>
+        ) : !value && !decks?.length > 0 ? (
+          <>Wait you have to learn something or what&apos;s the point</>
+        ) : (
+          <>
+            Starting a deck of flash cards for{' '}
+            <Highlight>{languages[value]}</Highlight> phrases
+          </>
+        )}
       </h2>
 
-      <X set={set} />
+      <X
+        set={() => {
+          set()
+          setClosed()
+        }}
+      />
     </Completed>
   ) : (
     <form className="big-card mb-16">
       <h2 className="h2">
-        Create{' '}
-        {previousValues?.length === 0 ? 'your first deck' : 'another deck'}
+        Create {decks?.length === 0 ? 'your first deck' : 'another deck'}
       </h2>
-      {previousValues?.length > 0 ? (
+      {decks?.length > 0 ? (
         <p className="py-2">
           FYI you&apos;re already learning{' '}
-          {previousValues.map(v => languages[v.lang]).join(', ')}
+          {decks?.map(v => languages[v.lang]).join(', ')}
         </p>
       ) : null}
       <div className="flex flex-col">
         <label className="font-bold py-2">The language you want to learn</label>
         <select
+          value={value || ''}
           name="language_primary"
           onChange={e => {
             e.preventDefault()
             set(e.target.value)
+            setClosed(true)
           }}
           className="border rounded p-3 mb-6"
         >
@@ -234,18 +273,30 @@ const CreateFirstDeckStep = ({ value, previousValues, set }) => {
               </option>
             ))}
         </select>
+        {decks?.length > 0 && !value ? (
+          <a
+            onClick={e => {
+              e.preventDefault()
+              setClosed(true)
+            }}
+            className="link"
+          >
+            Skip this step
+          </a>
+        ) : null}
       </div>
     </form>
   )
 }
 
 const SetUsernameStep = ({ value, set }) => {
-  return value ? (
+  const [closed, setClosed] = useState(value?.length > 0)
+  return closed && value ? (
     <Completed>
       <p className="h4 block">
         Your username is <Highlight>{value}</Highlight>
       </p>
-      <X set={set} />
+      <X set={() => setClosed()} />
     </Completed>
   ) : (
     <form
@@ -265,10 +316,14 @@ const SetUsernameStep = ({ value, set }) => {
           className="border rounded p-3"
           name="username"
           placeholder="Lernie McSanders"
-          devaultValue={value}
+          value={value || ''}
+          onChange={e => {
+            setClosed()
+            set(e.target.value)
+          }}
         />
       </div>
-      <button className="btn btn-quiet my-4" type="submit">
+      <button onClick={setClosed} className="btn btn-quiet my-4" type="submit">
         Do the thing
       </button>
     </form>
@@ -298,14 +353,16 @@ const X = ({ set }) => (
 )
 
 const Completed = ({ children }) => (
-  <div className="py-4 px-6 rounded-xl glass bg-white bg-opacity-10 text-white mb-8 flex flex-row gap-x-4 justify-between">
+  <div className="py-4 px-6 rounded-xl glass text-white mb-8 flex flex-row gap-x-4 justify-between">
     <div>{children[0]}</div>
     <div className="place-self-center">{children[1]}</div>
   </div>
 )
 
+// <span className="px-1 -skew-x-6 font-bold bg-accent bg-opacity-60 inline">
+// <span className="font-bold italic inline">{children}</span>
 const Highlight = ({ children }) => (
-  <span className="px-1 -skew-x-6 font-bold bg-accent bg-opacity-60 inline">
+  <span className="px-1 font-bold bg-accent bg-opacity-60 inline">
     {children}
   </span>
 )
