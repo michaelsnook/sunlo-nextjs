@@ -6,7 +6,7 @@ import { useGlobalState } from 'lib/global-store'
 import ErrorList from 'components/ErrorList'
 
 const ProfileCard = () => {
-  const { user, profile, setProfile } = useGlobalState()
+  const { profile, setProfile } = useGlobalState()
   const [errors, setErrors] = useState()
   const [isSubmitting, setIsSubmitting] = useState()
   const onSubmit = event => {

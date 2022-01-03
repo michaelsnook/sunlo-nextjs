@@ -3,12 +3,11 @@ import AppLayout from 'components/AppLayout'
 import { useGlobalState } from 'lib/global-store'
 
 export default function DeckIndex() {
-  const { profile, profileError: error } = useGlobalState()
-  const decks = profile?.decks
+  const { profileError, decks } = useGlobalState()
   return (
     <AppLayout>
       <h1 className="h1">Your decks</h1>
-      {!decks && !error ? (
+      {!decks && !profileError ? (
         <p>loading...</p>
       ) : (
         <div className="">

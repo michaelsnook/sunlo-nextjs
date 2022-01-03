@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import AppLayout from 'components/AppLayout'
 import { useGlobalState } from 'lib/global-store'
 
@@ -22,11 +23,12 @@ const AvatarSection = () => {
         </label>
       </div>
       <div>
-        <h2 className="text-4xl mb-1">Hi, {profile?.username} 👋</h2>
-        <span className="inline-block px-3 py-2 bg-gray-400 text-white rounded-full">
-          You&apos;re working on {profile?.decks?.length || 'zero'} languages
-          right now.
-        </span>
+        <h2 className="text-4xl">Hi, {profile?.username} 👋</h2>
+        <p className="my-4">
+          <Link href="/app/profile/start">
+            <a className="link">Go to profile setup</a>
+          </Link>
+        </p>
       </div>
     </>
   )
