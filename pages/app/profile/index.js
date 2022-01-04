@@ -34,7 +34,7 @@ const ProfileCard = () => {
       })
   }
 
-  return (
+  return !profile || !profile?.username || !profile?.languages_spoken ? null : (
     <form onSubmit={onSubmit}>
       <fieldset
         className="card shadow-xl p-6 my-8 border grid grid-cols-1 sm:grid-cols-2 gap-4"

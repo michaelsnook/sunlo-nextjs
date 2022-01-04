@@ -5,7 +5,8 @@ import { useGlobalState } from 'lib/global-store'
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState()
-  const { user, profile, signOut, decks, languages } = useGlobalState()
+  const { user, profile, signOut, decks, languages, isLoading } =
+    useGlobalState()
   const myMenus =
     decks && languages
       ? [
@@ -15,7 +16,7 @@ export default function Sidebar() {
               decks?.map(d => {
                 return {
                   name: languages[d.lang],
-                  href: `/app/decks/${d.id}`,
+                  href: `/app/decks/${d.lang}`,
                 }
               }) || [],
           },
@@ -23,7 +24,7 @@ export default function Sidebar() {
         ]
       : menus
 
-  return (
+  return (!profile && !decks) || !languages ? null : (
     <>
       <SidebarOpener isOpen={isOpen} setIsOpen={setIsOpen} />
       <div

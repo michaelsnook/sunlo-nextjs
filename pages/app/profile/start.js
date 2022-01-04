@@ -6,8 +6,16 @@ import ErrorList from 'components/ErrorList'
 import Link from 'next/link'
 
 export default function Start() {
-  const { user, profile, setProfile, decks, insertDeck, languages } =
+  const { user, profile, setProfile, decks, insertDeck, languages, isLoading } =
     useGlobalState()
+
+  console.log(
+    `render Start, isLoading: ${isLoading}. User, Profile, Languages:`,
+    user,
+    profile,
+    languages
+  )
+
   const [tempLanguagePrimary, setTempLanguagePrimary] = useState(
     profile?.language_primary
   )
@@ -43,7 +51,7 @@ export default function Start() {
           setIsSubmitting(false)
         } else {
           // merge the objects so we keep avatar_public_url
-          setProfile(data[0])
+          setProfile({ ...profile, ...data[0] })
           console.log('upsert profile data', data[0])
 
           if (typeof tempDeckToAdd === 'string' && tempDeckToAdd.length > 0) {
@@ -69,7 +77,7 @@ export default function Start() {
       })
   }
 
-  return !user ? null : (
+  return !profile ? null : (
     <BannerLayout>
       {successfulSetup ? (
         <div className="p2 md:p-6 lg:p-10 max-w-prose text-white min-h-85vh flex flex-col gap-12 justify-center">
