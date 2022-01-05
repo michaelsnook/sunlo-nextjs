@@ -16,7 +16,7 @@ export default function Sidebar() {
               decks?.map(d => {
                 return {
                   name: languages[d.lang],
-                  href: `/app/decks/${d.lang}`,
+                  href: d?.lang ? `/app/decks/${d.lang}` : '',
                 }
               }) || [],
           },

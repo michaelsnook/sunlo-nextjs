@@ -6,7 +6,7 @@ import { useGlobalState } from 'lib/global-store'
 import ErrorList from 'components/ErrorList'
 
 const ProfileCard = () => {
-  const { profile, setProfile } = useGlobalState()
+  const { profile, mergeProfileData } = useGlobalState()
   const [errors, setErrors] = useState()
   const [isSubmitting, setIsSubmitting] = useState()
   const onSubmit = event => {
@@ -28,7 +28,7 @@ const ProfileCard = () => {
           console.log('error', error)
         } else {
           // merge the objects so we keep avatar_public_url
-          setProfile({ ...profile, ...data[0] })
+          mergeProfileData(data[0])
           console.log('data', data)
         }
       })

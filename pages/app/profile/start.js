@@ -6,8 +6,15 @@ import ErrorList from 'components/ErrorList'
 import Link from 'next/link'
 
 export default function Start() {
-  const { user, profile, setProfile, decks, insertDeck, languages, isLoading } =
-    useGlobalState()
+  const {
+    user,
+    profile,
+    mergeProfileData,
+    decks,
+    insertDeckData,
+    languages,
+    isLoading,
+  } = useGlobalState()
 
   console.log(
     `render Start, isLoading: ${isLoading}. User, Profile, Languages:`,
@@ -51,7 +58,7 @@ export default function Start() {
           setIsSubmitting(false)
         } else {
           // merge the objects so we keep avatar_public_url
-          setProfile({ ...profile, ...data[0] })
+          mergeProfileData(data[0])
           console.log('upsert profile data', data[0])
 
           if (typeof tempDeckToAdd === 'string' && tempDeckToAdd.length > 0) {
@@ -64,7 +71,7 @@ export default function Start() {
                 if (error) {
                   setErrors(error)
                 } else {
-                  insertDeck(data)
+                  insertDeckData(data)
                   setSuccessfulSetup(true)
                 }
                 setIsSubmitting(false)
@@ -114,6 +121,13 @@ export default function Start() {
         </div>
       ) : (
         <div className="text-white p2 md:p-6 lg:p-10">
+          {profile ? (
+            <div className="absolute top-4 md:top-10">
+              <Link href="/app/profile">
+                <a className="link">&larr; Back to profile</a>
+              </Link>
+            </div>
+          ) : null}
           <h1 className="d1">Welcome to Sunlo</h1>
           <div className="max-w-prose">
             <p className="text-2xl my-4 mb-10">Let&apos;s get you started!</p>
@@ -244,6 +258,7 @@ const CreateFirstDeckStep = ({ value, set }) => {
       </h2>
 
       <X
+        plus={!value && decks?.length > 0}
         set={() => {
           set()
           setClosed()
@@ -338,10 +353,12 @@ const SetUsernameStep = ({ value, set }) => {
   )
 }
 
-const X = ({ set }) => (
+const X = ({ set, plus }) => (
   <button
     onClick={() => set()}
-    className="btn btn-quiet-dark rounded-full block flex-none"
+    className={`btn btn-quiet-dark rounded-full block flex-none ${
+      plus ? 'rotate-45' : ''
+    }`}
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
