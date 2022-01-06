@@ -36,67 +36,65 @@ export default function Sidebar() {
       />
       <nav
         aria-label="Main navigation"
-        className={`overflow-y-auto z-30 top-0 w-80 p-6 bg-[#efe9fb] text-gray-800 h-screen shadow-lg ${
-          isOpen ? 'fixed md:static' : 'hidden'
-        } md:flex flex-col gap-4`}
+        className={`overflow-y-auto overflow-x-hidden z-30 top-0 w-80 p-6 bg-[#efe9fb] text-gray-800 h-screen shadow-lg ${
+          isOpen ? 'fixed' : 'hidden'
+        } md:sticky md:flex flex-col gap-4`}
       >
-        <div className="scroll-auto">
-          <span className="h4 flex flex-row items-center">
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11
+        <span className="h4 flex flex-row items-center">
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11
               21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"
-              ></path>
-            </svg>
-            &nbsp; Sunlo
-          </span>
-          {isLoading ? null : (
-            <>
-              <Link href="/app/profile">
-                <a className="hover:link">
-                  <p>{profile?.username}</p>
-                  <p>{user?.email}</p>
-                </a>
-              </Link>
-              {myMenus.map(menu => (
-                <div key={menu.name}>
-                  <p className="font-bold my-4">
-                    {menu.href ? (
-                      <Link href={menu.href}>
-                        <a className="hover:link">{menu.name}</a>
+            ></path>
+          </svg>
+          &nbsp; Sunlo
+        </span>
+        {isLoading ? null : (
+          <>
+            <Link href="/app/profile">
+              <a className="hover:link">
+                <p>{profile?.username}</p>
+                <p>{user?.email}</p>
+              </a>
+            </Link>
+            {myMenus.map(menu => (
+              <div key={menu.name}>
+                <p className="font-bold my-4">
+                  {menu.href ? (
+                    <Link href={menu.href}>
+                      <a className="hover:link">{menu.name}</a>
+                    </Link>
+                  ) : (
+                    menu.name
+                  )}
+                </p>
+                <ul className="flex flex-col gap-2">
+                  {menu.links?.map(i => (
+                    <li key={i.href}>
+                      <Link href={i.href}>
+                        <a className="hover:link">{i.name}</a>
                       </Link>
-                    ) : (
-                      menu.name
-                    )}
-                  </p>
-                  <ul className="flex flex-col gap-2">
-                    {menu.links?.map(i => (
-                      <li key={i.href}>
-                        <Link href={i.href}>
-                          <a className="hover:link">{i.name}</a>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
-              <p>
-                <button className="btn btn-quiet" onClick={signOut}>
-                  Sign out
-                </button>
-              </p>
-            </>
-          )}
-        </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+            <p>
+              <button className="btn btn-quiet" onClick={signOut}>
+                Sign out
+              </button>
+            </p>
+          </>
+        )}
       </nav>
     </>
   )
