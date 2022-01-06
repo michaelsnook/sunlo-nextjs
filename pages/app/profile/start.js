@@ -130,7 +130,7 @@ export default function Start() {
           ) : null}
           <h1 className="d1">Welcome to Sunlo</h1>
           <div className="max-w-prose">
-            <p className="text-2xl my-4 mb-10">Let&apos;s get you started!</p>
+            <p className="text-2xl my-4 mb-10">Let&apos;s get started</p>
             <SetPrimaryLanguageStep
               value={tempLanguagePrimary}
               set={setTempLanguagePrimary}

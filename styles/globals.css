@@ -34,7 +34,14 @@
     background-color: hsla(var(--p) / var(--tw-bg-opacity, 1));
   }
   .big-card {
-    @apply card bg-white text-gray-800 p-6 shadow-lg mb-6;
+    @apply card bg-white text-gray-800 p-6 border shadow-lg mb-6 max-w-prose;
+  }
+  .page-card {
+    @apply container mx-0 card bg-white text-gray-800 p-6 border shadow-lg mb-6 py-10 pb-16;
+  }
+  .page-card > .h1,
+  .page-card > .h2 {
+    @apply mb-8 text-gray-700;
   }
 }
 @layer utilities {

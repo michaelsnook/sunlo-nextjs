@@ -35,9 +35,10 @@ const ProfileCard = () => {
   }
 
   return !profile || !profile?.username || !profile?.languages_spoken ? null : (
-    <form onSubmit={onSubmit}>
+    <form className="big-card flex flex-col space-y-4" onSubmit={onSubmit}>
+      <h2 className="h3">Profile</h2>
       <fieldset
-        className="card shadow-xl p-6 my-8 border grid grid-cols-1 sm:grid-cols-2 gap-4"
+        className="grid grid-cols-1 sm:grid-cols-2 gap-4"
         disabled={!profile || isSubmitting}
       >
         <div className="flex flex-col">
@@ -85,7 +86,8 @@ const ProfileCard = () => {
 const UserAuthCard = () => {
   const { user } = useGlobalState()
   return (
-    <div className="card shadow-xl p-6 my-8 border flex flex-col space-y-4">
+    <div className="big-card flex flex-col space-y-4">
+      <h2 className="h3">Login credentials</h2>
       <div className="flex flex-col w-full">
         <label className="font-bold px-3">Your email</label>
         <div className="flex flex-row">
