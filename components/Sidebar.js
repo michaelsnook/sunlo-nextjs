@@ -12,6 +12,7 @@ export default function Sidebar() {
       ? [
           {
             name: 'Your decks',
+            href: '/app/decks',
             links:
               decks?.map(d => {
                 return {
@@ -24,7 +25,7 @@ export default function Sidebar() {
         ]
       : menus
 
-  return (!profile && !decks) || !languages ? null : (
+  return (
     <>
       <SidebarOpener isOpen={isOpen} setIsOpen={setIsOpen} />
       <div
@@ -35,8 +36,8 @@ export default function Sidebar() {
       />
       <nav
         aria-label="Main navigation"
-        className={`sticky overflow-y-auto z-30 top-0 w-80 p-6 bg-[#efe9fb] h-screen shadow-lg ${
-          isOpen ? 'fixed' : 'hidden'
+        className={`overflow-y-auto z-30 top-0 w-80 p-6 bg-[#efe9fb] text-gray-800 h-screen shadow-lg ${
+          isOpen ? 'fixed md:static' : 'hidden'
         } md:flex flex-col gap-4`}
       >
         <div className="scroll-auto">
@@ -58,25 +59,43 @@ export default function Sidebar() {
             </svg>
             &nbsp; Sunlo
           </span>
-          <p>{profile?.username}</p>
-          <p>{user?.email}</p>
-          {myMenus.map(menu => (
-            <div key={menu.name}>
-              <p className="font-bold my-4">{menu.name}</p>
-              <ul className="flex flex-col gap-2">
-                {menu.links?.map(i => (
-                  <li key={i.href}>
-                    <Link href={i.href}>{i.name}</Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-          <p>
-            <button className="btn btn-quiet" onClick={signOut}>
-              Sign out
-            </button>
-          </p>
+          {isLoading ? null : (
+            <>
+              <Link href="/app/profile">
+                <a className="hover:link">
+                  <p>{profile?.username}</p>
+                  <p>{user?.email}</p>
+                </a>
+              </Link>
+              {myMenus.map(menu => (
+                <div key={menu.name}>
+                  <p className="font-bold my-4">
+                    {menu.href ? (
+                      <Link href={menu.href}>
+                        <a className="hover:link">{menu.name}</a>
+                      </Link>
+                    ) : (
+                      menu.name
+                    )}
+                  </p>
+                  <ul className="flex flex-col gap-2">
+                    {menu.links?.map(i => (
+                      <li key={i.href}>
+                        <Link href={i.href}>
+                          <a className="hover:link">{i.name}</a>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+              <p>
+                <button className="btn btn-quiet" onClick={signOut}>
+                  Sign out
+                </button>
+              </p>
+            </>
+          )}
         </div>
       </nav>
     </>
@@ -85,11 +104,7 @@ export default function Sidebar() {
 
 const SidebarOpener = ({ isOpen, setIsOpen }) => (
   <button
-    className={`shadow-lg fixed bottom-4 md:hidden left-3 border rounded-full inline-block ${
-      isOpen
-        ? 'bg-primary hover:border-white border-gray-400 text-white'
-        : 'text-primary hover:border-primary backdrop-filter backdrop-blur'
-    } p-2 z-50`}
+    className="z-50 fixed md:hidden bottom-4 left-3 p-2 btn-outline rounded-full bg-white btn-primary border border-primary"
     role="button"
     aria-haspopup="true"
     aria-label="Toggle main menu"
