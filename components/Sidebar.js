@@ -2,6 +2,24 @@ import { useState } from 'react'
 import Link from 'next/link'
 import menus from 'lib/menus'
 import { useGlobalState } from 'lib/global-store'
+import { useRouter } from 'next/router'
+
+const Navlink = ({ href, children }) => {
+  const router = useRouter()
+  return href !== router.asPath ? (
+    <Link href={href}>
+      <a className="link-hover">{children}</a>
+    </Link>
+  ) : (
+    <a
+      href="#"
+      className="border-gray-400 pl-2 border-l-4 text-gray-600"
+      disabled
+    >
+      {children}
+    </a>
+  )
+}
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState()
@@ -60,19 +78,15 @@ export default function Sidebar() {
         </span>
         {isLoading ? null : (
           <>
-            <Link href="/app/profile">
-              <a className="hover:link">
-                <p>{profile?.username}</p>
-                <p>{user?.email}</p>
-              </a>
-            </Link>
+            <Navlink href="/app/profile">
+              <p>{profile?.username}</p>
+              <p>{user?.email}</p>
+            </Navlink>
             {myMenus.map(menu => (
               <div key={menu.name}>
                 <p className="font-bold my-4">
                   {menu.href ? (
-                    <Link href={menu.href}>
-                      <a className="hover:link">{menu.name}</a>
-                    </Link>
+                    <Navlink href={menu.href}>{menu.name}</Navlink>
                   ) : (
                     menu.name
                   )}
@@ -80,9 +94,7 @@ export default function Sidebar() {
                 <ul className="flex flex-col gap-2">
                   {menu.links?.map(i => (
                     <li key={i.href}>
-                      <Link href={i.href}>
-                        <a className="hover:link">{i.name}</a>
-                      </Link>
+                      <Navlink href={i.href}>{i.name}</Navlink>
                     </li>
                   ))}
                 </ul>
