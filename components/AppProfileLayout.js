@@ -1,10 +1,12 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import AppLayout from 'components/AppLayout'
 import { useGlobalState } from 'lib/global-store'
 
 const AvatarSection = () => {
   const { profile } = useGlobalState()
+  const router = useRouter()
   return (
     <>
       <div className="avatar relative">
@@ -25,9 +27,15 @@ const AvatarSection = () => {
       <div>
         <h2 className="text-4xl">Hi, {profile?.username} 👋</h2>
         <p className="my-4">
-          <Link href="/app/profile/start">
-            <a className="link">Go to profile setup</a>
-          </Link>
+          {router.asPath === '/app/profile' ? (
+            <Link href="/app/profile/start">
+              <a className="link md:link-hover">Go to profile setup</a>
+            </Link>
+          ) : (
+            <Link href="/app/profile">
+              <a className="link md:link-hover">&larr; Back to profile</a>
+            </Link>
+          )}
         </p>
       </div>
     </>

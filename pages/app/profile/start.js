@@ -124,7 +124,7 @@ export default function Start() {
           {profile ? (
             <div className="absolute top-4 md:top-10">
               <Link href="/app/profile">
-                <a className="link">&larr; Back to profile</a>
+                <a className="link md:link-hover">&larr; Back to profile</a>
               </Link>
             </div>
           ) : null}
