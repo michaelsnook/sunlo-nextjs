@@ -4,22 +4,32 @@ import supabase from 'lib/supabase-client'
 import AppProfileLayout from 'components/AppProfileLayout'
 import { useGlobalState } from 'lib/global-store'
 import ErrorList from 'components/ErrorList'
+import {
+  // prependAndDedupe,
+  convertNodeListToCheckedValues,
+} from 'lib/data-helpers'
 
 const ProfileCard = () => {
-  const { profile, mergeProfileData } = useGlobalState()
+  const { profile, mergeProfileData, languages, isLoading } = useGlobalState()
   const [errors, setErrors] = useState()
   const [isSubmitting, setIsSubmitting] = useState()
   const onSubmit = event => {
     event.preventDefault()
     setErrors()
-    setIsSubmitting(false)
+    setIsSubmitting(true)
     console.log(event.target)
     const username = event.target.username.value
     const language_primary = event.target.language_primary.value
-    const languages_spoken = event.target.languages_spoken.value
+    const languages_spoken_array = convertNodeListToCheckedValues(
+      event.target.languages_spoken
+    )
     supabase
       .from('profile')
-      .update({ username, language_primary, languages_spoken })
+      .update({
+        username,
+        language_primary,
+        languages_spoken: [language_primary, ...languages_spoken_array],
+      })
       .match({ id: profile.id })
       .then(({ data, error }) => {
         setIsSubmitting(false)
@@ -27,14 +37,14 @@ const ProfileCard = () => {
           setErrors(error)
           console.log('error', error)
         } else {
-          // merge the objects so we keep avatar_public_url
+          // merge the objects, which will rebuild context
+          console.log('merge profile data', profile, data[0])
           mergeProfileData(data[0])
-          console.log('data', data)
         }
       })
   }
 
-  return !profile || !profile?.username || !profile?.languages_spoken ? null : (
+  return !profile || isLoading ? null : (
     <form className="big-card flex flex-col space-y-4" onSubmit={onSubmit}>
       <h2 className="h3">Profile</h2>
       <fieldset
@@ -42,8 +52,11 @@ const ProfileCard = () => {
         disabled={!profile || isSubmitting}
       >
         <div className="flex flex-col">
-          <label className="font-bold px-3">Your nickname</label>
+          <label htmlFor="username" className="font-bold px-3">
+            Your nickname
+          </label>
           <input
+            id="username"
             type="text"
             className="border rounded p-3"
             name="username"
@@ -52,22 +65,48 @@ const ProfileCard = () => {
           />
         </div>
         <div className="flex flex-col">
-          <label className="font-bold px-3">Languages you know</label>
-          <input
-            type="text"
+          <label htmlFor="language_primary" className="font-bold px-3">
+            Primary language
+          </label>
+          <select
+            name="language_primary"
+            defaultValue={profile.language_primary || ''}
             className="border rounded p-3"
-            name="languages_spoken"
-            defaultValue={profile ? `{${profile?.languages_spoken}}` : ''}
-          />
+          >
+            <option value="">-- select one --</option>
+            {Object.keys(languages).map(k => (
+              <option key={`language-primary-${k}`} value={k}>
+                {languages[k]}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="flex flex-col">
-          <label className="font-bold px-3">Primary language</label>
-          <input
-            type="text"
-            className="border rounded p-3"
-            name="language_primary"
-            defaultValue={profile?.language_primary || ''}
-          />
+          <label htmlFor="languages_spoken" className="font-bold px-3">
+            Languages you know
+          </label>
+          <div className="py-3 border rounded overflow-auto h-40">
+            {Object.keys(languages).map(k => (
+              <p key={`languages-spoken-${k}`} className="flex">
+                <label className="group-checked:bg-primary group-checked:text-white w-full px-3 py-1">
+                  <input
+                    type="checkbox"
+                    className={`rounded mr-2 focus:outline-gray-400 select-none checked-${
+                      profile.languages_spoken.indexOf(k) !== -1 ||
+                      k === profile.language_primary
+                    }`}
+                    value={k}
+                    name="languages_spoken"
+                    defaultChecked={
+                      profile.languages_spoken.indexOf(k) !== -1 ||
+                      k === profile.language_primary
+                    }
+                  />
+                  {languages[k]}
+                </label>
+              </p>
+            ))}
+          </div>
         </div>
         <div className="flex flex-col-reverse">
           <button
@@ -94,7 +133,7 @@ const UserAuthCard = () => {
           <input
             type="text"
             className="border rounded p-3 flex-grow"
-            value={user?.email}
+            value={user.email}
             disabled
           />
           <Link href="/app/profile/change-email">

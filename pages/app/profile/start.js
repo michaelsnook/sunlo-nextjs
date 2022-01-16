@@ -4,6 +4,7 @@ import { useGlobalState } from 'lib/global-store'
 import supabase from 'lib/supabase-client'
 import ErrorList from 'components/ErrorList'
 import Link from 'next/link'
+import { prependAndDedupe } from 'lib/data-helpers'
 
 export default function Start() {
   const {
@@ -32,15 +33,14 @@ export default function Start() {
   const [isSubmitting, setIsSubmitting] = useState()
   const [successfulSetup, setSuccessfulSetup] = useState()
 
-  const handleMainForm = event => {
+  const handleMainForm = () => {
     setErrors()
     setIsSubmitting(true)
 
     // an array with the new item at front, removing dupes of that same item
-    const newLanguagesSpoken = [tempLanguagePrimary].concat(
-      !profile?.languages_spoken?.length > 0
-        ? []
-        : profile?.languages_spoken.filter(i => i !== tempLanguagePrimary)
+    const newLanguagesSpoken = prependAndDedupe(
+      tempLanguagePrimary,
+      profile.languages_spoken
     )
     supabase
       .from('profile')
