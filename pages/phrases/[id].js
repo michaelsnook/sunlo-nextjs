@@ -4,7 +4,7 @@ import { getFullPhraseData } from 'lib/deck'
 import supabase from 'lib/supabase-client'
 
 export default function Phrase(data) {
-  console.log(`Props: `, data)
+  console.log(`Props2: `, data)
   return (
     <AppLayout>
       <div className="big-card">
@@ -15,17 +15,16 @@ export default function Phrase(data) {
 }
 
 export async function getStaticProps({ params }) {
-  const { id } = params
-  const props = await getFullPhraseData(id)
-  console.log('Props: ', props)
+  const props = await getFullPhraseData(params)
+  console.log('Props1: ', props)
   return { props }
 }
 
 export async function getStaticPaths() {
   const { data } = await supabase.from('card_phrase').select('id')
   console.log('getStaticPaths for /phrases/[id]', data)
-  const paths = data?.map(({ id }) => {
-    return { params: { id: `${id}` } }
+  const paths = data?.map(p => {
+    return { params: { id: `${p.id}` } }
   })
   return { paths, fallback: true }
 }
