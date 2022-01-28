@@ -1,6 +1,6 @@
 import AppLayout from 'components/AppLayout'
 import ShowPhrase from 'components/ShowPhrase'
-import { getFullPhraseData } from 'lib/deck'
+import { fetchFullPhraseData } from 'lib/phrase'
 import supabase from 'lib/supabase-client'
 
 export default function Phrase(data) {
@@ -15,7 +15,7 @@ export default function Phrase(data) {
 }
 
 export async function getStaticProps({ params }) {
-  const props = await getFullPhraseData(params)
+  const props = await fetchFullPhraseData(params)
   console.log('Props1: ', props)
   return { props }
 }

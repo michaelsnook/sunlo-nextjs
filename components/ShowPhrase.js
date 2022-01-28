@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import useSWR from 'swr'
-import { getFullPhraseData } from 'lib/deck'
+import { fetchFullPhraseData } from 'lib/phrase'
 import PhraseLink from 'components/PhraseLink'
 import { useLanguageLookupTable } from 'lib/language'
 
@@ -47,11 +47,12 @@ const ListSeeAlso = ({ list }) => {
 }
 
 export default function ShowPhrase({ phrase, id }) {
-  let { data, error } = phrase
+  const { data, error } = phrase
     ? { data: phrase }
-    : useSWR({ id, type: 'phrase' }, getFullPhraseData)
+    : useSWR({ id, type: 'phrase' }, fetchFullPhraseData)
   const { languageTable } = useLanguageLookupTable()
-  return data ? (
+
+  return data && languageTable ? (
     <div className="grid grid-cols-1 gap-4 ">
       <h2 className="h2">"{data.text}"</h2>
       <p className="-mt-2 mb-4 badge badge-primary badge-outline">

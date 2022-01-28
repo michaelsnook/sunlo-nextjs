@@ -1,11 +1,8 @@
 import Link from 'next/link'
-import useSWR from 'swr'
-import { getFullPhraseData } from 'lib/deck'
+import { usePhraseData } from 'lib/phrase'
 
-export default function PhraseLink({ id, text, lang }) {
-  const { data: phrase, error } = text
-    ? { data: { text, lang } }
-    : useSWR({ id, type: 'phrase' }, getFullPhraseData)
+export default function PhraseLink({ id }) {
+  const { phrase, error } = usePhraseData(id)
   console.log('Props 5,', phrase ?? '')
   return error ? (
     <p>{JSON.stringify(error)}</p>
