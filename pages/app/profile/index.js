@@ -8,9 +8,11 @@ import {
   // prependAndDedupe,
   convertNodeListToCheckedValues,
 } from 'lib/data-helpers'
+import { useLanguageLookupTable } from 'lib/language'
 
 const ProfileCard = () => {
-  const { profile, mergeProfileData, languages, isLoading } = useGlobalState()
+  const { profile, mergeProfileData, isLoading } = useGlobalState()
+  const { languageTable } = useLanguageLookupTable()
   const [errors, setErrors] = useState()
   const [isSubmitting, setIsSubmitting] = useState()
   const onSubmit = event => {
@@ -44,7 +46,7 @@ const ProfileCard = () => {
       })
   }
 
-  return !profile || isLoading ? null : (
+  return !profile || isLoading || !languageTable ? null : (
     <form className="big-card flex flex-col space-y-4" onSubmit={onSubmit}>
       <h2 className="h3">Profile</h2>
       <fieldset
@@ -74,9 +76,9 @@ const ProfileCard = () => {
             className="border rounded p-3"
           >
             <option value="">-- select one --</option>
-            {Object.keys(languages).map(k => (
+            {Object.keys(languageTable).map(k => (
               <option key={`language-primary-${k}`} value={k}>
-                {languages[k]}
+                {languageTable[k]}
               </option>
             ))}
           </select>
@@ -86,7 +88,7 @@ const ProfileCard = () => {
             Languages you know
           </label>
           <div className="py-3 border rounded overflow-auto h-40">
-            {Object.keys(languages).map(k => (
+            {Object.keys(languageTable).map(k => (
               <p key={`languages-spoken-${k}`} className="flex">
                 <label className="group-checked:bg-primary group-checked:text-white w-full px-3 py-1">
                   <input
@@ -102,7 +104,7 @@ const ProfileCard = () => {
                       k === profile.language_primary
                     }
                   />
-                  {languages[k]}
+                  {languageTable[k]}
                 </label>
               </p>
             ))}

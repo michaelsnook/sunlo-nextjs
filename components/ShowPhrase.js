@@ -1,8 +1,8 @@
 import Link from 'next/link'
-import { useGlobalState } from 'lib/global-store'
 import useSWR from 'swr'
 import { getFullPhraseData } from 'lib/deck'
 import PhraseLink from 'components/PhraseLink'
+import { useLanguageLookupTable } from 'lib/language'
 
 const ListTranslations = ({ list }) => {
   return list?.length > 0 ? (
@@ -28,7 +28,6 @@ const ListTranslations = ({ list }) => {
 }
 
 const ListSeeAlso = ({ list }) => {
-  const { language } = useGlobalState()
   return list?.length > 0 ? (
     <div>
       <p>See also, {list.length}:</p>
@@ -51,12 +50,12 @@ export default function ShowPhrase({ phrase, id }) {
   let { data, error } = phrase
     ? { data: phrase }
     : useSWR({ id, type: 'phrase' }, getFullPhraseData)
-  const { languages } = useGlobalState()
+  const { languageTable } = useLanguageLookupTable()
   return data ? (
     <div className="grid grid-cols-1 gap-4 ">
       <h2 className="h2">"{data.text}"</h2>
       <p className="-mt-2 mb-4 badge badge-primary badge-outline">
-        {languages[data.lang]}
+        {languageTable[data.lang]}
       </p>
       <ListTranslations list={data.translations} />
       <ListSeeAlso list={data.see_also} />

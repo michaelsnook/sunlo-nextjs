@@ -3,6 +3,7 @@ import Link from 'next/link'
 import menus from 'lib/menus'
 import { useGlobalState } from 'lib/global-store'
 import { useRouter } from 'next/router'
+import { useLanguageLookupTable } from 'lib/language'
 
 const Navlink = ({ href, children }) => {
   const router = useRouter()
@@ -23,10 +24,10 @@ const Navlink = ({ href, children }) => {
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState()
-  const { user, profile, signOut, decks, languages, isLoading } =
-    useGlobalState()
+  const { user, profile, signOut, decks, isLoading } = useGlobalState()
+  const { languageTable, isLoading: ltLoading } = useLanguageLookupTable()
   const myMenus =
-    decks && languages
+    decks && languageTable
       ? [
           {
             name: 'Your decks',
@@ -34,7 +35,7 @@ export default function Sidebar() {
             links:
               decks?.map(d => {
                 return {
-                  name: languages[d.lang],
+                  name: languageTable[d.lang],
                   href: d?.lang ? `/app/decks/${d.lang}` : '',
                 }
               }) || [],

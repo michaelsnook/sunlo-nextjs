@@ -2,7 +2,7 @@ import Link from 'next/link'
 import supabase from 'lib/supabase-client'
 import AppLayout from 'components/AppLayout'
 import PhraseCardSmall from 'components/PhraseCardSmall'
-import { getLanguagePhrases } from 'lib/deck'
+import { fetchLanguagePhrases } from 'lib/language'
 
 export default function LanguagePage({ language, phrases }) {
   console.log(language)
@@ -36,7 +36,14 @@ export default function LanguagePage({ language, phrases }) {
 
 export const getStaticProps = async ({ params }) => {
   const { code } = params
-  return await getLanguagePhrases(code)
+  const { data: phrases } = await fetchLanguagePhrases(code)
+  const { data: language } = await supabase
+    .from('language')
+    .select('name, code')
+    .eq('code', code)
+    .single()
+
+  return { props: { language, phrases } }
 }
 
 export const getStaticPaths = async () => {

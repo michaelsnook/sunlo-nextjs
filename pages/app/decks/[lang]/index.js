@@ -4,16 +4,17 @@ import supabase from 'lib/supabase-client'
 import AppLayout from 'components/AppLayout'
 import PhraseCardSmall from 'components/PhraseCardSmall'
 import { useGlobalState } from 'lib/global-store'
-import { getLanguagePhrases, deckFetcher, deckDataShaper } from 'lib/deck'
+import { deckFetcher, deckDataShaper } from 'lib/deck'
+import { fetchLanguagePhrases, useLanguageLookupTable } from 'lib/language'
 
 export default function DeckPage({ language, phrases }) {
   // const router = useRouter()
-  const { user, decks, languages, profile, profileError } = useGlobalState()
+  const { user, decks, profileError } = useGlobalState()
   console.log(
     'deckPage',
     `user is ${user ? '' : 'not '}present`,
     decks,
-    languages
+    language
   )
   if (profileError) throw profileError
   if (decks?.find(deck => language.code === deck.lang) === -1) {
@@ -22,7 +23,6 @@ export default function DeckPage({ language, phrases }) {
       decks,
       language,
       phrases,
-      languages,
     }
     console.log(error)
     throw error
@@ -77,7 +77,15 @@ export default function DeckPage({ language, phrases }) {
 
 export const getStaticProps = async ({ params }) => {
   const { lang } = params
-  return await getLanguagePhrases(params.lang)
+  const phrases = await fetchLanguagePhrases(params.lang)
+  const { data: language } = await supabase
+    .from('language')
+    .select('*')
+    .eq('code', lang)
+    .single()
+
+  if (!language || !phrases) throw `Problem loading language [${lang}]`
+  return { props: { language, phrases } }
 }
 
 export const getStaticPaths = async () => {

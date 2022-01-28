@@ -2,6 +2,7 @@ import Link from 'next/link'
 import supabase from 'lib/supabase-client'
 import SiteLayout from 'components/SiteLayout'
 import ErrorList from 'components/ErrorList'
+import { fetchLanguages } from 'lib/language'
 
 export default function Languages({ languages, error }) {
   return (
@@ -30,7 +31,7 @@ export default function Languages({ languages, error }) {
 }
 
 export const getStaticProps = async () => {
-  const { data: languages, error } = await supabase.from('language').select()
+  const { data: languages, error } = await fetchLanguages()
 
   // return error condition if languages has no entries
   if (error || !languages?.length > 0) return { props: { error } }
