@@ -5,23 +5,17 @@ import supabase from 'lib/supabase-client'
 import ErrorList from 'components/ErrorList'
 import Link from 'next/link'
 import { prependAndDedupe } from 'lib/data-helpers'
+import { useLanguageLookupTable, useLanguagePhrases } from 'lib/language'
 
 export default function Start() {
-  const {
-    user,
-    profile,
-    mergeProfileData,
-    decks,
-    insertDeckData,
-    languages,
-    isLoading,
-  } = useGlobalState()
-
+  const { user, profile, mergeProfileData, decks, insertDeckData, isLoading } =
+    useGlobalState()
+  const { languageTable } = useLanguageLookupTable()
   console.log(
     `render Start, isLoading: ${isLoading}. User, Profile, Languages:`,
     user,
     profile,
-    languages
+    languageTable
   )
 
   const [tempLanguagePrimary, setTempLanguagePrimary] = useState(
@@ -107,7 +101,7 @@ export default function Start() {
             {tempDeckToAdd ? (
               <Link href={`/app/decks/${tempDeckToAdd}`}>
                 <a className="mx-auto btn btn-secondary">
-                  Get started learning {languages[tempDeckToAdd]}
+                  Get started learning {languageTable[tempDeckToAdd]}
                   &nbsp;&rarr;
                 </a>
               </Link>
@@ -177,11 +171,11 @@ export default function Start() {
 
 const SetPrimaryLanguageStep = ({ value, set }) => {
   const [closed, setClosed] = useState(!!value)
-  const { languages } = useGlobalState()
+  const { languageTable } = useLanguageLookupTable()
   return closed && value?.length > 0 ? (
     <Completed>
       <p className="h4">
-        Your primary language is <Highlight>{languages[value]}</Highlight>
+        Your primary language is <Highlight>{languageTable[value]}</Highlight>
       </p>
       <X set={() => setClosed()} />
     </Completed>
@@ -209,11 +203,11 @@ const SetPrimaryLanguageStep = ({ value, set }) => {
         >
           <option value="">-- select one --</option>
           <option value="EN">English</option>
-          {languages &&
-            Object.keys(languages).map(k => {
+          {languageTable &&
+            Object.keys(languageTable).map(k => {
               return k === 'EN' ? null : (
                 <option key={`language-dropdown-option-${k}`} value={k}>
-                  {languages[k]}
+                  {languageTable[k]}
                 </option>
               )
             })}
@@ -226,7 +220,7 @@ const SetPrimaryLanguageStep = ({ value, set }) => {
               setClosed(true)
             }}
           >
-            Continue with {languages[value]}
+            Continue with {languageTable[value]}
           </a>
         ) : null}
       </div>
@@ -235,7 +229,8 @@ const SetPrimaryLanguageStep = ({ value, set }) => {
 }
 
 const CreateFirstDeckStep = ({ value, set }) => {
-  const { languages, decks } = useGlobalState()
+  const { decks } = useGlobalState()
+  const { languageTable } = useLanguageLookupTable()
   const [closed, setClosed] = useState(decks?.length > 0)
   return closed ? (
     <Completed>
@@ -244,7 +239,7 @@ const CreateFirstDeckStep = ({ value, set }) => {
           <>
             You&apos;re working on{' '}
             <Highlight>
-              {decks?.map(v => languages[v.lang]).join(', ')}
+              {decks?.map(v => languageTable[v.lang]).join(', ')}
             </Highlight>
           </>
         ) : !value && !decks?.length > 0 ? (
@@ -252,7 +247,7 @@ const CreateFirstDeckStep = ({ value, set }) => {
         ) : (
           <>
             Starting a deck of flash cards for{' '}
-            <Highlight>{languages[value]}</Highlight> phrases
+            <Highlight>{languageTable[value]}</Highlight> phrases
           </>
         )}
       </h2>
@@ -273,7 +268,7 @@ const CreateFirstDeckStep = ({ value, set }) => {
       {decks?.length > 0 ? (
         <p className="py-2">
           FYI you&apos;re already learning{' '}
-          {decks?.map(v => languages[v.lang]).join(', ')}
+          {decks?.map(v => languageTable[v.lang]).join(', ')}
         </p>
       ) : null}
       <div className="flex flex-col">
@@ -289,10 +284,10 @@ const CreateFirstDeckStep = ({ value, set }) => {
           className="border rounded p-3 mb-6"
         >
           <option value="">-- select one --</option>
-          {languages &&
-            Object.keys(languages).map(k => (
+          {languageTable &&
+            Object.keys(languageTable).map(k => (
               <option key={`language-dropdown-option-${k}`} value={k}>
-                {languages[k]}
+                {languageTable[k]}
               </option>
             ))}
         </select>
