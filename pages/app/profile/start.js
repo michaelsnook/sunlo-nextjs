@@ -105,17 +105,16 @@ export default function Start() {
           </div>
           <div className="flex flex-col space-y-4">
             {tempDeckToAdd ? (
-              <Link href={`/app/decks/${tempDeckToAdd}`}>
-                <a className="mx-auto btn btn-secondary">
-                  Get started learning {languages[tempDeckToAdd]}
-                  &nbsp;&rarr;
-                </a>
+              <Link
+                href={`/app/decks/${tempDeckToAdd}`}
+                className="mx-auto btn btn-secondary"
+              >
+                Get started learning {languages[tempDeckToAdd]}
+                &nbsp;&rarr;
               </Link>
             ) : null}
-            <Link href="/app/profile">
-              <a className="mx-auto btn btn-quiet-dark">
-                Go to your profile&nbsp;&rarr;
-              </a>
+            <Link href="/app/profile" className="mx-auto btn btn-quiet-dark">
+              Go to your profile&nbsp;&rarr;
             </Link>
           </div>
         </div>
@@ -123,8 +122,8 @@ export default function Start() {
         <div className="text-white p2 md:p-6 lg:p-10">
           {profile ? (
             <div className="absolute top-4 md:top-10">
-              <Link href="/app/profile">
-                <a className="link md:link-hover">&larr; Back to profile</a>
+              <Link href="/app/profile" className="link md:link-hover">
+                &larr; Back to profile
               </Link>
             </div>
           ) : null}

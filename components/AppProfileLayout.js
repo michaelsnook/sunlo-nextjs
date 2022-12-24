@@ -28,12 +28,12 @@ const AvatarSection = () => {
         <h2 className="text-4xl">Hi, {profile?.username} 👋</h2>
         <p className="my-4">
           {router.asPath === '/app/profile' ? (
-            <Link href="/app/profile/start">
-              <a className="link md:link-hover">Go to profile setup</a>
+            <Link href="/app/profile/start" className="link md:link-hover">
+              Go to profile setup
             </Link>
           ) : (
-            <Link href="/app/profile">
-              <a className="link md:link-hover">&larr; Back to profile</a>
+            <Link href="/app/profile" className="link md:link-hover">
+              &larr; Back to profile
             </Link>
           )}
         </p>

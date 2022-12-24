@@ -15,8 +15,8 @@ export default function DeckIndex() {
             {decks ? (
               decks?.map(d => (
                 <p key={d.lang}>
-                  <Link href={`/app/decks/${d.lang}`}>
-                    <a className="btn btn-quiet">{d.lang}</a>
+                  <Link href={`/app/decks/${d.lang}`} className="btn btn-quiet">
+                    {d.lang}
                   </Link>
                 </p>
               ))

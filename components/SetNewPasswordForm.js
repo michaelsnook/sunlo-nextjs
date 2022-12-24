@@ -85,8 +85,8 @@ const InvalidLink = () => (
     </p>
     <p>
       Or maybe the token has expired; try requesting{' '}
-      <Link href="/forgot-password">
-        <a className="link">another password reset email</a>
+      <Link href="/forgot-password" className="link">
+        another password reset email
       </Link>
       .
     </p>
@@ -98,8 +98,8 @@ const SuccessfulSubmit = () => (
     <h1 className="h3 text-gray-700">Update Successful!</h1>
     <p>
       You can close this window or go{' '}
-      <Link href="/app/profile">
-        <a className="link">back to your profile</a>
+      <Link href="/app/profile" className="link">
+        back to your profile
       </Link>
       .
     </p>

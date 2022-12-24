@@ -20,10 +20,11 @@ export default function LanguagePage({ language, phrases }) {
         <ul className="columns-1 sm:columns-2 lg:columns-3 gap-4">
           {phrases?.map(phrase => (
             <li key={`phrase-${phrase.id}`}>
-              <Link href={`/phrases/${phrase.id}`}>
-                <a className="card shadow p-4 hover:bg-primary hover:text-white mb-4">
-                  <PhraseCardSmall {...phrase} />
-                </a>
+              <Link
+                href={`/phrases/${phrase.id}`}
+                className="card shadow p-4 hover:bg-primary hover:text-white mb-4"
+              >
+                <PhraseCardSmall {...phrase} />
               </Link>
             </li>
           ))}

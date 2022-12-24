@@ -64,8 +64,8 @@ export default function Login({ signup }) {
             You&apos;re logged in as {profile.username}
           </h1>
           <p>
-            <Link href="/app/profile">
-              <a className="link">Skip logging in again and go to my profile</a>
+            <Link href="/app/profile" className="link">
+              Skip logging in again and go to my profile
             </Link>
           </p>
           <p>
@@ -130,16 +130,18 @@ export default function Login({ signup }) {
                 >
                   {signup ? 'Sign up' : 'Log in'}
                 </button>
-                <Link tabIndex="4" href={signup ? '/login' : '/signup'}>
-                  <a className="btn btn-quiet">
-                    {signup ? 'Log in' : 'Create account'}
-                  </a>
+                <Link
+                  tabIndex="4"
+                  href={signup ? '/login' : '/signup'}
+                  className="btn btn-quiet"
+                >
+                  {signup ? 'Log in' : 'Create account'}
                 </Link>
               </div>
               <ErrorList summary="Problem logging in" error={errors?.message} />
               <p>
-                <Link href="/forgot-password">
-                  <a className="link text-sm">Forgot password?</a>
+                <Link href="/forgot-password" className="link text-sm">
+                  Forgot password?
                 </Link>
               </p>
             </fieldset>
