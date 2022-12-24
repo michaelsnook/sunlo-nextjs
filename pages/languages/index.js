@@ -13,13 +13,11 @@ export default function Languages({ languages, error }) {
         <ul className="flex flex-col space-y-4">
           {languages.map(({ name, code }) => (
             <li key={code}>
-              <Link href={`/languages/${code}`}>
-                <a className="btn btn-quiet">
-                  <p>
-                    {name} ({code})
-                  </p>
-                  {/*'<p>xx cards, yy users learning</p>'*/}
-                </a>
+              <Link href={`/languages/${code}`} className="btn btn-quiet">
+                <p>
+                  {name} ({code})
+                </p>
+                {/*'<p>xx cards, yy users learning</p>'*/}
               </Link>
             </li>
           ))}

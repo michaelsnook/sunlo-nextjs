@@ -7,8 +7,8 @@ import { useRouter } from 'next/router'
 const Navlink = ({ href, children }) => {
   const router = useRouter()
   return href !== router.asPath ? (
-    <Link href={href}>
-      <a className="link-hover">{children}</a>
+    <Link href={href} className="link-hover">
+      {children}
     </Link>
   ) : (
     <a

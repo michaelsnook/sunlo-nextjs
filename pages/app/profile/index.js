@@ -136,8 +136,8 @@ const UserAuthCard = () => {
             value={user.email}
             disabled
           />
-          <Link href="/app/profile/change-email">
-            <a className="btn btn-quiet">Change</a>
+          <Link href="/app/profile/change-email" className="btn btn-quiet">
+            Change
           </Link>
         </div>
       </div>
@@ -150,8 +150,8 @@ const UserAuthCard = () => {
             value="***************"
             disabled
           />
-          <Link href="/app/profile/change-password">
-            <a className="btn btn-quiet">Change</a>
+          <Link href="/app/profile/change-password" className="btn btn-quiet">
+            Change
           </Link>
         </div>
       </div>
