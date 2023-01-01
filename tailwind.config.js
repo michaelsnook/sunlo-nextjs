@@ -1,5 +1,7 @@
 module.exports = {
+  mode: 'jit',
   content: [
+    './app/**/*.{js,ts,jsx,tsx}',
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
   ],
@@ -30,6 +32,7 @@ module.exports = {
       minHeight: {
         '100vh': '100vh',
         '85vh': '85vh',
+        '70vh': '70vh',
       },
     },
   },

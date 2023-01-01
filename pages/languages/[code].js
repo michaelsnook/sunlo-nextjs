@@ -21,7 +21,7 @@ export default function LanguagePage({ language, phrases }) {
           {phrases?.map(phrase => (
             <li key={`phrase-${phrase.id}`}>
               <Link
-                href={`/phrases/${phrase.id}`}
+                href={`/phrase/${phrase.id}`}
                 className="card shadow p-4 hover:bg-primary hover:text-white mb-4"
               >
                 <PhraseCardSmall {...phrase} />
