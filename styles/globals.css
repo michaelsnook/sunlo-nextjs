@@ -23,6 +23,10 @@
     --tab-radius:0.5rem;
     */
   }
+  body {
+    background-color: #eee;
+    min-height: 100vh;
+  }
 }
 
 @layer components {
@@ -37,11 +41,14 @@
     @apply card bg-white text-gray-800 p-6 border shadow-lg mb-6 max-w-prose;
   }
   .page-card {
-    @apply container mx-0 card bg-white text-gray-800 p-6 border shadow-lg mb-6 py-10 pb-16;
+    @apply container mx-0 card bg-white text-gray-800 px-3 md:px-6 lg:px-10 border shadow-lg mb-6 pt-10 pb-16 min-h-50vh;
   }
   .page-card > .h1,
   .page-card > .h2 {
     @apply mb-8 text-gray-700;
+  }
+  .card {
+    @apply bg-white;
   }
 }
 @layer utilities {
