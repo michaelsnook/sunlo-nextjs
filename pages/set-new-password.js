@@ -1,6 +1,6 @@
-import SiteLayout from '../components/SiteLayout'
-import SetNewPasswordForm from '../components/SetNewPasswordForm'
-import Banner from '../components/Banner'
+import SiteLayout from 'components/SiteLayout'
+import SetNewPasswordForm from 'components/SetNewPasswordForm'
+import Banner from 'components/Banner'
 
 export default function SetNewPassword() {
   return (

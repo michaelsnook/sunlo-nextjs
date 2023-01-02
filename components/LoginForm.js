@@ -1,6 +1,8 @@
+'use client'
+
 import { useState } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import supabase from 'lib/supabase-client'
 import { useGlobalState } from 'lib/global-store'
 import ErrorList from 'components/ErrorList'

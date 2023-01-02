@@ -5,7 +5,7 @@ export default async function Languages() {
   let languages = await getLanguages()
 
   return (
-    <>
+    <div className="page-card">
       <h1 className="h1">Languages</h1>
       {!languages ? (
         <p>
@@ -13,7 +13,7 @@ export default async function Languages() {
           always be languages.
         </p>
       ) : (
-        <ul className="flex flex-col space-y-4">
+        <ul className="columns-3xs space-y-4">
           {Object.keys(languages).map(code => (
             <li key={code}>
               <Link href={`/language/${code}`} className="btn btn-quiet">
@@ -26,6 +26,6 @@ export default async function Languages() {
           ))}
         </ul>
       )}
-    </>
+    </div>
   )
 }

@@ -1,6 +1,6 @@
-import SiteLayout from '../components/SiteLayout'
-import ForgotPasswordForm from '../components/ForgotPasswordForm'
-import Banner from '../components/Banner'
+import SiteLayout from 'components/SiteLayout'
+import ForgotPasswordForm from 'components/ForgotPasswordForm'
+import Banner from 'components/Banner'
 
 export default function ForgotPassword() {
   return (

@@ -22,8 +22,7 @@ const Footer = () => (
 export default function Layout({ children }) {
   return (
     <>
-      {/* <Sidebar /> */}
-      <div className="container flex-col py-10 min-h-70vh">{children}</div>
+      {children}
       <Footer />
     </>
   )

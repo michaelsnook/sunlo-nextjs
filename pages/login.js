@@ -1,6 +1,6 @@
-import SiteLayout from '../components/SiteLayout'
-import LoginForm from '../components/LoginForm'
-import Banner from '../components/Banner'
+import SiteLayout from 'components/SiteLayout'
+import LoginForm from 'components/LoginForm'
+import Banner from 'components/Banner'
 
 export default function Login() {
   return (
