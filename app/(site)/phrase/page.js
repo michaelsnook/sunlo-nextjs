@@ -40,7 +40,7 @@ query GetManyCardsQuery {
 }
 `
 
-export default async function Pokemon() {
+export default async function Page() {
   let { data, error } = await urqlClient.query(query).toPromise()
   if (error) throw Error(error)
   const phrases = data.cardPhraseCollection.edges

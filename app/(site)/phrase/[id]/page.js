@@ -1,26 +1,6 @@
 import { urqlClient } from 'lib/supabase-client'
-
-const query0 = `
-query GetallLanguagesQuery {
-  languageCollection {
-    edges {
-      node { 
-        code
-        name
-      }
-    }
-  }
-}
-`
-async function getLanguages() {
-  const { data, error } = await urqlClient.query(query0).toPromise()
-  if (error) throw Error(error)
-  let languages = {}
-  data.languageCollection.edges.map(({ node }) => {
-    languages[node.code] = node.name
-  })
-  return languages
-}
+import { getLanguages, getOnePhraseDetails } from 'app/fetchers'
+import { TinyPhrase } from 'components/PhraseCardSmall'
 
 const query1 = `
 query GetAllPhraseIDsQuery {
@@ -43,59 +23,9 @@ export async function generateStaticParams() {
   }))
 }
 
-const query2 = `
-query GetOneCardQuery($filter: CardPhraseFilter) {
-  cardPhraseCollection(filter: $filter) {
-    edges {
-      node {
-        id
-        text
-        lang
-        cardTranslationCollection {
-          edges {
-            node {
-              text
-              lang
-            }
-          }
-        }
-        cardSeeAlsoCollection {
-          edges {
-            node {
-              fromPhrase {
-                id
-                text
-                lang
-              }
-              toPhrase {
-                id
-                text
-                lang
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-`
-async function getPhrase(id) {
-  const vars = {
-    filter: {
-      id: {
-        eq: id,
-      },
-    },
-  }
-  let { data, error } = await urqlClient.query(query2, vars).toPromise()
-  if (error) throw Error(error)
-  return data.cardPhraseCollection.edges[0].node
-}
-
 export default async function Page({ params }) {
   let languages = await getLanguages()
-  let phrase = await getPhrase(params.id)
+  let phrase = await getOnePhraseDetails(params.id)
 
   const translations = phrase.cardTranslationCollection?.edges
   const seeAlso = phrase.cardSeeAlsoCollection?.edges.map(({ node }) => {
@@ -103,7 +33,7 @@ export default async function Page({ params }) {
   })
 
   return (
-    <div className="flex flex-col gap-12">
+    <div className="page-card flex flex-col gap-12">
       <div>
         <p className="text-xl">
           [{phrase.lang}] Phrase in {languages[phrase.lang]}
@@ -117,7 +47,7 @@ export default async function Page({ params }) {
             translations.map(({ node }) => {
               return (
                 <li key={`translation/${node.id}`}>
-                  [{node.lang}] {node.text}
+                  <TinyPhrase {...node} />
                 </li>
               )
             })
@@ -133,7 +63,7 @@ export default async function Page({ params }) {
             seeAlso.map(p => {
               return (
                 <li key={`seeAlso/${p.id}`}>
-                  [{p.lang}] {p.text}
+                  <TinyPhrase {...p} />
                 </li>
               )
             })
