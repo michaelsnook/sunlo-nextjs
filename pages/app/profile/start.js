@@ -45,12 +45,12 @@ export default function Start() {
     supabase
       .from('profile')
       .upsert({
-        id: user.id,
+        uid: user.id,
         username: tempUsername,
         language_primary: tempLanguagePrimary,
         languages_spoken: newLanguagesSpoken,
       })
-      .match({ id: user.id })
+      .match({ uid: user.id })
       .then(({ data, error }) => {
         if (error) {
           setErrors(error)

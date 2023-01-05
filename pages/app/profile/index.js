@@ -30,7 +30,7 @@ const ProfileCard = () => {
         language_primary,
         languages_spoken: [language_primary, ...languages_spoken_array],
       })
-      .match({ id: profile.id })
+      .match({ uid: profile.uid })
       .then(({ data, error }) => {
         setIsSubmitting(false)
         if (error) {
