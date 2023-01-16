@@ -6,7 +6,7 @@ export default function ShowUser() {
   const { user, profile } = useAuthState()
   return (
     <div className="border border-gray-300 my-6 p-4">
-      showing the user here: {JSON.stringify({ user, profile })}
+      showing the user here: {JSON.stringify({ user })}
     </div>
   )
 }
