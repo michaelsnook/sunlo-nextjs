@@ -1,9 +1,13 @@
+import { Providers } from 'lib/providers'
 import 'styles/globals.css'
 
 export default function RootLayout({ children }) {
   return (
     <html>
-      <body>{children}</body>
+      <head />
+      <body>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   )
 }
