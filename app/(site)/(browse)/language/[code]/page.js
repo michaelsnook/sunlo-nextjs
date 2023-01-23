@@ -1,9 +1,12 @@
 import Link from 'next/link'
+import languages from 'lib/languages'
 import PhraseCardSmall from 'components/PhraseCardSmall'
-import { getFullLanguageDetails, getLanguages } from 'app/fetchers'
+import { getFullLanguageDetails } from 'app/fetchers'
 
 export default async function LanguagePage({ params }) {
   let data = await getFullLanguageDetails(params.code)
+  console.log('LOOK HERE', data)
+  return <></>
   const language = data.languageCollection.edges[0].node
 
   return (
@@ -39,9 +42,7 @@ export default async function LanguagePage({ params }) {
 }
 
 export async function generateStaticParams() {
-  const data = await getLanguages()
-
-  return Object.keys(data).map(code => ({
+  return Object.keys(languages).map(code => ({
     code,
   }))
 }

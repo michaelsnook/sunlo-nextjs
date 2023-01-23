@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import supabase from 'lib/supabase-client'
+import languages from 'lib/languages'
 import AppProfileLayout from 'components/AppProfileLayout'
 import { useGlobalState } from 'lib/global-store'
 import ErrorList from 'components/ErrorList'
@@ -10,7 +11,7 @@ import {
 } from 'lib/data-helpers'
 
 const ProfileCard = () => {
-  const { profile, mergeProfileData, languages, isLoading } = useGlobalState()
+  const { profile, mergeProfileData, isLoading } = useGlobalState()
   const [errors, setErrors] = useState()
   const [isSubmitting, setIsSubmitting] = useState()
   const onSubmit = event => {

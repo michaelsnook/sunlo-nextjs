@@ -1,27 +1,20 @@
 import { useState } from 'react'
 import BannerLayout from 'components/BannerLayout'
 import { useGlobalState } from 'lib/global-store'
+import languages from 'lib/languages'
 import supabase from 'lib/supabase-client'
 import ErrorList from 'components/ErrorList'
 import Link from 'next/link'
 import { prependAndDedupe } from 'lib/data-helpers'
 
 export default function Start() {
-  const {
-    user,
-    profile,
-    mergeProfileData,
-    decks,
-    insertDeckData,
-    languages,
-    isLoading,
-  } = useGlobalState()
+  const { user, profile, mergeProfileData, decks, insertDeckData, isLoading } =
+    useGlobalState()
 
   console.log(
-    `render Start, isLoading: ${isLoading}. User, Profile, Languages:`,
+    `render Start, isLoading: ${isLoading}. User, Profile:`,
     user,
-    profile,
-    languages
+    profile
   )
 
   const [tempLanguagePrimary, setTempLanguagePrimary] = useState(
@@ -176,7 +169,6 @@ export default function Start() {
 
 const SetPrimaryLanguageStep = ({ value, set }) => {
   const [closed, setClosed] = useState(!!value)
-  const { languages } = useGlobalState()
   return closed && value?.length > 0 ? (
     <Completed>
       <p className="h4">
@@ -234,7 +226,7 @@ const SetPrimaryLanguageStep = ({ value, set }) => {
 }
 
 const CreateFirstDeckStep = ({ value, set }) => {
-  const { languages, decks } = useGlobalState()
+  const { decks } = useGlobalState()
   const [closed, setClosed] = useState(decks?.length > 0)
   return closed ? (
     <Completed>

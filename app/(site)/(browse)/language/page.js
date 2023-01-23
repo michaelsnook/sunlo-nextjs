@@ -1,9 +1,7 @@
 import Link from 'next/link'
-import { getLanguages } from 'app/fetchers'
+import languages from 'lib/languages'
 
 export default async function Languages() {
-  let languages = await getLanguages()
-
   return (
     <div className="page-card">
       <h1 className="h1">Languages</h1>
