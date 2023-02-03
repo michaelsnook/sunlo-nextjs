@@ -1,5 +1,6 @@
 import { urqlClient } from 'lib/supabase-client'
-import { getLanguages, getOnePhraseDetails } from 'app/fetchers'
+import { getOnePhraseDetails } from 'app/fetchers'
+import languages from 'lib/languages'
 import { TinyPhrase } from 'components/PhraseCardSmall'
 
 const query1 = `
@@ -24,7 +25,6 @@ export async function generateStaticParams() {
 }
 
 export default async function Page({ params }) {
-  let languages = await getLanguages()
   let phrase = await getOnePhraseDetails(params.id)
 
   const translations = phrase.cardTranslationCollection?.edges

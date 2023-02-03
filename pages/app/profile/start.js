@@ -5,23 +5,16 @@ import supabase from 'lib/supabase-client'
 import ErrorList from 'components/ErrorList'
 import Link from 'next/link'
 import { prependAndDedupe } from 'lib/data-helpers'
+import languages from 'lib/languages'
 
 export default function Start() {
-  const {
-    user,
-    profile,
-    mergeProfileData,
-    decks,
-    insertDeckData,
-    languages,
-    isLoading,
-  } = useGlobalState()
+  const { user, profile, mergeProfileData, decks, insertDeckData, isLoading } =
+    useGlobalState()
 
   console.log(
     `render Start, isLoading: ${isLoading}. User, Profile, Languages:`,
     user,
-    profile,
-    languages
+    profile
   )
 
   const [tempLanguagePrimary, setTempLanguagePrimary] = useState(
@@ -176,7 +169,6 @@ export default function Start() {
 
 const SetPrimaryLanguageStep = ({ value, set }) => {
   const [closed, setClosed] = useState(!!value)
-  const { languages } = useGlobalState()
   return closed && value?.length > 0 ? (
     <Completed>
       <p className="h4">
@@ -234,7 +226,7 @@ const SetPrimaryLanguageStep = ({ value, set }) => {
 }
 
 const CreateFirstDeckStep = ({ value, set }) => {
-  const { languages, decks } = useGlobalState()
+  const { decks } = useGlobalState()
   const [closed, setClosed] = useState(decks?.length > 0)
   return closed ? (
     <Completed>
@@ -288,12 +280,11 @@ const CreateFirstDeckStep = ({ value, set }) => {
           className="border rounded p-3 mb-6"
         >
           <option value="">-- select one --</option>
-          {languages &&
-            Object.keys(languages).map(k => (
-              <option key={`language-dropdown-option-${k}`} value={k}>
-                {languages[k]}
-              </option>
-            ))}
+          {Object.keys(languages).map(k => (
+            <option key={`language-dropdown-option-${k}`} value={k}>
+              {languages[k]}
+            </option>
+          ))}
         </select>
         {decks?.length > 0 && !value ? (
           <a

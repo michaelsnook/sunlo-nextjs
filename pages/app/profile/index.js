@@ -8,9 +8,10 @@ import {
   // prependAndDedupe,
   convertNodeListToCheckedValues,
 } from 'lib/data-helpers'
+import languages from 'lib/languages'
 
 const ProfileCard = () => {
-  const { profile, mergeProfileData, languages, isLoading } = useGlobalState()
+  const { profile, mergeProfileData, isLoading } = useGlobalState()
   const [errors, setErrors] = useState()
   const [isSubmitting, setIsSubmitting] = useState()
   const onSubmit = event => {
