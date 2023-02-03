@@ -13,7 +13,7 @@ export default function Login({ signup }) {
   const [sentConfirmationEmail, setSentConfirmationEmail] = useState()
 
   const router = useRouter()
-  const { user, profile, signOut } = useGlobalState()
+  const { user, profile } = useGlobalState()
 
   // const [isSignup, setIsSignup] = useState(signup)
 

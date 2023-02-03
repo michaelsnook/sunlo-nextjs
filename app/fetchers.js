@@ -1,29 +1,5 @@
 import { urqlClient } from 'lib/supabase-client'
 
-const getAllLanguagesQuery = `
-query GetAllLanguagesQuery {
-  languageCollection {
-    edges {
-      node { 
-        code
-        name
-      }
-    }
-  }
-}
-`
-export async function getLanguages() {
-  const { data, error } = await urqlClient
-    .query(getAllLanguagesQuery)
-    .toPromise()
-  if (error) throw Error(error)
-  let languages = {}
-  data.languageCollection.edges.map(({ node }) => {
-    languages[node.code] = node.name
-  })
-  return languages
-}
-
 const getFullLanguageDetailsQuery = `
 query GetFullLanguageDetailsQuery($filter: LanguageFilter) {
   languageCollection(filter: $filter) {
