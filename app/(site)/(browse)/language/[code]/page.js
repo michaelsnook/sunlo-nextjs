@@ -9,15 +9,11 @@ export default async function LanguagePage({ params }) {
 
   let data = await getFullLanguageDetails(params.code)
 
-  if (data.languageCollection.edges.length === 0) {
-    return (
-      <div className="page-card">
-        <h1 className="h1">
-          Error: {language.name} ({language.code}) not found in the database.
-        </h1>
-      </div>
-    )
-  }
+  if (
+    data.languageCollection.edges.length === 0 ||
+    !data.languageCollection.edges[0]?.node
+  )
+    notFound()
 
   const language = data.languageCollection.edges[0].node
 
