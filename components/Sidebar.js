@@ -24,7 +24,7 @@ const Navlink = ({ href, children }) => {
   )
 }
 
-export default function Sidebar() {
+export default function Sidebar({ shy = false }) {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
 
@@ -54,7 +54,7 @@ export default function Sidebar() {
 
   return (
     <>
-      <SidebarOpener isOpen={isOpen} setIsOpen={setIsOpen} />
+      <SidebarOpener isOpen={isOpen} setIsOpen={setIsOpen} shy={shy} />
       <div
         className={`z-20 bg-black bg-opacity-50 pt-10 ${
           isOpen ? 'fixed' : 'hidden'
@@ -63,9 +63,9 @@ export default function Sidebar() {
       />
       <nav
         aria-label="Main navigation"
-        className={`overflow-y-auto overflow-x-hidden z-30 top-0 w-80 p-6 bg-[#efe9fb] text-gray-800 h-screen shadow-lg ${
+        className={`overflow-y-auto overflow-x-hidden z-30 top-0 w-80 p-6 bg-[#efe9fb] text-gray-800 h-screen ${
           isOpen ? 'fixed' : 'hidden'
-        } md:sticky md:flex flex-col gap-4`}
+        } ${shy && !isOpen ? '' : 'md:sticky md:flex'}  flex-col gap-4`}
       >
         <span className="h4 flex flex-row items-center">
           <svg
@@ -121,9 +121,11 @@ export default function Sidebar() {
   )
 }
 
-const SidebarOpener = ({ isOpen, setIsOpen }) => (
+const SidebarOpener = ({ isOpen, setIsOpen, shy }) => (
   <button
-    className="z-50 fixed md:hidden bottom-4 left-3 p-2 btn-outline rounded-full bg-white btn-primary border border-primary"
+    className={`z-50 fixed ${
+      shy ? '' : 'md:hidden'
+    } bottom-4 left-3 p-2 btn-outline rounded-full bg-white btn-primary border border-primary`}
     role="button"
     aria-haspopup="true"
     aria-label="Toggle main menu"
