@@ -1,4 +1,6 @@
-import { useState } from 'react'
+'use client'
+
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import menus from 'lib/menus'
 import { useGlobalState } from 'lib/global-store'
@@ -23,7 +25,15 @@ const Navlink = ({ href, children }) => {
 }
 
 export default function Sidebar() {
-  const [isOpen, setIsOpen] = useState()
+  const [isOpen, setIsOpen] = useState(false)
+  const pathname = usePathname()
+
+  useEffect(() => {
+    if (isOpen) {
+      setIsOpen(false)
+    }
+  }, [pathname])
+
   const { user, profile, signOut, decks, isLoading } = useGlobalState()
   const myMenus = decks
     ? [
