@@ -100,7 +100,7 @@ export default function Sidebar() {
               </div>
             ))}
             <p>
-              <button className="btn btn-quiet" onClick={signOut}>
+              <button className="btn btn-quiet" onClick={() => signOut(`/`)}>
                 Sign out
               </button>
             </p>
