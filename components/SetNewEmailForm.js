@@ -16,7 +16,7 @@ export default function SetNewEmailForm() {
 
     const email = event.target.email.value
 
-    supabase.auth.update({ email }).then(({ data, error }) => {
+    supabase.auth.updateUser({ email }).then(({ data, error }) => {
       console.log(data, error)
       setIsSubmitting(false)
       setSuccessfulSubmit(!error)
