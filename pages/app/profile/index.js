@@ -4,10 +4,7 @@ import supabase from 'lib/supabase-client'
 import AppProfileLayout from 'components/AppProfileLayout'
 import { useGlobalState } from 'lib/global-store'
 import ErrorList from 'components/ErrorList'
-import {
-  // prependAndDedupe,
-  convertNodeListToCheckedValues,
-} from 'lib/data-helpers'
+import { convertNodeListToCheckedValues } from 'lib/data-helpers'
 import languages from 'lib/languages'
 
 const ProfileCard = () => {
@@ -134,7 +131,7 @@ const UserAuthCard = () => {
           <input
             type="text"
             className="border rounded p-3 flex-grow"
-            value={user.email}
+            value={user?.email ?? 'loading...'}
             disabled
           />
           <Link href="/app/profile/change-email" className="btn btn-quiet">

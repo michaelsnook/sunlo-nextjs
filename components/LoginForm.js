@@ -38,14 +38,14 @@ export default function Login({ signup }) {
         })
     } else {
       supabase.auth
-        .signIn({
+        .signInWithPassword({
           email,
           password,
         })
-        .then(({ user, session, error }) => {
+        .then(({ data, error }) => {
           setIsSubmitting(false)
-          setErrors(error)
-          if (user) {
+          if (error) setErrors(error)
+          if (data) {
             router.push('/app/profile')
           }
         })
