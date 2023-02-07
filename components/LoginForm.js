@@ -13,7 +13,7 @@ export default function Login({ signup }) {
   const [sentConfirmationEmail, setSentConfirmationEmail] = useState()
 
   const router = useRouter()
-  const { user, profile } = useGlobalState()
+  const { user, profile, signOut } = useGlobalState()
 
   // const [isSignup, setIsSignup] = useState(signup)
 
@@ -74,7 +74,7 @@ export default function Login({ signup }) {
             <a
               className="link"
               onClick={() => {
-                supabase.auth.signOut()
+                signOut(`/login`)
               }}
             >
               Log out and log in as someone new
