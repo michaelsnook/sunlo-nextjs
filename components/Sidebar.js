@@ -2,12 +2,12 @@ import { useState } from 'react'
 import Link from 'next/link'
 import menus from 'lib/menus'
 import { useGlobalState } from 'lib/global-store'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 import languages from 'lib/languages'
 
 const Navlink = ({ href, children }) => {
-  const router = useRouter()
-  return href !== router.asPath ? (
+  const pathname = usePathname()
+  return href !== pathname ? (
     <Link href={href} className="link-hover">
       {children}
     </Link>
