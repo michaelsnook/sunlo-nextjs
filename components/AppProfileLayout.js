@@ -1,12 +1,12 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { usePathname } from 'next/navigation'
 import AppLayout from 'components/AppLayout'
 import { useGlobalState } from 'lib/global-store'
 
 const AvatarSection = () => {
   const { profile } = useGlobalState()
-  const router = useRouter()
+  const pathname = usePathname()
   return (
     <>
       <div className="avatar relative">
@@ -27,7 +27,7 @@ const AvatarSection = () => {
       <div>
         <h2 className="text-4xl">Hi, {profile?.username} 👋</h2>
         <p className="my-4">
-          {router.asPath === '/app/profile' ? (
+          {pathname === '/app/profile' ? (
             <Link href="/app/profile/start" className="link md:link-hover">
               Go to profile setup
             </Link>
