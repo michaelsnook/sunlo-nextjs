@@ -14,7 +14,8 @@
     "next": "^13.1.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "swr": "^1.1.2"
+    "swr": "^1.1.2",
+    "urql": "^3.0.3"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.3",
