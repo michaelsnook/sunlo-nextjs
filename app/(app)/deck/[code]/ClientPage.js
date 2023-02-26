@@ -93,12 +93,14 @@ export default function ClientPage({ code }) {
             cardTranslationCollection: { edges },
           } = node.cardPhrase
           return (
-            <li
-              className="card shadow-lg hover:bg-primary hover:text-white mb-4 w-full inline-block"
-              key={url}
-            >
+            <li key={url}>
               <Link href={url}>
-                <PhraseCardSmall text={text} lang={lang} translations={edges} />
+                <PhraseCardSmall
+                  status={node.status}
+                  text={text}
+                  lang={lang}
+                  translations={edges}
+                />
               </Link>
             </li>
           )

@@ -6,10 +6,21 @@ export function TinyPhrase({ lang, text }) {
   )
 }
 
-export default function PhraseCardSmall({ text, lang, translations }) {
+function readStatus(status) {
+  if (!status) return { emoji: '', classString: '' }
+  if (status === 'learned') return { emoji: `✅ `, classString: 'bg-green-200' }
+  if (status === 'learning') return { emoji: `📖 `, classString: 'bg-blue-200' }
+  return { emoji: `❌ `, classString: '' }
+}
+
+export default function PhraseCardSmall({ status, text, lang, translations }) {
+  const { emoji, classString } = readStatus(status)
   return (
-    <div className="p-4">
+    <div
+      className={`card p-4 ${classString} shadow-lg hover:bg-primary hover:text-white mb-4 w-full inline-block`}
+    >
       <p lang={lang} className="mb-2 font-bold">
+        {emoji}
         {text}
       </p>
       {translations && translations?.length > 0 ? (

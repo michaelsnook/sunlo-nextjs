@@ -30,10 +30,7 @@ export default async function LanguagePage({ params }) {
       ) : (
         <ul className="columns-1 sm:columns-2 lg:columns-3 gap-4">
           {language.cardPhraseCollection.edges.map(({ node }) => (
-            <li
-              className="card shadow-lg hover:bg-primary hover:text-white mb-4 w-full inline-block"
-              key={`phrase-${node.id}`}
-            >
+            <li key={`phrase-${node.id}`}>
               <Link href={`/phrase/${node.id}`}>
                 <PhraseCardSmall
                   text={node.text}
