@@ -1,4 +1,4 @@
-import { urqlClient } from 'lib/supabase-client'
+import { queryClient } from 'app/query-client'
 
 const getFullLanguageDetailsQuery = `
 query GetFullLanguageDetailsQuery($filter: LanguageFilter) {
@@ -38,7 +38,7 @@ export async function getFullLanguageDetails(code) {
       },
     },
   }
-  const { data, error } = await urqlClient
+  const { data, error } = await queryClient
     .query(getFullLanguageDetailsQuery, vars)
     .toPromise()
   if (error) throw new Error(error)
@@ -92,7 +92,7 @@ export async function getOnePhraseDetails(id) {
       },
     },
   }
-  let { data, error } = await urqlClient
+  let { data, error } = await queryClient
     .query(getOnePhraseDetailsQuery, vars)
     .toPromise()
   if (error) throw Error(error)

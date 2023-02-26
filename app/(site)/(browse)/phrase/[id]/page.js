@@ -1,4 +1,4 @@
-import { urqlClient } from 'lib/supabase-client'
+import { queryClient } from 'app/query-client'
 import { getOnePhraseDetails } from 'app/fetchers'
 import languages from 'lib/languages'
 import { TinyPhrase } from 'components/PhraseCardSmall'
@@ -16,7 +16,7 @@ query GetAllPhraseIDsQuery {
 `
 
 export async function generateStaticParams() {
-  const { data, error } = await urqlClient.query(query1).toPromise()
+  const { data, error } = await queryClient.query(query1).toPromise()
   if (error) throw Error(error)
 
   return data.cardPhraseCollection.edges.map(edge => ({
