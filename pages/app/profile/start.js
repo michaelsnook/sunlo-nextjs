@@ -99,7 +99,7 @@ export default function Start() {
           <div className="flex flex-col space-y-4">
             {tempDeckToAdd ? (
               <Link
-                href={`/app/decks/${tempDeckToAdd}`}
+                href={`/deck/${tempDeckToAdd}`}
                 className="mx-auto btn btn-secondary"
               >
                 Get started learning {languages[tempDeckToAdd]}
