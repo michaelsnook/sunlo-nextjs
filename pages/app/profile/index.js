@@ -36,7 +36,7 @@ const ProfileCard = () => {
           console.log('error', error)
         } else {
           // merge the objects, which will rebuild context
-          mergeProfileData(data[0])
+          mergeProfileData(data)
         }
       })
   }
