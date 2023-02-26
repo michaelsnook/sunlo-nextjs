@@ -57,6 +57,7 @@ query GetOnePhraseDetailsQuery($filter: CardPhraseFilter) {
         cardTranslationCollection {
           edges {
             node {
+              id
               text
               lang
             }
