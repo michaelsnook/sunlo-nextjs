@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { urqlClient } from 'lib/supabase-client'
+import { queryClient } from 'app/query-client'
 import PhraseCardSmall from 'components/PhraseCardSmall'
 
 const query = `
@@ -41,7 +41,7 @@ query GetManyCardsQuery {
 `
 
 export default async function Page() {
-  let { data, error } = await urqlClient.query(query).toPromise()
+  let { data, error } = await queryClient.query(query).toPromise()
   if (error) throw Error(error)
   const phrases = data.cardPhraseCollection.edges
 
