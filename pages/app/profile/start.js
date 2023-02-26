@@ -51,8 +51,8 @@ export default function Start() {
           setIsSubmitting(false)
         } else {
           // merge the objects so we keep avatar_public_url
-          mergeProfileData(data[0])
-          console.log('upsert profile data', data[0])
+          mergeProfileData(data)
+          console.log('upsert profile data')
 
           if (typeof tempDeckToAdd === 'string' && tempDeckToAdd.length > 0) {
             supabase
