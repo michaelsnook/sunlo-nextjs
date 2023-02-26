@@ -1,4 +1,5 @@
 import languages from 'lib/languages'
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import ClientPage from './ClientPage'
 
@@ -6,7 +7,10 @@ export default async function DeckPage({ params: { code } }) {
   if (!languages[code]) notFound()
 
   return (
-    <div className="page-card">
+    <div>
+      <Link href="/deck" className="hover:underline text-primary">
+        &larr; Back to decks
+      </Link>
       <h1 className="h1">
         {languages[code]} ({code})
       </h1>
