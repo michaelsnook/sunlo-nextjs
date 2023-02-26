@@ -6,6 +6,7 @@ import { useGlobalState } from 'lib/global-store'
 import ErrorList from 'components/ErrorList'
 import { convertNodeListToCheckedValues } from 'lib/data-helpers'
 import languages from 'lib/languages'
+import Loading from 'app/loading'
 
 const ProfileCard = () => {
   const { profile, mergeProfileData, isLoading } = useGlobalState()
@@ -41,7 +42,9 @@ const ProfileCard = () => {
       })
   }
 
-  return !profile || isLoading ? null : (
+  return !profile || isLoading ? (
+    <Loading />
+  ) : (
     <form className="big-card flex flex-col space-y-4" onSubmit={onSubmit}>
       <h2 className="h3">Profile</h2>
       <fieldset
