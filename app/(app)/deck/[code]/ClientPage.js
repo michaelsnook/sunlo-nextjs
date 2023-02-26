@@ -26,6 +26,7 @@ query UserDeckDetailsQuery($filter: UserDeckFilter) {
                 cardTranslationCollection {
                   edges {
                     node {
+                      id
                       lang
                       text
                     }
