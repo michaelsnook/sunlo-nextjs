@@ -2,6 +2,7 @@ import { queryClient } from 'app/query-client'
 import { getOnePhraseDetails } from 'app/fetchers'
 import languages from 'lib/languages'
 import { TinyPhrase } from 'components/PhraseCardSmall'
+import Link from 'next/link'
 
 const query1 = `
 query GetAllPhraseIDsQuery {
@@ -35,9 +36,12 @@ export default async function Page({ params }) {
   return (
     <div className="page-card flex flex-col gap-12">
       <div>
-        <p className="text-xl">
-          [{phrase.lang}] Phrase in {languages[phrase.lang]}
-        </p>
+        <Link
+          href={`/language/${phrase.lang}`}
+          className="hover:underline text-primary"
+        >
+          &larr; Back to {languages[phrase.lang]}
+        </Link>
         <h1 className="h1 my-0">"{phrase.text}"</h1>
       </div>
       <div>

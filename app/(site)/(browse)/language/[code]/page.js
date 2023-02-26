@@ -19,6 +19,9 @@ export default async function LanguagePage({ params }) {
 
   return (
     <div className="page-card">
+      <Link href="/language" className="hover:underline text-primary">
+        &larr; Back to languages
+      </Link>
       <h1 className="h1">
         {language.name} ({language.code})
       </h1>
