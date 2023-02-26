@@ -5,6 +5,7 @@ import PhraseCardSmall from 'components/PhraseCardSmall'
 import languages from 'lib/languages'
 import { useQuery } from 'urql'
 import ErrorList from 'components/ErrorList'
+import Loading from 'app/loading'
 
 const getFullDeckDetailsQuery = `
 query UserDeckDetailsQuery($filter: UserDeckFilter) {
@@ -65,7 +66,7 @@ export default function ClientPage({ code }) {
     return <ErrorList error={error} />
   }
   if (fetching) {
-    return <>loading...</>
+    return <Loading />
   }
   return !cards.length ? (
     <p>

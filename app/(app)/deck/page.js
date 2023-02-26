@@ -4,6 +4,7 @@ import { useQuery } from 'urql'
 import Link from 'next/link'
 import languages from 'lib/languages'
 import ErrorList from 'components/ErrorList'
+import Loading from 'app/loading'
 
 const getMyDecksQuery = `
 query GetMyDecksQuery {
@@ -40,7 +41,7 @@ query GetMyDecksQuery {
 function PageInner({ data, fetching, error }) {
   console.log(`pageInner`, data)
   if (fetching) {
-    return <>loading...</>
+    return <Loading />
   }
   if (error) {
     return <ErrorList error={error} />
