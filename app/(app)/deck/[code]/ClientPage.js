@@ -55,9 +55,7 @@ export default function ClientPage({ code }) {
     variables: vars,
   })
 
-  console.log(`result: `, result)
   const { data, error, fetching } = result
-  console.log(`result,`, result)
   const deck = data?.userDeckCollection?.edges[0]?.node || null
   const cards = deck?.deckMembershipCollection?.edges || null
 
