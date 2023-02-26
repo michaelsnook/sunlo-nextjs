@@ -39,12 +39,12 @@ export default function Sidebar({ shy = false }) {
     ? [
         {
           name: 'Your decks',
-          href: '/app/decks',
+          href: '/deck',
           links:
             decks?.map(d => {
               return {
                 name: languages[d.lang],
-                href: d?.lang ? `/app/decks/${d.lang}` : '',
+                href: d?.lang ? `/deck/${d.lang}` : '',
               }
             }) || [],
         },
