@@ -75,8 +75,11 @@ export default function MyDecksPage() {
   const { data, fetching, error } = result
   console.log(`result:`, result)
   return (
-    <ul className="columns-3xs space-y-4">
-      <PageInner data={data} fetching={fetching} error={error} />
-    </ul>
+    <>
+      <h1 className="h1">Decks</h1>
+      <ul className="columns-3xs space-y-4">
+        <PageInner data={data} fetching={fetching} error={error} />
+      </ul>
+    </>
   )
 }
