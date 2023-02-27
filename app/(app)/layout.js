@@ -1,4 +1,4 @@
-import QueryProvider from './QueryProvider'
+import MySpecialQueryProvider from './QueryProvider'
 import Sidebar from 'components/Sidebar'
 
 export default function Layout({ children }) {
@@ -6,7 +6,7 @@ export default function Layout({ children }) {
     <div className="md:flex flex-row gap-6 bg-primary text-white">
       <Sidebar shy={true} />
       <div className="flex-grow py-6 px-min min-h-60vh">
-        <QueryProvider>{children}</QueryProvider>
+        <MySpecialQueryProvider>{children}</MySpecialQueryProvider>
       </div>
     </div>
   )

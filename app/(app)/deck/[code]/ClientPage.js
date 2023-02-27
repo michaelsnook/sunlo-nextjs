@@ -3,72 +3,23 @@
 import Link from 'next/link'
 import PhraseCardSmall from 'components/PhraseCardSmall'
 import languages from 'lib/languages'
-import { useQuery } from 'urql'
 import ErrorList from 'components/ErrorList'
 import Loading from 'app/loading'
-
-const getFullDeckDetailsQuery = `
-query UserDeckDetailsQuery($filter: UserDeckFilter) {
-  userDeckCollection(filter: $filter) {
-    edges {
-      node {
-        id
-        uid
-        lang
-        deckMembershipCollection {
-          edges {
-            node {
-              status
-              cardPhraseId
-              cardPhrase {
-                id
-                lang
-                text
-                cardTranslationCollection {
-                  edges {
-                    node {
-                      id
-                      lang
-                      text
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-`
+import { useDeck } from 'app/(app)/use-data'
 
 export default function ClientPage({ code }) {
-  const vars = {
-    filter: {
-      lang: {
-        eq: code,
-      },
-    },
-  }
+  const result = useDeck(code)
+  result ? console.log(`useDeck returned a result!`, result) : null
 
-  const [result] = useQuery({
-    query: getFullDeckDetailsQuery,
-    variables: vars,
-  })
-
-  const { data, error, fetching } = result
+  const { data, error, status } = result
   const deck = data?.userDeckCollection?.edges[0]?.node || null
   const cards = deck?.deckMembershipCollection?.edges || null
 
-  if (error) {
-    console.log(`error:`, error)
-    return <ErrorList error={error} />
-  }
-  if (fetching) {
-    return <Loading />
-  }
-  return !cards.length ? (
+  return status === 'loading' ? (
+    <Loading />
+  ) : status === 'error' ? (
+    <ErrorList error={error} />
+  ) : !cards.length ? (
     <p>
       You aren&apos;t learning any phrases yet in {languages[deck.lang]} yet.
       You can get started now!
