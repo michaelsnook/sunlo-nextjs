@@ -1,20 +1,15 @@
 'use client'
 
-import {
-  useQuery,
-  useQueryClient,
-  QueryClient,
-  QueryClientProvider,
-} from 'react-query'
+import { useState } from 'react'
+import { useQueryClient, QueryClient, QueryClientProvider } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
-import { request, gql } from 'graphql-request'
 
-const endpoint = 'https://graphqlzero.almansi.me/api'
+import { usePost, usePosts } from '/app/(app)/use-data.js'
 
 const queryClient = new QueryClient()
 
-function App() {
-  const [postId, setPostId] = React.useState(-1)
+export default function Page() {
+  const [postId, setPostId] = useState(-1)
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -38,31 +33,10 @@ function App() {
   )
 }
 
-function usePosts() {
-  return useQuery('posts', async () => {
-    const {
-      posts: { data },
-    } = await request(
-      endpoint,
-      gql`
-        query {
-          posts {
-            data {
-              id
-              title
-            }
-          }
-        }
-      `
-    )
-    return data
-  })
-}
-
 function Posts({ setPostId }) {
   const queryClient = useQueryClient()
   const { status, data, error, isFetching } = usePosts()
-  console.log(`running Posts`)
+
   return (
     <div>
       <h1>Posts</h1>
@@ -75,14 +49,14 @@ function Posts({ setPostId }) {
           <>
             <div>
               {data.map(post => (
-                <p key={post?.id}>
+                <p key={post.id}>
                   <a
-                    onClick={() => setPostId(post?.id)}
+                    onClick={() => setPostId(post.id)}
                     href="#"
                     style={
                       // We can find the existing query data here to show bold links for
                       // ones that are cached
-                      queryClient.getQueryData(['post', post?.id])
+                      queryClient.getQueryData(['post', post.id])
                         ? {
                             fontWeight: 'bold',
                             color: 'green',
@@ -100,31 +74,6 @@ function Posts({ setPostId }) {
         )}
       </div>
     </div>
-  )
-}
-
-function usePost(postId) {
-  return useQuery(
-    ['post', postId],
-    async () => {
-      const { post } = await request(
-        endpoint,
-        `
-        query {
-          post(id: ${postId}) {
-            id
-            title
-            body
-          }
-        }
-        `
-      )
-
-      return post
-    },
-    {
-      enabled: !!postId,
-    }
   )
 }
 
