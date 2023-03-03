@@ -9,7 +9,6 @@ import ErrorList from 'components/ErrorList'
 
 export function Phrases() {
   const { status, data, error } = usePhrases()
-  console.log(`rendering phrases`, data)
 
   return status === 'loading' ? (
     <>loading...</>
@@ -24,7 +23,6 @@ export function Phrases() {
 
 export function Decks() {
   const { status, data, error } = useDecks()
-  console.log(`rendering decks`, data)
 
   return status === 'loading' ? (
     <>loading...</>
@@ -39,7 +37,6 @@ export function Decks() {
 
 export function Deck({ lang }) {
   const { status, data, error } = useDeck(lang)
-  console.log(`rendering decks`, data)
 
   return status === 'loading' ? (
     <>loading...</>
