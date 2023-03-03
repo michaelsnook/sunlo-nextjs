@@ -3,13 +3,8 @@
 import { useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 
-import {
-  usePost,
-  usePosts,
-  usePhrases,
-  useDecks,
-  useDeck,
-} from '/app/(app)/use-data.js'
+import { usePost, usePosts } from 'app/(app)/example/use-data.js'
+import { useDeck, useDecks, usePhrases } from 'app/data/hooks'
 import ErrorList from 'components/ErrorList'
 
 export function Phrases() {
@@ -72,14 +67,16 @@ export default function Page() {
           loading sequences)
         </strong>
       </p>
-      <div className="container">
-        <Phrases />
-      </div>
-      <div className="container">
-        <Decks />
-      </div>
-      <div className="container">
-        <Deck lang="hin" />
+      <div className="container flex">
+        <div className="flex-grow">
+          <Phrases />
+        </div>
+        <div className="flex-grow">
+          <Decks />
+        </div>
+        <div className="flex-grow">
+          <Deck lang="hin" />
+        </div>
       </div>
       {postId > -1 ? (
         <Post postId={postId} setPostId={setPostId} />
