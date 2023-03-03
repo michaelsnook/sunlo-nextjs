@@ -1,34 +1,8 @@
 import { queryClient } from 'app/query-client'
-
-const getFullLanguageDetailsQuery = `
-query GetFullLanguageDetailsQuery($filter: LanguageFilter) {
-  languageCollection(filter: $filter) {
-    edges {
-      node {
-        code
-        name
-        cardPhraseCollection {
-          edges {
-            node {
-              id
-              text
-              lang
-              cardTranslationCollection {
-                edges {
-                  node {
-                    lang
-                    text
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-`
+import {
+  getFullLanguageDetailsQuery,
+  getOnePhraseDetailsQuery,
+} from 'app/data/queries'
 
 export async function getFullLanguageDetails(code) {
   const vars = {
@@ -46,44 +20,6 @@ export async function getFullLanguageDetails(code) {
   return data
 }
 
-const getOnePhraseDetailsQuery = `
-query GetOnePhraseDetailsQuery($filter: CardPhraseFilter) {
-  cardPhraseCollection(filter: $filter) {
-    edges {
-      node {
-        id
-        text
-        lang
-        cardTranslationCollection {
-          edges {
-            node {
-              id
-              text
-              lang
-            }
-          }
-        }
-        cardSeeAlsoCollection {
-          edges {
-            node {
-              fromPhrase {
-                id
-                text
-                lang
-              }
-              toPhrase {
-                id
-                text
-                lang
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-`
 export async function getOnePhraseDetails(id) {
   const vars = {
     filter: {

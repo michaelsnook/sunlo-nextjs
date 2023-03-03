@@ -3,6 +3,11 @@
 import { useQuery } from '@tanstack/react-query'
 import { request, gql } from 'graphql-request'
 import supabase from 'lib/supabase-client'
+import {
+  userDeckDetailsQuery,
+  getAllMyDecksQuery,
+  getManyCardsDetailsQuery,
+} from 'app/data/queries'
 
 const endpoint = 'https://graphqlzero.almansi.me/api'
 const endpoint2 = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/graphql/v1`
@@ -25,34 +30,7 @@ const addTokenToHeaders = token => {
   return result
 }
 
-const getDeckDetailsQuery = gql`
-  query UserDeckDetailsQuery($filter: UserDeckFilter) {
-    userDeckCollection(filter: $filter) {
-      edges {
-        node {
-          id
-          uid
-          lang
-          deckMembershipCollection {
-            edges {
-              node {
-                cardPhraseId
-                status
-                id
-                cardPhrase {
-                  text
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`
-
-export function useDeck() {
-  const deckLang = 'hin'
+export function useDeck(deckLang) {
   const filter = {
     lang: {
       eq: deckLang,
@@ -71,17 +49,7 @@ export function useDeck() {
       } = await supabase.auth.getSession()
       const response = await request({
         url: endpoint2,
-        document: `
-          query UserDeckDetailsQuery($filter: UserDeckFilter) {
-            userDeckCollection(filter: $filter) {
-              edges {
-                node {
-                  lang
-                }
-              }
-            }
-          }
-        `,
+        document: userDeckDetailsQuery,
         variables,
         requestHeaders: addTokenToHeaders(session.access_token),
       })
@@ -137,17 +105,7 @@ export function useDecks() {
 
       const data2 = await request({
         url: endpoint2,
-        document: gql`
-          query {
-            userDeckCollection {
-              edges {
-                node {
-                  lang
-                }
-              }
-            }
-          }
-        `,
+        document: getAllMyDecksQuery,
         requestHeaders: addTokenToHeaders(session.access_token),
       })
       return data2
@@ -167,18 +125,7 @@ export function usePhrases() {
     queryFn: async () => {
       const data = await request({
         url: endpoint2,
-        document: gql`
-          query {
-            cardPhraseCollection {
-              edges {
-                node {
-                  text
-                  lang
-                }
-              }
-            }
-          }
-        `,
+        document: getManyCardsDetailsQuery,
         requestHeaders: defaultHeaders,
       })
       return data

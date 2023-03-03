@@ -1,23 +1,14 @@
+import Link from 'next/link'
 import { queryClient } from 'app/query-client'
 import { getOnePhraseDetails } from 'app/fetchers'
 import languages from 'lib/languages'
 import { TinyPhrase } from 'components/PhraseCardSmall'
-import Link from 'next/link'
-
-const query1 = `
-query GetAllPhraseIDsQuery {
-  cardPhraseCollection {
-    edges {
-      node {
-        id
-      }
-    }
-  }
-}
-`
+import { getAllPhraseIDsQuery } from 'app/data/queries'
 
 export async function generateStaticParams() {
-  const { data, error } = await queryClient.query(query1).toPromise()
+  const { data, error } = await queryClient
+    .query(getAllPhraseIDsQuery)
+    .toPromise()
   if (error) throw Error(error)
 
   return data.cardPhraseCollection.edges.map(edge => ({

@@ -42,7 +42,7 @@ export function Decks() {
   )
 }
 
-export function Deck(lang) {
+export function Deck({ lang }) {
   const { status, data, error } = useDeck(lang)
   console.log(`rendering decks`, data)
 
