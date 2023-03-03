@@ -3,8 +3,59 @@
 import { useState } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 
-import { usePost, usePosts } from '/app/(app)/use-data.js'
+import {
+  usePost,
+  usePosts,
+  usePhrases,
+  useDecks,
+  useDeck,
+} from '/app/(app)/use-data.js'
+import ErrorList from 'components/ErrorList'
 
+export function Phrases() {
+  const { status, data, error } = usePhrases()
+  console.log(`rendering phrases`, data)
+
+  return status === 'loading' ? (
+    <>loading...</>
+  ) : status === 'error' ? (
+    <ErrorList error={error} />
+  ) : (
+    <textarea name="something" className="my-6">
+      {JSON.stringify(data)}
+    </textarea>
+  )
+}
+
+export function Decks() {
+  const { status, data, error } = useDecks()
+  console.log(`rendering decks`, data)
+
+  return status === 'loading' ? (
+    <>loading...</>
+  ) : status === 'error' ? (
+    <ErrorList error={error} />
+  ) : (
+    <textarea name="something" className="my-6">
+      {JSON.stringify(data)}
+    </textarea>
+  )
+}
+
+export function Deck(lang) {
+  const { status, data, error } = useDeck(lang)
+  console.log(`rendering decks`, data)
+
+  return status === 'loading' ? (
+    <>loading...</>
+  ) : status === 'error' ? (
+    <ErrorList error={error} />
+  ) : (
+    <textarea name="something" className="my-6">
+      {JSON.stringify(data)}
+    </textarea>
+  )
+}
 // export default function Page({ params }) {
 export default function Page() {
   const [postId, setPostId] = useState(-1)
@@ -21,6 +72,15 @@ export default function Page() {
           loading sequences)
         </strong>
       </p>
+      <div className="container">
+        <Phrases />
+      </div>
+      <div className="container">
+        <Decks />
+      </div>
+      <div className="container">
+        <Deck lang="hin" />
+      </div>
       {postId > -1 ? (
         <Post postId={postId} setPostId={setPostId} />
       ) : (
