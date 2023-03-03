@@ -8,6 +8,7 @@ import {
   getAllMyDecksQuery,
   getManyCardsDetailsQuery,
 } from 'app/data/queries'
+import { requestOptions } from './constants'
 
 export function useDeck(deckLang) {
   const filter = {
@@ -15,31 +16,28 @@ export function useDeck(deckLang) {
       eq: deckLang,
     },
   }
-
   const variables = { filter }
 
-  console.log(`run useDeck for "${deckLang}"`)
   return useQuery({
     queryKey: ['deck', deckLang],
     queryFn: async () => {
       const {
-        data: { session },
-        error,
+        data: {
+          session: { access_token },
+        },
       } = await supabase.auth.getSession()
       const response = await request({
-        url: endpoint,
         document: userDeckDetailsQuery,
         variables,
-        requestHeaders: addTokenToHeaders(session.access_token),
+        ...requestOptions(access_token),
       })
-      console.log('response from await request', response)
       return response
     },
     enabled: !!deckLang,
     retry: false,
-    // staleTime: Infinity,
-    // cacheTime: Infinity,
-    // refetchOnMount: false,
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    refetchOnMount: false,
     refetchOnWindowFocus: false,
   })
 }
@@ -48,24 +46,25 @@ export function useDecks() {
     queryKey: ['decks'],
     queryFn: async () => {
       const {
-        data: { session },
+        data: {
+          session: { access_token },
+        },
         error,
       } = await supabase.auth.getSession()
       if (error) return {}
 
       const data2 = await request({
-        url: endpoint,
         document: getAllMyDecksQuery,
-        requestHeaders: addTokenToHeaders(session.access_token),
+        ...requestOptions(access_token),
       })
       return data2
     },
     enabled: true,
-    // retry: false,
-    // staleTime: Infinity,
-    // cacheTime: Infinity,
-    // refetchOnMount: false,
-    // refetchOnWindowFocus: false,
+    retry: false,
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   })
 }
 
@@ -74,17 +73,16 @@ export function usePhrases() {
     queryKey: ['phrases'],
     queryFn: async () => {
       const data = await request({
-        url: endpoint,
         document: getManyCardsDetailsQuery,
-        requestHeaders: defaultHeaders,
+        ...requestOptions(),
       })
       return data
     },
     enabled: true,
-    // retry: false,
-    // staleTime: Infinity,
-    // cacheTime: Infinity,
-    // refetchOnMount: false,
-    // refetchOnWindowFocus: false,
+    retry: false,
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   })
 }

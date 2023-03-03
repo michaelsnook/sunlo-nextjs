@@ -1,9 +1,9 @@
 import Link from 'next/link'
 import { queryClient } from 'app/query-client'
 import { getOnePhraseDetails } from 'app/fetchers'
-import languages from 'lib/languages'
 import { TinyPhrase } from 'components/PhraseCardSmall'
 import { getAllPhraseIDsQuery } from 'app/data/queries'
+import languages from 'lib/languages'
 
 export async function generateStaticParams() {
   const { data, error } = await queryClient
