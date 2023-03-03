@@ -1,47 +1,12 @@
 import Link from 'next/link'
 import { queryClient } from 'app/query-client'
 import PhraseCardSmall from 'components/PhraseCardSmall'
-
-const query = `
-query GetManyCardsQuery {
-  cardPhraseCollection {
-    edges {
-      node {
-        id
-        text
-        lang
-        cardTranslationCollection {
-          edges {
-            node {
-              text
-              lang
-            }
-          }
-        }
-        cardSeeAlsoCollection {
-          edges {
-            node {
-              fromPhrase {
-                id
-                text
-                lang
-              }
-              toPhrase {
-                id
-                text
-                lang
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
-`
+import { getManyCardsDetailsQuery } from 'app/data/queries'
 
 export default async function Page() {
-  let { data, error } = await queryClient.query(query).toPromise()
+  let { data, error } = await queryClient
+    .query(getManyCardsDetailsQuery)
+    .toPromise()
   if (error) throw Error(error)
   const phrases = data.cardPhraseCollection.edges
 
