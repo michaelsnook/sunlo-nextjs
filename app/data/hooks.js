@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { request, gql } from 'graphql-request'
 import supabase from 'lib/supabase-client'
 import {
-  userDeckDetailsQuery,
+  userDeckCardsQuery,
   getAllMyDecksQuery,
   getManyCardsDetailsQuery,
 } from 'app/data/queries'
@@ -37,7 +37,7 @@ export function useDeck(deckLang) {
       }
 
       const response = await request({
-        document: userDeckDetailsQuery,
+        document: userDeckCardsQuery,
         variables,
         ...requestOptions(access_token),
       })

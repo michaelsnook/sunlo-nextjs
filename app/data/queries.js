@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request'
 
-export const userDeckDetailsQuery = gql`
-  query UserDeckDetailsQuery($filter: UserDeckFilter) {
+export const userDeckCardsQuery = gql`
+  query UserDeckCardsQuery($filter: UserDeckFilter) {
     userDeckCollection(filter: $filter) {
       edges {
         node {
@@ -120,7 +120,10 @@ export const getOnePhraseDetailsQuery = gql`
   }
 `
 
-export const getManyCardsDetailsQuery = gql`
+// gets a big long list of cards' details; irrespective of
+// what decks or languages those cards belong to.
+// hopefully the react-query cache will
+export const getManyPhrasesDetailsQuery = gql`
   query GetManyCardsDetailsQuery {
     cardPhraseCollection {
       edges {
@@ -159,6 +162,9 @@ export const getManyCardsDetailsQuery = gql`
   }
 `
 
+// gets all decks for auth'd user, and
+// all the card IDs and statuses in those decks
+// which serve as metadata for the deck
 export const getAllMyDecksQuery = gql`
   query {
     userDeckCollection {
