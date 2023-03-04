@@ -25,7 +25,17 @@ export function useDeck(deckLang) {
         data: {
           session: { access_token },
         },
+        error,
       } = await supabase.auth.getSession()
+      if (error) {
+        console.log(`Error in useDeck, useQuery, getSession`, error)
+        return {}
+      }
+      if (!access_token) {
+        console.log(`Tried to access useDecks but session not valid`)
+        return {}
+      }
+
       const response = await request({
         document: userDeckDetailsQuery,
         variables,
@@ -51,7 +61,14 @@ export function useDecks() {
         },
         error,
       } = await supabase.auth.getSession()
-      if (error) return {}
+      if (error) {
+        console.log(`Error in useDecks, useQuery, getSession`, error)
+        return {}
+      }
+      if (!access_token) {
+        console.log(`Tried to access useDecks but session not valid`)
+        return {}
+      }
 
       const data2 = await request({
         document: getAllMyDecksQuery,
