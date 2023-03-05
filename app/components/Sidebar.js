@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { staticMenu } from 'lib/menus'
-import { useGlobalState } from 'lib/global-store'
+import { staticMenu, convertDecksToMenu } from 'lib/menus'
 import { usePathname } from 'next/navigation'
-import languages from 'lib/languages'
+import { useProfile, useAllDecks } from 'app/data/hooks'
+import Loading from 'app/loading'
 
 const Navlink = ({ href, children }) => {
   const pathname = usePathname()
@@ -28,29 +28,23 @@ export default function Sidebar({ shy = false }) {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
 
+  const decks = useAllDecks()
+  const profile = useProfile()
+  const loading = decks.status === 'loading' || profile.status === 'loading'
+  // const { user, signOut } = useSession()
+  // const user = { email: '\\o/' }
+
+  console.log(`decks, profile, session`, decks?.data, profile?.data)
+
   useEffect(() => {
     if (isOpen) {
       setIsOpen(false)
     }
   }, [pathname])
 
-  const { user, profile, signOut, decks, isLoading } = useGlobalState()
-  const myMenus = decks
-    ? [
-        {
-          name: 'Your decks',
-          href: '/my-decks',
-          links:
-            decks?.map(d => {
-              return {
-                name: languages[d.lang],
-                href: d?.lang ? `/my-decks/${d.lang}` : '',
-              }
-            }) || [],
-        },
-        staticMenu,
-      ]
-    : [staticMenu]
+  const myMenus = loading
+    ? [staticMenu]
+    : [convertDecksToMenu(decks?.data), staticMenu]
 
   return (
     <>
@@ -85,11 +79,13 @@ export default function Sidebar({ shy = false }) {
           </svg>
           &nbsp; Sunlo
         </span>
-        {isLoading ? null : (
+        {loading ? (
+          <Loading />
+        ) : (
           <>
             <Navlink href="/app/profile">
-              <p>{profile?.username}</p>
-              <p>{user?.email}</p>
+              <p>{profile?.data.username}</p>
+              <p>{/*user?.email*/}</p>
             </Navlink>
             {myMenus.map(menu => (
               <div key={menu.name}>

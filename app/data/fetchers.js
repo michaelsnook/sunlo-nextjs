@@ -72,10 +72,17 @@ export const getAllDecks = async () => {
     return {}
   }
 
-  return await request({
+  const response = await request({
     document: allDecksQuery,
     ...requestOptions(access_token),
   })
+  const sortedResponse = response.userDeckCollection.edges.sort((a, b) => {
+    return (
+      b.node.deckMembershipCollection.edges.length -
+      a.node.deckMembershipCollection.edges.length
+    )
+  })
+  return sortedResponse
 }
 
 ///////// public fetchers below /////////
@@ -121,6 +128,5 @@ export const getProfile = async () => {
     document: profileQuery,
     ...requestOptions(session.access_token),
   })
-  console.log('Profile response is: ', response)
   return response?.profileCollection?.edges[0]?.node // || {}
 }

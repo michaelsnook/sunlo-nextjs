@@ -2,7 +2,7 @@
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import Sidebar from 'components/old/Sidebar'
+import Sidebar from 'app/components/Sidebar'
 
 const queryClient = new QueryClient()
 
