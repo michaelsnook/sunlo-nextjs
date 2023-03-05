@@ -1,15 +1,10 @@
 import Link from 'next/link'
-import { queryClient } from 'app/query-client'
-import { getOnePhraseDetails } from 'app/fetchers'
+import { getOnePhraseDetails, getAllPhraseIDs } from 'app/data/fetchers'
 import { TinyPhrase } from 'components/PhraseCardSmall'
-import { getAllPhraseIDsQuery } from 'app/data/queries'
 import languages from 'lib/languages'
 
 export async function generateStaticParams() {
-  const { data, error } = await queryClient
-    .query(getAllPhraseIDsQuery)
-    .toPromise()
-  if (error) throw Error(error)
+  const data = await getAllPhraseIDs()
 
   return data.cardPhraseCollection.edges.map(edge => ({
     id: edge.node.id,
@@ -18,7 +13,6 @@ export async function generateStaticParams() {
 
 export default async function Page({ params }) {
   let phrase = await getOnePhraseDetails(params.id)
-
   const translations = phrase.cardTranslationCollection?.edges
   const seeAlso = phrase.cardSeeAlsoCollection?.edges.map(({ node }) => {
     return node.fromPhrase.id === phrase.id ? node.toPhrase : node.fromPhrase

@@ -1,13 +1,10 @@
 import Link from 'next/link'
-import { queryClient } from 'app/query-client'
 import PhraseCardSmall from 'components/PhraseCardSmall'
-import { getManyCardsDetailsQuery } from 'app/data/queries'
+import { getAllPhraseDetails } from 'app/data/fetchers'
 
 export default async function Page() {
-  let { data, error } = await queryClient
-    .query(getManyCardsDetailsQuery)
-    .toPromise()
-  if (error) throw Error(error)
+  let data = await getAllPhraseDetails()
+
   const phrases = data.cardPhraseCollection.edges
 
   return (
