@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { useAllDecks } from 'app/data/hooks'
+import Loading from 'app/loading'
 import languages from 'lib/languages'
 
 function OneDeck({ node }) {
@@ -20,21 +21,14 @@ function OneDeck({ node }) {
 
 export default function Page() {
   const { status, data, error } = useAllDecks()
-  console.log(`rendering decks`, data)
-  if (status === 'loading') return <>loading...</>
+  if (status === 'loading') return <Loading />
   if (status === 'error') return <ErrorList error={error} />
-  const edges = data.userDeckCollection.edges.sort((a, b) => {
-    return (
-      b.node.deckMembershipCollection.edges.length -
-      a.node.deckMembershipCollection.edges.length
-    )
-  })
 
   return (
     <>
       <h1 className="h1">my decks</h1>
       <div className="page-card">
-        {edges.map(edge => (
+        {data?.map(edge => (
           <OneDeck key={edge.node.lang} node={edge.node} />
         ))}
       </div>
