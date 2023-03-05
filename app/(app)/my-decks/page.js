@@ -35,7 +35,7 @@ export default function Page() {
       <h1 className="h1">my decks</h1>
       <div className="page-card">
         {edges.map(edge => (
-          <OneDeck node={edge.node} />
+          <OneDeck key={edge.node.lang} node={edge.node} />
         ))}
       </div>
     </>
