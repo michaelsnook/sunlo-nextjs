@@ -1,12 +1,12 @@
 import { request } from 'graphql-request'
 import supabase from 'lib/supabase-client'
 import {
-  deckQuery,
   allDecksQuery,
-  languageDetailsQuery,
-  phraseDetailsQuery,
   allPhraseDetailsQuery,
   allPhraseIDsQuery,
+  deckQuery,
+  languageDetailsQuery,
+  phraseDetailsQuery,
 } from 'app/data/queries'
 import { requestOptions } from './constants'
 
@@ -37,6 +37,20 @@ export const getDeck = async deckLang => {
     document: deckQuery,
     variables,
     ...requestOptions(access_token),
+  })
+}
+
+export const getAllPhraseDetails = async () => {
+  return await request({
+    document: allPhraseDetailsQuery,
+    ...requestOptions(),
+  })
+}
+
+export const getAllPhraseIDs = async () => {
+  return await request({
+    document: allPhraseIDsQuery,
+    ...requestOptions(),
   })
 }
 
@@ -93,18 +107,4 @@ export const getOnePhraseDetails = async id => {
     ...requestOptions(),
   })
   return response.cardPhraseCollection.edges[0].node
-}
-
-export const getAllPhraseDetails = async () => {
-  return await request({
-    document: allPhraseDetailsQuery,
-    ...requestOptions(),
-  })
-}
-
-export const getAllPhraseIDs = async () => {
-  return await request({
-    document: allPhraseIDsQuery,
-    ...requestOptions(),
-  })
 }

@@ -3,11 +3,11 @@
 import { useQuery } from '@tanstack/react-query'
 import { getAllDecks, getDeck } from './fetchers'
 
-export function useDeck(deckLang) {
+export function useAllDecks() {
   return useQuery({
-    queryKey: ['deck', deckLang],
-    queryFn: async () => getDeck(deckLang),
-    enabled: !!deckLang,
+    queryKey: ['decks'],
+    queryFn: getAllDecks,
+    enabled: true,
     retry: false,
     staleTime: Infinity,
     cacheTime: Infinity,
@@ -16,11 +16,11 @@ export function useDeck(deckLang) {
   })
 }
 
-export function useAllDecks() {
+export function useDeck(deckLang) {
   return useQuery({
-    queryKey: ['decks'],
-    queryFn: getAllDecks,
-    enabled: true,
+    queryKey: ['deck', deckLang],
+    queryFn: async () => getDeck(deckLang),
+    enabled: !!deckLang,
     retry: false,
     staleTime: Infinity,
     cacheTime: Infinity,
