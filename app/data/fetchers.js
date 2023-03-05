@@ -7,6 +7,7 @@ import {
   deckQuery,
   languageDetailsQuery,
   phraseDetailsQuery,
+  profileQuery,
 } from 'app/data/queries'
 import { requestOptions } from './constants'
 
@@ -111,3 +112,15 @@ export const getOnePhraseDetails = async id => {
   return response?.cardPhraseCollection?.edges[0]?.node // || {}
 }
 
+export const getProfile = async () => {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
+  if (!session) return {}
+  const response = await request({
+    document: profileQuery,
+    ...requestOptions(session.access_token),
+  })
+  console.log('Profile response is: ', response)
+  return response?.profileCollection?.edges[0]?.node // || {}
+}
