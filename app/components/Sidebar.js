@@ -1,5 +1,4 @@
 'use client'
-
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { staticMenu, convertDecksToMenu } from 'lib/menus'

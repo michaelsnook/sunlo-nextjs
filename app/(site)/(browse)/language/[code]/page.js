@@ -23,7 +23,7 @@ export default async function LanguagePage({ params: { code } }) {
       <h1 className="h1">
         {languageName} ({code})
       </h1>
-      {!language.cardPhraseCollection.edges.length ? (
+      {!language?.cardPhraseCollection?.edges?.length ? (
         <p>
           We don&apos;t have any phrases for you to learn {languageName} yet.
           But you can be the first to add one!
