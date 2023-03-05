@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { useDecks } from 'app/data/hooks'
+import { useAllDecks } from 'app/data/hooks'
 import languages from 'lib/languages'
 
 function OneDeck({ node }) {
@@ -19,7 +19,7 @@ function OneDeck({ node }) {
 }
 
 export default function Page() {
-  const { status, data, error } = useDecks()
+  const { status, data, error } = useAllDecks()
   console.log(`rendering decks`, data)
   if (status === 'loading') return <>loading...</>
   if (status === 'error') return <ErrorList error={error} />

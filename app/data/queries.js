@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request'
 
-export const userDeckCardsQuery = gql`
-  query UserDeckCardsQuery($filter: UserDeckFilter) {
+export const deckQuery = gql`
+  query DeckQuery($filter: UserDeckFilter) {
     userDeckCollection(filter: $filter) {
       edges {
         node {
@@ -36,22 +36,8 @@ export const userDeckCardsQuery = gql`
   }
 `
 
-export const getAllPhrasesQuery = gql`
-  query {
-    cardPhraseCollection {
-      edges {
-        node {
-          id
-          text
-          lang
-        }
-      }
-    }
-  }
-`
-
-export const getFullLanguageDetailsQuery = gql`
-  query GetFullLanguageDetailsQuery($filter: LanguageFilter) {
+export const languageDetailsQuery = gql`
+  query LanguageDetailsQuery($filter: LanguageFilter) {
     languageCollection(filter: $filter) {
       edges {
         node {
@@ -81,8 +67,8 @@ export const getFullLanguageDetailsQuery = gql`
   }
 `
 
-export const getOnePhraseDetailsQuery = gql`
-  query GetOnePhraseDetailsQuery($filter: CardPhraseFilter) {
+export const phraseDetailsQuery = gql`
+  query PhraseDetailsQuery($filter: CardPhraseFilter) {
     cardPhraseCollection(filter: $filter) {
       edges {
         node {
@@ -123,8 +109,8 @@ export const getOnePhraseDetailsQuery = gql`
 // gets a big long list of cards' details; irrespective of
 // what decks or languages those cards belong to.
 // hopefully the react-query cache will
-export const getManyPhrasesDetailsQuery = gql`
-  query GetManyCardsDetailsQuery {
+export const allPhraseDetailsQuery = gql`
+  query AllPhraseDetailsQuery {
     cardPhraseCollection {
       edges {
         node {
@@ -165,8 +151,8 @@ export const getManyPhrasesDetailsQuery = gql`
 // gets all decks for auth'd user, and
 // all the card IDs and statuses in those decks
 // which serve as metadata for the deck
-export const getAllMyDecksQuery = gql`
-  query {
+export const allDecksQuery = gql`
+  query AllDecksQuery {
     userDeckCollection {
       edges {
         node {
@@ -187,8 +173,8 @@ export const getAllMyDecksQuery = gql`
   }
 `
 
-export const getAllPhraseIDsQuery = gql`
-  query GetAllPhraseIDsQuery {
+export const allPhraseIDsQuery = gql`
+  query AllPhraseIDsQuery {
     cardPhraseCollection {
       edges {
         node {

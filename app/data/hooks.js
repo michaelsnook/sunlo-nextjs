@@ -1,48 +1,12 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { request, gql } from 'graphql-request'
-import supabase from 'lib/supabase-client'
-import {
-  userDeckCardsQuery,
-  getAllMyDecksQuery,
-  getManyCardsDetailsQuery,
-} from 'app/data/queries'
-import { requestOptions } from './constants'
+import { getAllDecks, getDeck } from './fetchers'
 
 export function useDeck(deckLang) {
-  const filter = {
-    lang: {
-      eq: deckLang,
-    },
-  }
-  const variables = { filter }
-
   return useQuery({
     queryKey: ['deck', deckLang],
-    queryFn: async () => {
-      const {
-        data: {
-          session: { access_token },
-        },
-        error,
-      } = await supabase.auth.getSession()
-      if (error) {
-        console.log(`Error in useDeck, useQuery, getSession`, error)
-        return {}
-      }
-      if (!access_token) {
-        console.log(`Tried to access useDecks but session not valid`)
-        return {}
-      }
-
-      const response = await request({
-        document: userDeckCardsQuery,
-        variables,
-        ...requestOptions(access_token),
-      })
-      return response
-    },
+    queryFn: async () => getDeck(deckLang),
     enabled: !!deckLang,
     retry: false,
     staleTime: Infinity,
@@ -51,31 +15,11 @@ export function useDeck(deckLang) {
     refetchOnWindowFocus: false,
   })
 }
-export function useDecks() {
+
+export function useAllDecks() {
   return useQuery({
     queryKey: ['decks'],
-    queryFn: async () => {
-      const {
-        data: {
-          session: { access_token },
-        },
-        error,
-      } = await supabase.auth.getSession()
-      if (error) {
-        console.log(`Error in useDecks, useQuery, getSession`, error)
-        return {}
-      }
-      if (!access_token) {
-        console.log(`Tried to access useDecks but session not valid`)
-        return {}
-      }
-
-      const data2 = await request({
-        document: getAllMyDecksQuery,
-        ...requestOptions(access_token),
-      })
-      return data2
-    },
+    queryFn: getAllDecks,
     enabled: true,
     retry: false,
     staleTime: Infinity,
@@ -85,12 +29,12 @@ export function useDecks() {
   })
 }
 
-export function usePhrases() {
+/* export function useAllPhrases() {
   return useQuery({
     queryKey: ['phrases'],
     queryFn: async () => {
       const data = await request({
-        document: getManyCardsDetailsQuery,
+        document: allPhraseDetailsQuery,
         ...requestOptions(),
       })
       return data
@@ -103,3 +47,4 @@ export function usePhrases() {
     refetchOnWindowFocus: false,
   })
 }
+*/

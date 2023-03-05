@@ -1,13 +1,13 @@
 import Link from 'next/link'
 import PhraseCardSmall from 'components/PhraseCardSmall'
-import { getFullLanguageDetails } from 'app/fetchers'
+import { getLanguageDetails } from 'app/data/fetchers'
 import languages from 'lib/languages'
 import { notFound } from 'next/navigation'
 
 export default async function LanguagePage({ params }) {
   if (!languages[params.code]) notFound()
 
-  let data = await getFullLanguageDetails(params.code)
+  const data = await getLanguageDetails(params.code)
 
   if (
     data.languageCollection.edges.length === 0 ||
