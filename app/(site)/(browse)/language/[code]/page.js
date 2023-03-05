@@ -7,15 +7,7 @@ import { notFound } from 'next/navigation'
 export default async function LanguagePage({ params }) {
   if (!languages[params.code]) notFound()
 
-  const data = await getLanguageDetails(params.code)
-
-  if (
-    data.languageCollection.edges.length === 0 ||
-    !data.languageCollection.edges[0]?.node
-  )
-    notFound()
-
-  const language = data.languageCollection.edges[0].node
+  const language = await getLanguageDetails(params.code)
 
   return (
     <div className="page-card">
