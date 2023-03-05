@@ -48,10 +48,11 @@ export const getAllPhraseDetails = async () => {
 }
 
 export const getAllPhraseIDs = async () => {
-  return await request({
+  const data = await request({
     document: allPhraseIDsQuery,
     ...requestOptions(),
   })
+  return data.cardPhraseCollection.edges
 }
 
 export const getAllDecks = async () => {
@@ -86,11 +87,12 @@ export const getLanguageDetails = async code => {
       },
     },
   }
-  return await request({
+  const response = await request({
     document: languageDetailsQuery,
     variables,
     ...requestOptions(),
   })
+  return response.languageCollection.edges[0]?.node
 }
 
 export const getOnePhraseDetails = async id => {
@@ -106,5 +108,6 @@ export const getOnePhraseDetails = async id => {
     variables,
     ...requestOptions(),
   })
-  return response.cardPhraseCollection.edges[0].node
+  return response?.cardPhraseCollection?.edges[0]?.node // || {}
 }
+
