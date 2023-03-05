@@ -4,10 +4,16 @@ import { getLanguageDetails } from 'app/data/fetchers'
 import languages from 'lib/languages'
 import { notFound } from 'next/navigation'
 
-export default async function LanguagePage({ params }) {
-  if (!languages[params.code]) notFound()
+export default async function LanguagePage({ params: { code } }) {
+  if (!languages[code]) {
+    return notFound()
+  }
+  const languageName = languages[code]
 
-  const language = await getLanguageDetails(params.code)
+  const language = await getLanguageDetails(code)
+  if (language === null) {
+    return notFound()
+  }
 
   return (
     <div className="page-card">
@@ -15,11 +21,11 @@ export default async function LanguagePage({ params }) {
         &larr; Back to languages
       </Link>
       <h1 className="h1">
-        {language.name} ({language.code})
+        {languageName} ({code})
       </h1>
       {!language.cardPhraseCollection.edges.length ? (
         <p>
-          We don&apos;t have any phrases for you to learn {language.name} yet.
+          We don&apos;t have any phrases for you to learn {languageName} yet.
           But you can be the first to add one!
         </p>
       ) : (

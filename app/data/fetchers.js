@@ -27,18 +27,19 @@ export const getDeck = async deckLang => {
   } = await supabase.auth.getSession()
   if (error) {
     console.log(`Error in getDeck, useQuery, getSession`, error)
-    return {}
+    return null
   }
   if (!access_token) {
     console.log(`Tried to access getDeck but session not valid`)
-    return {}
+    return null
   }
 
-  return await request({
+  const response = await request({
     document: deckQuery,
     variables,
     ...requestOptions(access_token),
   })
+  return response?.userDeckCollection?.edges[0]?.node || null
 }
 
 export const getAllPhraseDetails = async () => {
@@ -65,11 +66,11 @@ export const getAllDecks = async () => {
   } = await supabase.auth.getSession()
   if (error) {
     console.log(`Error in getAllDecks, useQuery, getSession`, error)
-    return {}
+    return null
   }
   if (!access_token) {
     console.log(`Tried to access getAllDecks but session not valid`)
-    return {}
+    return null
   }
 
   const response = await request({
@@ -85,8 +86,6 @@ export const getAllDecks = async () => {
   return sortedResponse
 }
 
-///////// public fetchers below /////////
-
 export const getLanguageDetails = async code => {
   const variables = {
     filter: {
@@ -100,6 +99,10 @@ export const getLanguageDetails = async code => {
     variables,
     ...requestOptions(),
   })
+  console.log(
+    `LOGGING getLanguageDetails(${code})`,
+    response.languageCollection.edges[0]?.node
+  )
   return response.languageCollection.edges[0]?.node
 }
 
