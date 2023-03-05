@@ -184,3 +184,17 @@ export const phraseDetailsQuery = gql`
     }
   }
 `
+export const profileQuery = gql`
+  query ProfileQuery {
+    profileCollection {
+      edges {
+        node {
+          username
+          languagePrimary
+          languagesSpoken
+          avatarUrl
+        }
+      }
+    }
+  }
+`

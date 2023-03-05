@@ -1,7 +1,7 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { getAllDecks, getDeck } from './fetchers'
+import { getAllDecks, getDeck, getProfile } from './fetchers'
 
 export function useAllDecks() {
   return useQuery({
@@ -26,6 +26,19 @@ export function useDeck(deckLang) {
     cacheTime: Infinity,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
+  })
+}
+
+export function useProfile() {
+  return useQuery({
+    queryKey: ['profile'],
+    queryFn: getProfile,
+    enabled: true,
+    retry: false,
+    // staleTime: Infinity,
+    // cacheTime: Infinity,
+    // refetchOnMount: false,
+    // refetchOnWindowFocus: false,
   })
 }
 
