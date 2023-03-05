@@ -8,7 +8,7 @@ export default async function LanguagePage({ params: { code } }) {
   if (!languages[code]) {
     return notFound()
   }
-  const languageName = languages[code]
+  const languageName = languages[code] || ''
 
   const language = await getLanguageDetails(code)
   if (language === null) {
