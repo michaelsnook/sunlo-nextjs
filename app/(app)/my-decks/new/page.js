@@ -2,10 +2,14 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import Select from 'react-select'
 import languages from 'lib/languages'
 import { useAllDecks } from 'app/data/hooks'
 import ErrorList from 'components/ErrorList'
+import { useMutation } from '@tanstack/react-query'
+import { postNewDeck } from 'app/data/posters'
+// import { createNewDeck } from 'app/data/mutations'
 
 const options = Object.keys(languages).map(code => {
   return { value: code, label: languages[code] }
@@ -19,6 +23,17 @@ export default function Page() {
   const [value, setValue] = useState()
   const isDisabled = !(value?.length === 3)
   const [formError, setFormError] = useState()
+  const router = useRouter()
+
+  const createNewDeck = useMutation({
+    mutationFn: lang => postNewDeck(lang),
+    onSuccess: data => {
+      // console.log(`onSuccess data,`, data)
+      router.push(
+        `/my-decks/${data.insertIntoUserDeckCollection.records[0].lang}`
+      )
+    },
+  })
 
   const handleSubmit = event => {
     event.preventDefault()
@@ -28,6 +43,7 @@ export default function Page() {
       return
     }
     console.log(`submit the form`, event, value)
+    createNewDeck.mutate(value)
   }
   const handleChange = e => {
     setFormError('')
@@ -44,14 +60,16 @@ export default function Page() {
       <h1 className="h1">Start a new deck</h1>
       <div className="page-card">
         <form name="new-deck" onSubmit={handleSubmit}>
-          {status === 'error' ? (
+          {createNewDeck?.error ? (
+            <ErrorList errors={[createNewDeck.error]} asCard />
+          ) : status === 'error' ? (
             <ErrorList error={error} />
           ) : (
             <>
               <Select
                 options={options}
                 isOptionDisabled={option =>
-                  data.some(deck => {
+                  data?.some(deck => {
                     return status === 'loading'
                       ? // while loading the list of decks, all options enabled
                         false
