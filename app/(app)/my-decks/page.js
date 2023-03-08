@@ -6,7 +6,7 @@ export default function Page() {
     <>
       <div className="flex justify-between">
         <div className="grow">
-          <h1 className="h1">my decks</h1>
+          <h1 className="h1">My decks</h1>
         </div>
         <Link
           className="flex-none btn btn-outline text-white my-4"
