@@ -6,6 +6,7 @@ import {
   getDeck,
   getProfile,
   getAllPhrasesInLanguage,
+  getOnePhraseDetails,
 } from './fetchers'
 
 export function useAllDecks() {
@@ -44,6 +45,16 @@ export function useDeck(deckLang) {
     cacheTime: Infinity,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
+  })
+}
+
+export function usePhrase(id) {
+  return useQuery({
+    queryKey: ['phrase', id],
+    queryFn: async () => getOnePhraseDetails(id),
+    enabled: !!id && id !== -1,
+    staleTime: Infinity,
+    cacheTime: Infinity,
   })
 }
 

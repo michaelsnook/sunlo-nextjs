@@ -8,7 +8,7 @@ import { useState } from 'react'
 import BigPhrase from 'app/components/BigPhrase'
 
 export default function Browse({ lang, disable }) {
-  const [activePhrase, setActivePhrase] = useState()
+  const [activePhrase, setActivePhrase] = useState(-1)
 
   const { data, error, status } = useAllPhrasesInLanguage(lang)
   if (status === 'loading') return <Loading />
@@ -37,9 +37,9 @@ export default function Browse({ lang, disable }) {
         backspaceRemovesValue
         aria-label="Select a phrase to add to your deck"
         onChange={handleChange}
+        className="my-4"
       />
-      <p>{activePhrase}</p>
-      {activePhrase === -1 || true ? null : (
+      {activePhrase === -1 ? null : (
         <BigPhrase
           phraseID={activePhrase}
           clearPhrase={() => setActivePhrase(-1)}
