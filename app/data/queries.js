@@ -164,7 +164,7 @@ export const languageDetailsQuery = gql`
 `
 
 export const phraseDetailsQuery = gql`
-  query PhraseDetailsQuery($filter: CardPhraseFilter) {
+  query CardPhraseCollection($filter: CardPhraseFilter) {
     cardPhraseCollection(filter: $filter) {
       edges {
         node {
