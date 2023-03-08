@@ -18,7 +18,7 @@ export function TinyPhrase({ lang, text }) {
   )
 }
 
-export default function BigPhrase({ phraseID }) {
+export default function BigPhrase({ phraseID, setActivePhrase }) {
   const { data, status, error } = usePhrase(phraseID)
   const addNewCardToDeck = useMutation({
     mutationFn: status => postNewCard(status, phraseID),
@@ -60,7 +60,13 @@ export default function BigPhrase({ phraseID }) {
               <ul>
                 {seeAlsos.map(edge => (
                   <li key={edge.node.id}>
-                    <TinyPhrase {...edge.node} />
+                    <a
+                      className="hover:underline pointer"
+                      href="#"
+                      onClick={() => setActivePhrase(edge.node.id)}
+                    >
+                      <TinyPhrase {...edge.node} />
+                    </a>
                   </li>
                 ))}
               </ul>

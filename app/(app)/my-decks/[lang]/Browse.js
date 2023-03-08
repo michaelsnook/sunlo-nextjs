@@ -40,10 +40,19 @@ export default function Browse({ lang, disable }) {
         className="my-4"
       />
       {activePhrase === -1 ? null : (
-        <BigPhrase
-          phraseID={activePhrase}
-          clearPhrase={() => setActivePhrase(-1)}
-        />
+        <>
+          <a
+            href="#"
+            className="text-primary hover:underline"
+            onClick={() => setActivePhrase(-1)}
+          >
+            &times; Clear selection
+          </a>
+          <BigPhrase
+            phraseID={activePhrase}
+            setActivePhrase={setActivePhrase}
+          />
+        </>
       )}
     </div>
   )
