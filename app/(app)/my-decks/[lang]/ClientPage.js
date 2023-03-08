@@ -5,20 +5,32 @@ import ErrorList from 'components/ErrorList'
 import { useDeck } from 'app/data/hooks'
 import { useState } from 'react'
 import Card from 'app/components/Card'
+import Browse from './Browse'
 
 const Empty = () => <p className="text-gray-600">No cards here</p>
 
 export default function ClientPage({ lang }) {
   const [tab, setTab] = useState('active')
   const { status, data, error } = useDeck(lang)
+
   if (status === 'loading') return <Loading />
   if (status === 'error') return <ErrorList error={error} />
   const edges = data?.deckMembershipCollection?.edges ?? []
-  if (!edges?.length) return <>no cards in deck 💩</>
+
+  if (!edges?.length)
+    return (
+      <div>
+        no cards in deck 💩 go ahead and add some! <Browse lang={lang} />
+      </div>
+    )
+  // a simple array ['a12...', '45f...', ... ]
+  const disabledIDs = edges?.map(edge => edge.node.cardPhrase.id) || []
+  // console.log(`disabled IDs`, disabledIDs)
+  // 3 arrays of edges
   const cards = {
-    active: edges.filter(e => e.node.status === 'active'),
-    learned: edges.filter(e => e.node.status === 'learned'),
-    skipped: edges.filter(e => e.node.status === 'skipped'),
+    active: edges.filter(e => e.node.status === 'active') || [],
+    learned: edges.filter(e => e.node.status === 'learned') || [],
+    skipped: edges.filter(e => e.node.status === 'skipped') || [],
   }
   return (
     <div>
@@ -45,13 +57,21 @@ export default function ClientPage({ lang }) {
         >
           Skipped
         </a>
+        <a
+          className={`tab tab-bordered ${tab === 'browse' ? 'tab-active' : ''}`}
+          onClick={() => setTab('browse')}
+        >
+          Browse for new phrases...
+        </a>
       </div>
       <div>
-        {cards[tab].length ? (
+        {tab === 'browse' ? (
+          <Browse lang={lang} disable={disabledIDs} />
+        ) : cards[tab].length ? (
           cards[tab].map(c => (
-            <p key={c.node.id} className="my-2">
+            <div key={c.node.id} className="my-2">
               <Card {...c.node} />
-            </p>
+            </div>
           ))
         ) : (
           <Empty />

@@ -57,7 +57,9 @@ export default async function Page({ params }) {
               )
             })
           ) : (
-            <>No related phrases to see here</>
+            <p className="text-gray-600 italic">
+              No related phrases to see here
+            </p>
           )}
         </ul>
       </div>

@@ -79,10 +79,9 @@ export default function Page() {
                         deck.node.lang === option.value
                   })
                 }
-                autoFocus
                 placeholder="Select a language..."
                 backspaceRemovesValue
-                area-label="Select a language to start a new deck"
+                aria-label="Select a language to start a new deck"
                 onChange={handleChange}
               />
               {formError ? <TinyError text={formError} /> : null}

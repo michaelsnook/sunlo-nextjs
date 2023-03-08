@@ -122,6 +122,21 @@ export const getOnePhraseDetails = async id => {
   return response?.cardPhraseCollection?.edges[0]?.node // || {}
 }
 
+export const getAllPhrasesInLanguage = async lang => {
+  const variables = {
+    filter: {
+      lang: {
+        eq: lang,
+      },
+    },
+  }
+  const response = await request({
+    ...requestOptions(),
+    document: phraseDetailsQuery,
+  })
+  return response?.cardPhraseCollection?.edges
+}
+
 export const getProfile = async () => {
   const {
     data: { session },

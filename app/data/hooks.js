@@ -1,14 +1,32 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { getAllDecks, getDeck, getProfile } from './fetchers'
+import {
+  getAllDecks,
+  getDeck,
+  getProfile,
+  getAllPhrasesInLanguage,
+} from './fetchers'
 
 export function useAllDecks() {
   return useQuery({
     queryKey: ['decks'],
     queryFn: getAllDecks,
     enabled: true,
-    retry: false,
+    // retry: false,
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  })
+}
+
+export function useAllPhrasesInLanguage(lang) {
+  return useQuery({
+    queryKey: ['phrases', 'lang', lang],
+    queryFn: async () => getAllPhrasesInLanguage(lang),
+    enabled: !!lang,
+    // retry: 3,
     staleTime: Infinity,
     cacheTime: Infinity,
     refetchOnMount: false,
@@ -34,7 +52,7 @@ export function useProfile() {
     queryKey: ['profile'],
     queryFn: getProfile,
     enabled: true,
-    retry: false,
+    // retry: false,
     // staleTime: Infinity,
     // cacheTime: Infinity,
     // refetchOnMount: false,
