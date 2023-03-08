@@ -13,17 +13,18 @@ function readStatus(status) {
   return { emoji: `❌ `, classString: '' }
 }
 
-export default function PhraseCardSmall({ status, text, lang, translations }) {
+export default function Card({ status, cardPhrase }) {
   const { emoji, classString } = readStatus(status)
+  const translations = cardPhrase?.cardTranslationCollection?.edges ?? null
   return (
     <div
       className={`card p-4 ${classString} shadow-lg hover:bg-primary hover:text-white mb-4 w-full inline-block`}
     >
-      <p lang={lang} className="mb-2 font-bold">
+      <p lang={cardPhrase?.lang} className="mb-2 font-bold">
         {emoji}
-        {text}
+        <TinyPhrase {...cardPhrase} />
       </p>
-      {translations && translations?.length > 0 ? (
+      {translations?.length > 0 ? (
         <ul>
           {translations.map(({ node }) => (
             <li lang={node.lang} key={`translation-${node.id}`}>
@@ -31,7 +32,9 @@ export default function PhraseCardSmall({ status, text, lang, translations }) {
             </li>
           ))}
         </ul>
-      ) : null}
+      ) : (
+        <p className="text-gray-600">There aren't any translations sorry</p>
+      )}
     </div>
   )
 }

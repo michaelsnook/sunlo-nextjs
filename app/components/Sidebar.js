@@ -30,10 +30,6 @@ export default function Sidebar({ shy = false }) {
   const decks = useAllDecks()
   const profile = useProfile()
   const loading = decks.status === 'loading' || profile.status === 'loading'
-  // const { user, signOut } = useSession()
-  // const user = { email: '\\o/' }
-
-  console.log(`decks, profile, session`, decks?.data, profile?.data)
 
   useEffect(() => {
     if (isOpen) {

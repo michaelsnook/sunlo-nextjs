@@ -95,6 +95,7 @@ export const deckQuery = gql`
                 cardPhrase {
                   id
                   text
+                  lang
                   cardTranslationCollection {
                     edges {
                       node {
@@ -134,6 +135,22 @@ export const languageDetailsQuery = gql`
                       id
                       lang
                       text
+                    }
+                  }
+                }
+                cardSeeAlsoCollection {
+                  edges {
+                    node {
+                      fromPhrase {
+                        id
+                        text
+                        lang
+                      }
+                      toPhrase {
+                        id
+                        text
+                        lang
+                      }
                     }
                   }
                 }
