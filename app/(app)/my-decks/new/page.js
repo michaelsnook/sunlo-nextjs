@@ -7,7 +7,7 @@ import Select from 'react-select'
 import languages from 'lib/languages'
 import { useAllDecks } from 'app/data/hooks'
 import ErrorList from 'components/ErrorList'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { postNewDeck } from 'app/data/posters'
 // import { createNewDeck } from 'app/data/mutations'
 
@@ -24,11 +24,13 @@ export default function Page() {
   const isDisabled = !(value?.length === 3)
   const [formError, setFormError] = useState()
   const router = useRouter()
+  const queryClient = useQueryClient()
 
   const createNewDeck = useMutation({
     mutationFn: lang => postNewDeck(lang),
     onSuccess: data => {
       // console.log(`onSuccess data,`, data)
+      queryClient.invalidateQueries({ queryKey: ['decks'] })
       router.push(
         `/my-decks/${data.insertIntoUserDeckCollection.records[0].lang}`
       )
