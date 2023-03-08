@@ -4,10 +4,14 @@ import { useDeck } from 'app/data/hooks'
 import Loading from 'app/loading'
 import ErrorList from 'components/ErrorList'
 import languages from 'lib/languages'
+import Link from 'next/link'
 
 const Main = ({ data, lang }) => {
   return (
     <div>
+      <Link className="hover:underline" href="/my-decks">
+        &larr; Back to decks
+      </Link>
       <h1 className="h1">Learn {languages[lang]}</h1>
       <p className="py-4">
         deck {lang} looks like {JSON.stringify(data)}

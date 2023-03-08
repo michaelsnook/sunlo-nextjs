@@ -1,36 +1,22 @@
-'use client'
 import Link from 'next/link'
-import { useAllDecks } from 'app/data/hooks'
-import Loading from 'app/loading'
-import languages from 'lib/languages'
-
-function OneDeck({ node }) {
-  return (
-    <Link
-      href={`/my-decks/${node.lang}`}
-      className="card w-100 shadow-lg p-6 my-4 hover:bg-purple-200"
-    >
-      <h2 className="h2">{languages[node.lang]}</h2>
-      <p>
-        You&apos;re learning {languages[node.lang]}! There are{' '}
-        {node.deckMembershipCollection.edges.length} cards in your deck.
-      </p>
-    </Link>
-  )
-}
+import ClientPage from './ClientPage'
 
 export default function Page() {
-  const { status, data, error } = useAllDecks()
-  if (status === 'loading') return <Loading />
-  if (status === 'error') return <ErrorList error={error} />
-
   return (
     <>
-      <h1 className="h1">my decks</h1>
+      <div className="flex justify-between">
+        <div className="grow">
+          <h1 className="h1">my decks</h1>
+        </div>
+        <Link
+          className="flex-none btn btn-outline text-white my-4"
+          href="/my-decks/new"
+        >
+          + new
+        </Link>
+      </div>
       <div className="page-card">
-        {data?.map(edge => (
-          <OneDeck key={edge.node.lang} node={edge.node} />
-        ))}
+        <ClientPage />
       </div>
     </>
   )
