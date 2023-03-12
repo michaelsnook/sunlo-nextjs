@@ -133,6 +133,7 @@ export const getAllPhrasesInLanguage = async lang => {
   const response = await request({
     ...requestOptions(),
     document: phraseDetailsQuery,
+    variables,
   })
   return response?.cardPhraseCollection?.edges
 }
