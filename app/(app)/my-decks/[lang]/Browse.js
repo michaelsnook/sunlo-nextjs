@@ -32,7 +32,7 @@ export default function Browse({ lang, disable }) {
       <p className="my-4">Select a phrase to add to your deck</p>
       <Select
         options={options || []}
-        isOptionDisabled={option => disable.includes(option.value)}
+        isOptionDisabled={option => disable?.includes(option.value)}
         placeholder="Find a phrase"
         backspaceRemovesValue
         aria-label="Select a phrase to add to your deck"

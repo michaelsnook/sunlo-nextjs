@@ -180,6 +180,14 @@ export const phraseDetailsQuery = gql`
               }
             }
           }
+          deckMembershipCollection {
+            edges {
+              node {
+                deckId
+                status
+              }
+            }
+          }
           cardSeeAlsoCollection {
             edges {
               node {
