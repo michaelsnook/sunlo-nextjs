@@ -49,7 +49,7 @@ export default function Browse({ lang, disable }) {
             &times; Clear selection
           </a>
           <BigPhrase
-            phraseID={activePhrase}
+            phraseId={activePhrase}
             setActivePhrase={setActivePhrase}
           />
         </>

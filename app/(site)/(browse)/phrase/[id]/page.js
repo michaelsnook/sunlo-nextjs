@@ -1,10 +1,10 @@
 import Link from 'next/link'
-import { getOnePhraseDetails, getAllPhraseIDs } from 'app/data/fetchers'
+import { getOnePhraseDetails, getAllPhraseIds } from 'app/data/fetchers'
 import { TinyPhrase } from 'components/PhraseCardSmall'
 import languages from 'lib/languages'
 
 export async function generateStaticParams() {
-  let edges = await getAllPhraseIDs()
+  let edges = await getAllPhraseIds()
 
   return edges.map(edge => ({
     id: edge.node.id,
