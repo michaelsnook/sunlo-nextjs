@@ -24,8 +24,8 @@ export default function ClientPage({ lang }) {
       </div>
     )
   // a simple array ['a12...', '45f...', ... ]
-  const disabledIDs = edges?.map(edge => edge.node.cardPhrase.id) || []
-  // console.log(`disabled IDs`, disabledIDs)
+  const disabledIds = edges?.map(edge => edge.node.cardPhrase.id) || []
+  // console.log(`disabled IDs`, disabledIds)
   // 3 arrays of edges
   const cards = {
     active: edges.filter(e => e.node.status === 'active') || [],
@@ -66,7 +66,7 @@ export default function ClientPage({ lang }) {
       </div>
       <div>
         {tab === 'browse' ? (
-          <Browse lang={lang} disable={disabledIDs} />
+          <Browse lang={lang} disable={disabledIds} />
         ) : cards[tab].length ? (
           cards[tab].map(c => (
             <div key={c.node.id} className="my-2">

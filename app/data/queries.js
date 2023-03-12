@@ -67,8 +67,8 @@ export const allPhraseDetailsQuery = gql`
   }
 `
 
-export const allPhraseIDsQuery = gql`
-  query AllPhraseIDsQuery {
+export const allPhraseIdsQuery = gql`
+  query AllPhraseIdsQuery {
     cardPhraseCollection {
       edges {
         node {

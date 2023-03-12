@@ -2,8 +2,9 @@
 
 import Loading from 'app/loading'
 import ErrorList from 'components/ErrorList'
-import { usePhrase } from 'app/data/hooks'
+import { useAllDecks, usePhrase } from 'app/data/hooks'
 import { useMutation } from '@tanstack/react-query'
+import { postNewCard } from 'app/data/posters'
 
 export function TinyPhrase({ lang, text }) {
   return (
@@ -18,24 +19,33 @@ export function TinyPhrase({ lang, text }) {
   )
 }
 
-export default function BigPhrase({ phraseID, setActivePhrase }) {
-  const { data, status, error } = usePhrase(phraseID)
+export default function BigPhrase({ phraseId, setActivePhrase }) {
+  const { data, status, error } = usePhrase(phraseId)
+  const { data: decks, status: decksStatus, error: decksError } = useAllDecks()
+  const deckId =
+    data && decks
+      ? decks.find(edge => edge?.node?.lang === data?.lang)?.node?.id
+      : null
   const addNewCardToDeck = useMutation({
-    mutationFn: status => postNewCard(status, phraseID),
+    mutationFn: status => postNewCard({ status, phraseId, deckId }),
     onSuccess: data => {
       console.log(`onSuccess data,`, data)
       queryClient.invalidateQueries({ queryKey: ['deck', lang] })
     },
   })
-  if (phraseID === -1) return <>hi</>
-  if (status === 'loading') return <Loading />
-  if (status === 'error') return <ErrorList error={error} />
+
+  if (phraseId === -1) return <>hi</>
+  if (status === 'loading' || decksStatus === 'loading') return <Loading />
+  if (status === 'error' || decksStatus === 'error')
+    return <ErrorList errors={[error, decksError]} />
+
   const { text, lang } = data
+
   const translations = data.cardTranslationCollection?.edges ?? null
   const seeAlsos =
     data.cardSeeAlsoCollection?.edges.map(({ node }) => {
       return {
-        node: node.toPhraseId === phraseID ? node.toPhrase : node.fromPhrase,
+        node: node.toPhraseId === phraseId ? node.toPhrase : node.fromPhrase,
       }
     }) ?? null
 
@@ -84,12 +94,7 @@ export default function BigPhrase({ phraseID, setActivePhrase }) {
             addNewCardToDeck.isLoading ? 'loading' : ''
           }`}
           role="button"
-          onClick={() =>
-            addNewCardToDeck.mutate({
-              status: 'active',
-              cardPhraseId: phraseID,
-            })
-          }
+          onClick={() => addNewCardToDeck.mutate('active')}
         >
           📖 Learn it!
         </button>
@@ -98,12 +103,7 @@ export default function BigPhrase({ phraseID, setActivePhrase }) {
             addNewCardToDeck.isLoading ? 'loading' : ''
           }`}
           role="button"
-          onClick={() =>
-            addNewCardToDeck.mutate({
-              status: 'skipped',
-              cardPhraseId: phraseID,
-            })
-          }
+          onClick={() => addNewCardToDeck.mutate('skipped')}
         >
           ❌ Skip it
         </button>
