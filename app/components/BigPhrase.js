@@ -5,6 +5,7 @@ import ErrorList from 'components/ErrorList'
 import { useAllDecks, usePhrase } from 'app/data/hooks'
 import { useMutation } from '@tanstack/react-query'
 import { postNewCard } from 'app/data/posters'
+import { useQueryClient } from '@tanstack/react-query'
 
 export function TinyPhrase({ lang, text }) {
   return (
@@ -22,6 +23,10 @@ export function TinyPhrase({ lang, text }) {
 export default function BigPhrase({ phraseId, setActivePhrase }) {
   const { data, status, error } = usePhrase(phraseId)
   const { data: decks, status: decksStatus, error: decksError } = useAllDecks()
+  const queryClient = useQueryClient()
+  // const currentMembership
+  const currentStatus =
+    data?.deckMembershipCollection?.edges[0]?.node?.status || null
   const deckId =
     data && decks
       ? decks.find(edge => edge?.node?.lang === data?.lang)?.node?.id
@@ -31,6 +36,8 @@ export default function BigPhrase({ phraseId, setActivePhrase }) {
     onSuccess: data => {
       console.log(`onSuccess data,`, data)
       queryClient.invalidateQueries({ queryKey: ['deck', lang] })
+      queryClient.invalidateQueries({ queryKey: ['decks'] })
+      queryClient.invalidateQueries({ queryKey: ['phrase', phraseId] })
     },
   })
 
@@ -39,8 +46,8 @@ export default function BigPhrase({ phraseId, setActivePhrase }) {
   if (status === 'error' || decksStatus === 'error')
     return <ErrorList errors={[error, decksError]} />
 
+  // console.log(`the Phrase:`, data)
   const { text, lang } = data
-
   const translations = data.cardTranslationCollection?.edges ?? null
   const seeAlsos =
     data.cardSeeAlsoCollection?.edges.map(({ node }) => {
@@ -89,24 +96,48 @@ export default function BigPhrase({ phraseId, setActivePhrase }) {
         <p className="text-gray-600">There aren't any translations sorry</p>
       )}
       <div className="my-6 flex gap-8 text-2xl">
-        <button
-          className={`btn btn-success btn-lg ${
-            addNewCardToDeck.isLoading ? 'loading' : ''
-          }`}
-          role="button"
-          onClick={() => addNewCardToDeck.mutate('active')}
-        >
-          📖 Learn it!
-        </button>
-        <button
-          className={`btn btn-error btn-lg ${
-            addNewCardToDeck.isLoading ? 'loading' : ''
-          }`}
-          role="button"
-          onClick={() => addNewCardToDeck.mutate('skipped')}
-        >
-          ❌ Skip it
-        </button>
+        {addNewCardToDeck.isLoading ? (
+          <Loading />
+        ) : addNewCardToDeck.isError ? (
+          <ErrorList error={addNewCardToDeck.error} />
+        ) : addNewCardToDeck.isSuccess ? (
+          <p className="text-lg">
+            Success! added this phrase to your deck with status: &ldquo;
+            {
+              addNewCardToDeck.data.insertIntoDeckMembershipCollection
+                .records[0].status
+            }
+            &rdquo;.&nbsp;
+            <a
+              href="#"
+              className="text-primary hover:underline"
+              onClick={() => setActivePhrase(-1)}
+            >
+              Keep browsing.
+            </a>
+          </p>
+        ) : (
+          <>
+            <button
+              className={`btn btn-success btn-lg ${
+                addNewCardToDeck.isLoading ? 'loading' : ''
+              }`}
+              role="button"
+              onClick={() => addNewCardToDeck.mutate('active')}
+            >
+              📖 Learn it!
+            </button>
+            <button
+              className={`btn btn-error btn-lg ${
+                addNewCardToDeck.isLoading ? 'loading' : ''
+              }`}
+              role="button"
+              onClick={() => addNewCardToDeck.mutate('skipped')}
+            >
+              ❌ Skip it
+            </button>
+          </>
+        )}
       </div>
     </div>
   )
