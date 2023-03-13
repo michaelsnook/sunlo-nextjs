@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Banner from 'components/Banner'
+import Garlic from 'components/Garlic'
 
 export default function SiteHome() {
   return (
@@ -17,7 +18,10 @@ export default function SiteHome() {
           </p>
         </article>
         <aside className="py-5 px-0 md:px-3 lg:px-5 col-span-3">
-          <ul className="py-10 flex flex-row gap-2">
+          <ul className="py-10 flex flex-col gap-2">
+            <li className="ml-10">
+              <Garlic size={120} />
+            </li>
             <li>
               <Link
                 href="/login"
