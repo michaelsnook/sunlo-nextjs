@@ -12,7 +12,7 @@ export const postNewDeck = async (lang: string) => {
     },
     error,
   } = await supabase.auth.getSession()
-  if (error) return { error }
+  if (error) throw error
   const result = await request({
     ...requestOptions(access_token),
     variables: { objects: [{ lang }] },
@@ -30,7 +30,7 @@ export const postNewCard = async ({ status, phraseId, deckId }) => {
     },
     error,
   } = await supabase.auth.getSession()
-  if (error) return { error }
+  if (error) throw error
   const result = await request({
     ...requestOptions(access_token),
     variables: { objects: [{ status, cardPhraseId: phraseId, deckId }] },

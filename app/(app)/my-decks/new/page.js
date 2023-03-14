@@ -44,7 +44,7 @@ export default function Page() {
       console.log(`detected aform error`)
       return
     }
-    console.log(`submit the form`, event, value)
+    // console.log(`submit the form`, event, value)
     createNewDeck.mutate(value)
   }
   const handleChange = e => {

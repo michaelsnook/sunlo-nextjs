@@ -40,7 +40,7 @@ export default function BigPhrase({
       ? decks.find(edge => edge?.node?.lang === data?.lang)?.node?.id
       : null
   const addNewCardToDeck = useMutation({
-    mutationFn: status => postNewCard({ status, phraseId, deckId }),
+    mutationFn: (status: string) => postNewCard({ status, phraseId, deckId }),
     onSuccess: data => {
       console.log(`onSuccess data,`, data)
       queryClient.invalidateQueries({ queryKey: ['deck', lang] })
