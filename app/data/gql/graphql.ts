@@ -237,12 +237,12 @@ export type CardTranslation = Node & {
   cardPhrase?: Maybe<CardPhrase>;
   cardPhraseId: Scalars['UUID'];
   id: Scalars['UUID'];
-  lang?: Maybe<Scalars['String']>;
+  lang: Scalars['String'];
   language?: Maybe<Language>;
   literal?: Maybe<Scalars['String']>;
   /** Globally Unique Record Identifier */
   nodeId: Scalars['ID'];
-  text?: Maybe<Scalars['String']>;
+  text: Scalars['String'];
 };
 
 export type CardTranslationConnection = {
@@ -1523,7 +1523,7 @@ export type AllDecksQueryQuery = { __typename?: 'Query', userDeckCollection?: { 
 export type AllPhraseDetailsQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllPhraseDetailsQueryQuery = { __typename?: 'Query', cardPhraseCollection?: { __typename?: 'CardPhraseConnection', edges: Array<{ __typename?: 'CardPhraseEdge', node: { __typename?: 'CardPhrase', id: any, text: string, lang?: string | null, cardTranslationCollection?: { __typename?: 'CardTranslationConnection', edges: Array<{ __typename?: 'CardTranslationEdge', node: { __typename?: 'CardTranslation', id: any, text?: string | null, lang?: string | null } }> } | null, cardSeeAlsoCollection?: { __typename?: 'CardSeeAlsoConnection', edges: Array<{ __typename?: 'CardSeeAlsoEdge', node: { __typename?: 'CardSeeAlso', fromPhrase?: { __typename?: 'CardPhrase', id: any, text: string, lang?: string | null } | null, toPhrase?: { __typename?: 'CardPhrase', id: any, text: string, lang?: string | null } | null } }> } | null } }> } | null };
+export type AllPhraseDetailsQueryQuery = { __typename?: 'Query', cardPhraseCollection?: { __typename?: 'CardPhraseConnection', edges: Array<{ __typename?: 'CardPhraseEdge', node: { __typename?: 'CardPhrase', id: any, text: string, lang?: string | null, cardTranslationCollection?: { __typename?: 'CardTranslationConnection', edges: Array<{ __typename?: 'CardTranslationEdge', node: { __typename?: 'CardTranslation', id: any, text: string, lang: string } }> } | null, cardSeeAlsoCollection?: { __typename?: 'CardSeeAlsoConnection', edges: Array<{ __typename?: 'CardSeeAlsoEdge', node: { __typename?: 'CardSeeAlso', fromPhrase?: { __typename?: 'CardPhrase', id: any, text: string, lang?: string | null } | null, toPhrase?: { __typename?: 'CardPhrase', id: any, text: string, lang?: string | null } | null } }> } | null } }> } | null };
 
 export type AllPhraseIdsQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1535,21 +1535,21 @@ export type DeckQueryQueryVariables = Exact<{
 }>;
 
 
-export type DeckQueryQuery = { __typename?: 'Query', userDeckCollection?: { __typename?: 'UserDeckConnection', edges: Array<{ __typename?: 'UserDeckEdge', node: { __typename?: 'UserDeck', id: any, uid: any, lang?: string | null, deckMembershipCollection?: { __typename?: 'DeckMembershipConnection', edges: Array<{ __typename?: 'DeckMembershipEdge', node: { __typename?: 'DeckMembership', id: any, status: string, cardPhrase?: { __typename?: 'CardPhrase', id: any, text: string, lang?: string | null, cardTranslationCollection?: { __typename?: 'CardTranslationConnection', edges: Array<{ __typename?: 'CardTranslationEdge', node: { __typename?: 'CardTranslation', id: any, text?: string | null, lang?: string | null, literal?: string | null } }> } | null } | null } }> } | null } }> } | null };
+export type DeckQueryQuery = { __typename?: 'Query', userDeckCollection?: { __typename?: 'UserDeckConnection', edges: Array<{ __typename?: 'UserDeckEdge', node: { __typename?: 'UserDeck', id: any, uid: any, lang?: string | null, deckMembershipCollection?: { __typename?: 'DeckMembershipConnection', edges: Array<{ __typename?: 'DeckMembershipEdge', node: { __typename?: 'DeckMembership', id: any, status: string, cardPhrase?: { __typename?: 'CardPhrase', id: any, text: string, lang?: string | null, cardTranslationCollection?: { __typename?: 'CardTranslationConnection', edges: Array<{ __typename?: 'CardTranslationEdge', node: { __typename?: 'CardTranslation', id: any, text: string, lang: string, literal?: string | null } }> } | null } | null } }> } | null } }> } | null };
 
 export type LanguageDetailsQueryQueryVariables = Exact<{
   filter?: InputMaybe<LanguageFilter>;
 }>;
 
 
-export type LanguageDetailsQueryQuery = { __typename?: 'Query', languageCollection?: { __typename?: 'LanguageConnection', edges: Array<{ __typename?: 'LanguageEdge', node: { __typename?: 'Language', code: string, name: string, cardPhraseCollection?: { __typename?: 'CardPhraseConnection', edges: Array<{ __typename?: 'CardPhraseEdge', node: { __typename?: 'CardPhrase', id: any, text: string, lang?: string | null, cardTranslationCollection?: { __typename?: 'CardTranslationConnection', edges: Array<{ __typename?: 'CardTranslationEdge', node: { __typename?: 'CardTranslation', id: any, lang?: string | null, text?: string | null } }> } | null, cardSeeAlsoCollection?: { __typename?: 'CardSeeAlsoConnection', edges: Array<{ __typename?: 'CardSeeAlsoEdge', node: { __typename?: 'CardSeeAlso', fromPhrase?: { __typename?: 'CardPhrase', id: any, text: string, lang?: string | null } | null, toPhrase?: { __typename?: 'CardPhrase', id: any, text: string, lang?: string | null } | null } }> } | null } }> } | null } }> } | null };
+export type LanguageDetailsQueryQuery = { __typename?: 'Query', languageCollection?: { __typename?: 'LanguageConnection', edges: Array<{ __typename?: 'LanguageEdge', node: { __typename?: 'Language', code: string, name: string, cardPhraseCollection?: { __typename?: 'CardPhraseConnection', edges: Array<{ __typename?: 'CardPhraseEdge', node: { __typename?: 'CardPhrase', id: any, text: string, lang?: string | null, cardTranslationCollection?: { __typename?: 'CardTranslationConnection', edges: Array<{ __typename?: 'CardTranslationEdge', node: { __typename?: 'CardTranslation', id: any, lang: string, text: string } }> } | null, cardSeeAlsoCollection?: { __typename?: 'CardSeeAlsoConnection', edges: Array<{ __typename?: 'CardSeeAlsoEdge', node: { __typename?: 'CardSeeAlso', fromPhrase?: { __typename?: 'CardPhrase', id: any, text: string, lang?: string | null } | null, toPhrase?: { __typename?: 'CardPhrase', id: any, text: string, lang?: string | null } | null } }> } | null } }> } | null } }> } | null };
 
 export type CardPhraseCollectionQueryVariables = Exact<{
   filter?: InputMaybe<CardPhraseFilter>;
 }>;
 
 
-export type CardPhraseCollectionQuery = { __typename?: 'Query', cardPhraseCollection?: { __typename?: 'CardPhraseConnection', edges: Array<{ __typename?: 'CardPhraseEdge', node: { __typename?: 'CardPhrase', id: any, text: string, lang?: string | null, cardTranslationCollection?: { __typename?: 'CardTranslationConnection', edges: Array<{ __typename?: 'CardTranslationEdge', node: { __typename?: 'CardTranslation', id: any, text?: string | null, lang?: string | null } }> } | null, deckMembershipCollection?: { __typename?: 'DeckMembershipConnection', edges: Array<{ __typename?: 'DeckMembershipEdge', node: { __typename?: 'DeckMembership', deckId?: any | null, status: string } }> } | null, cardSeeAlsoCollection?: { __typename?: 'CardSeeAlsoConnection', edges: Array<{ __typename?: 'CardSeeAlsoEdge', node: { __typename?: 'CardSeeAlso', fromPhrase?: { __typename?: 'CardPhrase', id: any, text: string, lang?: string | null } | null, toPhrase?: { __typename?: 'CardPhrase', id: any, text: string, lang?: string | null } | null } }> } | null } }> } | null };
+export type CardPhraseCollectionQuery = { __typename?: 'Query', cardPhraseCollection?: { __typename?: 'CardPhraseConnection', edges: Array<{ __typename?: 'CardPhraseEdge', node: { __typename?: 'CardPhrase', id: any, text: string, lang?: string | null, cardTranslationCollection?: { __typename?: 'CardTranslationConnection', edges: Array<{ __typename?: 'CardTranslationEdge', node: { __typename?: 'CardTranslation', id: any, text: string, lang: string } }> } | null, deckMembershipCollection?: { __typename?: 'DeckMembershipConnection', edges: Array<{ __typename?: 'DeckMembershipEdge', node: { __typename?: 'DeckMembership', deckId?: any | null, status: string } }> } | null, cardSeeAlsoCollection?: { __typename?: 'CardSeeAlsoConnection', edges: Array<{ __typename?: 'CardSeeAlsoEdge', node: { __typename?: 'CardSeeAlso', fromPhrase?: { __typename?: 'CardPhrase', id: any, text: string, lang?: string | null } | null, toPhrase?: { __typename?: 'CardPhrase', id: any, text: string, lang?: string | null } | null } }> } | null } }> } | null };
 
 export type ProfileQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
