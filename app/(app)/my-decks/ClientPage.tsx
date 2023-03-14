@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useAllDecks } from 'app/data/hooks'
 import Loading from 'app/loading'
 import languages from 'lib/languages'
+import ErrorList from 'components/ErrorList'
 
 function OneDeck({ node }) {
   return (

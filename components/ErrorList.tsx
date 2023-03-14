@@ -1,4 +1,11 @@
-const ErrorList = ({ summary, error, errors, asCard }) => {
+type ErrorListProps = {
+  summary?: string
+  error?: Object
+  errors?: Object[]
+  asCard?: boolean
+}
+
+const ErrorList = ({ summary, error, errors, asCard }: ErrorListProps) => {
   // convert neively-passed error objects to strings
   const errorString = JSON.stringify(error)
 
