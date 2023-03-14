@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Garlic from 'components/garlic'
+import Garlic from 'app/components/Garlic'
 import { staticMenu, convertDecksToMenu } from 'lib/menus'
 import { usePathname } from 'next/navigation'
 import { useProfile, useAllDecks } from 'app/data/hooks'
