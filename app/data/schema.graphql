@@ -29,7 +29,9 @@ input BooleanFilter {
 }
 
 type CardPhrase implements Node {
-  """Globally Unique Record Identifier"""
+  """
+  Globally Unique Record Identifier
+  """
   nodeId: ID!
   text: String!
   id: UUID!
@@ -37,60 +39,96 @@ type CardPhrase implements Node {
   lang: String
   language: Language
   cardSeeAlsoCollection(
-    """Query the first `n` records in the collection"""
+    """
+    Query the first `n` records in the collection
+    """
     first: Int
 
-    """Query the last `n` records in the collection"""
+    """
+    Query the last `n` records in the collection
+    """
     last: Int
 
-    """Query values in the collection before the provided cursor"""
+    """
+    Query values in the collection before the provided cursor
+    """
     before: Cursor
 
-    """Query values in the collection after the provided cursor"""
+    """
+    Query values in the collection after the provided cursor
+    """
     after: Cursor
 
-    """Filters to apply to the results set when querying from the collection"""
+    """
+    Filters to apply to the results set when querying from the collection
+    """
     filter: CardSeeAlsoFilter
 
-    """Sort order to apply to the collection"""
+    """
+    Sort order to apply to the collection
+    """
     orderBy: [CardSeeAlsoOrderBy!]
   ): CardSeeAlsoConnection
   cardTranslationCollection(
-    """Query the first `n` records in the collection"""
+    """
+    Query the first `n` records in the collection
+    """
     first: Int
 
-    """Query the last `n` records in the collection"""
+    """
+    Query the last `n` records in the collection
+    """
     last: Int
 
-    """Query values in the collection before the provided cursor"""
+    """
+    Query values in the collection before the provided cursor
+    """
     before: Cursor
 
-    """Query values in the collection after the provided cursor"""
+    """
+    Query values in the collection after the provided cursor
+    """
     after: Cursor
 
-    """Filters to apply to the results set when querying from the collection"""
+    """
+    Filters to apply to the results set when querying from the collection
+    """
     filter: CardTranslationFilter
 
-    """Sort order to apply to the collection"""
+    """
+    Sort order to apply to the collection
+    """
     orderBy: [CardTranslationOrderBy!]
   ): CardTranslationConnection
   deckMembershipCollection(
-    """Query the first `n` records in the collection"""
+    """
+    Query the first `n` records in the collection
+    """
     first: Int
 
-    """Query the last `n` records in the collection"""
+    """
+    Query the last `n` records in the collection
+    """
     last: Int
 
-    """Query values in the collection before the provided cursor"""
+    """
+    Query values in the collection before the provided cursor
+    """
     before: Cursor
 
-    """Query values in the collection after the provided cursor"""
+    """
+    Query values in the collection after the provided cursor
+    """
     after: Cursor
 
-    """Filters to apply to the results set when querying from the collection"""
+    """
+    Filters to apply to the results set when querying from the collection
+    """
     filter: DeckMembershipFilter
 
-    """Sort order to apply to the collection"""
+    """
+    Sort order to apply to the collection
+    """
     orderBy: [DeckMembershipOrderBy!]
   ): DeckMembershipConnection
 }
@@ -101,10 +139,14 @@ type CardPhraseConnection {
 }
 
 type CardPhraseDeleteResponse {
-  """Count of the records impacted by the mutation"""
+  """
+  Count of the records impacted by the mutation
+  """
   affectedCount: Int!
 
-  """Array of records impacted by the mutation"""
+  """
+  Array of records impacted by the mutation
+  """
   records: [CardPhrase!]!
 }
 
@@ -129,10 +171,14 @@ input CardPhraseInsertInput {
 }
 
 type CardPhraseInsertResponse {
-  """Count of the records impacted by the mutation"""
+  """
+  Count of the records impacted by the mutation
+  """
   affectedCount: Int!
 
-  """Array of records impacted by the mutation"""
+  """
+  Array of records impacted by the mutation
+  """
   records: [CardPhrase!]!
 }
 
@@ -151,15 +197,21 @@ input CardPhraseUpdateInput {
 }
 
 type CardPhraseUpdateResponse {
-  """Count of the records impacted by the mutation"""
+  """
+  Count of the records impacted by the mutation
+  """
   affectedCount: Int!
 
-  """Array of records impacted by the mutation"""
+  """
+  Array of records impacted by the mutation
+  """
   records: [CardPhrase!]!
 }
 
 type CardSeeAlso implements Node {
-  """Globally Unique Record Identifier"""
+  """
+  Globally Unique Record Identifier
+  """
   nodeId: ID!
   fromPhraseId: UUID
   toPhraseId: UUID
@@ -175,10 +227,14 @@ type CardSeeAlsoConnection {
 }
 
 type CardSeeAlsoDeleteResponse {
-  """Count of the records impacted by the mutation"""
+  """
+  Count of the records impacted by the mutation
+  """
   affectedCount: Int!
 
-  """Array of records impacted by the mutation"""
+  """
+  Array of records impacted by the mutation
+  """
   records: [CardSeeAlso!]!
 }
 
@@ -203,10 +259,14 @@ input CardSeeAlsoInsertInput {
 }
 
 type CardSeeAlsoInsertResponse {
-  """Count of the records impacted by the mutation"""
+  """
+  Count of the records impacted by the mutation
+  """
   affectedCount: Int!
 
-  """Array of records impacted by the mutation"""
+  """
+  Array of records impacted by the mutation
+  """
   records: [CardSeeAlso!]!
 }
 
@@ -225,22 +285,28 @@ input CardSeeAlsoUpdateInput {
 }
 
 type CardSeeAlsoUpdateResponse {
-  """Count of the records impacted by the mutation"""
+  """
+  Count of the records impacted by the mutation
+  """
   affectedCount: Int!
 
-  """Array of records impacted by the mutation"""
+  """
+  Array of records impacted by the mutation
+  """
   records: [CardSeeAlso!]!
 }
 
 type CardTranslation implements Node {
-  """Globally Unique Record Identifier"""
+  """
+  Globally Unique Record Identifier
+  """
   nodeId: ID!
-  text: String
+  text: String!
   literal: String
   id: UUID!
   cardPhraseId: UUID!
   addedBy: UUID
-  lang: String
+  lang: String!
   language: Language
   cardPhrase: CardPhrase
 }
@@ -251,10 +317,14 @@ type CardTranslationConnection {
 }
 
 type CardTranslationDeleteResponse {
-  """Count of the records impacted by the mutation"""
+  """
+  Count of the records impacted by the mutation
+  """
   affectedCount: Int!
 
-  """Array of records impacted by the mutation"""
+  """
+  Array of records impacted by the mutation
+  """
   records: [CardTranslation!]!
 }
 
@@ -283,10 +353,14 @@ input CardTranslationInsertInput {
 }
 
 type CardTranslationInsertResponse {
-  """Count of the records impacted by the mutation"""
+  """
+  Count of the records impacted by the mutation
+  """
   affectedCount: Int!
 
-  """Array of records impacted by the mutation"""
+  """
+  Array of records impacted by the mutation
+  """
   records: [CardTranslation!]!
 }
 
@@ -309,10 +383,14 @@ input CardTranslationUpdateInput {
 }
 
 type CardTranslationUpdateResponse {
-  """Count of the records impacted by the mutation"""
+  """
+  Count of the records impacted by the mutation
+  """
   affectedCount: Int!
 
-  """Array of records impacted by the mutation"""
+  """
+  Array of records impacted by the mutation
+  """
   records: [CardTranslation!]!
 }
 
@@ -351,7 +429,9 @@ input DatetimeFilter {
 }
 
 type DeckMembership implements Node {
-  """Globally Unique Record Identifier"""
+  """
+  Globally Unique Record Identifier
+  """
   nodeId: ID!
   status: String!
   uid: UUID!
@@ -370,10 +450,14 @@ type DeckMembershipConnection {
 }
 
 type DeckMembershipDeleteResponse {
-  """Count of the records impacted by the mutation"""
+  """
+  Count of the records impacted by the mutation
+  """
   affectedCount: Int!
 
-  """Array of records impacted by the mutation"""
+  """
+  Array of records impacted by the mutation
+  """
   records: [DeckMembership!]!
 }
 
@@ -402,10 +486,14 @@ input DeckMembershipInsertInput {
 }
 
 type DeckMembershipInsertResponse {
-  """Count of the records impacted by the mutation"""
+  """
+  Count of the records impacted by the mutation
+  """
   affectedCount: Int!
 
-  """Array of records impacted by the mutation"""
+  """
+  Array of records impacted by the mutation
+  """
   records: [DeckMembership!]!
 }
 
@@ -428,10 +516,14 @@ input DeckMembershipUpdateInput {
 }
 
 type DeckMembershipUpdateResponse {
-  """Count of the records impacted by the mutation"""
+  """
+  Count of the records impacted by the mutation
+  """
   affectedCount: Int!
 
-  """Array of records impacted by the mutation"""
+  """
+  Array of records impacted by the mutation
+  """
   records: [DeckMembership!]!
 }
 
@@ -478,66 +570,104 @@ input IntFilter {
 scalar JSON
 
 type Language implements Node {
-  """Globally Unique Record Identifier"""
+  """
+  Globally Unique Record Identifier
+  """
   nodeId: ID!
   name: String!
   code: String!
   aliasOf: String
   cardTranslationCollection(
-    """Query the first `n` records in the collection"""
+    """
+    Query the first `n` records in the collection
+    """
     first: Int
 
-    """Query the last `n` records in the collection"""
+    """
+    Query the last `n` records in the collection
+    """
     last: Int
 
-    """Query values in the collection before the provided cursor"""
+    """
+    Query values in the collection before the provided cursor
+    """
     before: Cursor
 
-    """Query values in the collection after the provided cursor"""
+    """
+    Query values in the collection after the provided cursor
+    """
     after: Cursor
 
-    """Filters to apply to the results set when querying from the collection"""
+    """
+    Filters to apply to the results set when querying from the collection
+    """
     filter: CardTranslationFilter
 
-    """Sort order to apply to the collection"""
+    """
+    Sort order to apply to the collection
+    """
     orderBy: [CardTranslationOrderBy!]
   ): CardTranslationConnection
   cardPhraseCollection(
-    """Query the first `n` records in the collection"""
+    """
+    Query the first `n` records in the collection
+    """
     first: Int
 
-    """Query the last `n` records in the collection"""
+    """
+    Query the last `n` records in the collection
+    """
     last: Int
 
-    """Query values in the collection before the provided cursor"""
+    """
+    Query values in the collection before the provided cursor
+    """
     before: Cursor
 
-    """Query values in the collection after the provided cursor"""
+    """
+    Query values in the collection after the provided cursor
+    """
     after: Cursor
 
-    """Filters to apply to the results set when querying from the collection"""
+    """
+    Filters to apply to the results set when querying from the collection
+    """
     filter: CardPhraseFilter
 
-    """Sort order to apply to the collection"""
+    """
+    Sort order to apply to the collection
+    """
     orderBy: [CardPhraseOrderBy!]
   ): CardPhraseConnection
   userDeckCollection(
-    """Query the first `n` records in the collection"""
+    """
+    Query the first `n` records in the collection
+    """
     first: Int
 
-    """Query the last `n` records in the collection"""
+    """
+    Query the last `n` records in the collection
+    """
     last: Int
 
-    """Query values in the collection before the provided cursor"""
+    """
+    Query values in the collection before the provided cursor
+    """
     before: Cursor
 
-    """Query values in the collection after the provided cursor"""
+    """
+    Query values in the collection after the provided cursor
+    """
     after: Cursor
 
-    """Filters to apply to the results set when querying from the collection"""
+    """
+    Filters to apply to the results set when querying from the collection
+    """
     filter: UserDeckFilter
 
-    """Sort order to apply to the collection"""
+    """
+    Sort order to apply to the collection
+    """
     orderBy: [UserDeckOrderBy!]
   ): UserDeckConnection
 }
@@ -548,10 +678,14 @@ type LanguageConnection {
 }
 
 type LanguageDeleteResponse {
-  """Count of the records impacted by the mutation"""
+  """
+  Count of the records impacted by the mutation
+  """
   affectedCount: Int!
 
-  """Array of records impacted by the mutation"""
+  """
+  Array of records impacted by the mutation
+  """
   records: [Language!]!
 }
 
@@ -574,10 +708,14 @@ input LanguageInsertInput {
 }
 
 type LanguageInsertResponse {
-  """Count of the records impacted by the mutation"""
+  """
+  Count of the records impacted by the mutation
+  """
   affectedCount: Int!
 
-  """Array of records impacted by the mutation"""
+  """
+  Array of records impacted by the mutation
+  """
   records: [Language!]!
 }
 
@@ -594,18 +732,28 @@ input LanguageUpdateInput {
 }
 
 type LanguageUpdateResponse {
-  """Count of the records impacted by the mutation"""
+  """
+  Count of the records impacted by the mutation
+  """
   affectedCount: Int!
 
-  """Array of records impacted by the mutation"""
+  """
+  Array of records impacted by the mutation
+  """
   records: [Language!]!
 }
 
-"""The root type for creating and mutating data"""
+"""
+The root type for creating and mutating data
+"""
 type Mutation {
-  """Deletes zero or more records from the `CardPhrase` collection"""
+  """
+  Deletes zero or more records from the `CardPhrase` collection
+  """
   deleteFromCardPhraseCollection(
-    """Restricts the mutation's impact to records matching the criteria"""
+    """
+    Restricts the mutation's impact to records matching the criteria
+    """
     filter: CardPhraseFilter
 
     """
@@ -614,9 +762,13 @@ type Mutation {
     atMost: Int! = 1
   ): CardPhraseDeleteResponse!
 
-  """Deletes zero or more records from the `CardSeeAlso` collection"""
+  """
+  Deletes zero or more records from the `CardSeeAlso` collection
+  """
   deleteFromCardSeeAlsoCollection(
-    """Restricts the mutation's impact to records matching the criteria"""
+    """
+    Restricts the mutation's impact to records matching the criteria
+    """
     filter: CardSeeAlsoFilter
 
     """
@@ -625,9 +777,13 @@ type Mutation {
     atMost: Int! = 1
   ): CardSeeAlsoDeleteResponse!
 
-  """Deletes zero or more records from the `CardTranslation` collection"""
+  """
+  Deletes zero or more records from the `CardTranslation` collection
+  """
   deleteFromCardTranslationCollection(
-    """Restricts the mutation's impact to records matching the criteria"""
+    """
+    Restricts the mutation's impact to records matching the criteria
+    """
     filter: CardTranslationFilter
 
     """
@@ -636,9 +792,13 @@ type Mutation {
     atMost: Int! = 1
   ): CardTranslationDeleteResponse!
 
-  """Deletes zero or more records from the `DeckMembership` collection"""
+  """
+  Deletes zero or more records from the `DeckMembership` collection
+  """
   deleteFromDeckMembershipCollection(
-    """Restricts the mutation's impact to records matching the criteria"""
+    """
+    Restricts the mutation's impact to records matching the criteria
+    """
     filter: DeckMembershipFilter
 
     """
@@ -647,9 +807,13 @@ type Mutation {
     atMost: Int! = 1
   ): DeckMembershipDeleteResponse!
 
-  """Deletes zero or more records from the `Language` collection"""
+  """
+  Deletes zero or more records from the `Language` collection
+  """
   deleteFromLanguageCollection(
-    """Restricts the mutation's impact to records matching the criteria"""
+    """
+    Restricts the mutation's impact to records matching the criteria
+    """
     filter: LanguageFilter
 
     """
@@ -658,9 +822,13 @@ type Mutation {
     atMost: Int! = 1
   ): LanguageDeleteResponse!
 
-  """Deletes zero or more records from the `Profile` collection"""
+  """
+  Deletes zero or more records from the `Profile` collection
+  """
   deleteFromProfileCollection(
-    """Restricts the mutation's impact to records matching the criteria"""
+    """
+    Restricts the mutation's impact to records matching the criteria
+    """
     filter: ProfileFilter
 
     """
@@ -669,9 +837,13 @@ type Mutation {
     atMost: Int! = 1
   ): ProfileDeleteResponse!
 
-  """Deletes zero or more records from the `UserDeck` collection"""
+  """
+  Deletes zero or more records from the `UserDeck` collection
+  """
   deleteFromUserDeckCollection(
-    """Restricts the mutation's impact to records matching the criteria"""
+    """
+    Restricts the mutation's impact to records matching the criteria
+    """
     filter: UserDeckFilter
 
     """
@@ -680,9 +852,13 @@ type Mutation {
     atMost: Int! = 1
   ): UserDeckDeleteResponse!
 
-  """Deletes zero or more records from the `buckets` collection"""
+  """
+  Deletes zero or more records from the `buckets` collection
+  """
   deleteFrombucketsCollection(
-    """Restricts the mutation's impact to records matching the criteria"""
+    """
+    Restricts the mutation's impact to records matching the criteria
+    """
     filter: bucketsFilter
 
     """
@@ -691,9 +867,13 @@ type Mutation {
     atMost: Int! = 1
   ): bucketsDeleteResponse!
 
-  """Deletes zero or more records from the `migrations` collection"""
+  """
+  Deletes zero or more records from the `migrations` collection
+  """
   deleteFrommigrationsCollection(
-    """Restricts the mutation's impact to records matching the criteria"""
+    """
+    Restricts the mutation's impact to records matching the criteria
+    """
     filter: migrationsFilter
 
     """
@@ -702,9 +882,13 @@ type Mutation {
     atMost: Int! = 1
   ): migrationsDeleteResponse!
 
-  """Deletes zero or more records from the `objects` collection"""
+  """
+  Deletes zero or more records from the `objects` collection
+  """
   deleteFromobjectsCollection(
-    """Restricts the mutation's impact to records matching the criteria"""
+    """
+    Restricts the mutation's impact to records matching the criteria
+    """
     filter: objectsFilter
 
     """
@@ -713,44 +897,88 @@ type Mutation {
     atMost: Int! = 1
   ): objectsDeleteResponse!
 
-  """Adds one or more `CardPhrase` records to the collection"""
-  insertIntoCardPhraseCollection(objects: [CardPhraseInsertInput!]!): CardPhraseInsertResponse
+  """
+  Adds one or more `CardPhrase` records to the collection
+  """
+  insertIntoCardPhraseCollection(
+    objects: [CardPhraseInsertInput!]!
+  ): CardPhraseInsertResponse
 
-  """Adds one or more `CardSeeAlso` records to the collection"""
-  insertIntoCardSeeAlsoCollection(objects: [CardSeeAlsoInsertInput!]!): CardSeeAlsoInsertResponse
+  """
+  Adds one or more `CardSeeAlso` records to the collection
+  """
+  insertIntoCardSeeAlsoCollection(
+    objects: [CardSeeAlsoInsertInput!]!
+  ): CardSeeAlsoInsertResponse
 
-  """Adds one or more `CardTranslation` records to the collection"""
-  insertIntoCardTranslationCollection(objects: [CardTranslationInsertInput!]!): CardTranslationInsertResponse
+  """
+  Adds one or more `CardTranslation` records to the collection
+  """
+  insertIntoCardTranslationCollection(
+    objects: [CardTranslationInsertInput!]!
+  ): CardTranslationInsertResponse
 
-  """Adds one or more `DeckMembership` records to the collection"""
-  insertIntoDeckMembershipCollection(objects: [DeckMembershipInsertInput!]!): DeckMembershipInsertResponse
+  """
+  Adds one or more `DeckMembership` records to the collection
+  """
+  insertIntoDeckMembershipCollection(
+    objects: [DeckMembershipInsertInput!]!
+  ): DeckMembershipInsertResponse
 
-  """Adds one or more `Language` records to the collection"""
-  insertIntoLanguageCollection(objects: [LanguageInsertInput!]!): LanguageInsertResponse
+  """
+  Adds one or more `Language` records to the collection
+  """
+  insertIntoLanguageCollection(
+    objects: [LanguageInsertInput!]!
+  ): LanguageInsertResponse
 
-  """Adds one or more `Profile` records to the collection"""
-  insertIntoProfileCollection(objects: [ProfileInsertInput!]!): ProfileInsertResponse
+  """
+  Adds one or more `Profile` records to the collection
+  """
+  insertIntoProfileCollection(
+    objects: [ProfileInsertInput!]!
+  ): ProfileInsertResponse
 
-  """Adds one or more `UserDeck` records to the collection"""
-  insertIntoUserDeckCollection(objects: [UserDeckInsertInput!]!): UserDeckInsertResponse
+  """
+  Adds one or more `UserDeck` records to the collection
+  """
+  insertIntoUserDeckCollection(
+    objects: [UserDeckInsertInput!]!
+  ): UserDeckInsertResponse
 
-  """Adds one or more `buckets` records to the collection"""
-  insertIntobucketsCollection(objects: [bucketsInsertInput!]!): bucketsInsertResponse
+  """
+  Adds one or more `buckets` records to the collection
+  """
+  insertIntobucketsCollection(
+    objects: [bucketsInsertInput!]!
+  ): bucketsInsertResponse
 
-  """Adds one or more `migrations` records to the collection"""
-  insertIntomigrationsCollection(objects: [migrationsInsertInput!]!): migrationsInsertResponse
+  """
+  Adds one or more `migrations` records to the collection
+  """
+  insertIntomigrationsCollection(
+    objects: [migrationsInsertInput!]!
+  ): migrationsInsertResponse
 
-  """Adds one or more `objects` records to the collection"""
-  insertIntoobjectsCollection(objects: [objectsInsertInput!]!): objectsInsertResponse
+  """
+  Adds one or more `objects` records to the collection
+  """
+  insertIntoobjectsCollection(
+    objects: [objectsInsertInput!]!
+  ): objectsInsertResponse
 
-  """Updates zero or more records in the `CardPhrase` collection"""
+  """
+  Updates zero or more records in the `CardPhrase` collection
+  """
   updateCardPhraseCollection(
     """
     Fields that are set will be updated for all records matching the `filter`
     """
     set: CardPhraseUpdateInput!
 
-    """Restricts the mutation's impact to records matching the criteria"""
+    """
+    Restricts the mutation's impact to records matching the criteria
+    """
     filter: CardPhraseFilter
 
     """
@@ -759,14 +987,18 @@ type Mutation {
     atMost: Int! = 1
   ): CardPhraseUpdateResponse!
 
-  """Updates zero or more records in the `CardSeeAlso` collection"""
+  """
+  Updates zero or more records in the `CardSeeAlso` collection
+  """
   updateCardSeeAlsoCollection(
     """
     Fields that are set will be updated for all records matching the `filter`
     """
     set: CardSeeAlsoUpdateInput!
 
-    """Restricts the mutation's impact to records matching the criteria"""
+    """
+    Restricts the mutation's impact to records matching the criteria
+    """
     filter: CardSeeAlsoFilter
 
     """
@@ -775,14 +1007,18 @@ type Mutation {
     atMost: Int! = 1
   ): CardSeeAlsoUpdateResponse!
 
-  """Updates zero or more records in the `CardTranslation` collection"""
+  """
+  Updates zero or more records in the `CardTranslation` collection
+  """
   updateCardTranslationCollection(
     """
     Fields that are set will be updated for all records matching the `filter`
     """
     set: CardTranslationUpdateInput!
 
-    """Restricts the mutation's impact to records matching the criteria"""
+    """
+    Restricts the mutation's impact to records matching the criteria
+    """
     filter: CardTranslationFilter
 
     """
@@ -791,14 +1027,18 @@ type Mutation {
     atMost: Int! = 1
   ): CardTranslationUpdateResponse!
 
-  """Updates zero or more records in the `DeckMembership` collection"""
+  """
+  Updates zero or more records in the `DeckMembership` collection
+  """
   updateDeckMembershipCollection(
     """
     Fields that are set will be updated for all records matching the `filter`
     """
     set: DeckMembershipUpdateInput!
 
-    """Restricts the mutation's impact to records matching the criteria"""
+    """
+    Restricts the mutation's impact to records matching the criteria
+    """
     filter: DeckMembershipFilter
 
     """
@@ -807,14 +1047,18 @@ type Mutation {
     atMost: Int! = 1
   ): DeckMembershipUpdateResponse!
 
-  """Updates zero or more records in the `Language` collection"""
+  """
+  Updates zero or more records in the `Language` collection
+  """
   updateLanguageCollection(
     """
     Fields that are set will be updated for all records matching the `filter`
     """
     set: LanguageUpdateInput!
 
-    """Restricts the mutation's impact to records matching the criteria"""
+    """
+    Restricts the mutation's impact to records matching the criteria
+    """
     filter: LanguageFilter
 
     """
@@ -823,14 +1067,18 @@ type Mutation {
     atMost: Int! = 1
   ): LanguageUpdateResponse!
 
-  """Updates zero or more records in the `Profile` collection"""
+  """
+  Updates zero or more records in the `Profile` collection
+  """
   updateProfileCollection(
     """
     Fields that are set will be updated for all records matching the `filter`
     """
     set: ProfileUpdateInput!
 
-    """Restricts the mutation's impact to records matching the criteria"""
+    """
+    Restricts the mutation's impact to records matching the criteria
+    """
     filter: ProfileFilter
 
     """
@@ -839,14 +1087,18 @@ type Mutation {
     atMost: Int! = 1
   ): ProfileUpdateResponse!
 
-  """Updates zero or more records in the `UserDeck` collection"""
+  """
+  Updates zero or more records in the `UserDeck` collection
+  """
   updateUserDeckCollection(
     """
     Fields that are set will be updated for all records matching the `filter`
     """
     set: UserDeckUpdateInput!
 
-    """Restricts the mutation's impact to records matching the criteria"""
+    """
+    Restricts the mutation's impact to records matching the criteria
+    """
     filter: UserDeckFilter
 
     """
@@ -855,14 +1107,18 @@ type Mutation {
     atMost: Int! = 1
   ): UserDeckUpdateResponse!
 
-  """Updates zero or more records in the `buckets` collection"""
+  """
+  Updates zero or more records in the `buckets` collection
+  """
   updatebucketsCollection(
     """
     Fields that are set will be updated for all records matching the `filter`
     """
     set: bucketsUpdateInput!
 
-    """Restricts the mutation's impact to records matching the criteria"""
+    """
+    Restricts the mutation's impact to records matching the criteria
+    """
     filter: bucketsFilter
 
     """
@@ -871,14 +1127,18 @@ type Mutation {
     atMost: Int! = 1
   ): bucketsUpdateResponse!
 
-  """Updates zero or more records in the `migrations` collection"""
+  """
+  Updates zero or more records in the `migrations` collection
+  """
   updatemigrationsCollection(
     """
     Fields that are set will be updated for all records matching the `filter`
     """
     set: migrationsUpdateInput!
 
-    """Restricts the mutation's impact to records matching the criteria"""
+    """
+    Restricts the mutation's impact to records matching the criteria
+    """
     filter: migrationsFilter
 
     """
@@ -887,14 +1147,18 @@ type Mutation {
     atMost: Int! = 1
   ): migrationsUpdateResponse!
 
-  """Updates zero or more records in the `objects` collection"""
+  """
+  Updates zero or more records in the `objects` collection
+  """
   updateobjectsCollection(
     """
     Fields that are set will be updated for all records matching the `filter`
     """
     set: objectsUpdateInput!
 
-    """Restricts the mutation's impact to records matching the criteria"""
+    """
+    Restricts the mutation's impact to records matching the criteria
+    """
     filter: objectsFilter
 
     """
@@ -905,22 +1169,34 @@ type Mutation {
 }
 
 interface Node {
-  """Retrieves a record by `ID`"""
+  """
+  Retrieves a record by `ID`
+  """
   nodeId: ID!
 }
 
-"""Defines a per-field sorting order"""
+"""
+Defines a per-field sorting order
+"""
 enum OrderByDirection {
-  """Ascending order, nulls first"""
+  """
+  Ascending order, nulls first
+  """
   AscNullsFirst
 
-  """Ascending order, nulls last"""
+  """
+  Ascending order, nulls last
+  """
   AscNullsLast
 
-  """Descending order, nulls first"""
+  """
+  Descending order, nulls first
+  """
   DescNullsFirst
 
-  """Descending order, nulls last"""
+  """
+  Descending order, nulls last
+  """
   DescNullsLast
 }
 
@@ -932,7 +1208,9 @@ type PageInfo {
 }
 
 type Profile implements Node {
-  """Globally Unique Record Identifier"""
+  """
+  Globally Unique Record Identifier
+  """
   nodeId: ID!
   uid: UUID!
   username: String
@@ -942,41 +1220,65 @@ type Profile implements Node {
   languagesSpoken: [String]!
   languagePrimary: String!
   userDeckCollection(
-    """Query the first `n` records in the collection"""
+    """
+    Query the first `n` records in the collection
+    """
     first: Int
 
-    """Query the last `n` records in the collection"""
+    """
+    Query the last `n` records in the collection
+    """
     last: Int
 
-    """Query values in the collection before the provided cursor"""
+    """
+    Query values in the collection before the provided cursor
+    """
     before: Cursor
 
-    """Query values in the collection after the provided cursor"""
+    """
+    Query values in the collection after the provided cursor
+    """
     after: Cursor
 
-    """Filters to apply to the results set when querying from the collection"""
+    """
+    Filters to apply to the results set when querying from the collection
+    """
     filter: UserDeckFilter
 
-    """Sort order to apply to the collection"""
+    """
+    Sort order to apply to the collection
+    """
     orderBy: [UserDeckOrderBy!]
   ): UserDeckConnection
   deckMembershipCollection(
-    """Query the first `n` records in the collection"""
+    """
+    Query the first `n` records in the collection
+    """
     first: Int
 
-    """Query the last `n` records in the collection"""
+    """
+    Query the last `n` records in the collection
+    """
     last: Int
 
-    """Query values in the collection before the provided cursor"""
+    """
+    Query values in the collection before the provided cursor
+    """
     before: Cursor
 
-    """Query values in the collection after the provided cursor"""
+    """
+    Query values in the collection after the provided cursor
+    """
     after: Cursor
 
-    """Filters to apply to the results set when querying from the collection"""
+    """
+    Filters to apply to the results set when querying from the collection
+    """
     filter: DeckMembershipFilter
 
-    """Sort order to apply to the collection"""
+    """
+    Sort order to apply to the collection
+    """
     orderBy: [DeckMembershipOrderBy!]
   ): DeckMembershipConnection
 }
@@ -987,10 +1289,14 @@ type ProfileConnection {
 }
 
 type ProfileDeleteResponse {
-  """Count of the records impacted by the mutation"""
+  """
+  Count of the records impacted by the mutation
+  """
   affectedCount: Int!
 
-  """Array of records impacted by the mutation"""
+  """
+  Array of records impacted by the mutation
+  """
   records: [Profile!]!
 }
 
@@ -1020,10 +1326,14 @@ input ProfileInsertInput {
 }
 
 type ProfileInsertResponse {
-  """Count of the records impacted by the mutation"""
+  """
+  Count of the records impacted by the mutation
+  """
   affectedCount: Int!
 
-  """Array of records impacted by the mutation"""
+  """
+  Array of records impacted by the mutation
+  """
   records: [Profile!]!
 }
 
@@ -1047,228 +1357,378 @@ input ProfileUpdateInput {
 }
 
 type ProfileUpdateResponse {
-  """Count of the records impacted by the mutation"""
+  """
+  Count of the records impacted by the mutation
+  """
   affectedCount: Int!
 
-  """Array of records impacted by the mutation"""
+  """
+  Array of records impacted by the mutation
+  """
   records: [Profile!]!
 }
 
-"""The root type for querying data"""
+"""
+The root type for querying data
+"""
 type Query {
-  """A pagable collection of type `buckets`"""
+  """
+  A pagable collection of type `buckets`
+  """
   bucketsCollection(
-    """Query the first `n` records in the collection"""
+    """
+    Query the first `n` records in the collection
+    """
     first: Int
 
-    """Query the last `n` records in the collection"""
+    """
+    Query the last `n` records in the collection
+    """
     last: Int
 
-    """Query values in the collection before the provided cursor"""
+    """
+    Query values in the collection before the provided cursor
+    """
     before: Cursor
 
-    """Query values in the collection after the provided cursor"""
+    """
+    Query values in the collection after the provided cursor
+    """
     after: Cursor
 
-    """Filters to apply to the results set when querying from the collection"""
+    """
+    Filters to apply to the results set when querying from the collection
+    """
     filter: bucketsFilter
 
-    """Sort order to apply to the collection"""
+    """
+    Sort order to apply to the collection
+    """
     orderBy: [bucketsOrderBy!]
   ): bucketsConnection
 
-  """A pagable collection of type `CardPhrase`"""
+  """
+  A pagable collection of type `CardPhrase`
+  """
   cardPhraseCollection(
-    """Query the first `n` records in the collection"""
+    """
+    Query the first `n` records in the collection
+    """
     first: Int
 
-    """Query the last `n` records in the collection"""
+    """
+    Query the last `n` records in the collection
+    """
     last: Int
 
-    """Query values in the collection before the provided cursor"""
+    """
+    Query values in the collection before the provided cursor
+    """
     before: Cursor
 
-    """Query values in the collection after the provided cursor"""
+    """
+    Query values in the collection after the provided cursor
+    """
     after: Cursor
 
-    """Filters to apply to the results set when querying from the collection"""
+    """
+    Filters to apply to the results set when querying from the collection
+    """
     filter: CardPhraseFilter
 
-    """Sort order to apply to the collection"""
+    """
+    Sort order to apply to the collection
+    """
     orderBy: [CardPhraseOrderBy!]
   ): CardPhraseConnection
 
-  """A pagable collection of type `CardSeeAlso`"""
+  """
+  A pagable collection of type `CardSeeAlso`
+  """
   cardSeeAlsoCollection(
-    """Query the first `n` records in the collection"""
+    """
+    Query the first `n` records in the collection
+    """
     first: Int
 
-    """Query the last `n` records in the collection"""
+    """
+    Query the last `n` records in the collection
+    """
     last: Int
 
-    """Query values in the collection before the provided cursor"""
+    """
+    Query values in the collection before the provided cursor
+    """
     before: Cursor
 
-    """Query values in the collection after the provided cursor"""
+    """
+    Query values in the collection after the provided cursor
+    """
     after: Cursor
 
-    """Filters to apply to the results set when querying from the collection"""
+    """
+    Filters to apply to the results set when querying from the collection
+    """
     filter: CardSeeAlsoFilter
 
-    """Sort order to apply to the collection"""
+    """
+    Sort order to apply to the collection
+    """
     orderBy: [CardSeeAlsoOrderBy!]
   ): CardSeeAlsoConnection
 
-  """A pagable collection of type `CardTranslation`"""
+  """
+  A pagable collection of type `CardTranslation`
+  """
   cardTranslationCollection(
-    """Query the first `n` records in the collection"""
+    """
+    Query the first `n` records in the collection
+    """
     first: Int
 
-    """Query the last `n` records in the collection"""
+    """
+    Query the last `n` records in the collection
+    """
     last: Int
 
-    """Query values in the collection before the provided cursor"""
+    """
+    Query values in the collection before the provided cursor
+    """
     before: Cursor
 
-    """Query values in the collection after the provided cursor"""
+    """
+    Query values in the collection after the provided cursor
+    """
     after: Cursor
 
-    """Filters to apply to the results set when querying from the collection"""
+    """
+    Filters to apply to the results set when querying from the collection
+    """
     filter: CardTranslationFilter
 
-    """Sort order to apply to the collection"""
+    """
+    Sort order to apply to the collection
+    """
     orderBy: [CardTranslationOrderBy!]
   ): CardTranslationConnection
 
-  """A pagable collection of type `DeckMembership`"""
+  """
+  A pagable collection of type `DeckMembership`
+  """
   deckMembershipCollection(
-    """Query the first `n` records in the collection"""
+    """
+    Query the first `n` records in the collection
+    """
     first: Int
 
-    """Query the last `n` records in the collection"""
+    """
+    Query the last `n` records in the collection
+    """
     last: Int
 
-    """Query values in the collection before the provided cursor"""
+    """
+    Query values in the collection before the provided cursor
+    """
     before: Cursor
 
-    """Query values in the collection after the provided cursor"""
+    """
+    Query values in the collection after the provided cursor
+    """
     after: Cursor
 
-    """Filters to apply to the results set when querying from the collection"""
+    """
+    Filters to apply to the results set when querying from the collection
+    """
     filter: DeckMembershipFilter
 
-    """Sort order to apply to the collection"""
+    """
+    Sort order to apply to the collection
+    """
     orderBy: [DeckMembershipOrderBy!]
   ): DeckMembershipConnection
 
-  """A pagable collection of type `Language`"""
+  """
+  A pagable collection of type `Language`
+  """
   languageCollection(
-    """Query the first `n` records in the collection"""
+    """
+    Query the first `n` records in the collection
+    """
     first: Int
 
-    """Query the last `n` records in the collection"""
+    """
+    Query the last `n` records in the collection
+    """
     last: Int
 
-    """Query values in the collection before the provided cursor"""
+    """
+    Query values in the collection before the provided cursor
+    """
     before: Cursor
 
-    """Query values in the collection after the provided cursor"""
+    """
+    Query values in the collection after the provided cursor
+    """
     after: Cursor
 
-    """Filters to apply to the results set when querying from the collection"""
+    """
+    Filters to apply to the results set when querying from the collection
+    """
     filter: LanguageFilter
 
-    """Sort order to apply to the collection"""
+    """
+    Sort order to apply to the collection
+    """
     orderBy: [LanguageOrderBy!]
   ): LanguageConnection
 
-  """A pagable collection of type `migrations`"""
+  """
+  A pagable collection of type `migrations`
+  """
   migrationsCollection(
-    """Query the first `n` records in the collection"""
+    """
+    Query the first `n` records in the collection
+    """
     first: Int
 
-    """Query the last `n` records in the collection"""
+    """
+    Query the last `n` records in the collection
+    """
     last: Int
 
-    """Query values in the collection before the provided cursor"""
+    """
+    Query values in the collection before the provided cursor
+    """
     before: Cursor
 
-    """Query values in the collection after the provided cursor"""
+    """
+    Query values in the collection after the provided cursor
+    """
     after: Cursor
 
-    """Filters to apply to the results set when querying from the collection"""
+    """
+    Filters to apply to the results set when querying from the collection
+    """
     filter: migrationsFilter
 
-    """Sort order to apply to the collection"""
+    """
+    Sort order to apply to the collection
+    """
     orderBy: [migrationsOrderBy!]
   ): migrationsConnection
 
-  """Retrieve a record by its `ID`"""
+  """
+  Retrieve a record by its `ID`
+  """
   node(
-    """The record's `ID`"""
+    """
+    The record's `ID`
+    """
     nodeId: ID!
   ): Node
 
-  """A pagable collection of type `objects`"""
+  """
+  A pagable collection of type `objects`
+  """
   objectsCollection(
-    """Query the first `n` records in the collection"""
+    """
+    Query the first `n` records in the collection
+    """
     first: Int
 
-    """Query the last `n` records in the collection"""
+    """
+    Query the last `n` records in the collection
+    """
     last: Int
 
-    """Query values in the collection before the provided cursor"""
+    """
+    Query values in the collection before the provided cursor
+    """
     before: Cursor
 
-    """Query values in the collection after the provided cursor"""
+    """
+    Query values in the collection after the provided cursor
+    """
     after: Cursor
 
-    """Filters to apply to the results set when querying from the collection"""
+    """
+    Filters to apply to the results set when querying from the collection
+    """
     filter: objectsFilter
 
-    """Sort order to apply to the collection"""
+    """
+    Sort order to apply to the collection
+    """
     orderBy: [objectsOrderBy!]
   ): objectsConnection
 
-  """A pagable collection of type `Profile`"""
+  """
+  A pagable collection of type `Profile`
+  """
   profileCollection(
-    """Query the first `n` records in the collection"""
+    """
+    Query the first `n` records in the collection
+    """
     first: Int
 
-    """Query the last `n` records in the collection"""
+    """
+    Query the last `n` records in the collection
+    """
     last: Int
 
-    """Query values in the collection before the provided cursor"""
+    """
+    Query values in the collection before the provided cursor
+    """
     before: Cursor
 
-    """Query values in the collection after the provided cursor"""
+    """
+    Query values in the collection after the provided cursor
+    """
     after: Cursor
 
-    """Filters to apply to the results set when querying from the collection"""
+    """
+    Filters to apply to the results set when querying from the collection
+    """
     filter: ProfileFilter
 
-    """Sort order to apply to the collection"""
+    """
+    Sort order to apply to the collection
+    """
     orderBy: [ProfileOrderBy!]
   ): ProfileConnection
 
-  """A pagable collection of type `UserDeck`"""
+  """
+  A pagable collection of type `UserDeck`
+  """
   userDeckCollection(
-    """Query the first `n` records in the collection"""
+    """
+    Query the first `n` records in the collection
+    """
     first: Int
 
-    """Query the last `n` records in the collection"""
+    """
+    Query the last `n` records in the collection
+    """
     last: Int
 
-    """Query values in the collection before the provided cursor"""
+    """
+    Query values in the collection before the provided cursor
+    """
     before: Cursor
 
-    """Query values in the collection after the provided cursor"""
+    """
+    Query values in the collection after the provided cursor
+    """
     after: Cursor
 
-    """Filters to apply to the results set when querying from the collection"""
+    """
+    Filters to apply to the results set when querying from the collection
+    """
     filter: UserDeckFilter
 
-    """Sort order to apply to the collection"""
+    """
+    Sort order to apply to the collection
+    """
     orderBy: [UserDeckOrderBy!]
   ): UserDeckConnection
 }
@@ -1316,7 +1776,9 @@ input UUIDFilter {
 }
 
 type UserDeck implements Node {
-  """Globally Unique Record Identifier"""
+  """
+  Globally Unique Record Identifier
+  """
   nodeId: ID!
   id: UUID!
   uid: UUID!
@@ -1324,22 +1786,34 @@ type UserDeck implements Node {
   language: Language
   profile: Profile
   deckMembershipCollection(
-    """Query the first `n` records in the collection"""
+    """
+    Query the first `n` records in the collection
+    """
     first: Int
 
-    """Query the last `n` records in the collection"""
+    """
+    Query the last `n` records in the collection
+    """
     last: Int
 
-    """Query values in the collection before the provided cursor"""
+    """
+    Query values in the collection before the provided cursor
+    """
     before: Cursor
 
-    """Query values in the collection after the provided cursor"""
+    """
+    Query values in the collection after the provided cursor
+    """
     after: Cursor
 
-    """Filters to apply to the results set when querying from the collection"""
+    """
+    Filters to apply to the results set when querying from the collection
+    """
     filter: DeckMembershipFilter
 
-    """Sort order to apply to the collection"""
+    """
+    Sort order to apply to the collection
+    """
     orderBy: [DeckMembershipOrderBy!]
   ): DeckMembershipConnection
 }
@@ -1350,10 +1824,14 @@ type UserDeckConnection {
 }
 
 type UserDeckDeleteResponse {
-  """Count of the records impacted by the mutation"""
+  """
+  Count of the records impacted by the mutation
+  """
   affectedCount: Int!
 
-  """Array of records impacted by the mutation"""
+  """
+  Array of records impacted by the mutation
+  """
   records: [UserDeck!]!
 }
 
@@ -1376,10 +1854,14 @@ input UserDeckInsertInput {
 }
 
 type UserDeckInsertResponse {
-  """Count of the records impacted by the mutation"""
+  """
+  Count of the records impacted by the mutation
+  """
   affectedCount: Int!
 
-  """Array of records impacted by the mutation"""
+  """
+  Array of records impacted by the mutation
+  """
   records: [UserDeck!]!
 }
 
@@ -1396,15 +1878,21 @@ input UserDeckUpdateInput {
 }
 
 type UserDeckUpdateResponse {
-  """Count of the records impacted by the mutation"""
+  """
+  Count of the records impacted by the mutation
+  """
   affectedCount: Int!
 
-  """Array of records impacted by the mutation"""
+  """
+  Array of records impacted by the mutation
+  """
   records: [UserDeck!]!
 }
 
 type buckets implements Node {
-  """Globally Unique Record Identifier"""
+  """
+  Globally Unique Record Identifier
+  """
   nodeId: ID!
   id: String!
   name: String!
@@ -1413,22 +1901,34 @@ type buckets implements Node {
   updated_at: Datetime
   public: Boolean
   objectsCollection(
-    """Query the first `n` records in the collection"""
+    """
+    Query the first `n` records in the collection
+    """
     first: Int
 
-    """Query the last `n` records in the collection"""
+    """
+    Query the last `n` records in the collection
+    """
     last: Int
 
-    """Query values in the collection before the provided cursor"""
+    """
+    Query values in the collection before the provided cursor
+    """
     before: Cursor
 
-    """Query values in the collection after the provided cursor"""
+    """
+    Query values in the collection after the provided cursor
+    """
     after: Cursor
 
-    """Filters to apply to the results set when querying from the collection"""
+    """
+    Filters to apply to the results set when querying from the collection
+    """
     filter: objectsFilter
 
-    """Sort order to apply to the collection"""
+    """
+    Sort order to apply to the collection
+    """
     orderBy: [objectsOrderBy!]
   ): objectsConnection
 }
@@ -1439,10 +1939,14 @@ type bucketsConnection {
 }
 
 type bucketsDeleteResponse {
-  """Count of the records impacted by the mutation"""
+  """
+  Count of the records impacted by the mutation
+  """
   affectedCount: Int!
 
-  """Array of records impacted by the mutation"""
+  """
+  Array of records impacted by the mutation
+  """
   records: [buckets!]!
 }
 
@@ -1471,10 +1975,14 @@ input bucketsInsertInput {
 }
 
 type bucketsInsertResponse {
-  """Count of the records impacted by the mutation"""
+  """
+  Count of the records impacted by the mutation
+  """
   affectedCount: Int!
 
-  """Array of records impacted by the mutation"""
+  """
+  Array of records impacted by the mutation
+  """
   records: [buckets!]!
 }
 
@@ -1497,15 +2005,21 @@ input bucketsUpdateInput {
 }
 
 type bucketsUpdateResponse {
-  """Count of the records impacted by the mutation"""
+  """
+  Count of the records impacted by the mutation
+  """
   affectedCount: Int!
 
-  """Array of records impacted by the mutation"""
+  """
+  Array of records impacted by the mutation
+  """
   records: [buckets!]!
 }
 
 type migrations implements Node {
-  """Globally Unique Record Identifier"""
+  """
+  Globally Unique Record Identifier
+  """
   nodeId: ID!
   id: Int!
   name: String!
@@ -1519,10 +2033,14 @@ type migrationsConnection {
 }
 
 type migrationsDeleteResponse {
-  """Count of the records impacted by the mutation"""
+  """
+  Count of the records impacted by the mutation
+  """
   affectedCount: Int!
 
-  """Array of records impacted by the mutation"""
+  """
+  Array of records impacted by the mutation
+  """
   records: [migrations!]!
 }
 
@@ -1547,10 +2065,14 @@ input migrationsInsertInput {
 }
 
 type migrationsInsertResponse {
-  """Count of the records impacted by the mutation"""
+  """
+  Count of the records impacted by the mutation
+  """
   affectedCount: Int!
 
-  """Array of records impacted by the mutation"""
+  """
+  Array of records impacted by the mutation
+  """
   records: [migrations!]!
 }
 
@@ -1569,15 +2091,21 @@ input migrationsUpdateInput {
 }
 
 type migrationsUpdateResponse {
-  """Count of the records impacted by the mutation"""
+  """
+  Count of the records impacted by the mutation
+  """
   affectedCount: Int!
 
-  """Array of records impacted by the mutation"""
+  """
+  Array of records impacted by the mutation
+  """
   records: [migrations!]!
 }
 
 type objects implements Node {
-  """Globally Unique Record Identifier"""
+  """
+  Globally Unique Record Identifier
+  """
   nodeId: ID!
   id: UUID!
   bucket_id: String
@@ -1597,10 +2125,14 @@ type objectsConnection {
 }
 
 type objectsDeleteResponse {
-  """Count of the records impacted by the mutation"""
+  """
+  Count of the records impacted by the mutation
+  """
   affectedCount: Int!
 
-  """Array of records impacted by the mutation"""
+  """
+  Array of records impacted by the mutation
+  """
   records: [objects!]!
 }
 
@@ -1632,10 +2164,14 @@ input objectsInsertInput {
 }
 
 type objectsInsertResponse {
-  """Count of the records impacted by the mutation"""
+  """
+  Count of the records impacted by the mutation
+  """
   affectedCount: Int!
 
-  """Array of records impacted by the mutation"""
+  """
+  Array of records impacted by the mutation
+  """
   records: [objects!]!
 }
 
@@ -1661,9 +2197,13 @@ input objectsUpdateInput {
 }
 
 type objectsUpdateResponse {
-  """Count of the records impacted by the mutation"""
+  """
+  Count of the records impacted by the mutation
+  """
   affectedCount: Int!
 
-  """Array of records impacted by the mutation"""
+  """
+  Array of records impacted by the mutation
+  """
   records: [objects!]!
 }
