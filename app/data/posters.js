@@ -1,17 +1,7 @@
 import { gql, request } from 'graphql-request'
 import supabase from 'lib/supabase-client'
 import { requestOptions } from './constants'
-
-const newDeckMutation = gql`
-  mutation Mutation($objects: [UserDeckInsertInput!]!) {
-    insertIntoUserDeckCollection(objects: $objects) {
-      records {
-        id
-        lang
-      }
-    }
-  }
-`
+import { newDeckMutation, newCardMutation } from 'app/data/mutations.js'
 
 export const postNewDeck = async lang => {
   // console.log(`postNewDeck ${lang}`)
@@ -30,21 +20,6 @@ export const postNewDeck = async lang => {
   // console.log(`RESULT: `, result)
   return result
 }
-
-const newCardMutation = gql`
-  mutation InsertIntoDeckMembershipCollection(
-    $objects: [DeckMembershipInsertInput!]!
-  ) {
-    insertIntoDeckMembershipCollection(objects: $objects) {
-      records {
-        id
-        status
-        cardPhraseId
-        deckId
-      }
-    }
-  }
-`
 
 export const postNewCard = async ({ status, phraseId, deckId }) => {
   console.log(`postNewCard`, status, phraseId, deckId)

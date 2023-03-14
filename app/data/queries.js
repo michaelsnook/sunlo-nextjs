@@ -1,9 +1,9 @@
-import { gql } from 'graphql-request'
+import { graphql } from './gql/gql'
 
 // gets all decks for auth'd user, and
 // all the card IDs and statuses in those decks
 // which serve as metadata for the deck
-export const allDecksQuery = gql`
+export const allDecksQuery = graphql(/* GraphQL */ `
   query AllDecksQuery {
     userDeckCollection {
       edges {
@@ -23,12 +23,12 @@ export const allDecksQuery = gql`
       }
     }
   }
-`
+`)
 
 // gets a big long list of cards' details; irrespective of
 // what decks or languages those cards belong to.
 // hopefully the react-query cache will
-export const allPhraseDetailsQuery = gql`
+export const allPhraseDetailsQuery = graphql(/* GraphQL */ `
   query AllPhraseDetailsQuery {
     cardPhraseCollection {
       edges {
@@ -65,9 +65,9 @@ export const allPhraseDetailsQuery = gql`
       }
     }
   }
-`
+`)
 
-export const allPhraseIdsQuery = gql`
+export const allPhraseIdsQuery = graphql(/* GraphQL */ `
   query AllPhraseIdsQuery {
     cardPhraseCollection {
       edges {
@@ -77,9 +77,9 @@ export const allPhraseIdsQuery = gql`
       }
     }
   }
-`
+`)
 
-export const deckQuery = gql`
+export const deckQuery = graphql(/* GraphQL */ `
   query DeckQuery($filter: UserDeckFilter) {
     userDeckCollection(filter: $filter) {
       edges {
@@ -114,9 +114,9 @@ export const deckQuery = gql`
       }
     }
   }
-`
+`)
 
-export const languageDetailsQuery = gql`
+export const languageDetailsQuery = graphql(/* GraphQL */ `
   query LanguageDetailsQuery($filter: LanguageFilter) {
     languageCollection(filter: $filter) {
       edges {
@@ -161,9 +161,9 @@ export const languageDetailsQuery = gql`
       }
     }
   }
-`
+`)
 
-export const phraseDetailsQuery = gql`
+export const phraseDetailsQuery = graphql(/* GraphQL */ `
   query CardPhraseCollection($filter: CardPhraseFilter) {
     cardPhraseCollection(filter: $filter) {
       edges {
@@ -208,9 +208,9 @@ export const phraseDetailsQuery = gql`
       }
     }
   }
-`
+`)
 
-export const profileQuery = gql`
+export const profileQuery = graphql(/* GraphQL */ `
   query ProfileQuery {
     profileCollection {
       edges {
@@ -223,4 +223,4 @@ export const profileQuery = gql`
       }
     }
   }
-`
+`)
