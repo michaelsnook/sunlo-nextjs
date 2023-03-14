@@ -41,7 +41,7 @@ export default function BigPhrase({ phraseId, setActivePhrase }) {
     },
   })
 
-  if (phraseId === -1) return <>hi</>
+  if (!phraseId) return <>hi</>
   if (status === 'loading' || decksStatus === 'loading') return <Loading />
   if (status === 'error' || decksStatus === 'error')
     return <ErrorList errors={[error, decksError]} />
@@ -111,7 +111,7 @@ export default function BigPhrase({ phraseId, setActivePhrase }) {
             <a
               href="#"
               className="text-primary hover:underline"
-              onClick={() => setActivePhrase(-1)}
+              onClick={() => setActivePhrase('')}
             >
               Keep browsing.
             </a>

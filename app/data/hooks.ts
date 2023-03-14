@@ -22,7 +22,7 @@ export function useAllDecks() {
   })
 }
 
-export function useAllPhrasesInLanguage(lang) {
+export function useAllPhrasesInLanguage(lang: string) {
   return useQuery({
     queryKey: ['phrases', 'lang', lang],
     queryFn: async () => getAllPhrasesInLanguage(lang),
@@ -35,7 +35,7 @@ export function useAllPhrasesInLanguage(lang) {
   })
 }
 
-export function useDeck(deckLang) {
+export function useDeck(deckLang: string) {
   return useQuery({
     queryKey: ['deck', deckLang],
     queryFn: async () => getDeck(deckLang),
@@ -48,11 +48,11 @@ export function useDeck(deckLang) {
   })
 }
 
-export function usePhrase(id) {
+export function usePhrase(id: string) {
   return useQuery({
     queryKey: ['phrase', id],
     queryFn: async () => getOnePhraseDetails(id),
-    enabled: !!id && id !== -1,
+    enabled: !!id,
     staleTime: Infinity,
     cacheTime: Infinity,
   })
