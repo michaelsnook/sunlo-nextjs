@@ -6,21 +6,29 @@ import { useAllDecks, usePhrase } from 'app/data/hooks'
 import { useMutation } from '@tanstack/react-query'
 import { postNewCard } from 'app/data/posters'
 import { useQueryClient } from '@tanstack/react-query'
+import { Scalars } from 'app/data/gql/graphql'
 
-export function TinyPhrase({ lang, text }) {
-  return (
-    <>
-      {lang ? (
-        <span className="text-gray-500">[{lang}]&nbsp;</span>
-      ) : (
-        <>&nbsp;</>
-      )}
-      &ldquo;{text}&rdquo;
-    </>
-  )
+type TinyPhraseProps = {
+  lang?: string
+  text: string
 }
 
-export default function BigPhrase({ phraseId, setActivePhrase }) {
+type BigPhraseProps = {
+  phraseId: Scalars['UUID']
+  setActivePhrase: Function
+}
+
+export const TinyPhrase = ({ lang, text }: TinyPhraseProps) => (
+  <>
+    {lang ? <span className="text-gray-500">[{lang}]</span> : null}
+    &ldquo;{text}&rdquo;
+  </>
+)
+
+export default function BigPhrase({
+  phraseId,
+  setActivePhrase,
+}: BigPhraseProps) {
   const { data, status, error } = usePhrase(phraseId)
   const { data: decks, status: decksStatus, error: decksError } = useAllDecks()
   const queryClient = useQueryClient()
@@ -52,7 +60,7 @@ export default function BigPhrase({ phraseId, setActivePhrase }) {
   const seeAlsos =
     data.cardSeeAlsoCollection?.edges.map(({ node }) => {
       return {
-        node: node.toPhraseId === phraseId ? node.toPhrase : node.fromPhrase,
+        node: node.toPhrase.id === phraseId ? node.toPhrase : node.fromPhrase,
       }
     }) ?? null
 

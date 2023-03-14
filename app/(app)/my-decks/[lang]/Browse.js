@@ -8,7 +8,7 @@ import { useState } from 'react'
 import BigPhrase from 'app/components/BigPhrase'
 
 export default function Browse({ lang, disable }) {
-  const [activePhrase, setActivePhrase] = useState(-1)
+  const [activePhrase, setActivePhrase] = useState()
 
   const { data, error, status } = useAllPhrasesInLanguage(lang)
   if (status === 'loading') return <Loading />

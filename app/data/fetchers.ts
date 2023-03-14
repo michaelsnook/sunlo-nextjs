@@ -13,6 +13,7 @@ import type {
   UserDeckFilter,
   LanguageFilter,
   CardPhraseFilter,
+  Scalars,
 } from './gql/graphql'
 import { requestOptions } from './constants'
 
@@ -113,7 +114,7 @@ export const getLanguageDetails = async (code: string) => {
   return response.languageCollection.edges[0]?.node
 }
 
-export const getOnePhraseDetails = async (id: string) => {
+export const getOnePhraseDetails = async (id: Scalars['UUID']) => {
   const variables = {
     filter: <CardPhraseFilter>{
       id: {
