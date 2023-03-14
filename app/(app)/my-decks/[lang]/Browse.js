@@ -39,12 +39,12 @@ export default function Browse({ lang, disable }) {
         onChange={handleChange}
         className="my-4"
       />
-      {activePhrase === -1 ? null : (
+      {!activePhrase ? null : (
         <>
           <a
             href="#"
             className="text-primary hover:underline"
-            onClick={() => setActivePhrase(-1)}
+            onClick={() => setActivePhrase('')}
           >
             &times; Clear selection
           </a>

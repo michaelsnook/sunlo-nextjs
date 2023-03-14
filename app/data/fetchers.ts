@@ -9,11 +9,16 @@ import {
   phraseDetailsQuery,
   profileQuery,
 } from 'app/data/queries'
+import type {
+  UserDeckFilter,
+  LanguageFilter,
+  CardPhraseFilter,
+} from './gql/graphql'
 import { requestOptions } from './constants'
 
-export const getDeck = async deckLang => {
+export const getDeck = async (deckLang: string) => {
   const variables = {
-    filter: {
+    filter: <UserDeckFilter>{
       lang: {
         eq: deckLang,
       },
@@ -86,9 +91,9 @@ export const getAllDecks = async () => {
   return sortedResponse
 }
 
-export const getLanguageDetails = async code => {
+export const getLanguageDetails = async (code: string) => {
   const variables = {
-    filter: {
+    filter: <LanguageFilter>{
       code: {
         eq: code,
       },
@@ -99,16 +104,18 @@ export const getLanguageDetails = async code => {
     variables,
     ...requestOptions(),
   })
+  /*
   console.log(
     `LOGGING getLanguageDetails(${code})`,
     response.languageCollection.edges[0]?.node
   )
+  */
   return response.languageCollection.edges[0]?.node
 }
 
-export const getOnePhraseDetails = async id => {
+export const getOnePhraseDetails = async (id: string) => {
   const variables = {
-    filter: {
+    filter: <CardPhraseFilter>{
       id: {
         eq: id,
       },
@@ -122,9 +129,9 @@ export const getOnePhraseDetails = async id => {
   return response?.cardPhraseCollection?.edges[0]?.node // || {}
 }
 
-export const getAllPhrasesInLanguage = async lang => {
+export const getAllPhrasesInLanguage = async (lang: String) => {
   const variables = {
-    filter: {
+    filter: <LanguageFilter>{
       lang: {
         eq: lang,
       },
