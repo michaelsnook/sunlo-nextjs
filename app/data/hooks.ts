@@ -8,6 +8,7 @@ import {
   getAllPhrasesInLanguage,
   getOnePhraseDetails,
 } from './fetchers'
+import { Scalars } from './gql/graphql'
 
 export function useAllDecks() {
   return useQuery({
@@ -48,7 +49,7 @@ export function useDeck(deckLang: string) {
   })
 }
 
-export function usePhrase(id: string) {
+export function usePhrase(id: Scalars['UUID']) {
   return useQuery({
     queryKey: ['phrase', id],
     queryFn: async () => getOnePhraseDetails(id),
