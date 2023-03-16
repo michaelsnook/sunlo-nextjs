@@ -12,15 +12,13 @@ export const newDeckMutation = graphql(/* GraphQL */ `
 `)
 
 export const newCardMutation = graphql(/* GraphQL */ `
-  mutation InsertIntoDeckMembershipCollection(
-    $objects: [DeckMembershipInsertInput!]!
-  ) {
-    insertIntoDeckMembershipCollection(objects: $objects) {
+  mutation InsertIntoUserCardCollection($objects: [UserCardInsertInput!]!) {
+    insertIntoUserCardCollection(objects: $objects) {
       records {
         id
         status
-        cardPhraseId
-        deckId
+        phraseId
+        userDeckId
       }
     }
   }
