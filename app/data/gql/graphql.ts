@@ -45,279 +45,6 @@ export type BooleanFilter = {
   neq?: InputMaybe<Scalars['Boolean']>;
 };
 
-export type CardPhrase = Node & {
-  __typename?: 'CardPhrase';
-  addedBy?: Maybe<Scalars['UUID']>;
-  cardSeeAlsoCollection?: Maybe<CardSeeAlsoConnection>;
-  cardTranslationCollection?: Maybe<CardTranslationConnection>;
-  deckMembershipCollection?: Maybe<DeckMembershipConnection>;
-  id: Scalars['UUID'];
-  lang?: Maybe<Scalars['String']>;
-  language?: Maybe<Language>;
-  /** Globally Unique Record Identifier */
-  nodeId: Scalars['ID'];
-  text: Scalars['String'];
-};
-
-
-export type CardPhraseCardSeeAlsoCollectionArgs = {
-  after?: InputMaybe<Scalars['Cursor']>;
-  before?: InputMaybe<Scalars['Cursor']>;
-  filter?: InputMaybe<CardSeeAlsoFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<CardSeeAlsoOrderBy>>;
-};
-
-
-export type CardPhraseCardTranslationCollectionArgs = {
-  after?: InputMaybe<Scalars['Cursor']>;
-  before?: InputMaybe<Scalars['Cursor']>;
-  filter?: InputMaybe<CardTranslationFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<CardTranslationOrderBy>>;
-};
-
-
-export type CardPhraseDeckMembershipCollectionArgs = {
-  after?: InputMaybe<Scalars['Cursor']>;
-  before?: InputMaybe<Scalars['Cursor']>;
-  filter?: InputMaybe<DeckMembershipFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<DeckMembershipOrderBy>>;
-};
-
-export type CardPhraseConnection = {
-  __typename?: 'CardPhraseConnection';
-  edges: Array<CardPhraseEdge>;
-  pageInfo: PageInfo;
-};
-
-export type CardPhraseDeleteResponse = {
-  __typename?: 'CardPhraseDeleteResponse';
-  /** Count of the records impacted by the mutation */
-  affectedCount: Scalars['Int'];
-  /** Array of records impacted by the mutation */
-  records: Array<CardPhrase>;
-};
-
-export type CardPhraseEdge = {
-  __typename?: 'CardPhraseEdge';
-  cursor: Scalars['String'];
-  node: CardPhrase;
-};
-
-export type CardPhraseFilter = {
-  addedBy?: InputMaybe<UuidFilter>;
-  id?: InputMaybe<UuidFilter>;
-  lang?: InputMaybe<StringFilter>;
-  nodeId?: InputMaybe<IdFilter>;
-  text?: InputMaybe<StringFilter>;
-};
-
-export type CardPhraseInsertInput = {
-  addedBy?: InputMaybe<Scalars['UUID']>;
-  id?: InputMaybe<Scalars['UUID']>;
-  lang?: InputMaybe<Scalars['String']>;
-  text?: InputMaybe<Scalars['String']>;
-};
-
-export type CardPhraseInsertResponse = {
-  __typename?: 'CardPhraseInsertResponse';
-  /** Count of the records impacted by the mutation */
-  affectedCount: Scalars['Int'];
-  /** Array of records impacted by the mutation */
-  records: Array<CardPhrase>;
-};
-
-export type CardPhraseOrderBy = {
-  addedBy?: InputMaybe<OrderByDirection>;
-  id?: InputMaybe<OrderByDirection>;
-  lang?: InputMaybe<OrderByDirection>;
-  text?: InputMaybe<OrderByDirection>;
-};
-
-export type CardPhraseUpdateInput = {
-  addedBy?: InputMaybe<Scalars['UUID']>;
-  id?: InputMaybe<Scalars['UUID']>;
-  lang?: InputMaybe<Scalars['String']>;
-  text?: InputMaybe<Scalars['String']>;
-};
-
-export type CardPhraseUpdateResponse = {
-  __typename?: 'CardPhraseUpdateResponse';
-  /** Count of the records impacted by the mutation */
-  affectedCount: Scalars['Int'];
-  /** Array of records impacted by the mutation */
-  records: Array<CardPhrase>;
-};
-
-export type CardSeeAlso = Node & {
-  __typename?: 'CardSeeAlso';
-  addedBy?: Maybe<Scalars['UUID']>;
-  fromPhrase?: Maybe<CardPhrase>;
-  fromPhraseId?: Maybe<Scalars['UUID']>;
-  id: Scalars['UUID'];
-  /** Globally Unique Record Identifier */
-  nodeId: Scalars['ID'];
-  toPhrase?: Maybe<CardPhrase>;
-  toPhraseId?: Maybe<Scalars['UUID']>;
-};
-
-export type CardSeeAlsoConnection = {
-  __typename?: 'CardSeeAlsoConnection';
-  edges: Array<CardSeeAlsoEdge>;
-  pageInfo: PageInfo;
-};
-
-export type CardSeeAlsoDeleteResponse = {
-  __typename?: 'CardSeeAlsoDeleteResponse';
-  /** Count of the records impacted by the mutation */
-  affectedCount: Scalars['Int'];
-  /** Array of records impacted by the mutation */
-  records: Array<CardSeeAlso>;
-};
-
-export type CardSeeAlsoEdge = {
-  __typename?: 'CardSeeAlsoEdge';
-  cursor: Scalars['String'];
-  node: CardSeeAlso;
-};
-
-export type CardSeeAlsoFilter = {
-  addedBy?: InputMaybe<UuidFilter>;
-  fromPhraseId?: InputMaybe<UuidFilter>;
-  id?: InputMaybe<UuidFilter>;
-  nodeId?: InputMaybe<IdFilter>;
-  toPhraseId?: InputMaybe<UuidFilter>;
-};
-
-export type CardSeeAlsoInsertInput = {
-  addedBy?: InputMaybe<Scalars['UUID']>;
-  fromPhraseId?: InputMaybe<Scalars['UUID']>;
-  id?: InputMaybe<Scalars['UUID']>;
-  toPhraseId?: InputMaybe<Scalars['UUID']>;
-};
-
-export type CardSeeAlsoInsertResponse = {
-  __typename?: 'CardSeeAlsoInsertResponse';
-  /** Count of the records impacted by the mutation */
-  affectedCount: Scalars['Int'];
-  /** Array of records impacted by the mutation */
-  records: Array<CardSeeAlso>;
-};
-
-export type CardSeeAlsoOrderBy = {
-  addedBy?: InputMaybe<OrderByDirection>;
-  fromPhraseId?: InputMaybe<OrderByDirection>;
-  id?: InputMaybe<OrderByDirection>;
-  toPhraseId?: InputMaybe<OrderByDirection>;
-};
-
-export type CardSeeAlsoUpdateInput = {
-  addedBy?: InputMaybe<Scalars['UUID']>;
-  fromPhraseId?: InputMaybe<Scalars['UUID']>;
-  id?: InputMaybe<Scalars['UUID']>;
-  toPhraseId?: InputMaybe<Scalars['UUID']>;
-};
-
-export type CardSeeAlsoUpdateResponse = {
-  __typename?: 'CardSeeAlsoUpdateResponse';
-  /** Count of the records impacted by the mutation */
-  affectedCount: Scalars['Int'];
-  /** Array of records impacted by the mutation */
-  records: Array<CardSeeAlso>;
-};
-
-export type CardTranslation = Node & {
-  __typename?: 'CardTranslation';
-  addedBy?: Maybe<Scalars['UUID']>;
-  cardPhrase?: Maybe<CardPhrase>;
-  cardPhraseId: Scalars['UUID'];
-  id: Scalars['UUID'];
-  lang: Scalars['String'];
-  language?: Maybe<Language>;
-  literal?: Maybe<Scalars['String']>;
-  /** Globally Unique Record Identifier */
-  nodeId: Scalars['ID'];
-  text: Scalars['String'];
-};
-
-export type CardTranslationConnection = {
-  __typename?: 'CardTranslationConnection';
-  edges: Array<CardTranslationEdge>;
-  pageInfo: PageInfo;
-};
-
-export type CardTranslationDeleteResponse = {
-  __typename?: 'CardTranslationDeleteResponse';
-  /** Count of the records impacted by the mutation */
-  affectedCount: Scalars['Int'];
-  /** Array of records impacted by the mutation */
-  records: Array<CardTranslation>;
-};
-
-export type CardTranslationEdge = {
-  __typename?: 'CardTranslationEdge';
-  cursor: Scalars['String'];
-  node: CardTranslation;
-};
-
-export type CardTranslationFilter = {
-  addedBy?: InputMaybe<UuidFilter>;
-  cardPhraseId?: InputMaybe<UuidFilter>;
-  id?: InputMaybe<UuidFilter>;
-  lang?: InputMaybe<StringFilter>;
-  literal?: InputMaybe<StringFilter>;
-  nodeId?: InputMaybe<IdFilter>;
-  text?: InputMaybe<StringFilter>;
-};
-
-export type CardTranslationInsertInput = {
-  addedBy?: InputMaybe<Scalars['UUID']>;
-  cardPhraseId?: InputMaybe<Scalars['UUID']>;
-  id?: InputMaybe<Scalars['UUID']>;
-  lang?: InputMaybe<Scalars['String']>;
-  literal?: InputMaybe<Scalars['String']>;
-  text?: InputMaybe<Scalars['String']>;
-};
-
-export type CardTranslationInsertResponse = {
-  __typename?: 'CardTranslationInsertResponse';
-  /** Count of the records impacted by the mutation */
-  affectedCount: Scalars['Int'];
-  /** Array of records impacted by the mutation */
-  records: Array<CardTranslation>;
-};
-
-export type CardTranslationOrderBy = {
-  addedBy?: InputMaybe<OrderByDirection>;
-  cardPhraseId?: InputMaybe<OrderByDirection>;
-  id?: InputMaybe<OrderByDirection>;
-  lang?: InputMaybe<OrderByDirection>;
-  literal?: InputMaybe<OrderByDirection>;
-  text?: InputMaybe<OrderByDirection>;
-};
-
-export type CardTranslationUpdateInput = {
-  addedBy?: InputMaybe<Scalars['UUID']>;
-  cardPhraseId?: InputMaybe<Scalars['UUID']>;
-  id?: InputMaybe<Scalars['UUID']>;
-  lang?: InputMaybe<Scalars['String']>;
-  literal?: InputMaybe<Scalars['String']>;
-  text?: InputMaybe<Scalars['String']>;
-};
-
-export type CardTranslationUpdateResponse = {
-  __typename?: 'CardTranslationUpdateResponse';
-  /** Count of the records impacted by the mutation */
-  affectedCount: Scalars['Int'];
-  /** Array of records impacted by the mutation */
-  records: Array<CardTranslation>;
-};
-
 /** Boolean expression comparing fields on type "Date" */
 export type DateFilter = {
   eq?: InputMaybe<Scalars['Date']>;
@@ -340,94 +67,6 @@ export type DatetimeFilter = {
   lt?: InputMaybe<Scalars['Datetime']>;
   lte?: InputMaybe<Scalars['Datetime']>;
   neq?: InputMaybe<Scalars['Datetime']>;
-};
-
-export type DeckMembership = Node & {
-  __typename?: 'DeckMembership';
-  cardPhrase?: Maybe<CardPhrase>;
-  cardPhraseId: Scalars['UUID'];
-  deck?: Maybe<UserDeck>;
-  deckId?: Maybe<Scalars['UUID']>;
-  id: Scalars['UUID'];
-  /** Globally Unique Record Identifier */
-  nodeId: Scalars['ID'];
-  profile?: Maybe<Profile>;
-  status: Scalars['String'];
-  uid: Scalars['UUID'];
-  updatedAt?: Maybe<Scalars['Datetime']>;
-};
-
-export type DeckMembershipConnection = {
-  __typename?: 'DeckMembershipConnection';
-  edges: Array<DeckMembershipEdge>;
-  pageInfo: PageInfo;
-};
-
-export type DeckMembershipDeleteResponse = {
-  __typename?: 'DeckMembershipDeleteResponse';
-  /** Count of the records impacted by the mutation */
-  affectedCount: Scalars['Int'];
-  /** Array of records impacted by the mutation */
-  records: Array<DeckMembership>;
-};
-
-export type DeckMembershipEdge = {
-  __typename?: 'DeckMembershipEdge';
-  cursor: Scalars['String'];
-  node: DeckMembership;
-};
-
-export type DeckMembershipFilter = {
-  cardPhraseId?: InputMaybe<UuidFilter>;
-  deckId?: InputMaybe<UuidFilter>;
-  id?: InputMaybe<UuidFilter>;
-  nodeId?: InputMaybe<IdFilter>;
-  status?: InputMaybe<StringFilter>;
-  uid?: InputMaybe<UuidFilter>;
-  updatedAt?: InputMaybe<DatetimeFilter>;
-};
-
-export type DeckMembershipInsertInput = {
-  cardPhraseId?: InputMaybe<Scalars['UUID']>;
-  deckId?: InputMaybe<Scalars['UUID']>;
-  id?: InputMaybe<Scalars['UUID']>;
-  status?: InputMaybe<Scalars['String']>;
-  uid?: InputMaybe<Scalars['UUID']>;
-  updatedAt?: InputMaybe<Scalars['Datetime']>;
-};
-
-export type DeckMembershipInsertResponse = {
-  __typename?: 'DeckMembershipInsertResponse';
-  /** Count of the records impacted by the mutation */
-  affectedCount: Scalars['Int'];
-  /** Array of records impacted by the mutation */
-  records: Array<DeckMembership>;
-};
-
-export type DeckMembershipOrderBy = {
-  cardPhraseId?: InputMaybe<OrderByDirection>;
-  deckId?: InputMaybe<OrderByDirection>;
-  id?: InputMaybe<OrderByDirection>;
-  status?: InputMaybe<OrderByDirection>;
-  uid?: InputMaybe<OrderByDirection>;
-  updatedAt?: InputMaybe<OrderByDirection>;
-};
-
-export type DeckMembershipUpdateInput = {
-  cardPhraseId?: InputMaybe<Scalars['UUID']>;
-  deckId?: InputMaybe<Scalars['UUID']>;
-  id?: InputMaybe<Scalars['UUID']>;
-  status?: InputMaybe<Scalars['String']>;
-  uid?: InputMaybe<Scalars['UUID']>;
-  updatedAt?: InputMaybe<Scalars['Datetime']>;
-};
-
-export type DeckMembershipUpdateResponse = {
-  __typename?: 'DeckMembershipUpdateResponse';
-  /** Count of the records impacted by the mutation */
-  affectedCount: Scalars['Int'];
-  /** Array of records impacted by the mutation */
-  records: Array<DeckMembership>;
 };
 
 export enum FilterIs {
@@ -467,33 +106,33 @@ export type IntFilter = {
 export type Language = Node & {
   __typename?: 'Language';
   aliasOf?: Maybe<Scalars['String']>;
-  cardPhraseCollection?: Maybe<CardPhraseConnection>;
-  cardTranslationCollection?: Maybe<CardTranslationConnection>;
-  code: Scalars['String'];
+  lang: Scalars['String'];
   name: Scalars['String'];
   /** Globally Unique Record Identifier */
   nodeId: Scalars['ID'];
+  phraseCollection?: Maybe<PhraseConnection>;
+  phraseTranslationCollection?: Maybe<PhraseTranslationConnection>;
   userDeckCollection?: Maybe<UserDeckConnection>;
 };
 
 
-export type LanguageCardPhraseCollectionArgs = {
+export type LanguagePhraseCollectionArgs = {
   after?: InputMaybe<Scalars['Cursor']>;
   before?: InputMaybe<Scalars['Cursor']>;
-  filter?: InputMaybe<CardPhraseFilter>;
+  filter?: InputMaybe<PhraseFilter>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<CardPhraseOrderBy>>;
+  orderBy?: InputMaybe<Array<PhraseOrderBy>>;
 };
 
 
-export type LanguageCardTranslationCollectionArgs = {
+export type LanguagePhraseTranslationCollectionArgs = {
   after?: InputMaybe<Scalars['Cursor']>;
   before?: InputMaybe<Scalars['Cursor']>;
-  filter?: InputMaybe<CardTranslationFilter>;
+  filter?: InputMaybe<PhraseTranslationFilter>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<CardTranslationOrderBy>>;
+  orderBy?: InputMaybe<Array<PhraseTranslationOrderBy>>;
 };
 
 
@@ -528,14 +167,14 @@ export type LanguageEdge = {
 
 export type LanguageFilter = {
   aliasOf?: InputMaybe<StringFilter>;
-  code?: InputMaybe<StringFilter>;
+  lang?: InputMaybe<StringFilter>;
   name?: InputMaybe<StringFilter>;
   nodeId?: InputMaybe<IdFilter>;
 };
 
 export type LanguageInsertInput = {
   aliasOf?: InputMaybe<Scalars['String']>;
-  code?: InputMaybe<Scalars['String']>;
+  lang?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
 };
 
@@ -549,13 +188,13 @@ export type LanguageInsertResponse = {
 
 export type LanguageOrderBy = {
   aliasOf?: InputMaybe<OrderByDirection>;
-  code?: InputMaybe<OrderByDirection>;
+  lang?: InputMaybe<OrderByDirection>;
   name?: InputMaybe<OrderByDirection>;
 };
 
 export type LanguageUpdateInput = {
   aliasOf?: InputMaybe<Scalars['String']>;
-  code?: InputMaybe<Scalars['String']>;
+  lang?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
 };
 
@@ -570,94 +209,66 @@ export type LanguageUpdateResponse = {
 /** The root type for creating and mutating data */
 export type Mutation = {
   __typename?: 'Mutation';
-  /** Deletes zero or more records from the `CardPhrase` collection */
-  deleteFromCardPhraseCollection: CardPhraseDeleteResponse;
-  /** Deletes zero or more records from the `CardSeeAlso` collection */
-  deleteFromCardSeeAlsoCollection: CardSeeAlsoDeleteResponse;
-  /** Deletes zero or more records from the `CardTranslation` collection */
-  deleteFromCardTranslationCollection: CardTranslationDeleteResponse;
-  /** Deletes zero or more records from the `DeckMembership` collection */
-  deleteFromDeckMembershipCollection: DeckMembershipDeleteResponse;
   /** Deletes zero or more records from the `Language` collection */
   deleteFromLanguageCollection: LanguageDeleteResponse;
-  /** Deletes zero or more records from the `Profile` collection */
-  deleteFromProfileCollection: ProfileDeleteResponse;
+  /** Deletes zero or more records from the `Phrase` collection */
+  deleteFromPhraseCollection: PhraseDeleteResponse;
+  /** Deletes zero or more records from the `PhraseSeeAlso` collection */
+  deleteFromPhraseSeeAlsoCollection: PhraseSeeAlsoDeleteResponse;
+  /** Deletes zero or more records from the `PhraseTranslation` collection */
+  deleteFromPhraseTranslationCollection: PhraseTranslationDeleteResponse;
+  /** Deletes zero or more records from the `UserCard` collection */
+  deleteFromUserCardCollection: UserCardDeleteResponse;
   /** Deletes zero or more records from the `UserDeck` collection */
   deleteFromUserDeckCollection: UserDeckDeleteResponse;
+  /** Deletes zero or more records from the `UserProfile` collection */
+  deleteFromUserProfileCollection: UserProfileDeleteResponse;
   /** Deletes zero or more records from the `buckets` collection */
   deleteFrombucketsCollection: BucketsDeleteResponse;
   /** Deletes zero or more records from the `migrations` collection */
   deleteFrommigrationsCollection: MigrationsDeleteResponse;
   /** Deletes zero or more records from the `objects` collection */
   deleteFromobjectsCollection: ObjectsDeleteResponse;
-  /** Adds one or more `CardPhrase` records to the collection */
-  insertIntoCardPhraseCollection?: Maybe<CardPhraseInsertResponse>;
-  /** Adds one or more `CardSeeAlso` records to the collection */
-  insertIntoCardSeeAlsoCollection?: Maybe<CardSeeAlsoInsertResponse>;
-  /** Adds one or more `CardTranslation` records to the collection */
-  insertIntoCardTranslationCollection?: Maybe<CardTranslationInsertResponse>;
-  /** Adds one or more `DeckMembership` records to the collection */
-  insertIntoDeckMembershipCollection?: Maybe<DeckMembershipInsertResponse>;
   /** Adds one or more `Language` records to the collection */
   insertIntoLanguageCollection?: Maybe<LanguageInsertResponse>;
-  /** Adds one or more `Profile` records to the collection */
-  insertIntoProfileCollection?: Maybe<ProfileInsertResponse>;
+  /** Adds one or more `Phrase` records to the collection */
+  insertIntoPhraseCollection?: Maybe<PhraseInsertResponse>;
+  /** Adds one or more `PhraseSeeAlso` records to the collection */
+  insertIntoPhraseSeeAlsoCollection?: Maybe<PhraseSeeAlsoInsertResponse>;
+  /** Adds one or more `PhraseTranslation` records to the collection */
+  insertIntoPhraseTranslationCollection?: Maybe<PhraseTranslationInsertResponse>;
+  /** Adds one or more `UserCard` records to the collection */
+  insertIntoUserCardCollection?: Maybe<UserCardInsertResponse>;
   /** Adds one or more `UserDeck` records to the collection */
   insertIntoUserDeckCollection?: Maybe<UserDeckInsertResponse>;
+  /** Adds one or more `UserProfile` records to the collection */
+  insertIntoUserProfileCollection?: Maybe<UserProfileInsertResponse>;
   /** Adds one or more `buckets` records to the collection */
   insertIntobucketsCollection?: Maybe<BucketsInsertResponse>;
   /** Adds one or more `migrations` records to the collection */
   insertIntomigrationsCollection?: Maybe<MigrationsInsertResponse>;
   /** Adds one or more `objects` records to the collection */
   insertIntoobjectsCollection?: Maybe<ObjectsInsertResponse>;
-  /** Updates zero or more records in the `CardPhrase` collection */
-  updateCardPhraseCollection: CardPhraseUpdateResponse;
-  /** Updates zero or more records in the `CardSeeAlso` collection */
-  updateCardSeeAlsoCollection: CardSeeAlsoUpdateResponse;
-  /** Updates zero or more records in the `CardTranslation` collection */
-  updateCardTranslationCollection: CardTranslationUpdateResponse;
-  /** Updates zero or more records in the `DeckMembership` collection */
-  updateDeckMembershipCollection: DeckMembershipUpdateResponse;
   /** Updates zero or more records in the `Language` collection */
   updateLanguageCollection: LanguageUpdateResponse;
-  /** Updates zero or more records in the `Profile` collection */
-  updateProfileCollection: ProfileUpdateResponse;
+  /** Updates zero or more records in the `Phrase` collection */
+  updatePhraseCollection: PhraseUpdateResponse;
+  /** Updates zero or more records in the `PhraseSeeAlso` collection */
+  updatePhraseSeeAlsoCollection: PhraseSeeAlsoUpdateResponse;
+  /** Updates zero or more records in the `PhraseTranslation` collection */
+  updatePhraseTranslationCollection: PhraseTranslationUpdateResponse;
+  /** Updates zero or more records in the `UserCard` collection */
+  updateUserCardCollection: UserCardUpdateResponse;
   /** Updates zero or more records in the `UserDeck` collection */
   updateUserDeckCollection: UserDeckUpdateResponse;
+  /** Updates zero or more records in the `UserProfile` collection */
+  updateUserProfileCollection: UserProfileUpdateResponse;
   /** Updates zero or more records in the `buckets` collection */
   updatebucketsCollection: BucketsUpdateResponse;
   /** Updates zero or more records in the `migrations` collection */
   updatemigrationsCollection: MigrationsUpdateResponse;
   /** Updates zero or more records in the `objects` collection */
   updateobjectsCollection: ObjectsUpdateResponse;
-};
-
-
-/** The root type for creating and mutating data */
-export type MutationDeleteFromCardPhraseCollectionArgs = {
-  atMost?: Scalars['Int'];
-  filter?: InputMaybe<CardPhraseFilter>;
-};
-
-
-/** The root type for creating and mutating data */
-export type MutationDeleteFromCardSeeAlsoCollectionArgs = {
-  atMost?: Scalars['Int'];
-  filter?: InputMaybe<CardSeeAlsoFilter>;
-};
-
-
-/** The root type for creating and mutating data */
-export type MutationDeleteFromCardTranslationCollectionArgs = {
-  atMost?: Scalars['Int'];
-  filter?: InputMaybe<CardTranslationFilter>;
-};
-
-
-/** The root type for creating and mutating data */
-export type MutationDeleteFromDeckMembershipCollectionArgs = {
-  atMost?: Scalars['Int'];
-  filter?: InputMaybe<DeckMembershipFilter>;
 };
 
 
@@ -669,9 +280,30 @@ export type MutationDeleteFromLanguageCollectionArgs = {
 
 
 /** The root type for creating and mutating data */
-export type MutationDeleteFromProfileCollectionArgs = {
+export type MutationDeleteFromPhraseCollectionArgs = {
   atMost?: Scalars['Int'];
-  filter?: InputMaybe<ProfileFilter>;
+  filter?: InputMaybe<PhraseFilter>;
+};
+
+
+/** The root type for creating and mutating data */
+export type MutationDeleteFromPhraseSeeAlsoCollectionArgs = {
+  atMost?: Scalars['Int'];
+  filter?: InputMaybe<PhraseSeeAlsoFilter>;
+};
+
+
+/** The root type for creating and mutating data */
+export type MutationDeleteFromPhraseTranslationCollectionArgs = {
+  atMost?: Scalars['Int'];
+  filter?: InputMaybe<PhraseTranslationFilter>;
+};
+
+
+/** The root type for creating and mutating data */
+export type MutationDeleteFromUserCardCollectionArgs = {
+  atMost?: Scalars['Int'];
+  filter?: InputMaybe<UserCardFilter>;
 };
 
 
@@ -679,6 +311,13 @@ export type MutationDeleteFromProfileCollectionArgs = {
 export type MutationDeleteFromUserDeckCollectionArgs = {
   atMost?: Scalars['Int'];
   filter?: InputMaybe<UserDeckFilter>;
+};
+
+
+/** The root type for creating and mutating data */
+export type MutationDeleteFromUserProfileCollectionArgs = {
+  atMost?: Scalars['Int'];
+  filter?: InputMaybe<UserProfileFilter>;
 };
 
 
@@ -704,44 +343,44 @@ export type MutationDeleteFromobjectsCollectionArgs = {
 
 
 /** The root type for creating and mutating data */
-export type MutationInsertIntoCardPhraseCollectionArgs = {
-  objects: Array<CardPhraseInsertInput>;
-};
-
-
-/** The root type for creating and mutating data */
-export type MutationInsertIntoCardSeeAlsoCollectionArgs = {
-  objects: Array<CardSeeAlsoInsertInput>;
-};
-
-
-/** The root type for creating and mutating data */
-export type MutationInsertIntoCardTranslationCollectionArgs = {
-  objects: Array<CardTranslationInsertInput>;
-};
-
-
-/** The root type for creating and mutating data */
-export type MutationInsertIntoDeckMembershipCollectionArgs = {
-  objects: Array<DeckMembershipInsertInput>;
-};
-
-
-/** The root type for creating and mutating data */
 export type MutationInsertIntoLanguageCollectionArgs = {
   objects: Array<LanguageInsertInput>;
 };
 
 
 /** The root type for creating and mutating data */
-export type MutationInsertIntoProfileCollectionArgs = {
-  objects: Array<ProfileInsertInput>;
+export type MutationInsertIntoPhraseCollectionArgs = {
+  objects: Array<PhraseInsertInput>;
+};
+
+
+/** The root type for creating and mutating data */
+export type MutationInsertIntoPhraseSeeAlsoCollectionArgs = {
+  objects: Array<PhraseSeeAlsoInsertInput>;
+};
+
+
+/** The root type for creating and mutating data */
+export type MutationInsertIntoPhraseTranslationCollectionArgs = {
+  objects: Array<PhraseTranslationInsertInput>;
+};
+
+
+/** The root type for creating and mutating data */
+export type MutationInsertIntoUserCardCollectionArgs = {
+  objects: Array<UserCardInsertInput>;
 };
 
 
 /** The root type for creating and mutating data */
 export type MutationInsertIntoUserDeckCollectionArgs = {
   objects: Array<UserDeckInsertInput>;
+};
+
+
+/** The root type for creating and mutating data */
+export type MutationInsertIntoUserProfileCollectionArgs = {
+  objects: Array<UserProfileInsertInput>;
 };
 
 
@@ -764,38 +403,6 @@ export type MutationInsertIntoobjectsCollectionArgs = {
 
 
 /** The root type for creating and mutating data */
-export type MutationUpdateCardPhraseCollectionArgs = {
-  atMost?: Scalars['Int'];
-  filter?: InputMaybe<CardPhraseFilter>;
-  set: CardPhraseUpdateInput;
-};
-
-
-/** The root type for creating and mutating data */
-export type MutationUpdateCardSeeAlsoCollectionArgs = {
-  atMost?: Scalars['Int'];
-  filter?: InputMaybe<CardSeeAlsoFilter>;
-  set: CardSeeAlsoUpdateInput;
-};
-
-
-/** The root type for creating and mutating data */
-export type MutationUpdateCardTranslationCollectionArgs = {
-  atMost?: Scalars['Int'];
-  filter?: InputMaybe<CardTranslationFilter>;
-  set: CardTranslationUpdateInput;
-};
-
-
-/** The root type for creating and mutating data */
-export type MutationUpdateDeckMembershipCollectionArgs = {
-  atMost?: Scalars['Int'];
-  filter?: InputMaybe<DeckMembershipFilter>;
-  set: DeckMembershipUpdateInput;
-};
-
-
-/** The root type for creating and mutating data */
 export type MutationUpdateLanguageCollectionArgs = {
   atMost?: Scalars['Int'];
   filter?: InputMaybe<LanguageFilter>;
@@ -804,10 +411,34 @@ export type MutationUpdateLanguageCollectionArgs = {
 
 
 /** The root type for creating and mutating data */
-export type MutationUpdateProfileCollectionArgs = {
+export type MutationUpdatePhraseCollectionArgs = {
   atMost?: Scalars['Int'];
-  filter?: InputMaybe<ProfileFilter>;
-  set: ProfileUpdateInput;
+  filter?: InputMaybe<PhraseFilter>;
+  set: PhraseUpdateInput;
+};
+
+
+/** The root type for creating and mutating data */
+export type MutationUpdatePhraseSeeAlsoCollectionArgs = {
+  atMost?: Scalars['Int'];
+  filter?: InputMaybe<PhraseSeeAlsoFilter>;
+  set: PhraseSeeAlsoUpdateInput;
+};
+
+
+/** The root type for creating and mutating data */
+export type MutationUpdatePhraseTranslationCollectionArgs = {
+  atMost?: Scalars['Int'];
+  filter?: InputMaybe<PhraseTranslationFilter>;
+  set: PhraseTranslationUpdateInput;
+};
+
+
+/** The root type for creating and mutating data */
+export type MutationUpdateUserCardCollectionArgs = {
+  atMost?: Scalars['Int'];
+  filter?: InputMaybe<UserCardFilter>;
+  set: UserCardUpdateInput;
 };
 
 
@@ -816,6 +447,14 @@ export type MutationUpdateUserDeckCollectionArgs = {
   atMost?: Scalars['Int'];
   filter?: InputMaybe<UserDeckFilter>;
   set: UserDeckUpdateInput;
+};
+
+
+/** The root type for creating and mutating data */
+export type MutationUpdateUserProfileCollectionArgs = {
+  atMost?: Scalars['Int'];
+  filter?: InputMaybe<UserProfileFilter>;
+  set: UserProfileUpdateInput;
 };
 
 
@@ -867,114 +506,277 @@ export type PageInfo = {
   startCursor?: Maybe<Scalars['String']>;
 };
 
-export type Profile = Node & {
-  __typename?: 'Profile';
-  avatarUrl?: Maybe<Scalars['String']>;
-  createdAt: Scalars['Datetime'];
-  deckMembershipCollection?: Maybe<DeckMembershipConnection>;
-  languagePrimary: Scalars['String'];
-  languagesSpoken: Array<Maybe<Scalars['String']>>;
+export type Phrase = Node & {
+  __typename?: 'Phrase';
+  addedBy?: Maybe<Scalars['UUID']>;
+  id: Scalars['UUID'];
+  lang?: Maybe<Scalars['String']>;
+  language?: Maybe<Language>;
   /** Globally Unique Record Identifier */
   nodeId: Scalars['ID'];
-  uid: Scalars['UUID'];
-  updatedAt?: Maybe<Scalars['Datetime']>;
-  userDeckCollection?: Maybe<UserDeckConnection>;
-  username?: Maybe<Scalars['String']>;
+  phraseSeeAlsoCollection?: Maybe<PhraseSeeAlsoConnection>;
+  phraseTranslationCollection?: Maybe<PhraseTranslationConnection>;
+  text: Scalars['String'];
+  userCardCollection?: Maybe<UserCardConnection>;
 };
 
 
-export type ProfileDeckMembershipCollectionArgs = {
+export type PhrasePhraseSeeAlsoCollectionArgs = {
   after?: InputMaybe<Scalars['Cursor']>;
   before?: InputMaybe<Scalars['Cursor']>;
-  filter?: InputMaybe<DeckMembershipFilter>;
+  filter?: InputMaybe<PhraseSeeAlsoFilter>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<DeckMembershipOrderBy>>;
+  orderBy?: InputMaybe<Array<PhraseSeeAlsoOrderBy>>;
 };
 
 
-export type ProfileUserDeckCollectionArgs = {
+export type PhrasePhraseTranslationCollectionArgs = {
   after?: InputMaybe<Scalars['Cursor']>;
   before?: InputMaybe<Scalars['Cursor']>;
-  filter?: InputMaybe<UserDeckFilter>;
+  filter?: InputMaybe<PhraseTranslationFilter>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<UserDeckOrderBy>>;
+  orderBy?: InputMaybe<Array<PhraseTranslationOrderBy>>;
 };
 
-export type ProfileConnection = {
-  __typename?: 'ProfileConnection';
-  edges: Array<ProfileEdge>;
+
+export type PhraseUserCardCollectionArgs = {
+  after?: InputMaybe<Scalars['Cursor']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  filter?: InputMaybe<UserCardFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<UserCardOrderBy>>;
+};
+
+export type PhraseConnection = {
+  __typename?: 'PhraseConnection';
+  edges: Array<PhraseEdge>;
   pageInfo: PageInfo;
 };
 
-export type ProfileDeleteResponse = {
-  __typename?: 'ProfileDeleteResponse';
+export type PhraseDeleteResponse = {
+  __typename?: 'PhraseDeleteResponse';
   /** Count of the records impacted by the mutation */
   affectedCount: Scalars['Int'];
   /** Array of records impacted by the mutation */
-  records: Array<Profile>;
+  records: Array<Phrase>;
 };
 
-export type ProfileEdge = {
-  __typename?: 'ProfileEdge';
+export type PhraseEdge = {
+  __typename?: 'PhraseEdge';
   cursor: Scalars['String'];
-  node: Profile;
+  node: Phrase;
 };
 
-export type ProfileFilter = {
-  avatarUrl?: InputMaybe<StringFilter>;
-  createdAt?: InputMaybe<DatetimeFilter>;
-  languagePrimary?: InputMaybe<StringFilter>;
+export type PhraseFilter = {
+  addedBy?: InputMaybe<UuidFilter>;
+  id?: InputMaybe<UuidFilter>;
+  lang?: InputMaybe<StringFilter>;
   nodeId?: InputMaybe<IdFilter>;
-  uid?: InputMaybe<UuidFilter>;
-  updatedAt?: InputMaybe<DatetimeFilter>;
-  username?: InputMaybe<StringFilter>;
+  text?: InputMaybe<StringFilter>;
 };
 
-export type ProfileInsertInput = {
-  avatarUrl?: InputMaybe<Scalars['String']>;
-  createdAt?: InputMaybe<Scalars['Datetime']>;
-  languagePrimary?: InputMaybe<Scalars['String']>;
-  languagesSpoken?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  uid?: InputMaybe<Scalars['UUID']>;
-  updatedAt?: InputMaybe<Scalars['Datetime']>;
-  username?: InputMaybe<Scalars['String']>;
+export type PhraseInsertInput = {
+  addedBy?: InputMaybe<Scalars['UUID']>;
+  id?: InputMaybe<Scalars['UUID']>;
+  lang?: InputMaybe<Scalars['String']>;
+  text?: InputMaybe<Scalars['String']>;
 };
 
-export type ProfileInsertResponse = {
-  __typename?: 'ProfileInsertResponse';
+export type PhraseInsertResponse = {
+  __typename?: 'PhraseInsertResponse';
   /** Count of the records impacted by the mutation */
   affectedCount: Scalars['Int'];
   /** Array of records impacted by the mutation */
-  records: Array<Profile>;
+  records: Array<Phrase>;
 };
 
-export type ProfileOrderBy = {
-  avatarUrl?: InputMaybe<OrderByDirection>;
-  createdAt?: InputMaybe<OrderByDirection>;
-  languagePrimary?: InputMaybe<OrderByDirection>;
-  uid?: InputMaybe<OrderByDirection>;
-  updatedAt?: InputMaybe<OrderByDirection>;
-  username?: InputMaybe<OrderByDirection>;
+export type PhraseOrderBy = {
+  addedBy?: InputMaybe<OrderByDirection>;
+  id?: InputMaybe<OrderByDirection>;
+  lang?: InputMaybe<OrderByDirection>;
+  text?: InputMaybe<OrderByDirection>;
 };
 
-export type ProfileUpdateInput = {
-  avatarUrl?: InputMaybe<Scalars['String']>;
-  createdAt?: InputMaybe<Scalars['Datetime']>;
-  languagePrimary?: InputMaybe<Scalars['String']>;
-  languagesSpoken?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
-  uid?: InputMaybe<Scalars['UUID']>;
-  updatedAt?: InputMaybe<Scalars['Datetime']>;
-  username?: InputMaybe<Scalars['String']>;
+export type PhraseSeeAlso = Node & {
+  __typename?: 'PhraseSeeAlso';
+  addedBy?: Maybe<Scalars['UUID']>;
+  fromPhrase?: Maybe<Phrase>;
+  fromPhraseId?: Maybe<Scalars['UUID']>;
+  id: Scalars['UUID'];
+  /** Globally Unique Record Identifier */
+  nodeId: Scalars['ID'];
+  toPhrase?: Maybe<Phrase>;
+  toPhraseId?: Maybe<Scalars['UUID']>;
 };
 
-export type ProfileUpdateResponse = {
-  __typename?: 'ProfileUpdateResponse';
+export type PhraseSeeAlsoConnection = {
+  __typename?: 'PhraseSeeAlsoConnection';
+  edges: Array<PhraseSeeAlsoEdge>;
+  pageInfo: PageInfo;
+};
+
+export type PhraseSeeAlsoDeleteResponse = {
+  __typename?: 'PhraseSeeAlsoDeleteResponse';
   /** Count of the records impacted by the mutation */
   affectedCount: Scalars['Int'];
   /** Array of records impacted by the mutation */
-  records: Array<Profile>;
+  records: Array<PhraseSeeAlso>;
+};
+
+export type PhraseSeeAlsoEdge = {
+  __typename?: 'PhraseSeeAlsoEdge';
+  cursor: Scalars['String'];
+  node: PhraseSeeAlso;
+};
+
+export type PhraseSeeAlsoFilter = {
+  addedBy?: InputMaybe<UuidFilter>;
+  fromPhraseId?: InputMaybe<UuidFilter>;
+  id?: InputMaybe<UuidFilter>;
+  nodeId?: InputMaybe<IdFilter>;
+  toPhraseId?: InputMaybe<UuidFilter>;
+};
+
+export type PhraseSeeAlsoInsertInput = {
+  addedBy?: InputMaybe<Scalars['UUID']>;
+  fromPhraseId?: InputMaybe<Scalars['UUID']>;
+  id?: InputMaybe<Scalars['UUID']>;
+  toPhraseId?: InputMaybe<Scalars['UUID']>;
+};
+
+export type PhraseSeeAlsoInsertResponse = {
+  __typename?: 'PhraseSeeAlsoInsertResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int'];
+  /** Array of records impacted by the mutation */
+  records: Array<PhraseSeeAlso>;
+};
+
+export type PhraseSeeAlsoOrderBy = {
+  addedBy?: InputMaybe<OrderByDirection>;
+  fromPhraseId?: InputMaybe<OrderByDirection>;
+  id?: InputMaybe<OrderByDirection>;
+  toPhraseId?: InputMaybe<OrderByDirection>;
+};
+
+export type PhraseSeeAlsoUpdateInput = {
+  addedBy?: InputMaybe<Scalars['UUID']>;
+  fromPhraseId?: InputMaybe<Scalars['UUID']>;
+  id?: InputMaybe<Scalars['UUID']>;
+  toPhraseId?: InputMaybe<Scalars['UUID']>;
+};
+
+export type PhraseSeeAlsoUpdateResponse = {
+  __typename?: 'PhraseSeeAlsoUpdateResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int'];
+  /** Array of records impacted by the mutation */
+  records: Array<PhraseSeeAlso>;
+};
+
+export type PhraseTranslation = Node & {
+  __typename?: 'PhraseTranslation';
+  addedBy?: Maybe<Scalars['UUID']>;
+  id: Scalars['UUID'];
+  lang: Scalars['String'];
+  language?: Maybe<Language>;
+  literal?: Maybe<Scalars['String']>;
+  /** Globally Unique Record Identifier */
+  nodeId: Scalars['ID'];
+  phrase?: Maybe<Phrase>;
+  phraseId: Scalars['UUID'];
+  text: Scalars['String'];
+};
+
+export type PhraseTranslationConnection = {
+  __typename?: 'PhraseTranslationConnection';
+  edges: Array<PhraseTranslationEdge>;
+  pageInfo: PageInfo;
+};
+
+export type PhraseTranslationDeleteResponse = {
+  __typename?: 'PhraseTranslationDeleteResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int'];
+  /** Array of records impacted by the mutation */
+  records: Array<PhraseTranslation>;
+};
+
+export type PhraseTranslationEdge = {
+  __typename?: 'PhraseTranslationEdge';
+  cursor: Scalars['String'];
+  node: PhraseTranslation;
+};
+
+export type PhraseTranslationFilter = {
+  addedBy?: InputMaybe<UuidFilter>;
+  id?: InputMaybe<UuidFilter>;
+  lang?: InputMaybe<StringFilter>;
+  literal?: InputMaybe<StringFilter>;
+  nodeId?: InputMaybe<IdFilter>;
+  phraseId?: InputMaybe<UuidFilter>;
+  text?: InputMaybe<StringFilter>;
+};
+
+export type PhraseTranslationInsertInput = {
+  addedBy?: InputMaybe<Scalars['UUID']>;
+  id?: InputMaybe<Scalars['UUID']>;
+  lang?: InputMaybe<Scalars['String']>;
+  literal?: InputMaybe<Scalars['String']>;
+  phraseId?: InputMaybe<Scalars['UUID']>;
+  text?: InputMaybe<Scalars['String']>;
+};
+
+export type PhraseTranslationInsertResponse = {
+  __typename?: 'PhraseTranslationInsertResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int'];
+  /** Array of records impacted by the mutation */
+  records: Array<PhraseTranslation>;
+};
+
+export type PhraseTranslationOrderBy = {
+  addedBy?: InputMaybe<OrderByDirection>;
+  id?: InputMaybe<OrderByDirection>;
+  lang?: InputMaybe<OrderByDirection>;
+  literal?: InputMaybe<OrderByDirection>;
+  phraseId?: InputMaybe<OrderByDirection>;
+  text?: InputMaybe<OrderByDirection>;
+};
+
+export type PhraseTranslationUpdateInput = {
+  addedBy?: InputMaybe<Scalars['UUID']>;
+  id?: InputMaybe<Scalars['UUID']>;
+  lang?: InputMaybe<Scalars['String']>;
+  literal?: InputMaybe<Scalars['String']>;
+  phraseId?: InputMaybe<Scalars['UUID']>;
+  text?: InputMaybe<Scalars['String']>;
+};
+
+export type PhraseTranslationUpdateResponse = {
+  __typename?: 'PhraseTranslationUpdateResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int'];
+  /** Array of records impacted by the mutation */
+  records: Array<PhraseTranslation>;
+};
+
+export type PhraseUpdateInput = {
+  addedBy?: InputMaybe<Scalars['UUID']>;
+  id?: InputMaybe<Scalars['UUID']>;
+  lang?: InputMaybe<Scalars['String']>;
+  text?: InputMaybe<Scalars['String']>;
+};
+
+export type PhraseUpdateResponse = {
+  __typename?: 'PhraseUpdateResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int'];
+  /** Array of records impacted by the mutation */
+  records: Array<Phrase>;
 };
 
 /** The root type for querying data */
@@ -982,14 +784,6 @@ export type Query = {
   __typename?: 'Query';
   /** A pagable collection of type `buckets` */
   bucketsCollection?: Maybe<BucketsConnection>;
-  /** A pagable collection of type `CardPhrase` */
-  cardPhraseCollection?: Maybe<CardPhraseConnection>;
-  /** A pagable collection of type `CardSeeAlso` */
-  cardSeeAlsoCollection?: Maybe<CardSeeAlsoConnection>;
-  /** A pagable collection of type `CardTranslation` */
-  cardTranslationCollection?: Maybe<CardTranslationConnection>;
-  /** A pagable collection of type `DeckMembership` */
-  deckMembershipCollection?: Maybe<DeckMembershipConnection>;
   /** A pagable collection of type `Language` */
   languageCollection?: Maybe<LanguageConnection>;
   /** A pagable collection of type `migrations` */
@@ -998,10 +792,18 @@ export type Query = {
   node?: Maybe<Node>;
   /** A pagable collection of type `objects` */
   objectsCollection?: Maybe<ObjectsConnection>;
-  /** A pagable collection of type `Profile` */
-  profileCollection?: Maybe<ProfileConnection>;
+  /** A pagable collection of type `Phrase` */
+  phraseCollection?: Maybe<PhraseConnection>;
+  /** A pagable collection of type `PhraseSeeAlso` */
+  phraseSeeAlsoCollection?: Maybe<PhraseSeeAlsoConnection>;
+  /** A pagable collection of type `PhraseTranslation` */
+  phraseTranslationCollection?: Maybe<PhraseTranslationConnection>;
+  /** A pagable collection of type `UserCard` */
+  userCardCollection?: Maybe<UserCardConnection>;
   /** A pagable collection of type `UserDeck` */
   userDeckCollection?: Maybe<UserDeckConnection>;
+  /** A pagable collection of type `UserProfile` */
+  userProfileCollection?: Maybe<UserProfileConnection>;
 };
 
 
@@ -1013,50 +815,6 @@ export type QueryBucketsCollectionArgs = {
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Array<BucketsOrderBy>>;
-};
-
-
-/** The root type for querying data */
-export type QueryCardPhraseCollectionArgs = {
-  after?: InputMaybe<Scalars['Cursor']>;
-  before?: InputMaybe<Scalars['Cursor']>;
-  filter?: InputMaybe<CardPhraseFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<CardPhraseOrderBy>>;
-};
-
-
-/** The root type for querying data */
-export type QueryCardSeeAlsoCollectionArgs = {
-  after?: InputMaybe<Scalars['Cursor']>;
-  before?: InputMaybe<Scalars['Cursor']>;
-  filter?: InputMaybe<CardSeeAlsoFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<CardSeeAlsoOrderBy>>;
-};
-
-
-/** The root type for querying data */
-export type QueryCardTranslationCollectionArgs = {
-  after?: InputMaybe<Scalars['Cursor']>;
-  before?: InputMaybe<Scalars['Cursor']>;
-  filter?: InputMaybe<CardTranslationFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<CardTranslationOrderBy>>;
-};
-
-
-/** The root type for querying data */
-export type QueryDeckMembershipCollectionArgs = {
-  after?: InputMaybe<Scalars['Cursor']>;
-  before?: InputMaybe<Scalars['Cursor']>;
-  filter?: InputMaybe<DeckMembershipFilter>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<DeckMembershipOrderBy>>;
 };
 
 
@@ -1100,13 +858,46 @@ export type QueryObjectsCollectionArgs = {
 
 
 /** The root type for querying data */
-export type QueryProfileCollectionArgs = {
+export type QueryPhraseCollectionArgs = {
   after?: InputMaybe<Scalars['Cursor']>;
   before?: InputMaybe<Scalars['Cursor']>;
-  filter?: InputMaybe<ProfileFilter>;
+  filter?: InputMaybe<PhraseFilter>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<ProfileOrderBy>>;
+  orderBy?: InputMaybe<Array<PhraseOrderBy>>;
+};
+
+
+/** The root type for querying data */
+export type QueryPhraseSeeAlsoCollectionArgs = {
+  after?: InputMaybe<Scalars['Cursor']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  filter?: InputMaybe<PhraseSeeAlsoFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<PhraseSeeAlsoOrderBy>>;
+};
+
+
+/** The root type for querying data */
+export type QueryPhraseTranslationCollectionArgs = {
+  after?: InputMaybe<Scalars['Cursor']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  filter?: InputMaybe<PhraseTranslationFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<PhraseTranslationOrderBy>>;
+};
+
+
+/** The root type for querying data */
+export type QueryUserCardCollectionArgs = {
+  after?: InputMaybe<Scalars['Cursor']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  filter?: InputMaybe<UserCardFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<UserCardOrderBy>>;
 };
 
 
@@ -1118,6 +909,17 @@ export type QueryUserDeckCollectionArgs = {
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
   orderBy?: InputMaybe<Array<UserDeckOrderBy>>;
+};
+
+
+/** The root type for querying data */
+export type QueryUserProfileCollectionArgs = {
+  after?: InputMaybe<Scalars['Cursor']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  filter?: InputMaybe<UserProfileFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<UserProfileOrderBy>>;
 };
 
 /** Boolean expression comparing fields on type "String" */
@@ -1152,26 +954,114 @@ export type UuidFilter = {
   neq?: InputMaybe<Scalars['UUID']>;
 };
 
+export type UserCard = Node & {
+  __typename?: 'UserCard';
+  id: Scalars['UUID'];
+  /** Globally Unique Record Identifier */
+  nodeId: Scalars['ID'];
+  phrase?: Maybe<Phrase>;
+  phraseId: Scalars['UUID'];
+  status: Scalars['String'];
+  uid: Scalars['UUID'];
+  updatedAt?: Maybe<Scalars['Datetime']>;
+  userDeck?: Maybe<UserDeck>;
+  userDeckId?: Maybe<Scalars['UUID']>;
+  userProfile?: Maybe<UserProfile>;
+};
+
+export type UserCardConnection = {
+  __typename?: 'UserCardConnection';
+  edges: Array<UserCardEdge>;
+  pageInfo: PageInfo;
+};
+
+export type UserCardDeleteResponse = {
+  __typename?: 'UserCardDeleteResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int'];
+  /** Array of records impacted by the mutation */
+  records: Array<UserCard>;
+};
+
+export type UserCardEdge = {
+  __typename?: 'UserCardEdge';
+  cursor: Scalars['String'];
+  node: UserCard;
+};
+
+export type UserCardFilter = {
+  id?: InputMaybe<UuidFilter>;
+  nodeId?: InputMaybe<IdFilter>;
+  phraseId?: InputMaybe<UuidFilter>;
+  status?: InputMaybe<StringFilter>;
+  uid?: InputMaybe<UuidFilter>;
+  updatedAt?: InputMaybe<DatetimeFilter>;
+  userDeckId?: InputMaybe<UuidFilter>;
+};
+
+export type UserCardInsertInput = {
+  id?: InputMaybe<Scalars['UUID']>;
+  phraseId?: InputMaybe<Scalars['UUID']>;
+  status?: InputMaybe<Scalars['String']>;
+  uid?: InputMaybe<Scalars['UUID']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']>;
+  userDeckId?: InputMaybe<Scalars['UUID']>;
+};
+
+export type UserCardInsertResponse = {
+  __typename?: 'UserCardInsertResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int'];
+  /** Array of records impacted by the mutation */
+  records: Array<UserCard>;
+};
+
+export type UserCardOrderBy = {
+  id?: InputMaybe<OrderByDirection>;
+  phraseId?: InputMaybe<OrderByDirection>;
+  status?: InputMaybe<OrderByDirection>;
+  uid?: InputMaybe<OrderByDirection>;
+  updatedAt?: InputMaybe<OrderByDirection>;
+  userDeckId?: InputMaybe<OrderByDirection>;
+};
+
+export type UserCardUpdateInput = {
+  id?: InputMaybe<Scalars['UUID']>;
+  phraseId?: InputMaybe<Scalars['UUID']>;
+  status?: InputMaybe<Scalars['String']>;
+  uid?: InputMaybe<Scalars['UUID']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']>;
+  userDeckId?: InputMaybe<Scalars['UUID']>;
+};
+
+export type UserCardUpdateResponse = {
+  __typename?: 'UserCardUpdateResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int'];
+  /** Array of records impacted by the mutation */
+  records: Array<UserCard>;
+};
+
 export type UserDeck = Node & {
   __typename?: 'UserDeck';
-  deckMembershipCollection?: Maybe<DeckMembershipConnection>;
   id: Scalars['UUID'];
   lang?: Maybe<Scalars['String']>;
   language?: Maybe<Language>;
   /** Globally Unique Record Identifier */
   nodeId: Scalars['ID'];
-  profile?: Maybe<Profile>;
   uid: Scalars['UUID'];
+  userCardCollection?: Maybe<UserCardConnection>;
+  userProfile?: Maybe<UserProfile>;
 };
 
 
-export type UserDeckDeckMembershipCollectionArgs = {
+export type UserDeckUserCardCollectionArgs = {
   after?: InputMaybe<Scalars['Cursor']>;
   before?: InputMaybe<Scalars['Cursor']>;
-  filter?: InputMaybe<DeckMembershipFilter>;
+  filter?: InputMaybe<UserCardFilter>;
   first?: InputMaybe<Scalars['Int']>;
   last?: InputMaybe<Scalars['Int']>;
-  orderBy?: InputMaybe<Array<DeckMembershipOrderBy>>;
+  orderBy?: InputMaybe<Array<UserCardOrderBy>>;
 };
 
 export type UserDeckConnection = {
@@ -1233,6 +1123,116 @@ export type UserDeckUpdateResponse = {
   affectedCount: Scalars['Int'];
   /** Array of records impacted by the mutation */
   records: Array<UserDeck>;
+};
+
+export type UserProfile = Node & {
+  __typename?: 'UserProfile';
+  avatarUrl?: Maybe<Scalars['String']>;
+  createdAt: Scalars['Datetime'];
+  languagePrimary: Scalars['String'];
+  languagesSpoken: Array<Maybe<Scalars['String']>>;
+  /** Globally Unique Record Identifier */
+  nodeId: Scalars['ID'];
+  uid: Scalars['UUID'];
+  updatedAt?: Maybe<Scalars['Datetime']>;
+  userCardCollection?: Maybe<UserCardConnection>;
+  userDeckCollection?: Maybe<UserDeckConnection>;
+  username?: Maybe<Scalars['String']>;
+};
+
+
+export type UserProfileUserCardCollectionArgs = {
+  after?: InputMaybe<Scalars['Cursor']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  filter?: InputMaybe<UserCardFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<UserCardOrderBy>>;
+};
+
+
+export type UserProfileUserDeckCollectionArgs = {
+  after?: InputMaybe<Scalars['Cursor']>;
+  before?: InputMaybe<Scalars['Cursor']>;
+  filter?: InputMaybe<UserDeckFilter>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  orderBy?: InputMaybe<Array<UserDeckOrderBy>>;
+};
+
+export type UserProfileConnection = {
+  __typename?: 'UserProfileConnection';
+  edges: Array<UserProfileEdge>;
+  pageInfo: PageInfo;
+};
+
+export type UserProfileDeleteResponse = {
+  __typename?: 'UserProfileDeleteResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int'];
+  /** Array of records impacted by the mutation */
+  records: Array<UserProfile>;
+};
+
+export type UserProfileEdge = {
+  __typename?: 'UserProfileEdge';
+  cursor: Scalars['String'];
+  node: UserProfile;
+};
+
+export type UserProfileFilter = {
+  avatarUrl?: InputMaybe<StringFilter>;
+  createdAt?: InputMaybe<DatetimeFilter>;
+  languagePrimary?: InputMaybe<StringFilter>;
+  nodeId?: InputMaybe<IdFilter>;
+  uid?: InputMaybe<UuidFilter>;
+  updatedAt?: InputMaybe<DatetimeFilter>;
+  username?: InputMaybe<StringFilter>;
+};
+
+export type UserProfileInsertInput = {
+  avatarUrl?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['Datetime']>;
+  languagePrimary?: InputMaybe<Scalars['String']>;
+  languagesSpoken?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  uid?: InputMaybe<Scalars['UUID']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']>;
+  username?: InputMaybe<Scalars['String']>;
+};
+
+export type UserProfileInsertResponse = {
+  __typename?: 'UserProfileInsertResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int'];
+  /** Array of records impacted by the mutation */
+  records: Array<UserProfile>;
+};
+
+export type UserProfileOrderBy = {
+  avatarUrl?: InputMaybe<OrderByDirection>;
+  createdAt?: InputMaybe<OrderByDirection>;
+  languagePrimary?: InputMaybe<OrderByDirection>;
+  uid?: InputMaybe<OrderByDirection>;
+  updatedAt?: InputMaybe<OrderByDirection>;
+  username?: InputMaybe<OrderByDirection>;
+};
+
+export type UserProfileUpdateInput = {
+  avatarUrl?: InputMaybe<Scalars['String']>;
+  createdAt?: InputMaybe<Scalars['Datetime']>;
+  languagePrimary?: InputMaybe<Scalars['String']>;
+  languagesSpoken?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  uid?: InputMaybe<Scalars['UUID']>;
+  updatedAt?: InputMaybe<Scalars['Datetime']>;
+  username?: InputMaybe<Scalars['String']>;
+};
+
+export type UserProfileUpdateResponse = {
+  __typename?: 'UserProfileUpdateResponse';
+  /** Count of the records impacted by the mutation */
+  affectedCount: Scalars['Int'];
+  /** Array of records impacted by the mutation */
+  records: Array<UserProfile>;
 };
 
 export type Buckets = Node & {
@@ -1508,61 +1508,61 @@ export type MutationMutationVariables = Exact<{
 
 export type MutationMutation = { __typename?: 'Mutation', insertIntoUserDeckCollection?: { __typename?: 'UserDeckInsertResponse', records: Array<{ __typename?: 'UserDeck', id: any, lang?: string | null }> } | null };
 
-export type InsertIntoDeckMembershipCollectionMutationVariables = Exact<{
-  objects: Array<DeckMembershipInsertInput> | DeckMembershipInsertInput;
+export type InsertIntoUserCardCollectionMutationVariables = Exact<{
+  objects: Array<UserCardInsertInput> | UserCardInsertInput;
 }>;
 
 
-export type InsertIntoDeckMembershipCollectionMutation = { __typename?: 'Mutation', insertIntoDeckMembershipCollection?: { __typename?: 'DeckMembershipInsertResponse', records: Array<{ __typename?: 'DeckMembership', id: any, status: string, cardPhraseId: any, deckId?: any | null }> } | null };
+export type InsertIntoUserCardCollectionMutation = { __typename?: 'Mutation', insertIntoUserCardCollection?: { __typename?: 'UserCardInsertResponse', records: Array<{ __typename?: 'UserCard', id: any, status: string, phraseId: any, userDeckId?: any | null }> } | null };
 
 export type AllDecksQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllDecksQueryQuery = { __typename?: 'Query', userDeckCollection?: { __typename?: 'UserDeckConnection', edges: Array<{ __typename?: 'UserDeckEdge', node: { __typename?: 'UserDeck', id: any, lang?: string | null, deckMembershipCollection?: { __typename?: 'DeckMembershipConnection', edges: Array<{ __typename?: 'DeckMembershipEdge', node: { __typename?: 'DeckMembership', id: any, status: string, cardPhraseId: any } }> } | null } }> } | null };
+export type AllDecksQueryQuery = { __typename?: 'Query', userDeckCollection?: { __typename?: 'UserDeckConnection', edges: Array<{ __typename?: 'UserDeckEdge', node: { __typename?: 'UserDeck', id: any, lang?: string | null, userCardCollection?: { __typename?: 'UserCardConnection', edges: Array<{ __typename?: 'UserCardEdge', node: { __typename?: 'UserCard', id: any, status: string, phraseId: any } }> } | null } }> } | null };
 
 export type AllPhraseDetailsQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllPhraseDetailsQueryQuery = { __typename?: 'Query', cardPhraseCollection?: { __typename?: 'CardPhraseConnection', edges: Array<{ __typename?: 'CardPhraseEdge', node: { __typename?: 'CardPhrase', id: any, text: string, lang?: string | null, cardTranslationCollection?: { __typename?: 'CardTranslationConnection', edges: Array<{ __typename?: 'CardTranslationEdge', node: { __typename?: 'CardTranslation', id: any, text: string, lang: string } }> } | null, cardSeeAlsoCollection?: { __typename?: 'CardSeeAlsoConnection', edges: Array<{ __typename?: 'CardSeeAlsoEdge', node: { __typename?: 'CardSeeAlso', fromPhrase?: { __typename?: 'CardPhrase', id: any, text: string, lang?: string | null } | null, toPhrase?: { __typename?: 'CardPhrase', id: any, text: string, lang?: string | null } | null } }> } | null } }> } | null };
+export type AllPhraseDetailsQueryQuery = { __typename?: 'Query', phraseCollection?: { __typename?: 'PhraseConnection', edges: Array<{ __typename?: 'PhraseEdge', node: { __typename?: 'Phrase', id: any, text: string, lang?: string | null, phraseTranslationCollection?: { __typename?: 'PhraseTranslationConnection', edges: Array<{ __typename?: 'PhraseTranslationEdge', node: { __typename?: 'PhraseTranslation', id: any, text: string, lang: string } }> } | null, phraseSeeAlsoCollection?: { __typename?: 'PhraseSeeAlsoConnection', edges: Array<{ __typename?: 'PhraseSeeAlsoEdge', node: { __typename?: 'PhraseSeeAlso', fromPhrase?: { __typename?: 'Phrase', id: any, text: string, lang?: string | null } | null, toPhrase?: { __typename?: 'Phrase', id: any, text: string, lang?: string | null } | null } }> } | null } }> } | null };
 
 export type AllPhraseIdsQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllPhraseIdsQueryQuery = { __typename?: 'Query', cardPhraseCollection?: { __typename?: 'CardPhraseConnection', edges: Array<{ __typename?: 'CardPhraseEdge', node: { __typename?: 'CardPhrase', id: any } }> } | null };
+export type AllPhraseIdsQueryQuery = { __typename?: 'Query', phraseCollection?: { __typename?: 'PhraseConnection', edges: Array<{ __typename?: 'PhraseEdge', node: { __typename?: 'Phrase', id: any } }> } | null };
 
-export type DeckQueryQueryVariables = Exact<{
+export type UserDeckQueryQueryVariables = Exact<{
   filter?: InputMaybe<UserDeckFilter>;
 }>;
 
 
-export type DeckQueryQuery = { __typename?: 'Query', userDeckCollection?: { __typename?: 'UserDeckConnection', edges: Array<{ __typename?: 'UserDeckEdge', node: { __typename?: 'UserDeck', id: any, uid: any, lang?: string | null, deckMembershipCollection?: { __typename?: 'DeckMembershipConnection', edges: Array<{ __typename?: 'DeckMembershipEdge', node: { __typename?: 'DeckMembership', id: any, status: string, cardPhrase?: { __typename?: 'CardPhrase', id: any, text: string, lang?: string | null, cardTranslationCollection?: { __typename?: 'CardTranslationConnection', edges: Array<{ __typename?: 'CardTranslationEdge', node: { __typename?: 'CardTranslation', id: any, text: string, lang: string, literal?: string | null } }> } | null } | null } }> } | null } }> } | null };
+export type UserDeckQueryQuery = { __typename?: 'Query', userDeckCollection?: { __typename?: 'UserDeckConnection', edges: Array<{ __typename?: 'UserDeckEdge', node: { __typename?: 'UserDeck', id: any, uid: any, lang?: string | null, userCardCollection?: { __typename?: 'UserCardConnection', edges: Array<{ __typename?: 'UserCardEdge', node: { __typename?: 'UserCard', id: any, status: string, phrase?: { __typename?: 'Phrase', id: any, text: string, lang?: string | null, phraseTranslationCollection?: { __typename?: 'PhraseTranslationConnection', edges: Array<{ __typename?: 'PhraseTranslationEdge', node: { __typename?: 'PhraseTranslation', id: any, text: string, lang: string, literal?: string | null } }> } | null } | null } }> } | null } }> } | null };
 
 export type LanguageDetailsQueryQueryVariables = Exact<{
   filter?: InputMaybe<LanguageFilter>;
 }>;
 
 
-export type LanguageDetailsQueryQuery = { __typename?: 'Query', languageCollection?: { __typename?: 'LanguageConnection', edges: Array<{ __typename?: 'LanguageEdge', node: { __typename?: 'Language', code: string, name: string, cardPhraseCollection?: { __typename?: 'CardPhraseConnection', edges: Array<{ __typename?: 'CardPhraseEdge', node: { __typename?: 'CardPhrase', id: any, text: string, lang?: string | null, cardTranslationCollection?: { __typename?: 'CardTranslationConnection', edges: Array<{ __typename?: 'CardTranslationEdge', node: { __typename?: 'CardTranslation', id: any, lang: string, text: string } }> } | null, cardSeeAlsoCollection?: { __typename?: 'CardSeeAlsoConnection', edges: Array<{ __typename?: 'CardSeeAlsoEdge', node: { __typename?: 'CardSeeAlso', fromPhrase?: { __typename?: 'CardPhrase', id: any, text: string, lang?: string | null } | null, toPhrase?: { __typename?: 'CardPhrase', id: any, text: string, lang?: string | null } | null } }> } | null } }> } | null } }> } | null };
+export type LanguageDetailsQueryQuery = { __typename?: 'Query', languageCollection?: { __typename?: 'LanguageConnection', edges: Array<{ __typename?: 'LanguageEdge', node: { __typename?: 'Language', lang: string, name: string, phraseCollection?: { __typename?: 'PhraseConnection', edges: Array<{ __typename?: 'PhraseEdge', node: { __typename?: 'Phrase', id: any, text: string, lang?: string | null, phraseTranslationCollection?: { __typename?: 'PhraseTranslationConnection', edges: Array<{ __typename?: 'PhraseTranslationEdge', node: { __typename?: 'PhraseTranslation', id: any, lang: string, text: string } }> } | null, phraseSeeAlsoCollection?: { __typename?: 'PhraseSeeAlsoConnection', edges: Array<{ __typename?: 'PhraseSeeAlsoEdge', node: { __typename?: 'PhraseSeeAlso', fromPhrase?: { __typename?: 'Phrase', id: any, text: string, lang?: string | null } | null, toPhrase?: { __typename?: 'Phrase', id: any, text: string, lang?: string | null } | null } }> } | null } }> } | null } }> } | null };
 
-export type CardPhraseCollectionQueryVariables = Exact<{
-  filter?: InputMaybe<CardPhraseFilter>;
+export type PhraseCollectionQueryVariables = Exact<{
+  filter?: InputMaybe<PhraseFilter>;
 }>;
 
 
-export type CardPhraseCollectionQuery = { __typename?: 'Query', cardPhraseCollection?: { __typename?: 'CardPhraseConnection', edges: Array<{ __typename?: 'CardPhraseEdge', node: { __typename?: 'CardPhrase', id: any, text: string, lang?: string | null, cardTranslationCollection?: { __typename?: 'CardTranslationConnection', edges: Array<{ __typename?: 'CardTranslationEdge', node: { __typename?: 'CardTranslation', id: any, text: string, lang: string } }> } | null, deckMembershipCollection?: { __typename?: 'DeckMembershipConnection', edges: Array<{ __typename?: 'DeckMembershipEdge', node: { __typename?: 'DeckMembership', deckId?: any | null, status: string } }> } | null, cardSeeAlsoCollection?: { __typename?: 'CardSeeAlsoConnection', edges: Array<{ __typename?: 'CardSeeAlsoEdge', node: { __typename?: 'CardSeeAlso', fromPhrase?: { __typename?: 'CardPhrase', id: any, text: string, lang?: string | null } | null, toPhrase?: { __typename?: 'CardPhrase', id: any, text: string, lang?: string | null } | null } }> } | null } }> } | null };
+export type PhraseCollectionQuery = { __typename?: 'Query', phraseCollection?: { __typename?: 'PhraseConnection', edges: Array<{ __typename?: 'PhraseEdge', node: { __typename?: 'Phrase', id: any, text: string, lang?: string | null, phraseTranslationCollection?: { __typename?: 'PhraseTranslationConnection', edges: Array<{ __typename?: 'PhraseTranslationEdge', node: { __typename?: 'PhraseTranslation', id: any, text: string, lang: string } }> } | null, userCardCollection?: { __typename?: 'UserCardConnection', edges: Array<{ __typename?: 'UserCardEdge', node: { __typename?: 'UserCard', userDeckId?: any | null, status: string } }> } | null, phraseSeeAlsoCollection?: { __typename?: 'PhraseSeeAlsoConnection', edges: Array<{ __typename?: 'PhraseSeeAlsoEdge', node: { __typename?: 'PhraseSeeAlso', fromPhrase?: { __typename?: 'Phrase', id: any, text: string, lang?: string | null } | null, toPhrase?: { __typename?: 'Phrase', id: any, text: string, lang?: string | null } | null } }> } | null } }> } | null };
 
-export type ProfileQueryQueryVariables = Exact<{ [key: string]: never; }>;
+export type UserProfileQueryQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type ProfileQueryQuery = { __typename?: 'Query', profileCollection?: { __typename?: 'ProfileConnection', edges: Array<{ __typename?: 'ProfileEdge', node: { __typename?: 'Profile', username?: string | null, languagePrimary: string, languagesSpoken: Array<string | null>, avatarUrl?: string | null } }> } | null };
+export type UserProfileQueryQuery = { __typename?: 'Query', userProfileCollection?: { __typename?: 'UserProfileConnection', edges: Array<{ __typename?: 'UserProfileEdge', node: { __typename?: 'UserProfile', username?: string | null, languagePrimary: string, languagesSpoken: Array<string | null>, avatarUrl?: string | null } }> } | null };
 
 
 export const MutationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Mutation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"objects"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserDeckInsertInput"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insertIntoUserDeckCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"Variable","name":{"kind":"Name","value":"objects"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"records"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}}]}}]}}]}}]} as unknown as DocumentNode<MutationMutation, MutationMutationVariables>;
-export const InsertIntoDeckMembershipCollectionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InsertIntoDeckMembershipCollection"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"objects"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"DeckMembershipInsertInput"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insertIntoDeckMembershipCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"Variable","name":{"kind":"Name","value":"objects"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"records"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"cardPhraseId"}},{"kind":"Field","name":{"kind":"Name","value":"deckId"}}]}}]}}]}}]} as unknown as DocumentNode<InsertIntoDeckMembershipCollectionMutation, InsertIntoDeckMembershipCollectionMutationVariables>;
-export const AllDecksQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllDecksQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userDeckCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}},{"kind":"Field","name":{"kind":"Name","value":"deckMembershipCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"cardPhraseId"}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<AllDecksQueryQuery, AllDecksQueryQueryVariables>;
-export const AllPhraseDetailsQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllPhraseDetailsQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cardPhraseCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}},{"kind":"Field","name":{"kind":"Name","value":"cardTranslationCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"cardSeeAlsoCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fromPhrase"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}}]}},{"kind":"Field","name":{"kind":"Name","value":"toPhrase"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}}]}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<AllPhraseDetailsQueryQuery, AllPhraseDetailsQueryQueryVariables>;
-export const AllPhraseIdsQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllPhraseIdsQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cardPhraseCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}}]} as unknown as DocumentNode<AllPhraseIdsQueryQuery, AllPhraseIdsQueryQueryVariables>;
-export const DeckQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"DeckQuery"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"UserDeckFilter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userDeckCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"uid"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}},{"kind":"Field","name":{"kind":"Name","value":"deckMembershipCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"cardPhrase"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}},{"kind":"Field","name":{"kind":"Name","value":"cardTranslationCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}},{"kind":"Field","name":{"kind":"Name","value":"literal"}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<DeckQueryQuery, DeckQueryQueryVariables>;
-export const LanguageDetailsQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"LanguageDetailsQuery"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"LanguageFilter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"languageCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"code"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"cardPhraseCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}},{"kind":"Field","name":{"kind":"Name","value":"cardTranslationCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}},{"kind":"Field","name":{"kind":"Name","value":"text"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"cardSeeAlsoCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fromPhrase"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}}]}},{"kind":"Field","name":{"kind":"Name","value":"toPhrase"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<LanguageDetailsQueryQuery, LanguageDetailsQueryQueryVariables>;
-export const CardPhraseCollectionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"CardPhraseCollection"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"CardPhraseFilter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"cardPhraseCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}},{"kind":"Field","name":{"kind":"Name","value":"cardTranslationCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"deckMembershipCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deckId"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"cardSeeAlsoCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fromPhrase"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}}]}},{"kind":"Field","name":{"kind":"Name","value":"toPhrase"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}}]}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<CardPhraseCollectionQuery, CardPhraseCollectionQueryVariables>;
-export const ProfileQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ProfileQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"profileCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"languagePrimary"}},{"kind":"Field","name":{"kind":"Name","value":"languagesSpoken"}},{"kind":"Field","name":{"kind":"Name","value":"avatarUrl"}}]}}]}}]}}]}}]} as unknown as DocumentNode<ProfileQueryQuery, ProfileQueryQueryVariables>;
+export const InsertIntoUserCardCollectionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"InsertIntoUserCardCollection"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"objects"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserCardInsertInput"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"insertIntoUserCardCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"objects"},"value":{"kind":"Variable","name":{"kind":"Name","value":"objects"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"records"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"phraseId"}},{"kind":"Field","name":{"kind":"Name","value":"userDeckId"}}]}}]}}]}}]} as unknown as DocumentNode<InsertIntoUserCardCollectionMutation, InsertIntoUserCardCollectionMutationVariables>;
+export const AllDecksQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllDecksQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userDeckCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}},{"kind":"Field","name":{"kind":"Name","value":"userCardCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"phraseId"}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<AllDecksQueryQuery, AllDecksQueryQueryVariables>;
+export const AllPhraseDetailsQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllPhraseDetailsQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"phraseCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}},{"kind":"Field","name":{"kind":"Name","value":"phraseTranslationCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"phraseSeeAlsoCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fromPhrase"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}}]}},{"kind":"Field","name":{"kind":"Name","value":"toPhrase"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}}]}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<AllPhraseDetailsQueryQuery, AllPhraseDetailsQueryQueryVariables>;
+export const AllPhraseIdsQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"AllPhraseIdsQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"phraseCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}}]} as unknown as DocumentNode<AllPhraseIdsQueryQuery, AllPhraseIdsQueryQueryVariables>;
+export const UserDeckQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UserDeckQuery"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"UserDeckFilter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userDeckCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"uid"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}},{"kind":"Field","name":{"kind":"Name","value":"userCardCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"phrase"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}},{"kind":"Field","name":{"kind":"Name","value":"phraseTranslationCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}},{"kind":"Field","name":{"kind":"Name","value":"literal"}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<UserDeckQueryQuery, UserDeckQueryQueryVariables>;
+export const LanguageDetailsQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"LanguageDetailsQuery"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"LanguageFilter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"languageCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"lang"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"phraseCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}},{"kind":"Field","name":{"kind":"Name","value":"phraseTranslationCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}},{"kind":"Field","name":{"kind":"Name","value":"text"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"phraseSeeAlsoCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fromPhrase"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}}]}},{"kind":"Field","name":{"kind":"Name","value":"toPhrase"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<LanguageDetailsQueryQuery, LanguageDetailsQueryQueryVariables>;
+export const PhraseCollectionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"PhraseCollection"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"filter"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"PhraseFilter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"phraseCollection"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"filter"},"value":{"kind":"Variable","name":{"kind":"Name","value":"filter"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}},{"kind":"Field","name":{"kind":"Name","value":"phraseTranslationCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"userCardCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userDeckId"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"phraseSeeAlsoCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"fromPhrase"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}}]}},{"kind":"Field","name":{"kind":"Name","value":"toPhrase"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"text"}},{"kind":"Field","name":{"kind":"Name","value":"lang"}}]}}]}}]}}]}}]}}]}}]}}]}}]} as unknown as DocumentNode<PhraseCollectionQuery, PhraseCollectionQueryVariables>;
+export const UserProfileQueryDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"UserProfileQuery"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"userProfileCollection"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"edges"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"username"}},{"kind":"Field","name":{"kind":"Name","value":"languagePrimary"}},{"kind":"Field","name":{"kind":"Name","value":"languagesSpoken"}},{"kind":"Field","name":{"kind":"Name","value":"avatarUrl"}}]}}]}}]}}]}}]} as unknown as DocumentNode<UserProfileQueryQuery, UserProfileQueryQueryVariables>;

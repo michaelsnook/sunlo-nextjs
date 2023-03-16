@@ -10,12 +10,12 @@ export const allDecksQuery = graphql(/* GraphQL */ `
         node {
           id
           lang
-          deckMembershipCollection {
+          userCardCollection {
             edges {
               node {
                 id
                 status
-                cardPhraseId
+                phraseId
               }
             }
           }
@@ -30,13 +30,13 @@ export const allDecksQuery = graphql(/* GraphQL */ `
 // hopefully the react-query cache will
 export const allPhraseDetailsQuery = graphql(/* GraphQL */ `
   query AllPhraseDetailsQuery {
-    cardPhraseCollection {
+    phraseCollection {
       edges {
         node {
           id
           text
           lang
-          cardTranslationCollection {
+          phraseTranslationCollection {
             edges {
               node {
                 id
@@ -45,7 +45,7 @@ export const allPhraseDetailsQuery = graphql(/* GraphQL */ `
               }
             }
           }
-          cardSeeAlsoCollection {
+          phraseSeeAlsoCollection {
             edges {
               node {
                 fromPhrase {
@@ -69,7 +69,7 @@ export const allPhraseDetailsQuery = graphql(/* GraphQL */ `
 
 export const allPhraseIdsQuery = graphql(/* GraphQL */ `
   query AllPhraseIdsQuery {
-    cardPhraseCollection {
+    phraseCollection {
       edges {
         node {
           id
@@ -80,23 +80,23 @@ export const allPhraseIdsQuery = graphql(/* GraphQL */ `
 `)
 
 export const deckQuery = graphql(/* GraphQL */ `
-  query DeckQuery($filter: UserDeckFilter) {
+  query UserDeckQuery($filter: UserDeckFilter) {
     userDeckCollection(filter: $filter) {
       edges {
         node {
           id
           uid
           lang
-          deckMembershipCollection {
+          userCardCollection {
             edges {
               node {
                 id
                 status
-                cardPhrase {
+                phrase {
                   id
                   text
                   lang
-                  cardTranslationCollection {
+                  phraseTranslationCollection {
                     edges {
                       node {
                         id
@@ -123,13 +123,13 @@ export const languageDetailsQuery = graphql(/* GraphQL */ `
         node {
           lang
           name
-          cardPhraseCollection {
+          phraseCollection {
             edges {
               node {
                 id
                 text
                 lang
-                cardTranslationCollection {
+                phraseTranslationCollection {
                   edges {
                     node {
                       id
@@ -138,7 +138,7 @@ export const languageDetailsQuery = graphql(/* GraphQL */ `
                     }
                   }
                 }
-                cardSeeAlsoCollection {
+                phraseSeeAlsoCollection {
                   edges {
                     node {
                       fromPhrase {
@@ -164,14 +164,14 @@ export const languageDetailsQuery = graphql(/* GraphQL */ `
 `)
 
 export const phraseDetailsQuery = graphql(/* GraphQL */ `
-  query CardPhraseCollection($filter: CardPhraseFilter) {
-    cardPhraseCollection(filter: $filter) {
+  query PhraseCollection($filter: PhraseFilter) {
+    phraseCollection(filter: $filter) {
       edges {
         node {
           id
           text
           lang
-          cardTranslationCollection {
+          phraseTranslationCollection {
             edges {
               node {
                 id
@@ -180,15 +180,15 @@ export const phraseDetailsQuery = graphql(/* GraphQL */ `
               }
             }
           }
-          deckMembershipCollection {
+          userCardCollection {
             edges {
               node {
-                deckId
+                userDeckId
                 status
               }
             }
           }
-          cardSeeAlsoCollection {
+          phraseSeeAlsoCollection {
             edges {
               node {
                 fromPhrase {
@@ -211,8 +211,8 @@ export const phraseDetailsQuery = graphql(/* GraphQL */ `
 `)
 
 export const profileQuery = graphql(/* GraphQL */ `
-  query ProfileQuery {
-    profileCollection {
+  query UserProfileQuery {
+    userProfileCollection {
       edges {
         node {
           username
