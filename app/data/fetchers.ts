@@ -92,11 +92,11 @@ export const getAllDecks = async () => {
   return sortedResponse
 }
 
-export const getLanguageDetails = async (code: string) => {
+export const getLanguageDetails = async (lang: string) => {
   const variables = {
     filter: <LanguageFilter>{
-      code: {
-        eq: code,
+      lang: {
+        eq: lang,
       },
     },
   }
@@ -107,7 +107,7 @@ export const getLanguageDetails = async (code: string) => {
   })
   /*
   console.log(
-    `LOGGING getLanguageDetails(${code})`,
+    `LOGGING getLanguageDetails(${lang})`,
     response.languageCollection.edges[0]?.node
   )
   */

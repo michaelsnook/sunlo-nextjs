@@ -36,7 +36,7 @@ export default function Start() {
       profile.languages_spoken
     )
     supabase
-      .from('profile')
+      .from('user_profile')
       .upsert({
         uid: user.id,
         username: tempUsername,
