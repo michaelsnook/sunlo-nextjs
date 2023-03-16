@@ -12,7 +12,7 @@ import { Scalars } from './gql/graphql'
 
 export function useAllDecks() {
   return useQuery({
-    queryKey: ['decks'],
+    queryKey: ['user_decks'],
     queryFn: getAllDecks,
     enabled: true,
     // retry: false,
@@ -38,7 +38,7 @@ export function useAllPhrasesInLanguage(lang: string) {
 
 export function useDeck(deckLang: string) {
   return useQuery({
-    queryKey: ['deck', deckLang],
+    queryKey: ['user_deck', deckLang],
     queryFn: async () => getDeck(deckLang),
     enabled: !!deckLang,
     retry: false,
@@ -61,7 +61,7 @@ export function usePhrase(id: Scalars['UUID']) {
 
 export function useProfile() {
   return useQuery({
-    queryKey: ['profile'],
+    queryKey: ['user_profile'],
     queryFn: getProfile,
     enabled: true,
     // retry: false,

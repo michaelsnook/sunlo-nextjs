@@ -57,8 +57,8 @@ export default function Start() {
           if (typeof tempDeckToAdd === 'string' && tempDeckToAdd.length > 0) {
             supabase
               .from('user_deck')
-              .upsert({ lang: tempDeckToAdd, profile_id: user.id })
-              .match({ profile_id: user.id, lang: tempDeckToAdd })
+              .upsert({ lang: tempDeckToAdd, user_profile_id: user.id })
+              .match({ user_profile_id: user.id, lang: tempDeckToAdd })
               .then(({ data, error }) => {
                 console.log('create new deck', data, error)
                 if (error) {
@@ -199,15 +199,14 @@ const SetPrimaryLanguageStep = ({ value, set }) => {
           className="border rounded p-3 mb-6"
         >
           <option value="">-- select one --</option>
-          <option value="EN">English</option>
-          {languages &&
-            Object.keys(languages).map(k => {
-              return k === 'EN' ? null : (
-                <option key={`language-dropdown-option-${k}`} value={k}>
-                  {languages[k]}
-                </option>
-              )
-            })}
+          <option value="eng">English</option>
+          {Object.keys(languages).map(k => {
+            return k === 'eng' ? null : (
+              <option key={`language-dropdown-option-${k}`} value={k}>
+                {languages[k]}
+              </option>
+            )
+          })}
         </select>
         {value ? (
           <a

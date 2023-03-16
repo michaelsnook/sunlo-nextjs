@@ -13,16 +13,16 @@ function readStatus(status) {
   return { emoji: `❌ `, classString: '' }
 }
 
-export default function Card({ status, cardPhrase }) {
+export default function Card({ status, phrase }) {
   const { emoji, classString } = readStatus(status)
-  const translations = cardPhrase?.cardTranslationCollection?.edges ?? null
+  const translations = phrase?.phraseTranslationCollection?.edges ?? null
   return (
     <div
       className={`card p-4 ${classString} shadow-lg hover:bg-primary hover:text-white mb-4 w-full inline-block`}
     >
-      <p lang={cardPhrase?.lang} className="mb-2 font-bold">
+      <p lang={phrase?.lang} className="mb-2 font-bold">
         {emoji}
-        <TinyPhrase {...cardPhrase} />
+        <TinyPhrase {...phrase} />
       </p>
       {translations?.length > 0 ? (
         <ul>

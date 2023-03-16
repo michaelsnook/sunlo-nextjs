@@ -12,7 +12,7 @@ import {
 import type {
   UserDeckFilter,
   LanguageFilter,
-  CardPhraseFilter,
+  PhraseFilter,
   Scalars,
 } from './gql/graphql'
 import { requestOptions } from './constants'
@@ -60,7 +60,7 @@ export const getAllPhraseIds = async () => {
     document: allPhraseIdsQuery,
     ...requestOptions(),
   })
-  return data.cardPhraseCollection.edges
+  return data.phraseCollection.edges
 }
 
 export const getAllDecks = async () => {
@@ -85,8 +85,8 @@ export const getAllDecks = async () => {
   })
   const sortedResponse = response.userDeckCollection.edges.sort((a, b) => {
     return (
-      b.node.deckMembershipCollection.edges.length -
-      a.node.deckMembershipCollection.edges.length
+      b.node.userCardCollection.edges.length -
+      a.node.userCardCollection.edges.length
     )
   })
   return sortedResponse
@@ -116,7 +116,7 @@ export const getLanguageDetails = async (lang: string) => {
 
 export const getOnePhraseDetails = async (id: Scalars['UUID']) => {
   const variables = {
-    filter: <CardPhraseFilter>{
+    filter: <PhraseFilter>{
       id: {
         eq: id,
       },
@@ -127,7 +127,7 @@ export const getOnePhraseDetails = async (id: Scalars['UUID']) => {
     variables,
     ...requestOptions(),
   })
-  return response?.cardPhraseCollection?.edges[0]?.node // || {}
+  return response?.phraseCollection?.edges[0]?.node // || {}
 }
 
 export const getAllPhrasesInLanguage = async (lang: String) => {
@@ -143,7 +143,7 @@ export const getAllPhrasesInLanguage = async (lang: String) => {
     document: phraseDetailsQuery,
     variables,
   })
-  return response?.cardPhraseCollection?.edges
+  return response?.phraseCollection?.edges
 }
 
 export const getProfile = async () => {
@@ -155,5 +155,5 @@ export const getProfile = async () => {
     document: profileQuery,
     ...requestOptions(session.access_token),
   })
-  return response?.profileCollection?.edges[0]?.node // || {}
+  return response?.userProfileCollection?.edges[0]?.node // || {}
 }

@@ -13,8 +13,8 @@ export async function generateStaticParams() {
 
 export default async function Page({ params }) {
   let phrase = await getOnePhraseDetails(params.id)
-  const translations = phrase.cardTranslationCollection?.edges
-  const seeAlso = phrase.cardSeeAlsoCollection?.edges.map(({ node }) => {
+  const translations = phrase.phraseTranslationCollection?.edges
+  const seeAlso = phrase.phraseSeeAlsoCollection?.edges.map(({ node }) => {
     return node.fromPhrase.id === phrase.id ? node.toPhrase : node.fromPhrase
   })
 

@@ -15,7 +15,7 @@ export default function ClientPage({ lang }) {
 
   if (status === 'loading') return <Loading />
   if (status === 'error') return <ErrorList error={error} />
-  const edges = data?.deckMembershipCollection?.edges ?? []
+  const edges = data?.userCardCollection?.edges ?? []
 
   if (!edges?.length)
     return (
@@ -24,7 +24,7 @@ export default function ClientPage({ lang }) {
       </div>
     )
   // a simple array ['a12...', '45f...', ... ]
-  const disabledIds = edges?.map(edge => edge.node.cardPhrase.id) || []
+  const disabledIds = edges?.map(edge => edge.node.phrase.id) || []
   // console.log(`disabled IDs`, disabledIds)
   // 3 arrays of edges
   const cards = {
