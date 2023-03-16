@@ -11,8 +11,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { postNewDeck } from 'app/data/posters'
 // import { createNewDeck } from 'app/data/mutations'
 
-const options = Object.keys(languages).map(code => {
-  return { value: code, label: languages[code] }
+const options = Object.keys(languages).map(lang => {
+  return { value: lang, label: languages[lang] }
 })
 
 function TinyError({ text }) {

@@ -4,13 +4,13 @@ import { getLanguageDetails } from 'app/data/fetchers'
 import languages from 'lib/languages'
 import { notFound } from 'next/navigation'
 
-export default async function LanguagePage({ params: { code } }) {
-  if (!languages[code]) {
+export default async function LanguagePage({ params: { lang } }) {
+  if (!languages[lang]) {
     return notFound()
   }
-  const languageName = languages[code] || ''
+  const languageName = languages[lang] || ''
 
-  const language = await getLanguageDetails(code)
+  const language = await getLanguageDetails(lang)
   if (language === null) {
     return notFound()
   }
@@ -21,7 +21,7 @@ export default async function LanguagePage({ params: { code } }) {
         &larr; Back to languages
       </Link>
       <h1 className="h1">
-        {languageName} ({code})
+        {languageName} ({lang})
       </h1>
       {!language?.cardPhraseCollection?.edges?.length ? (
         <p>
@@ -50,7 +50,7 @@ export default async function LanguagePage({ params: { code } }) {
 export async function generateStaticParams() {
   const data = languages
 
-  return Object.keys(data).map(code => ({
-    code,
+  return Object.keys(data).map(lang => ({
+    lang,
   }))
 }

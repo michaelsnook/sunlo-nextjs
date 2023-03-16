@@ -121,7 +121,7 @@ export const languageDetailsQuery = graphql(/* GraphQL */ `
     languageCollection(filter: $filter) {
       edges {
         node {
-          code
+          lang
           name
           cardPhraseCollection {
             edges {
