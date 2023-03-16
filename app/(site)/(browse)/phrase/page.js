@@ -5,7 +5,7 @@ import { getAllPhraseDetails } from 'app/data/fetchers'
 export default async function Page() {
   let data = await getAllPhraseDetails()
 
-  const phrases = data.cardPhraseCollection.edges
+  const phrases = data.phraseCollection.edges
 
   return (
     <>

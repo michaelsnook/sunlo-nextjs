@@ -23,7 +23,7 @@ const ProfileCard = () => {
       event.target.languages_spoken
     )
     supabase
-      .from('profile')
+      .from('user_profile')
       .update({
         username,
         language_primary,

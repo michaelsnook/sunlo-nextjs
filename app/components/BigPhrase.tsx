@@ -32,19 +32,19 @@ export default function BigPhrase({
   const { data, status, error } = usePhrase(phraseId)
   const { data: decks, status: decksStatus, error: decksError } = useAllDecks()
   const queryClient = useQueryClient()
-  // const currentMembership
-  const currentStatus =
-    data?.deckMembershipCollection?.edges[0]?.node?.status || null
-  const deckId =
+
+  // const currentStatus = data?.userCardCollection?.edges[0]?.node?.status || null
+  const userDeckId =
     data && decks
       ? decks.find(edge => edge?.node?.lang === data?.lang)?.node?.id
       : null
   const addNewCardToDeck = useMutation({
-    mutationFn: (status: string) => postNewCard({ status, phraseId, deckId }),
+    mutationFn: (status: string) =>
+      postNewCard({ status, phraseId, userDeckId }),
     onSuccess: data => {
       console.log(`onSuccess data,`, data)
-      queryClient.invalidateQueries({ queryKey: ['deck', lang] })
-      queryClient.invalidateQueries({ queryKey: ['decks'] })
+      queryClient.invalidateQueries({ queryKey: ['user_deck', lang] })
+      queryClient.invalidateQueries({ queryKey: ['user_decks'] })
       queryClient.invalidateQueries({ queryKey: ['phrase', phraseId] })
     },
   })
@@ -56,9 +56,9 @@ export default function BigPhrase({
 
   // console.log(`the Phrase:`, data)
   const { text, lang } = data
-  const translations = data.cardTranslationCollection?.edges ?? null
+  const translations = data.phraseTranslationCollection?.edges ?? null
   const seeAlsos =
-    data.cardSeeAlsoCollection?.edges.map(({ node }) => {
+    data.phraseSeeAlsoCollection?.edges.map(({ node }) => {
       return {
         node: node.toPhrase.id === phraseId ? node.toPhrase : node.fromPhrase,
       }
@@ -112,8 +112,8 @@ export default function BigPhrase({
           <p className="text-lg">
             Success! added this phrase to your deck with status: &ldquo;
             {
-              addNewCardToDeck.data.insertIntoDeckMembershipCollection
-                .records[0].status
+              addNewCardToDeck.data.insertIntoUserCardCollection.records[0]
+                .status
             }
             &rdquo;.&nbsp;
             <a

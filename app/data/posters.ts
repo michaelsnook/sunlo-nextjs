@@ -22,8 +22,8 @@ export const postNewDeck = async (lang: string) => {
   return result
 }
 
-export const postNewCard = async ({ status, phraseId, deckId }) => {
-  console.log(`postNewCard`, status, phraseId, deckId)
+export const postNewCard = async ({ status, phraseId, userDeckId }) => {
+  console.log(`postNewCard`, status, phraseId, userDeckId)
   const {
     data: {
       session: { access_token },
@@ -33,7 +33,7 @@ export const postNewCard = async ({ status, phraseId, deckId }) => {
   if (error) throw error
   const result = await request({
     ...requestOptions(access_token),
-    variables: { objects: [{ status, cardPhraseId: phraseId, deckId }] },
+    variables: { objects: [{ status, phraseId: phraseId, userDeckId }] },
     document: newCardMutation,
   })
   // console.log(`RESULT: `, result)
