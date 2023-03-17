@@ -29,7 +29,7 @@ export default function ForgotPasswordForm() {
   }
 
   return (
-    <div className="mx-auto max-w-lg my-6">
+    <div className="max-w-lg my-6">
       {successfulSubmit ? (
         <div className="flex flex-col space-y-4">
           <h1 className="h3 text-gray-700">Check your email</h1>
@@ -52,10 +52,10 @@ export default function ForgotPasswordForm() {
                   aria-invalid={errors?.email ? 'true' : 'false'}
                   className={`${
                     errors?.email ? 'border-error/60' : ''
-                  } rounded-md`}
+                  } rounded-md w-full`}
                   tabIndex="1"
                   type="text"
-                  placeholder="email"
+                  placeholder="email@domain"
                 />
               </div>
               <div className="flex flex-row justify-between">

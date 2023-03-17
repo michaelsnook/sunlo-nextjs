@@ -26,7 +26,7 @@ export default function SetNewPasswordForm() {
   }
 
   return (
-    <div className="mx-auto max-w-lg my-6">
+    <div className="max-w-lg my-6">
       {successfulSubmit ? (
         <SuccessfulSubmit />
       ) : !user ? (
@@ -47,7 +47,7 @@ export default function SetNewPasswordForm() {
                   aria-invalid={errors?.password ? 'true' : 'false'}
                   className={`${
                     errors?.password ? 'border-error/60' : ''
-                  } rounded-md`}
+                  } rounded-md w-full`}
                   tabIndex="1"
                   type="password"
                   placeholder="new password"

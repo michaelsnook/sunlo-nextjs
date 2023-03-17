@@ -25,7 +25,7 @@ export default function SetNewEmailForm() {
   }
 
   return (
-    <div className="mx-auto max-w-lg my-6">
+    <div className="max-w-lg">
       {successfulSubmit ? (
         <SuccessfulSubmit />
       ) : (
@@ -47,10 +47,10 @@ export default function SetNewEmailForm() {
                   aria-invalid={errors?.email ? 'true' : 'false'}
                   className={`${
                     errors?.email ? 'border-error/60' : ''
-                  } rounded-md`}
+                  } rounded-md w-full`}
                   tabIndex="1"
                   type="text"
-                  placeholder="email"
+                  placeholder="email@domain"
                   defaultValue={user?.email}
                 />
               </div>
