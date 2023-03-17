@@ -57,7 +57,7 @@ export default function Login({ signup }) {
   }
 
   return (
-    <div className="mx-auto max-w-lg my-6">
+    <div className="max-w-lg">
       {sentConfirmationEmail ? (
         <SuccessfulSubmit />
       ) : (
@@ -78,10 +78,10 @@ export default function Login({ signup }) {
                   aria-invalid={errors?.email ? 'true' : 'false'}
                   className={`${
                     errors?.email ? 'border-error/60' : ''
-                  } rounded-md`}
+                  } rounded-md w-full`}
                   tabIndex="1"
                   type="text"
-                  placeholder="email"
+                  placeholder="email@domain"
                 />
               </div>
               <div>
@@ -95,10 +95,10 @@ export default function Login({ signup }) {
                   aria-invalid={errors?.password ? 'true' : 'false'}
                   className={`${
                     errors?.password ? 'border-error/60' : ''
-                  } rounded-md`}
+                  } rounded-md w-full`}
                   tabIndex="2"
                   type="password"
-                  placeholder="****"
+                  placeholder="* * * * * * * *"
                 />
               </div>
               <div className="flex flex-row justify-between">
