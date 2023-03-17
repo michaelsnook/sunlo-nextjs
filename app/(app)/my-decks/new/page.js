@@ -27,13 +27,11 @@ export default function Page() {
   const queryClient = useQueryClient()
 
   const createNewDeck = useMutation({
-    mutationFn: lang => postNewDeck(lang),
+    mutationFn: postNewDeck,
     onSuccess: data => {
       // console.log(`onSuccess data,`, data)
       queryClient.invalidateQueries({ queryKey: ['decks'] })
-      router.push(
-        `/my-decks/${data.insertIntoUserDeckCollection.records[0].lang}`
-      )
+      router.push(`/my-decks/${data.lang}`)
     },
   })
 
