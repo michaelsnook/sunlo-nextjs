@@ -2,7 +2,6 @@ import { request } from 'graphql-request'
 import supabase from 'lib/supabase-client'
 import { requestOptions } from './constants'
 import { newDeckMutation, newCardMutation } from 'app/data/mutations.js'
-// import type { CardPhraseFilter, UserDeckInsertInput } from './gql/graphql'
 
 export const postNewDeck = async (lang: string) => {
   // console.log(`postNewDeck ${lang}`)
@@ -19,7 +18,7 @@ export const postNewDeck = async (lang: string) => {
     document: newDeckMutation,
   })
   // console.log(`RESULT: `, result)
-  return result
+  return result.insertIntoUserDeckCollection.records[0]
 }
 
 export const postNewCard = async ({ status, phraseId, userDeckId }) => {
