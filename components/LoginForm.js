@@ -14,7 +14,7 @@ export default function Login({ signup }) {
 
   const router = useRouter()
   const { user, profile, signOut } = useGlobalState()
-
+  if (profile && user) router.push('/app/profile')
   // const [isSignup, setIsSignup] = useState(signup)
 
   const onSubmit = event => {
@@ -60,27 +60,6 @@ export default function Login({ signup }) {
     <div className="mx-auto max-w-lg my-6">
       {sentConfirmationEmail ? (
         <SuccessfulSubmit />
-      ) : user && profile ? (
-        <div className="flex flex-col space-y-4">
-          <h1 className="h3 text-gray-700">
-            You&apos;re logged in as {profile.username}
-          </h1>
-          <p>
-            <Link href="/app/profile" className="link">
-              Skip logging in again and go to my profile
-            </Link>
-          </p>
-          <p>
-            <a
-              className="link"
-              onClick={() => {
-                signOut(`/login`)
-              }}
-            >
-              Log out and log in as someone new
-            </a>
-          </p>
-        </div>
       ) : (
         <>
           <h1 className="h3 text-gray-700">
