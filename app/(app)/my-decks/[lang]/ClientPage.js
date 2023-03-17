@@ -6,6 +6,7 @@ import { useDeck } from 'app/data/hooks'
 import { useState } from 'react'
 import Card from 'app/components/Card'
 import Browse from './Browse'
+import Garlic from 'app/components/Garlic'
 
 const Empty = () => <p className="text-gray-600">No cards here</p>
 
@@ -20,7 +21,17 @@ export default function ClientPage({ lang }) {
   if (!edges?.length)
     return (
       <div>
-        no cards in deck 💩 go ahead and add some! <Browse lang={lang} />
+        <div className="flex flex-row">
+          <Garlic className="mx-4" />
+          <h2 className="h2">It looks like this is a brand new deck!</h2>
+        </div>
+
+        <p className="my-4">
+          You can get started by browsing the phrases we already have in the
+          library and adding cards to your deck, or create your own!
+        </p>
+
+        <Browse lang={lang} />
       </div>
     )
   // a simple array ['a12...', '45f...', ... ]
