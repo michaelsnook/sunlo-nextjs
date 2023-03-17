@@ -29,7 +29,7 @@ export default function ForgotPasswordForm() {
   }
 
   return (
-    <div className="max-w-lg my-6">
+    <div className="section-card-inner">
       {successfulSubmit ? (
         <div className="flex flex-col space-y-4">
           <h1 className="h3 text-gray-700">Check your email</h1>

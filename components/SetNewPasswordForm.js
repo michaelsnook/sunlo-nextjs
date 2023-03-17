@@ -26,7 +26,7 @@ export default function SetNewPasswordForm() {
   }
 
   return (
-    <div className="max-w-lg my-6">
+    <div className="section-card-inner">
       {successfulSubmit ? (
         <SuccessfulSubmit />
       ) : !user ? (

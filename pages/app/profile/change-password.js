@@ -4,7 +4,7 @@ import SetNewPasswordForm from 'components/SetNewPasswordForm'
 export default function ChangePassword() {
   return (
     <AppProfileLayout>
-      <main className="big-card">
+      <main className="section-card">
         <SetNewPasswordForm />
       </main>
     </AppProfileLayout>

@@ -4,7 +4,7 @@ import SetNewEmailForm from 'components/SetNewEmailForm'
 export default function ChangePassword() {
   return (
     <AppProfileLayout>
-      <main className="big-card p-10">
+      <main className="section-card">
         <SetNewEmailForm />
       </main>
     </AppProfileLayout>

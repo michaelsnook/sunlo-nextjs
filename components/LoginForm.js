@@ -57,7 +57,7 @@ export default function Login({ signup }) {
   }
 
   return (
-    <div className="max-w-lg">
+    <div className="section-card-inner">
       {sentConfirmationEmail ? (
         <SuccessfulSubmit />
       ) : (

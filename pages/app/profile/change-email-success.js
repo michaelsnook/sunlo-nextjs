@@ -5,7 +5,7 @@ export default function ChangePassword() {
   const { user } = useGlobalState()
   return (
     <AppProfileLayout>
-      <main className="big-card">
+      <main className="section-card">
         {user ? (
           <div className="flex flex-col space-y-4">
             <h1 className="h3 text-gray-700">Email address changed!</h1>
