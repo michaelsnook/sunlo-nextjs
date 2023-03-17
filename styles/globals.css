@@ -37,9 +37,20 @@
     @apply btn btn-outline border-none text-white hover:btn-secondary;
     background-color: hsla(var(--p) / var(--tw-bg-opacity, 1));
   }
+  /* used when you want a card section, width lg */
+  .section-card {
+    @apply card shadow-lg bg-white text-gray-800 max-w-lg p-10;
+  }
+  /* used inside .section-card to provide optional spacing and 
+  ability to use the section inside other elements */
+  .section-card-inner {
+    @apply max-w-lg md:px-4 lg:px-8;
+  }
+  /* used when you want a big card area, that goes as wide as prose */
   .big-card {
     @apply card bg-white text-gray-800 p-6 border shadow-lg mb-6 max-w-prose;
   }
+  /* used for a whole page */
   .page-card {
     @apply container mx-auto card bg-white text-gray-800 px-3 md:px-6 lg:px-10 border shadow-lg mb-6 pt-10 pb-16 min-h-50vh;
   }

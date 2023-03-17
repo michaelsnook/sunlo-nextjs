@@ -25,7 +25,7 @@ export default function SetNewEmailForm() {
   }
 
   return (
-    <div className="max-w-lg">
+    <div className="section-card-inner">
       {successfulSubmit ? (
         <SuccessfulSubmit />
       ) : (
