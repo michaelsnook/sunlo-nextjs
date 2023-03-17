@@ -8,7 +8,6 @@ export default async function LanguagePage({ params: { lang } }) {
   if (!languages[lang]) {
     return notFound()
   }
-  const languageName = languages[lang] || ''
 
   const language = await getLanguageDetails(lang)
   if (language === null) {
@@ -21,11 +20,11 @@ export default async function LanguagePage({ params: { lang } }) {
         &larr; Back to languages
       </Link>
       <h1 className="h1">
-        {languageName} ({lang})
+        {languages[lang]} ({lang})
       </h1>
       {!language?.phraseCollection?.edges?.length ? (
         <p>
-          We don&apos;t have any phrases for you to learn {languageName} yet.
+          We don&apos;t have any phrases for you to learn {languages[lang]} yet.
           But you can be the first to add one!
         </p>
       ) : (
