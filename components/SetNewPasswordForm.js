@@ -46,7 +46,7 @@ export default function SetNewPasswordForm() {
                   required="required"
                   aria-invalid={errors?.password ? 'true' : 'false'}
                   className={`${
-                    errors?.password ? 'border-red-600' : ''
+                    errors?.password ? 'border-error/60' : ''
                   } rounded-md`}
                   tabIndex="1"
                   type="password"

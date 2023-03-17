@@ -46,7 +46,7 @@ export default function SetNewEmailForm() {
                   required="required"
                   aria-invalid={errors?.email ? 'true' : 'false'}
                   className={`${
-                    errors?.email ? 'border-red-600' : ''
+                    errors?.email ? 'border-error/60' : ''
                   } rounded-md`}
                   tabIndex="1"
                   type="text"

@@ -52,50 +52,52 @@ export default function Sidebar({ shy = false }) {
         } md:hidden top-0 left-0 right-0 bottom-0`}
         onClick={() => setIsOpen(false)}
       />
-      <nav
-        aria-label="Main navigation"
-        className={`overflow-y-auto overflow-x-hidden z-30 top-0 w-80 p-6 bg-[#efe9fb] text-gray-800 h-screen ${
-          isOpen ? 'fixed' : 'hidden'
-        } ${shy && !isOpen ? '' : 'md:sticky md:flex'}  flex-col gap-4`}
-      >
-        <span className="h4 flex flex-row items-center">
-          <Garlic size={50} />
-          Sunlo
-        </span>
-        {loading ? (
-          <Loading />
-        ) : (
-          <>
-            <Navlink href="/app/profile">
-              <p>{profile?.data.username}</p>
-              <p>{/*user?.email*/}</p>
-            </Navlink>
-            {myMenus.map(menu => (
-              <div key={menu.name}>
-                <p className="font-bold my-4">
-                  {menu.href ? (
-                    <Navlink href={menu.href}>{menu.name}</Navlink>
-                  ) : (
-                    menu.name
-                  )}
-                </p>
-                <ul className="flex flex-col gap-2">
-                  {menu.links?.map(i => (
-                    <li key={i.href}>
-                      <Navlink href={i.href}>{i.name}</Navlink>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-            <p>
-              <button className="btn btn-quiet" onClick={() => signOut(`/`)}>
-                Sign out
-              </button>
-            </p>
-          </>
-        )}
-      </nav>
+      <div className="bg-white">
+        <nav
+          aria-label="Main navigation"
+          className={`overflow-y-auto overflow-x-hidden z-30 top-0 w-72 p-6 bg-primary/20 text-gray-800 h-screen ${
+            isOpen ? 'fixed' : 'hidden'
+          } ${shy && !isOpen ? '' : 'md:sticky md:flex'}  flex-col gap-4`}
+        >
+          <span className="h4 flex flex-row items-center">
+            <Garlic size={50} />
+            Sunlo
+          </span>
+          {loading ? (
+            <Loading />
+          ) : (
+            <>
+              <Navlink href="/app/profile">
+                <p>{profile?.data.username}</p>
+                <p>{/*user?.email*/}</p>
+              </Navlink>
+              {myMenus.map(menu => (
+                <div key={menu.name}>
+                  <p className="font-bold my-4">
+                    {menu.href ? (
+                      <Navlink href={menu.href}>{menu.name}</Navlink>
+                    ) : (
+                      menu.name
+                    )}
+                  </p>
+                  <ul className="flex flex-col gap-2">
+                    {menu.links?.map(i => (
+                      <li key={i.href}>
+                        <Navlink href={i.href}>{i.name}</Navlink>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+              <p>
+                <button className="btn btn-quiet" onClick={() => signOut(`/`)}>
+                  Sign out
+                </button>
+              </p>
+            </>
+          )}
+        </nav>
+      </div>
     </>
   )
 }

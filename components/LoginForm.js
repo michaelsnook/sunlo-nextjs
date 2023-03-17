@@ -98,7 +98,7 @@ export default function Login({ signup }) {
                   required="required"
                   aria-invalid={errors?.email ? 'true' : 'false'}
                   className={`${
-                    errors?.email ? 'border-red-600' : ''
+                    errors?.email ? 'border-error/60' : ''
                   } rounded-md`}
                   tabIndex="1"
                   type="text"
@@ -115,7 +115,7 @@ export default function Login({ signup }) {
                   required="required"
                   aria-invalid={errors?.password ? 'true' : 'false'}
                   className={`${
-                    errors?.password ? 'border-red-600' : ''
+                    errors?.password ? 'border-error/60' : ''
                   } rounded-md`}
                   tabIndex="2"
                   type="password"

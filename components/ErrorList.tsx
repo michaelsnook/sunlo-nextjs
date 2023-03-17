@@ -11,8 +11,8 @@ const ErrorList = ({ summary, error, errors, asCard }: ErrorListProps) => {
 
   return !error && !errors?.length ? null : (
     <div className={`${asCard ? 'big-card' : ''} mt-6 mb-2`}>
-      {summary ? <p className="font-bold text-red-600">{summary}</p> : null}
-      <ul className="pl-5 text-red-600 list-disc">
+      {summary ? <p className="font-bold text-error/60">{summary}</p> : null}
+      <ul className="pl-5 text-error/60 list-disc">
         {errorString ? <li key={errorString}>{errorString}</li> : null}
         {errors
           ? errors.map(m => (
