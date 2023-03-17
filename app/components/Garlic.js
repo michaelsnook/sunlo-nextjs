@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-const Garlic = ({ size = 50 }) => (
+const Garlic = ({ size = 50, className = '' }) => (
   <Image
     src="/images/garlic.png"
     alt="a smiling garlic"
@@ -9,6 +9,7 @@ const Garlic = ({ size = 50 }) => (
     style={{
       filter: 'drop-shadow(0px 0px 2px #fff)',
     }}
+    className={`place-self-center ${className}`}
   />
 )
 

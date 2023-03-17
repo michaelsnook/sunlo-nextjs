@@ -15,7 +15,9 @@ export default function Browse({ lang, disable }) {
   if (status === 'error') return <ErrorList error={error} />
   if (!data?.length) {
     return (
-      <>there are no phrases for this language 💩 you'll need to add some.</>
+      <p className="bg-primary/10 p-6 rounded-lg">
+        there are no phrases for this language 💩 you'll need to add some.
+      </p>
     )
   }
 

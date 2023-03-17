@@ -60,7 +60,7 @@ export default function Sidebar({ shy = false }) {
       >
         <span className="h4 flex flex-row items-center">
           <Garlic size={50} />
-          &nbsp; Sunlo
+          Sunlo
         </span>
         {loading ? (
           <Loading />
