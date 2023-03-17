@@ -16,7 +16,7 @@ const options = Object.keys(languages).map(lang => {
 })
 
 function TinyError({ text }) {
-  return <p className="my-4 text-red-700">{text}</p>
+  return <p className="my-4 text-error/70">{text}</p>
 }
 
 export default function Page() {

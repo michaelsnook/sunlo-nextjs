@@ -8,8 +8,9 @@ export function TinyPhrase({ lang, text }) {
 
 function readStatus(status) {
   if (!status) return { emoji: '', classString: '' }
-  if (status === 'learned') return { emoji: `✅ `, classString: 'bg-green-200' }
-  if (status === 'active') return { emoji: `📖 `, classString: 'bg-blue-200' }
+  if (status === 'learned')
+    return { emoji: `✅ `, classString: 'bg-success/20' }
+  if (status === 'active') return { emoji: `📖 `, classString: 'bg-info/20' }
   return { emoji: `❌ `, classString: '' }
 }
 
