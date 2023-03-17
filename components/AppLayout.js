@@ -17,7 +17,7 @@ export default function AppLayout({
         <meta property="og:image" content={image} />
         <meta name="theme-color" content="#570df8" />
       </Head>
-      <div className="md:flex flex-row gap-6 bg-primary text-white">
+      <div className="md:flex flex-row bg-primary text-white">
         <Sidebar />
         <div className="flex-grow py-6 px-min min-h-100vh">{children}</div>
       </div>
