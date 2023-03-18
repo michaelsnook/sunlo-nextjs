@@ -143,37 +143,6 @@ type Language implements Node {
     """
     orderBy: [PhraseTranslationOrderBy!]
   ): PhraseTranslationConnection
-  phraseCollection(
-    """
-    Query the first `n` records in the collection
-    """
-    first: Int
-
-    """
-    Query the last `n` records in the collection
-    """
-    last: Int
-
-    """
-    Query values in the collection before the provided cursor
-    """
-    before: Cursor
-
-    """
-    Query values in the collection after the provided cursor
-    """
-    after: Cursor
-
-    """
-    Filters to apply to the results set when querying from the collection
-    """
-    filter: PhraseFilter
-
-    """
-    Sort order to apply to the collection
-    """
-    orderBy: [PhraseOrderBy!]
-  ): PhraseConnection
   userDeckCollection(
     """
     Query the first `n` records in the collection
@@ -205,6 +174,37 @@ type Language implements Node {
     """
     orderBy: [UserDeckOrderBy!]
   ): UserDeckConnection
+  phraseCollection(
+    """
+    Query the first `n` records in the collection
+    """
+    first: Int
+
+    """
+    Query the last `n` records in the collection
+    """
+    last: Int
+
+    """
+    Query values in the collection before the provided cursor
+    """
+    before: Cursor
+
+    """
+    Query values in the collection after the provided cursor
+    """
+    after: Cursor
+
+    """
+    Filters to apply to the results set when querying from the collection
+    """
+    filter: PhraseFilter
+
+    """
+    Sort order to apply to the collection
+    """
+    orderBy: [PhraseOrderBy!]
+  ): PhraseConnection
 }
 
 type LanguageConnection {
@@ -750,7 +750,7 @@ type Phrase implements Node {
   text: String!
   id: UUID!
   addedBy: UUID
-  lang: String
+  lang: String!
   language: Language
   phraseSeeAlsoCollection(
     """
@@ -1524,7 +1524,7 @@ type UserCard implements Node {
   uid: UUID!
   id: UUID!
   phraseId: UUID!
-  userDeckId: UUID
+  userDeckId: UUID!
   updatedAt: Datetime
   userDeck: UserDeck
   userProfile: UserProfile
