@@ -15,6 +15,8 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "\n  mutation Mutation($objects: [UserDeckInsertInput!]!) {\n    insertIntoUserDeckCollection(objects: $objects) {\n      records {\n        id\n        lang\n      }\n    }\n  }\n": types.MutationDocument,
     "\n  mutation InsertIntoUserCardCollection($objects: [UserCardInsertInput!]!) {\n    insertIntoUserCardCollection(objects: $objects) {\n      records {\n        id\n        status\n        phraseId\n        userDeckId\n      }\n    }\n  }\n": types.InsertIntoUserCardCollectionDocument,
+    "\n  mutation IntertIntoPhraseCollection($objects: [PhraseInsertInput!]!) {\n    insertIntoPhraseCollection(objects: $objects) {\n      records {\n        id\n        text\n        lang\n      }\n    }\n  }\n": types.IntertIntoPhraseCollectionDocument,
+    "\n  mutation InsertIntoPhraseTranslationCollection(\n    $objects: [PhraseTranslationInsertInput!]!\n  ) {\n    insertIntoPhraseTranslationCollection(objects: $objects) {\n      records {\n        id\n        phraseId\n        text\n        lang\n        literal\n      }\n    }\n  }\n": types.InsertIntoPhraseTranslationCollectionDocument,
     "\n  query AllDecksQuery {\n    userDeckCollection {\n      edges {\n        node {\n          id\n          lang\n          userCardCollection {\n            edges {\n              node {\n                id\n                status\n                phraseId\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n": types.AllDecksQueryDocument,
     "\n  query AllPhraseDetailsQuery {\n    phraseCollection {\n      edges {\n        node {\n          id\n          text\n          lang\n          phraseTranslationCollection {\n            edges {\n              node {\n                id\n                text\n                lang\n              }\n            }\n          }\n          phraseSeeAlsoCollection {\n            edges {\n              node {\n                fromPhrase {\n                  id\n                  text\n                  lang\n                }\n                toPhrase {\n                  id\n                  text\n                  lang\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n": types.AllPhraseDetailsQueryDocument,
     "\n  query AllPhraseIdsQuery {\n    phraseCollection {\n      edges {\n        node {\n          id\n        }\n      }\n    }\n  }\n": types.AllPhraseIdsQueryDocument,
@@ -46,6 +48,14 @@ export function graphql(source: "\n  mutation Mutation($objects: [UserDeckInsert
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation InsertIntoUserCardCollection($objects: [UserCardInsertInput!]!) {\n    insertIntoUserCardCollection(objects: $objects) {\n      records {\n        id\n        status\n        phraseId\n        userDeckId\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation InsertIntoUserCardCollection($objects: [UserCardInsertInput!]!) {\n    insertIntoUserCardCollection(objects: $objects) {\n      records {\n        id\n        status\n        phraseId\n        userDeckId\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation IntertIntoPhraseCollection($objects: [PhraseInsertInput!]!) {\n    insertIntoPhraseCollection(objects: $objects) {\n      records {\n        id\n        text\n        lang\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation IntertIntoPhraseCollection($objects: [PhraseInsertInput!]!) {\n    insertIntoPhraseCollection(objects: $objects) {\n      records {\n        id\n        text\n        lang\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation InsertIntoPhraseTranslationCollection(\n    $objects: [PhraseTranslationInsertInput!]!\n  ) {\n    insertIntoPhraseTranslationCollection(objects: $objects) {\n      records {\n        id\n        phraseId\n        text\n        lang\n        literal\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation InsertIntoPhraseTranslationCollection(\n    $objects: [PhraseTranslationInsertInput!]!\n  ) {\n    insertIntoPhraseTranslationCollection(objects: $objects) {\n      records {\n        id\n        phraseId\n        text\n        lang\n        literal\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
