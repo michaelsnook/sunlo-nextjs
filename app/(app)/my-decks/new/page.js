@@ -4,16 +4,12 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import Select from 'react-select'
-import languages from 'lib/languages'
+import languages, { options } from 'lib/languages'
 import { useAllDecks } from 'app/data/hooks'
 import ErrorList from 'components/ErrorList'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { postNewDeck } from 'app/data/posters'
 // import { createNewDeck } from 'app/data/mutations'
-
-const options = Object.keys(languages).map(lang => {
-  return { value: lang, label: languages[lang] }
-})
 
 function TinyError({ text }) {
   return <p className="my-4 text-error/70">{text}</p>
