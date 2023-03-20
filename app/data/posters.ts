@@ -1,7 +1,21 @@
+'use client'
+
 import { request } from 'graphql-request'
 import supabase from 'lib/supabase-client'
 import { requestOptions } from './constants'
-import { newDeckMutation, newCardMutation } from 'app/data/mutations.js'
+import {
+  newUserDeckMutation,
+  newUserCardMutation,
+  newPhraseMutation,
+  newPhraseTranslationsMutation,
+} from 'app/data/mutations'
+import {
+  PhraseInsertInput,
+  PhraseTranslation,
+  PhraseTranslationInsertInput,
+  Scalars,
+  UserCardInsertInput,
+} from './gql/graphql'
 
 export const postNewDeck = async (lang: string) => {
   // console.log(`postNewDeck ${lang}`)
@@ -15,14 +29,14 @@ export const postNewDeck = async (lang: string) => {
   const result = await request({
     ...requestOptions(access_token),
     variables: { objects: [{ lang }] },
-    document: newDeckMutation,
+    document: newUserDeckMutation,
   })
   // console.log(`RESULT: `, result)
   return result.insertIntoUserDeckCollection.records[0]
 }
 
-export const postNewCard = async ({ status, phraseId, userDeckId }) => {
-  console.log(`postNewCard`, status, phraseId, userDeckId)
+export const postNewCard = async (object: UserCardInsertInput) => {
+  console.log(`postNewCard`, object)
   const {
     data: {
       session: { access_token },
@@ -32,9 +46,106 @@ export const postNewCard = async ({ status, phraseId, userDeckId }) => {
   if (error) throw error
   const result = await request({
     ...requestOptions(access_token),
-    variables: { objects: [{ status, phraseId: phraseId, userDeckId }] },
-    document: newCardMutation,
+    variables: { objects: [object] },
+    document: newUserCardMutation,
   })
   // console.log(`RESULT: `, result)
+  return result
+}
+
+type PhraseCardTranslationsInsertInput = {
+  phrase: PhraseInsertInput
+  phraseTranslations: Array<{
+    text: string
+    lang: string
+    literal: string
+  }>
+  userDeckId: Scalars['UUID']
+}
+
+type PhraseCardTranslationsInsertResult = {
+  userDeckId: Scalars['UUID']
+  status: string
+  phrase: {
+    text: string
+    lang: string
+    phraseTranslationCollection: {
+      edges: Array<{
+        node: PhraseTranslation
+      }>
+    }
+  }
+}
+
+export const postNewPhraseCardTranslations = async ({
+  phrase,
+  phraseTranslations,
+  userDeckId,
+}: PhraseCardTranslationsInsertInput): Promise<PhraseCardTranslationsInsertResult> => {
+  console.log(
+    `postNewPhraseCardTranslations`,
+    phrase,
+    phraseTranslations,
+    userDeckId
+  )
+  const {
+    data: {
+      session: { access_token },
+    },
+    error,
+  } = await supabase.auth.getSession()
+  if (error) throw error
+
+  // everything is ready, let's go with the first
+  const result1 = await request({
+    ...requestOptions(access_token),
+    variables: { objects: [phrase] },
+    document: newPhraseMutation,
+  })
+  console.log(`this is the result of the newPhraseMutation`, result1)
+  const phraseData = result1.insertIntoPhraseCollection.records[0]
+  const { id: phraseId } = phraseData
+
+  // we have a phrase! let's use its ID to construct
+  // the translations and the card
+  const phraseTranslationsInput = phraseTranslations.map(
+    (t): PhraseTranslationInsertInput => {
+      return {
+        ...t,
+        phraseId,
+      }
+    }
+  )
+  const phraseTranslationResponse = request({
+    ...requestOptions(access_token),
+    variables: {
+      objects: phraseTranslationsInput,
+    },
+    document: newPhraseTranslationsMutation,
+  })
+  const userCardResponse = request({
+    ...requestOptions(access_token),
+    variables: { objects: [{ userDeckId, phraseId }] },
+    document: newUserCardMutation,
+  })
+
+  // resolve both promises / post in parallel
+  const [phraseTranslationData, userCardData] = await Promise.all([
+    phraseTranslationResponse,
+    userCardResponse,
+  ])
+  const userCardResult = userCardData.insertIntoUserCardCollection.records[0]
+  const phraseTranslationsResult =
+    phraseTranslationData.insertIntoPhraseTranslationCollection.records
+  const result = {
+    ...userCardResult,
+    phrase: {
+      ...phraseData,
+      phraseTranslationCollection: {
+        edges: phraseTranslationsResult.map(node => ({ node })),
+      },
+    },
+  }
+  console.log(result)
   return result
 }
