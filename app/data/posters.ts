@@ -63,6 +63,7 @@ type PhraseCardTranslationsInsertInput = {
   userDeckId: Scalars['UUID']
 }
 
+/*
 type PhraseCardTranslationsInsertResult = {
   userDeckId: Scalars['UUID']
   status: string
@@ -75,13 +76,13 @@ type PhraseCardTranslationsInsertResult = {
       }>
     }
   }
-}
+} */
 
 export const postNewPhraseCardTranslations = async ({
   phrase,
   phraseTranslations,
   userDeckId,
-}: PhraseCardTranslationsInsertInput): Promise<PhraseCardTranslationsInsertResult> => {
+}: PhraseCardTranslationsInsertInput): Promise<any> => {
   console.log(
     `postNewPhraseCardTranslations`,
     phrase,
