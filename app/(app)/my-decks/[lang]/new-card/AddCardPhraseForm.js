@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import Select from 'react-select'
 import languages, { options } from 'lib/languages'
@@ -9,11 +8,13 @@ import { useDeck } from 'app/data/hooks'
 import ErrorList from 'components/ErrorList'
 import Loading from 'app/loading'
 import { postNewPhraseCardTranslations } from 'app/data/posters'
+import { useRouter } from 'next/navigation'
 
 export default function AddCardPhraseForm({ lang }) {
   const { status, data: deck, error } = useDeck(lang)
   const [selectLang, setSelectLang] = useState()
   const queryClient = useQueryClient()
+  const router = useRouter()
 
   const addCardPhrase = useMutation({
     mutationFn: postNewPhraseCardTranslations,
@@ -93,16 +94,15 @@ export default function AddCardPhraseForm({ lang }) {
         ) : addCardPhrase.isSuccess ? (
           <p className="text-lg">
             Success! added this new phrase to your deck!{' '}
-            <Link
-              href={`/my-decks/${lang}`}
-              className="text-primary hover:underline"
+            <a
+              className="link text-primary hover:underline pointer"
+              onClick={() => router.back()}
             >
               Go back
-            </Link>{' '}
+            </a>{' '}
             or add{' '}
             <a
-              href="#"
-              className="text-primary hover:underline"
+              className="link text-primary hover:underline"
               onClick={() => location.reload()}
             >
               another new card
@@ -118,12 +118,12 @@ export default function AddCardPhraseForm({ lang }) {
             >
               Submit
             </button>
-            <Link
+            <a
               className="place-self-center btn btn-quiet"
-              href={`/my-decks/${lang}`}
+              onClick={() => router.back()}
             >
               Cancel
-            </Link>
+            </a>
           </>
         )}
       </div>
