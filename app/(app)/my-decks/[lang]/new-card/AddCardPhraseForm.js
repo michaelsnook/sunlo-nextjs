@@ -3,15 +3,40 @@
 import { useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import Select from 'react-select'
-import languages, { options } from 'lib/languages'
+import languages, {
+  allLanguageOptions,
+  makeLanguageOptions,
+} from 'lib/languages'
 import { useDeck } from 'app/data/hooks'
 import ErrorList from 'components/ErrorList'
 import Loading from 'app/loading'
 import { postNewPhraseCardTranslations } from 'app/data/posters'
+import { useProfile } from 'app/data/hooks'
 import { useRouter } from 'next/navigation'
 
+const SelectLanguageYouKnow = ({ onChange, disabledLang }) => {
+  const { data, status } = useProfile()
+  if (status === 'loading') return <Loading />
+
+  const { languagesSpoken } = data
+  const selectOptions = languagesSpoken?.length
+    ? makeLanguageOptions(languagesSpoken)
+    : allLanguageOptions
+
+  return (
+    <Select
+      name="translationLang"
+      options={selectOptions}
+      isOptionDisabled={option => option.value === disabledLang}
+      placeholder="Select a language..."
+      onChange={onChange}
+      aria-label="Select a language for your translation"
+    />
+  )
+}
+
 export default function AddCardPhraseForm({ lang }) {
-  const { status, data: deck, error } = useDeck(lang)
+  const { status, data: deck } = useDeck(lang)
   const [selectLang, setSelectLang] = useState()
   const queryClient = useQueryClient()
   const router = useRouter()
@@ -19,7 +44,7 @@ export default function AddCardPhraseForm({ lang }) {
   const addCardPhrase = useMutation({
     mutationFn: postNewPhraseCardTranslations,
     onSuccess: data => {
-      console.log(`postNewPhraseCardTranslations success`, data)
+      // console.log(`postNewPhraseCardTranslations success`, data)
       queryClient.invalidateQueries({ queryKey: ['user_deck', lang] })
     },
     onError: error => {
@@ -29,6 +54,7 @@ export default function AddCardPhraseForm({ lang }) {
 
   const handleChangeSelect = ({ value }) => {
     setSelectLang(value)
+    // console.log(`handleChange value`, value)
   }
 
   const handleSubmit = event => {
@@ -42,7 +68,7 @@ export default function AddCardPhraseForm({ lang }) {
     if (!event.target.text.value) throw 'no phrase text'
     if (!event.target.translation_text.value) throw 'no translation text'
 
-    const submitData = {
+    addCardPhrase.mutate({
       phrase: {
         text: event.target.text.value,
         lang,
@@ -54,21 +80,20 @@ export default function AddCardPhraseForm({ lang }) {
         },
       ],
       userDeckId: deck.id,
-    }
-    addCardPhrase.mutate(submitData)
+    })
   }
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
       <div className="">
         <div className="form-control">
-          <label>Phrase text</label>
+          <label>{languages[lang]} phrase to learn</label>
           <textarea className="textarea border-gray-400" name="text" />
         </div>
         <p className="mt-4">Phrase language: {languages[lang]}</p>
       </div>
       <div className="my-6">
         <div className="form-control">
-          <label>Translation text</label>
+          <label>Translation into a language you know</label>
           <textarea
             className="textarea border-gray-400"
             name="translation_text"
@@ -76,13 +101,9 @@ export default function AddCardPhraseForm({ lang }) {
         </div>
         <div className="form-control mt-4">
           <label>Translation language</label>
-          <Select
-            name="translation_language"
-            options={options}
-            isOptionDisabled={option => option.value === lang}
-            placeholder="Select a language..."
+          <SelectLanguageYouKnow
+            disabledLang={lang}
             onChange={handleChangeSelect}
-            aria-label="Select a language for your translation"
           />
         </div>
       </div>
