@@ -156,11 +156,7 @@ export default function Start() {
               </div>
             ) : null}
           </div>
-          <ErrorList
-            summary="Couldn't save profile"
-            error={errors?.message}
-            asCard
-          />
+          <ErrorList summary="Couldn't save profile" error={errors?.message} />
         </div>
       )}
     </BannerLayout>
