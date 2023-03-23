@@ -19,9 +19,20 @@ const SelectLanguageYouKnow = ({ onChange, disabledLang }) => {
   if (status === 'loading') return <Loading />
 
   const { languagesSpoken } = data
-  const selectOptions = languagesSpoken?.length
-    ? makeLanguageOptions(languagesSpoken)
-    : allLanguageOptions
+  const selectOptions = !languagesSpoken?.length
+    ? allLanguageOptions
+    : [
+        {
+          label: 'Your langauges',
+          options: makeLanguageOptions(languagesSpoken),
+        },
+        {
+          label: 'Other languages',
+          options: allLanguageOptions.filter(
+            option => languagesSpoken.indexOf(option.value) === -1
+          ),
+        },
+      ]
 
   return (
     <Select
