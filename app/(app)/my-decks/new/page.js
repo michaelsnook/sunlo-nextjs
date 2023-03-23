@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import Select from 'react-select'
-import languages, { options } from 'lib/languages'
+import languages, { allLanguageOptions } from 'lib/languages'
 import { useAllDecks } from 'app/data/hooks'
 import ErrorList from 'components/ErrorList'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -63,7 +63,7 @@ export default function Page() {
           ) : (
             <>
               <Select
-                options={options}
+                options={allLanguageOptions}
                 isOptionDisabled={option =>
                   data?.some(deck => {
                     return status === 'loading'
