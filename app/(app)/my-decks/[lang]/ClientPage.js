@@ -1,12 +1,12 @@
 'use client'
 
+import { useState } from 'react'
 import Loading from 'app/loading'
 import ErrorList from 'components/ErrorList'
 import { useDeck } from 'app/data/hooks'
-import { useState } from 'react'
 import Card from 'app/components/Card'
-import Browse from './Browse'
 import Garlic from 'app/components/Garlic'
+import Browse from './Browse'
 
 const Empty = () => <p className="text-gray-600">No cards here</p>
 
@@ -28,7 +28,7 @@ export default function ClientPage({ lang }) {
 
         <p className="my-4">
           You can get started by browsing the phrases we already have in the
-          library and adding cards to your deck, or create your own!
+          library...
         </p>
 
         <Browse lang={lang} />

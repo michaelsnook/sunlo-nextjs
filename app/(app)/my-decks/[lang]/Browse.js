@@ -1,10 +1,11 @@
 'use client'
 
+import Link from 'next/link'
+import { useState } from 'react'
+import Select from 'react-select'
 import Loading from 'app/loading'
 import ErrorList from 'components/ErrorList'
 import { useAllPhrasesInLanguage } from 'app/data/hooks'
-import Select from 'react-select'
-import { useState } from 'react'
 import BigPhrase from 'app/components/BigPhrase'
 
 export default function Browse({ lang, disable }) {
@@ -16,7 +17,13 @@ export default function Browse({ lang, disable }) {
   if (!data?.length) {
     return (
       <p className="bg-primary/10 p-6 rounded-lg">
-        there are no phrases for this language 💩 you'll need to add some.
+        There are no phrases for this language 💩{' '}
+        <Link
+          href={`/my-decks/${lang}/new-card`}
+          className="flex-none hover:underline place-self-center text-primary"
+        >
+          you'll need to add some.
+        </Link>
       </p>
     )
   }
