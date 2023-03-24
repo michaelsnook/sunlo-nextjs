@@ -57,7 +57,7 @@ export default function Page() {
       <div className="page-card">
         <form name="new-deck" onSubmit={handleSubmit}>
           {createNewDeck?.error ? (
-            <ErrorList errors={[createNewDeck.error]} asCard />
+            <ErrorList error={createNewDeck.error} />
           ) : status === 'error' ? (
             <ErrorList error={error} />
           ) : (

@@ -1,17 +1,19 @@
+// @ts-ignore
 /*
+import type { Maybe } from 'app/data/gql/graphql'
+
 type ErrorListProps = {
-  summary?: string
-  error?: Object
-  errors?: Object[]
+  summary: Maybe<string>
+  error: Maybe<any>
+  errors: Maybe<Array<any>>
 }
 */
-
 // const ErrorList = ({ summary, error, errors }: ErrorListProps) => {
 const ErrorList = ({ summary, error, errors }) => {
   const pickSummary =
     summary ?? error?.message ?? error?.response?.errors[0]?.message ?? null
   const displaySummary = pickSummary ? pickSummary.split(':')[0] : null
-  // convert neively-passed error objects to strings
+  // convert naively-passed error objects to strings
   const errorString = JSON.stringify(error, null, 2)
 
   return !error && !errors?.length ? null : (

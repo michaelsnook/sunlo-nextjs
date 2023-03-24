@@ -24,6 +24,7 @@ function OneDeck({ node }) {
 export default function ClientPage() {
   const { status, data, error } = useAllDecks()
   if (status === 'loading') return <Loading />
+
   if (status === 'error') return <ErrorList error={error} />
 
   return (
