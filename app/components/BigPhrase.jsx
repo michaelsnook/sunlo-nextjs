@@ -1,3 +1,4 @@
+// @ts-ignore
 'use client'
 
 import Loading from 'app/loading'
@@ -7,7 +8,9 @@ import { useMutation } from '@tanstack/react-query'
 import { postNewCard } from 'app/data/posters'
 import { useQueryClient } from '@tanstack/react-query'
 import { Scalars } from 'app/data/gql/graphql'
+import { UseQueryResult } from 'app/data/hooks'
 
+/*
 type TinyPhraseProps = {
   lang?: string
   text: string
@@ -17,18 +20,17 @@ type BigPhraseProps = {
   phraseId: Scalars['UUID']
   setActivePhrase: Function
 }
-
-export const TinyPhrase = ({ lang, text }: TinyPhraseProps) => (
+*/
+export const TinyPhrase = ({ lang, text } /*: TinyPhraseProps*/) => (
   <>
     {lang ? <span className="text-gray-500">[{lang}]</span> : null}
     &ldquo;{text}&rdquo;
   </>
 )
 
-export default function BigPhrase({
-  phraseId,
-  setActivePhrase,
-}: BigPhraseProps) {
+export default function BigPhrase(
+  { phraseId, setActivePhrase } /*: BigPhraseProps*/
+) {
   const { data, status, error } = usePhrase(phraseId)
   const { data: decks, status: decksStatus, error: decksError } = useAllDecks()
   const queryClient = useQueryClient()
@@ -38,8 +40,8 @@ export default function BigPhrase({
     data && decks
       ? decks.find(edge => edge?.node?.lang === data?.lang)?.node?.id
       : null
-  const addNewCardToDeck = useMutation({
-    mutationFn: (status: string) =>
+  const addNewCardToDeck /*: UseQueryResult*/ = useMutation({
+    mutationFn: (status /*: string*/) =>
       postNewCard({ status, phraseId, userDeckId }),
     onSuccess: data => {
       console.log(`onSuccess data,`, data)

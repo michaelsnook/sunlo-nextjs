@@ -8,9 +8,18 @@ import {
   getAllPhrasesInLanguage,
   getOnePhraseDetails,
 } from './fetchers'
-import { Scalars } from './gql/graphql'
+import type { Scalars, Maybe } from './gql/graphql'
 
-export function useAllDecks() {
+export type UseQueryResult = {
+  status: string
+  error: Maybe<any>
+  data: Maybe<any>
+  isLoading: boolean
+  isSuccess: boolean
+  isError: boolean
+}
+
+export function useAllDecks(): UseQueryResult {
   return useQuery({
     queryKey: ['user_decks'],
     queryFn: getAllDecks,
@@ -23,7 +32,7 @@ export function useAllDecks() {
   })
 }
 
-export function useAllPhrasesInLanguage(lang: string) {
+export function useAllPhrasesInLanguage(lang: string): UseQueryResult {
   return useQuery({
     queryKey: ['phrases', 'lang', lang],
     queryFn: async () => getAllPhrasesInLanguage(lang),
@@ -36,7 +45,7 @@ export function useAllPhrasesInLanguage(lang: string) {
   })
 }
 
-export function useDeck(deckLang: string) {
+export function useDeck(deckLang: string): UseQueryResult {
   return useQuery({
     queryKey: ['user_deck', deckLang],
     queryFn: async () => getDeck(deckLang),
@@ -49,7 +58,7 @@ export function useDeck(deckLang: string) {
   })
 }
 
-export function usePhrase(id: Scalars['UUID']) {
+export function usePhrase(id: Scalars['UUID']): UseQueryResult {
   return useQuery({
     queryKey: ['phrase', id],
     queryFn: async () => getOnePhraseDetails(id),
@@ -59,7 +68,7 @@ export function usePhrase(id: Scalars['UUID']) {
   })
 }
 
-export function useProfile() {
+export function useProfile(): UseQueryResult {
   return useQuery({
     queryKey: ['user_profile'],
     queryFn: getProfile,
