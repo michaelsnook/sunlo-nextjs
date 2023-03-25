@@ -46,11 +46,16 @@ const SelectLanguageYouKnow = ({ onChange, disabledLang }) => {
   )
 }
 
-export default function AddCardPhraseForm({ lang, offerRefresh = false }) {
+export default function AddCardPhraseForm({
+  lang,
+  offerRefresh = false,
+  cancel,
+}) {
   const { status, data: deck } = useDeck(lang)
   const [selectLang, setSelectLang] = useState()
   const queryClient = useQueryClient()
   const router = useRouter()
+  const onCancel = cancel ? cancel : () => router.back()
 
   const addCardPhrase = useMutation({
     mutationFn: postNewPhraseCardTranslations,
@@ -131,7 +136,7 @@ export default function AddCardPhraseForm({ lang, offerRefresh = false }) {
           <div className="bg-success/50 border-success text-black rounded-lg border py-4 px-6 mb-4">
             <p className="text-lg">
               Success! added this new phrase to your deck!{' '}
-              <a className="link text-primary" onClick={() => router.back()}>
+              <a className="link text-primary" onClick={() => onCancel()}>
                 Go back
               </a>{' '}
               {offerRefresh ? (
@@ -159,7 +164,7 @@ export default function AddCardPhraseForm({ lang, offerRefresh = false }) {
             </button>
             <a
               className="place-self-center btn btn-quiet"
-              onClick={() => router.back()}
+              onClick={() => onCancel()}
             >
               Cancel
             </a>

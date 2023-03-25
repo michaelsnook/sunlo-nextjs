@@ -44,7 +44,7 @@ export default function Sidebar({ shy = false }) {
     : [convertDecksToMenu(decks?.data), staticMenu]
 
   return (
-    <>
+    <div id="sidebar-all">
       <SidebarOpener isOpen={isOpen} setIsOpen={setIsOpen} shy={shy} />
       <div
         className={`z-20 bg-black bg-opacity-50 pt-10 ${
@@ -98,7 +98,7 @@ export default function Sidebar({ shy = false }) {
           )}
         </nav>
       </div>
-    </>
+    </div>
   )
 }
 

@@ -3,11 +3,9 @@
 import ClientPage from './ClientPage'
 import languages from 'lib/languages'
 import Link from 'next/link'
-import Modal from 'react-modal'
+import MyModal from 'app/components/Modal'
 import { useState } from 'react'
 import AddCardPhraseForm from './new-card/AddCardPhraseForm'
-
-Modal.setAppElement('#modal-root')
 
 export default function Page({ params: { lang } }) {
   const [showModal, setShowModal] = useState(false)
@@ -29,14 +27,10 @@ export default function Page({ params: { lang } }) {
       <div className="page-card">
         <ClientPage lang={lang} />
       </div>
-      <Modal
-        className="big-card my-6 mx-auto"
-        isOpen={showModal}
-        onRequestClose={() => setShowModal(false)}
-      >
+      <MyModal isOpen={showModal} onRequestClose={() => setShowModal(false)}>
         <h1 className="h1">Add a new card</h1>
-        <AddCardPhraseForm lang={lang} />
-      </Modal>
+        <AddCardPhraseForm lang={lang} cancel={() => setShowModal(false)} />
+      </MyModal>
     </>
   )
 }
