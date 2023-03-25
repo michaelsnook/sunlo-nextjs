@@ -12,7 +12,7 @@ export default function Start() {
     useGlobalState()
 
   console.log(
-    `render Start, isLoading: ${isLoading}. User, Profile, Languages:`,
+    `render Start, isLoading: ${isLoading}. User, Profile:`,
     user,
     profile
   )
