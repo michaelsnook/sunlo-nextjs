@@ -20,7 +20,7 @@ export default function Browse({ lang, disable }) {
         There are no phrases for this language 💩{' '}
         <Link
           href={`/my-decks/${lang}/new-card`}
-          className="flex-none hover:underline place-self-center text-primary"
+          className="flex-none link place-self-center text-primary"
         >
           you'll need to add some.
         </Link>
@@ -50,11 +50,7 @@ export default function Browse({ lang, disable }) {
       />
       {!activePhrase ? null : (
         <>
-          <a
-            href="#"
-            className="text-primary hover:underline"
-            onClick={() => setActivePhrase('')}
-          >
+          <a className="text-primary link" onClick={() => setActivePhrase('')}>
             &times; Clear selection
           </a>
           <BigPhrase

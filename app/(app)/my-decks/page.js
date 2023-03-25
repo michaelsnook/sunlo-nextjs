@@ -9,7 +9,7 @@ export default function Page() {
           <h1 className="h1">My decks</h1>
         </div>
         <Link
-          className="flex-none hover:underline place-self-center text-white my-4"
+          className="flex-none link place-self-center text-white my-4"
           href="/my-decks/new"
         >
           + new deck
