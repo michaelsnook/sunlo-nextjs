@@ -46,7 +46,7 @@ const SelectLanguageYouKnow = ({ onChange, disabledLang }) => {
   )
 }
 
-export default function AddCardPhraseForm({ lang }) {
+export default function AddCardPhraseForm({ lang, offerRefresh = false }) {
   const { status, data: deck } = useDeck(lang)
   const [selectLang, setSelectLang] = useState()
   const queryClient = useQueryClient()
@@ -128,23 +128,26 @@ export default function AddCardPhraseForm({ lang }) {
         ) : addCardPhrase.isError ? (
           <ErrorList error={addCardPhrase.error} />
         ) : addCardPhrase.isSuccess ? (
-          <p className="text-lg">
-            Success! added this new phrase to your deck!{' '}
-            <a
-              className="link text-primary hover:underline pointer"
-              onClick={() => router.back()}
-            >
-              Go back
-            </a>{' '}
-            or add{' '}
-            <a
-              className="link text-primary hover:underline"
-              onClick={() => location.reload()}
-            >
-              another new card
-            </a>
-            .
-          </p>
+          <div className="bg-success/50 border-success text-black rounded-lg border py-4 px-6 mb-4">
+            <p className="text-lg">
+              Success! added this new phrase to your deck!{' '}
+              <a className="link text-primary" onClick={() => router.back()}>
+                Go back
+              </a>{' '}
+              {offerRefresh ? (
+                <>
+                  or add{' '}
+                  <a
+                    className="link text-primary"
+                    onClick={() => location.reload()}
+                  >
+                    another new card
+                  </a>
+                  .
+                </>
+              ) : null}
+            </p>
+          </div>
         ) : (
           <>
             <button

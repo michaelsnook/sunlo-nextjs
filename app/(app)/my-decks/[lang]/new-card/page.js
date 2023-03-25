@@ -14,7 +14,7 @@ export default function Page({ params: { lang } }) {
       </Link>
       <h1 className="h1">Add a new card</h1>
       <div className="page-card">
-        <AddCardPhraseForm lang={lang} />
+        <AddCardPhraseForm lang={lang} offerRefresh />
       </div>
     </>
   )
