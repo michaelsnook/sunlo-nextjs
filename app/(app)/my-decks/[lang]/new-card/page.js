@@ -1,8 +1,12 @@
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import languages from 'lib/languages'
 import AddCardPhraseForm from './AddCardPhraseForm'
 
-export default async function Page({ params: { lang } }) {
+export default function Page({ params: { lang } }) {
+  const router = useRouter()
+  const underPage = `/my-decks/${lang}`
+
   return (
     <>
       <Link href={`/my-decks/${lang}`} className="hover:underline">

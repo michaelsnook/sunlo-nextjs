@@ -98,7 +98,11 @@ export default function AddCardPhraseForm({ lang }) {
       <div className="">
         <div className="form-control">
           <label>{languages[lang]} phrase to learn</label>
-          <textarea className="textarea border-gray-400" name="text" />
+          <textarea
+            autoFocus
+            className="textarea border-gray-400"
+            name="text"
+          />
         </div>
         <p className="mt-4">Phrase language: {languages[lang]}</p>
       </div>
