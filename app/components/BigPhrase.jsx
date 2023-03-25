@@ -120,7 +120,7 @@ export default function BigPhrase(
             &rdquo;.&nbsp;
             <a
               href="#"
-              className="text-primary hover:underline"
+              className="text-primary link"
               onClick={() => setActivePhrase('')}
             >
               Keep browsing.

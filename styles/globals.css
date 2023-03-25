@@ -37,6 +37,9 @@
     @apply btn btn-outline border-none text-white hover:btn-secondary;
     background-color: hsla(var(--p) / var(--tw-bg-opacity, 1));
   }
+  .link {
+    @apply hover:underline cursor-pointer;
+  }
   /* used when you want a card section, width lg */
   .section-card {
     @apply card shadow-lg bg-white text-gray-800 max-w-lg p-10;

@@ -14,14 +14,14 @@ export default function Page({ params: { lang } }) {
 
   return (
     <>
-      <Link className="hover:underline" href="/my-decks">
+      <Link className="link" href="/my-decks">
         &larr; Back to decks
       </Link>
       <div className="flex flex-row justify-between">
         <h1 className="h1">Learn {languages[lang]}</h1>
         <a
           onClick={() => setShowModal(true)}
-          className="flex-none hover:underline place-self-center"
+          className="flex-none link place-self-center"
         >
           + new card
         </a>

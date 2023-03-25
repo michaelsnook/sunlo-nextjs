@@ -21,10 +21,7 @@ export default async function Page({ params }) {
   return (
     <div className="page-card flex flex-col gap-12">
       <div>
-        <Link
-          href={`/language/${phrase.lang}`}
-          className="hover:underline text-primary"
-        >
+        <Link href={`/language/${phrase.lang}`} className="link text-primary">
           &larr; Back to {languages[phrase.lang]}
         </Link>
         <h1 className="h1 my-0">"{phrase.text}"</h1>

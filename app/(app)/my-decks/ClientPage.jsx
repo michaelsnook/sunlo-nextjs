@@ -42,7 +42,7 @@ export default function ClientPage() {
       ) : (
         <p className="my-6">
           It looks like you're not learning any languages right now.{' '}
-          <Link className="hover:underline" href="/my-decks/new">
+          <Link className="link" href="/my-decks/new">
             Let's get started!
           </Link>
         </p>
