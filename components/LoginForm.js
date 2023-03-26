@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import supabase from 'lib/supabase-client'
 import { useGlobalState } from 'lib/global-store'
-import ErrorList from 'components/ErrorList'
+import ErrorList from 'app/components/ErrorList'
 
 export default function Login({ signup }) {
   const [errors, setErrors] = useState()

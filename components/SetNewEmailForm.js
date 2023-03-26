@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import supabase from 'lib/supabase-client'
 import { useGlobalState } from 'lib/global-store'
-import ErrorList from 'components/ErrorList'
+import ErrorList from 'app/components/ErrorList'
 
 export default function SetNewEmailForm() {
   const { user } = useGlobalState()

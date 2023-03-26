@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import Banner from 'components/Banner'
+import Banner from 'app/components/Banner'
 import Garlic from 'app/components/Garlic'
 
 export default function SiteHome() {

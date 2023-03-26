@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import Banner from 'components/Banner'
+import Banner from 'app/components/Banner'
 
 export default function BannerLayout({
   image = `/images/sunlo-logo-color.png`,

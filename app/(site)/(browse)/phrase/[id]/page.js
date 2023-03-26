@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { getOnePhraseDetails, getAllPhraseIds } from 'app/data/fetchers'
-import { TinyPhrase } from 'components/PhraseCardSmall'
+import { TinyPhrase } from 'app/components/PhraseCardSmall'
 import languages from 'lib/languages'
 
 export async function generateStaticParams() {
