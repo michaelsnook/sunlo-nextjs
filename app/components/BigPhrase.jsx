@@ -2,7 +2,7 @@
 'use client'
 
 import Loading from 'app/loading'
-import ErrorList from 'components/ErrorList'
+import ErrorList from 'app/components/ErrorList'
 import { useAllDecks, usePhrase } from 'app/data/hooks'
 import { useMutation } from '@tanstack/react-query'
 import { postNewCard } from 'app/data/posters'

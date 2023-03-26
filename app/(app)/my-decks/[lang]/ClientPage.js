@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Loading from 'app/loading'
-import ErrorList from 'components/ErrorList'
+import ErrorList from 'app/components/ErrorList'
 import { useDeck } from 'app/data/hooks'
 import Card from 'app/components/Card'
 import Garlic from 'app/components/Garlic'

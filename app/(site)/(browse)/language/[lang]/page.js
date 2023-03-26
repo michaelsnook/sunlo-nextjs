@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import PhraseCardSmall from 'components/PhraseCardSmall'
+import PhraseCardSmall from 'app/components/PhraseCardSmall'
 import { getLanguageDetails } from 'app/data/fetchers'
 import languages from 'lib/languages'
 import { notFound } from 'next/navigation'

@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import Select from 'react-select'
 import Loading from 'app/loading'
-import ErrorList from 'components/ErrorList'
+import ErrorList from 'app/components/ErrorList'
 import { useAllPhrasesInLanguage } from 'app/data/hooks'
 import BigPhrase from 'app/components/BigPhrase'
 

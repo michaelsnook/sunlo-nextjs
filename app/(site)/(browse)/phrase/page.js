@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import PhraseCardSmall from 'components/PhraseCardSmall'
+import PhraseCardSmall from 'app/components/PhraseCardSmall'
 import { getAllPhraseDetails } from 'app/data/fetchers'
 
 export default async function Page() {

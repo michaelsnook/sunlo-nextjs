@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import supabase from 'lib/supabase-client'
-import ErrorList from 'components/ErrorList'
+import ErrorList from 'app/components/ErrorList'
 import { useGlobalState } from 'lib/global-store'
 
 export default function SetNewPasswordForm() {

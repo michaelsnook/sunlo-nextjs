@@ -8,7 +8,7 @@ import languages, {
   makeLanguageOptions,
 } from 'lib/languages'
 import { useDeck } from 'app/data/hooks'
-import ErrorList from 'components/ErrorList'
+import ErrorList from 'app/components/ErrorList'
 import Loading from 'app/loading'
 import { postNewPhraseCardTranslations } from 'app/data/posters'
 import { useProfile } from 'app/data/hooks'
