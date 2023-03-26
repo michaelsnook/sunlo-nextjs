@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { staticMenu } from 'lib/menus'
 
 const Footer = () => (
-  <footer className="container pt-10 pb-16 flex flex-row gap-16">
+  <footer className="container p-10 flex flex-row gap-16">
     {[staticMenu].map(menu => (
       <div key={menu.name}>
         <p className="font-bold my-4">{menu.name}</p>
