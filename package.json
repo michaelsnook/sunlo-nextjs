@@ -6,7 +6,8 @@
     "build": "next build",
     "start": "next start",
     "codegen": "graphql-codegen --config codegen.ts",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.7.1",
@@ -31,6 +32,7 @@
     "daisyui": "^2.51.4",
     "eslint": "8.30.0",
     "eslint-config-next": "13.1.1",
+    "husky": "^8.0.3",
     "postcss": "^8.4.20",
     "prettier": "2.8.1",
     "tailwindcss": "^3.2.7",
