@@ -4,14 +4,16 @@ import { useState } from 'react'
 import Loading from 'app/loading'
 import ErrorList from 'app/components/ErrorList'
 import { useDeck } from 'app/data/hooks'
-import Card from 'app/components/Card'
 import Garlic from 'app/components/Garlic'
+import MyModal from 'app/components/Modal'
+import Card from 'app/components/Card'
 import Browse from './Browse'
 
 const Empty = () => <p className="text-gray-600">No cards here</p>
 
 export default function ClientPage({ lang }) {
   const [tab, setTab] = useState('active')
+  const [phraseModal, setPhraseModal] = useState()
   const { status, data, error } = useDeck(lang)
 
   if (status === 'loading') return <Loading />
@@ -45,6 +47,14 @@ export default function ClientPage({ lang }) {
   }
   return (
     <div>
+      {phraseModal === null ? null : (
+        <MyModal
+          onRequestClose={() => setPhraseModal(null)}
+          isOpen={typeof phraseModal === 'object'}
+        >
+          {JSON.stringify(phraseModal)}
+        </MyModal>
+      )}
       <div className="tabs">
         <a
           className={`tab tab-bordered ${tab === 'active' ? 'tab-active' : ''}`}
@@ -80,7 +90,14 @@ export default function ClientPage({ lang }) {
           <Browse lang={lang} disable={disabledIds} />
         ) : cards[tab].length ? (
           cards[tab].map(c => (
-            <div key={c.node.id} className="my-2">
+            <div
+              onClick={() => {
+                setPhraseModal(c.node)
+                console.log(c.node)
+              }}
+              key={c.node.id}
+              className="my-2"
+            >
               <Card {...c.node} />
             </div>
           ))
