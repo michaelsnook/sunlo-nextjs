@@ -5,7 +5,6 @@ import languages from 'lib/languages'
 
 export async function generateStaticParams() {
   let edges = await getAllPhraseDetails()
-
   return edges.map(edge => ({
     id: edge.node.id,
   }))
