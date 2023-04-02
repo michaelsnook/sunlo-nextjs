@@ -67,18 +67,6 @@ export const allPhraseDetailsQuery = graphql(/* GraphQL */ `
   }
 `)
 
-export const allPhraseIdsQuery = graphql(/* GraphQL */ `
-  query AllPhraseIdsQuery {
-    phraseCollection {
-      edges {
-        node {
-          id
-        }
-      }
-    }
-  }
-`)
-
 export const deckQuery = graphql(/* GraphQL */ `
   query UserDeckQuery($filter: UserDeckFilter) {
     userDeckCollection(filter: $filter) {

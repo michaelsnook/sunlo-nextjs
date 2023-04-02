@@ -3,7 +3,6 @@ import supabase from 'lib/supabase-client'
 import {
   allDecksQuery,
   allPhraseDetailsQuery,
-  allPhraseIdsQuery,
   deckQuery,
   languageDetailsQuery,
   phraseDetailsQuery,
@@ -53,14 +52,6 @@ export const getAllPhraseDetails = async () => {
     document: allPhraseDetailsQuery,
     ...requestOptions(),
   })
-}
-
-export const getAllPhraseIds = async () => {
-  const data = await request({
-    document: allPhraseIdsQuery,
-    ...requestOptions(),
-  })
-  return data.phraseCollection.edges
 }
 
 export const getAllDecks = async () => {
