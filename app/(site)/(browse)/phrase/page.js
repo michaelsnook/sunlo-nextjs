@@ -3,9 +3,7 @@ import PhraseCardSmall from 'app/components/PhraseCardSmall'
 import { getAllPhraseDetails } from 'app/data/fetchers'
 
 export default async function Page() {
-  let data = await getAllPhraseDetails()
-
-  const phrases = data.phraseCollection.edges
+  let phrases = await getAllPhraseDetails()
 
   return (
     <>

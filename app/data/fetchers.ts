@@ -48,10 +48,11 @@ export const getDeck = async (deckLang: string) => {
 }
 
 export const getAllPhraseDetails = async () => {
-  return await request({
+  const response = await request({
     document: allPhraseDetailsQuery,
     ...requestOptions(),
   })
+  return response?.phraseCollection ? response.phraseCollection.edges : []
 }
 
 export const getAllDecks = async () => {
