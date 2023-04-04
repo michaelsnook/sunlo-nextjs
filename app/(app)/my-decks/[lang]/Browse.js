@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import Select from 'react-select'
 import Loading from 'app/loading'
 import ErrorList from 'app/components/ErrorList'
@@ -9,9 +9,23 @@ import { useAllPhrasesInLanguage } from 'app/data/hooks'
 import BigPhrase from 'app/components/BigPhrase'
 
 export default function Browse({ lang, disable }) {
-  const [activePhrase, setActivePhrase] = useState()
+  const [activePhraseId, setActivePhraseId] = useState()
 
   const { data, error, status } = useAllPhrasesInLanguage(lang)
+
+  // pass initial data directly into the phrase, it will treat as stale
+  /*
+  const { node: activePhraseData } = useMemo(() => {
+    data.find(edge => {
+      return edge.node.id === activePhraseId
+    })
+  })
+  console.log(
+    `activePhraseId: ${activePhraseId}, activePhraseData`,
+    activePhraseData
+  )
+  */
+
   if (status === 'loading') return <Loading />
   if (status === 'error') return <ErrorList error={error} />
   if (!data?.length) {
@@ -34,7 +48,7 @@ export default function Browse({ lang, disable }) {
       label: edge.node.text,
     }
   })
-  const handleChange = ({ value }) => setActivePhrase(value)
+  const handleChange = ({ value }) => setActivePhraseId(value)
 
   return (
     <div>
@@ -48,14 +62,16 @@ export default function Browse({ lang, disable }) {
         onChange={handleChange}
         className="my-4"
       />
-      {!activePhrase ? null : (
+      {!activePhraseId ? null : (
         <>
-          <a className="text-primary link" onClick={() => setActivePhrase('')}>
+          <a className="text-primary link" onClick={() => handleChange('')}>
             &times; Clear selection
           </a>
           <BigPhrase
-            phraseId={activePhrase}
-            setActivePhrase={setActivePhrase}
+            phraseId={activePhraseId}
+            // initialData={activePhraseData}
+            onClose={() => handleChange('')}
+            onNavigate={handleChange}
           />
         </>
       )}

@@ -7,7 +7,7 @@ function MyModal({ onRequestClose, isOpen, children }) {
     <Modal
       isOpen={isOpen}
       className="big-card my-6 mx-auto w-11/12 place-self-center outline-none"
-      overlayClassName="bg-black/60 fixed backdrop-blur-sm absolute inset-0 flex"
+      overlayClassName="bg-black/60 fixed backdrop-blur-sm fixed inset-0 flex"
       noScroll={true}
       onRequestClose={onRequestClose}
     >

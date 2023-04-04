@@ -5,56 +5,67 @@ import Loading from 'app/loading'
 import ErrorList from 'app/components/ErrorList'
 import { useDeck } from 'app/data/hooks'
 import Garlic from 'app/components/Garlic'
+import BigPhrase from 'app/components/BigPhrase'
 import MyModal from 'app/components/Modal'
 import Card from 'app/components/Card'
 import Browse from './Browse'
 
-const Empty = () => <p className="text-gray-600">No cards here</p>
+const Empty = () => <p className="text-gray-600 my-4">🧄 No cards here 🥦</p>
+const BrandNew = ({ lang }) => {
+  return (
+    <div>
+      <div className="flex flex-row">
+        <Garlic className="mx-4" />
+        <h2 className="h2">It looks like this is a brand new deck!</h2>
+      </div>
 
+      <p className="my-4">
+        You can get started by browsing the phrases we already have in the
+        library...
+      </p>
+
+      <Browse lang={lang} />
+    </div>
+  )
+}
 export default function ClientPage({ lang }) {
   const [tab, setTab] = useState('active')
-  const [phraseModal, setPhraseModal] = useState()
-  const { status, data, error } = useDeck(lang)
+  const [phraseModalId, setPhraseModalId] = useState()
+  const { status, data: deckData, error } = useDeck(lang)
 
   if (status === 'loading') return <Loading />
   if (status === 'error') return <ErrorList error={error} />
-  const edges = data?.userCardCollection?.edges ?? []
 
-  if (!edges?.length)
-    return (
-      <div>
-        <div className="flex flex-row">
-          <Garlic className="mx-4" />
-          <h2 className="h2">It looks like this is a brand new deck!</h2>
-        </div>
+  const cardNodes = (deckData?.userCardCollection.edges || []).map(e => e.node)
+  if (!cardNodes?.length) return <BrandNew lang={lang} />
 
-        <p className="my-4">
-          You can get started by browsing the phrases we already have in the
-          library...
-        </p>
+  // at this point data is loaded, the deck is present, there are
+  // one of more cards in it.
 
-        <Browse lang={lang} />
-      </div>
-    )
-  // a simple array ['a12...', '45f...', ... ]
-  const disabledIds = edges?.map(edge => edge.node.phrase.id) || []
+  // Array!UUID, and Array!UserCardEdge, so we can safely map later
+  const disabledIds = cardNodes.map(node => node.phraseId) || []
   // console.log(`disabled IDs`, disabledIds)
-  // 3 arrays of edges
+  // unpack the card edges to nodes... why
   const cards = {
-    active: edges.filter(e => e.node.status === 'active') || [],
-    learned: edges.filter(e => e.node.status === 'learned') || [],
-    skipped: edges.filter(e => e.node.status === 'skipped') || [],
+    active: cardNodes.filter(node => node.status === 'active'),
+    learned: cardNodes.filter(node => node.status === 'learned'),
+    skipped: cardNodes.filter(node => node.status === 'skipped'),
   }
+
   return (
     <div>
-      {phraseModal === null ? null : (
-        <MyModal
-          onRequestClose={() => setPhraseModal(null)}
-          isOpen={typeof phraseModal === 'object'}
-        >
-          {JSON.stringify(phraseModal)}
-        </MyModal>
-      )}
+      <MyModal
+        onRequestClose={() => setPhraseModalId('')}
+        isOpen={!!phraseModalId}
+      >
+        <BigPhrase
+          phraseId={phraseModalId}
+          onClose={() => setPhraseModalId('')}
+          onNavigate={setPhraseModalId}
+          noBox={true}
+        />
+      </MyModal>
+
       <div className="tabs">
         <a
           className={`tab tab-bordered ${tab === 'active' ? 'tab-active' : ''}`}
@@ -82,27 +93,28 @@ export default function ClientPage({ lang }) {
           className={`tab tab-bordered ${tab === 'browse' ? 'tab-active' : ''}`}
           onClick={() => setTab('browse')}
         >
-          Browse <span className="hidden md:block">for new</span> phrases...
+          <>Browse&nbsp;</>
+          <span className="hidden md:block">for new&nbsp;</span>phrases...
         </a>
       </div>
       <div>
         {tab === 'browse' ? (
           <Browse lang={lang} disable={disabledIds} />
-        ) : cards[tab].length ? (
+        ) : !cards[tab]?.length ? (
+          <Empty />
+        ) : (
           cards[tab].map(c => (
             <div
               onClick={() => {
-                setPhraseModal(c.node)
-                console.log(c.node)
+                setPhraseModalId(c.phrase.id)
+                // console.log(c)
               }}
-              key={c.node.id}
+              key={c.id}
               className="my-2"
             >
-              <Card {...c.node} />
+              <Card {...c} />
             </div>
           ))
-        ) : (
-          <Empty />
         )}
       </div>
     </div>

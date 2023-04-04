@@ -35,6 +35,7 @@ export function useAllDecks(): UseQueryResult {
 export function useAllPhrasesInLanguage(lang: string): UseQueryResult {
   return useQuery({
     queryKey: ['phrases', 'lang', lang],
+    // fix this. use queryKey[2]
     queryFn: async () => getAllPhrasesInLanguage(lang),
     enabled: !!lang,
     // retry: 3,
@@ -48,6 +49,7 @@ export function useAllPhrasesInLanguage(lang: string): UseQueryResult {
 export function useDeck(deckLang: string): UseQueryResult {
   return useQuery({
     queryKey: ['user_deck', deckLang],
+    // fix this. use queryKey[1]
     queryFn: async () => getDeck(deckLang),
     enabled: !!deckLang,
     retry: false,
@@ -61,6 +63,7 @@ export function useDeck(deckLang: string): UseQueryResult {
 export function usePhrase(id: Scalars['UUID']): UseQueryResult {
   return useQuery({
     queryKey: ['phrase', id],
+    // fix this. use queryKey[1]
     queryFn: async () => getOnePhraseDetails(id),
     enabled: !!id,
     staleTime: Infinity,
@@ -80,23 +83,3 @@ export function useProfile(): UseQueryResult {
     // refetchOnWindowFocus: false,
   })
 }
-
-/* export function useAllPhrases() {
-  return useQuery({
-    queryKey: ['phrases'],
-    queryFn: async () => {
-      const data = await request({
-        document: allPhraseDetailsQuery,
-        ...requestOptions(),
-      })
-      return data
-    },
-    enabled: true,
-    retry: false,
-    staleTime: Infinity,
-    cacheTime: Infinity,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  })
-}
-*/
