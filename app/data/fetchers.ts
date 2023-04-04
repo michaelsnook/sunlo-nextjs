@@ -6,6 +6,7 @@ import {
   deckQuery,
   languageDetailsQuery,
   phraseDetailsQuery,
+  onePhraseDetailsQuery,
   profileQuery,
 } from 'app/data/queries'
 import type {
@@ -44,7 +45,7 @@ export const getDeck = async (deckLang: string) => {
     variables,
     ...requestOptions(access_token),
   })
-  return response?.userDeckCollection?.edges[0]?.node || null
+  return response?.userDeckCollection.edges[0]?.node || null
 }
 
 export const getAllPhraseDetails = async () => {
@@ -81,7 +82,7 @@ export const getAllDecks = async () => {
       a.node.userCardCollection.edges.length
     )
   })
-  return sortedResponse
+  return sortedResponse || null
 }
 
 export const getLanguageDetails = async (lang: string) => {
@@ -97,16 +98,20 @@ export const getLanguageDetails = async (lang: string) => {
     variables,
     ...requestOptions(),
   })
-  /*
-  console.log(
-    `LOGGING getLanguageDetails(${lang})`,
-    response.languageCollection.edges[0]?.node
-  )
-  */
-  return response.languageCollection.edges[0]?.node
+  return response.languageCollection.edges[0]?.node || null
 }
 
 export const getOnePhraseDetails = async (id: Scalars['UUID']) => {
+  const {
+    data: {
+      session: { access_token },
+    },
+    error,
+  } = await supabase.auth.getSession()
+  if (error) {
+    console.log(`Error in getOnePhraseDetails`, error)
+    return null
+  }
   const variables = {
     filter: <PhraseFilter>{
       id: {
@@ -115,16 +120,17 @@ export const getOnePhraseDetails = async (id: Scalars['UUID']) => {
     },
   }
   const response = await request({
-    document: phraseDetailsQuery,
+    document: onePhraseDetailsQuery,
     variables,
-    ...requestOptions(),
+    ...requestOptions(access_token),
   })
-  return response?.phraseCollection?.edges[0]?.node // || {}
+
+  return response?.phraseCollection.edges[0]?.node || null // || {}
 }
 
 export const getAllPhrasesInLanguage = async (lang: String) => {
   const variables = {
-    filter: <LanguageFilter>{
+    filter: <PhraseFilter>{
       lang: {
         eq: lang,
       },
@@ -135,7 +141,7 @@ export const getAllPhrasesInLanguage = async (lang: String) => {
     document: phraseDetailsQuery,
     variables,
   })
-  return response?.phraseCollection?.edges
+  return response?.phraseCollection.edges
 }
 
 export const getProfile = async () => {
@@ -147,5 +153,5 @@ export const getProfile = async () => {
     document: profileQuery,
     ...requestOptions(session.access_token),
   })
-  return response?.userProfileCollection?.edges[0]?.node // || {}
+  return response?.userProfileCollection.edges[0]?.node || null // || {}
 }
