@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useMemo } from 'react'
+import { useState } from 'react'
 import Select from 'react-select'
 import Loading from 'app/loading'
 import ErrorList from 'app/components/ErrorList'
@@ -12,19 +12,6 @@ export default function Browse({ lang, disable }) {
   const [activePhraseId, setActivePhraseId] = useState()
 
   const { data, error, status } = useAllPhrasesInLanguage(lang)
-
-  // pass initial data directly into the phrase, it will treat as stale
-  /*
-  const { node: activePhraseData } = useMemo(() => {
-    data.find(edge => {
-      return edge.node.id === activePhraseId
-    })
-  })
-  console.log(
-    `activePhraseId: ${activePhraseId}, activePhraseData`,
-    activePhraseData
-  )
-  */
 
   if (status === 'loading') return <Loading />
   if (status === 'error') return <ErrorList error={error} />
