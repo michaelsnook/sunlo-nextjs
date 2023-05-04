@@ -6,7 +6,7 @@ import {
   getDeck,
   getProfile,
   getAllPhrasesInLanguage,
-  getOnePhraseDetails,
+  getPhraseDetails,
 } from './fetchers'
 import type { Scalars, Maybe } from './gql/graphql'
 
@@ -64,7 +64,7 @@ export function usePhrase(id: Scalars['UUID']): UseQueryResult {
   return useQuery({
     queryKey: ['phrase', id],
     // fix this. use queryKey[1]
-    queryFn: async () => getOnePhraseDetails(id),
+    queryFn: async () => getPhraseDetails(id),
     enabled: !!id,
     staleTime: Infinity,
     cacheTime: Infinity,

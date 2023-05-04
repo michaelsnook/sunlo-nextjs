@@ -101,17 +101,13 @@ export const getLanguageDetails = async (lang: string) => {
   return response.languageCollection.edges[0]?.node || null
 }
 
-export const getOnePhraseDetails = async (id: Scalars['UUID']) => {
-  const {
-    data: {
-      session: { access_token },
-    },
-    error,
-  } = await supabase.auth.getSession()
+export const getPhraseDetails = async (id: Scalars['UUID']) => {
+  let { data, error } = await supabase.auth.getSession()
   if (error) {
-    console.log(`Error in getOnePhraseDetails`, error)
+    console.log(`Error in getPhraseDetails`, error)
     return null
   }
+  const access_token = data?.session?.access_token || null
   const variables = {
     filter: <PhraseFilter>{
       id: {
