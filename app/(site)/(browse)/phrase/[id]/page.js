@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { getOnePhraseDetails, getAllPhraseDetails } from 'app/data/fetchers'
+import { getPhraseDetails, getAllPhraseDetails } from 'app/data/fetchers'
 import { TinyPhrase } from 'app/components/PhraseCardSmall'
 import languages from 'lib/languages'
 
@@ -11,7 +11,7 @@ export async function generateStaticParams() {
 }
 
 export default async function Page({ params }) {
-  let phrase = await getOnePhraseDetails(params.id)
+  let phrase = await getPhraseDetails(params.id)
   const translations = phrase.phraseTranslationCollection?.edges
   const seeAlso = phrase.phraseSeeAlsoCollection?.edges.map(({ node }) => {
     return node.fromPhrase.id === phrase.id ? node.toPhrase : node.fromPhrase
