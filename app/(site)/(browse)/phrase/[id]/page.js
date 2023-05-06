@@ -23,7 +23,7 @@ export default async function Page({ params }) {
         <Link href={`/language/${phrase.lang}`} className="link text-primary">
           &larr; Back to {languages[phrase.lang]}
         </Link>
-        <h1 className="h1 my-0">"{phrase.text}"</h1>
+        <h1 className="h1 my-0">&ldquo;{phrase.text}&rdquo;</h1>
       </div>
       <div>
         <h2 className="h2">Translations</h2>

@@ -34,7 +34,9 @@ export default function Card({ status, phrase }) {
           ))}
         </ul>
       ) : (
-        <p className="text-gray-600">There aren't any translations sorry</p>
+        <p className="text-gray-600">
+          There aren&apos;t any translations sorry
+        </p>
       )}
     </div>
   )
