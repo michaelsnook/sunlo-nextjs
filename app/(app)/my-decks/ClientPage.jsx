@@ -41,9 +41,9 @@ export default function ClientPage() {
         </>
       ) : (
         <p className="my-6">
-          It looks like you're not learning any languages right now.{' '}
+          It looks like you&apos;re not learning any languages right now.{' '}
           <Link className="link" href="/my-decks/new">
-            Let's get started!
+            Let&apos;s get started!
           </Link>
         </p>
       )}
