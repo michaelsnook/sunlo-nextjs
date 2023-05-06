@@ -25,8 +25,8 @@ const EditCardButtonsSection = ({ userCardId, onSuccess }) => {
   })
   return (
     <p className="my-4">
-      there's already a card here and now you can modify it with buttons &lt;
-      button &gt;
+      there&apos;s already a card here and now you can modify it with buttons
+      &lt; button &gt;
     </p>
   )
 }
@@ -93,6 +93,8 @@ export default function BigPhrase({ phraseId, onClose, onNavigate, noBox }) {
     status: phraseStatus,
     error: phraseError,
   } = usePhrase(phraseId) // || initialData.id
+  const queryClient = useQueryClient()
+
   if (!phraseId) return <p>no phrase info provided</p>
   // use the hook info if present, else initial data, else null
   const phrase = phraseData || null // || phraseInitial // || null -- unreachable
@@ -106,7 +108,6 @@ export default function BigPhrase({ phraseId, onClose, onNavigate, noBox }) {
       return node.toPhrase.id !== phraseId ? node.toPhrase : node.fromPhrase
     }) || null
 
-  const queryClient = useQueryClient()
   const clearCache = () => {
     console.log(`onSuccess data,`, phrase)
     queryClient.invalidateQueries({ queryKey: ['phrase', phraseId] })
@@ -186,7 +187,9 @@ function BigPhraseInner({ translations, seeAlsos, onNavigate }) {
           ) : null}
         </>
       ) : (
-        <p className="text-gray-600">There aren't any translations sorry</p>
+        <p className="text-gray-600">
+          There aren&apos;t any translations sorry
+        </p>
       )}
     </>
   )

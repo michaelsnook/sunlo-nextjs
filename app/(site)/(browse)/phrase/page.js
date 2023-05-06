@@ -9,7 +9,9 @@ export default async function Page() {
     <>
       <div className="py-10">
         <h1 className="h1">Browse all phrases in all languages</h1>
-        <p>This page is not really useful, but it's good to have an index.</p>
+        <p>
+          This page is not really useful, but it&apos;s good to have an index.
+        </p>
       </div>
       {!phrases.length ? (
         <p>
