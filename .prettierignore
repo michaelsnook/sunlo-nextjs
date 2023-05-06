@@ -1,3 +1,4 @@
 .next
 node_modules
 app/data/gql
+tsconfig.json
