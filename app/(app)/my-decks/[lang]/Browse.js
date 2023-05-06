@@ -23,7 +23,7 @@ export default function Browse({ lang, disable }) {
           href={`/my-decks/${lang}/new-card`}
           className="flex-none link place-self-center text-primary"
         >
-          you'll need to add some.
+          you&apos;ll need to add some.
         </Link>
       </p>
     )
