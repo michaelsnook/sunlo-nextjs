@@ -296,19 +296,3 @@ export const onePhraseDetailsQuery = graphql(/* GraphQL */ `
     }
   }
 `)
-
-// this returns profile fields, only
-export const profileQuery = graphql(/* GraphQL */ `
-  query UserProfileQuery {
-    userProfileCollection {
-      edges {
-        node {
-          username
-          languagePrimary
-          languagesSpoken
-          avatarUrl
-        }
-      }
-    }
-  }
-`)

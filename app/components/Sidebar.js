@@ -29,9 +29,14 @@ export default function Sidebar({ shy = false }) {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
 
-  const decks = useAllDecks()
-  const profile = useProfile()
-  const loading = decks.status === 'loading' || profile.status === 'loading'
+  const { data: decks, status: decksStatus, error: decksError } = useAllDecks()
+  const {
+    data: profile,
+    status: profileStatus,
+    error: profileError,
+  } = useProfile()
+
+  const loading = decksStatus === 'loading' || profileStatus === 'loading'
 
   useEffect(() => {
     if (isOpen) {
@@ -41,7 +46,7 @@ export default function Sidebar({ shy = false }) {
 
   const myMenus = loading
     ? [staticMenu]
-    : [convertDecksToMenu(decks?.data), staticMenu]
+    : [convertDecksToMenu(decks), staticMenu]
 
   return (
     <div id="sidebar-all">
@@ -67,7 +72,7 @@ export default function Sidebar({ shy = false }) {
         ) : (
           <>
             <Navlink href="/app/profile">
-              <p>{profile?.data.username}</p>
+              <p>{profile?.username}</p>
               <p>{/*user?.email*/}</p>
             </Navlink>
             {myMenus.map(menu => (
