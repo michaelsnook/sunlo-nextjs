@@ -2,3 +2,4 @@
 node_modules
 app/data/gql
 tsconfig.json
+supabase/.temp
