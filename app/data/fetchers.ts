@@ -7,7 +7,6 @@ import {
   languageDetailsQuery,
   phraseDetailsQuery,
   onePhraseDetailsQuery,
-  profileQuery,
 } from 'app/data/queries'
 import type {
   UserDeckFilter,
@@ -141,13 +140,11 @@ export const getAllPhrasesInLanguage = async (lang: String) => {
 }
 
 export const getProfile = async () => {
-  const {
-    data: { session },
-  } = await supabase.auth.getSession()
-  if (!session) return {}
-  const response = await request({
-    document: profileQuery,
-    ...requestOptions(session.access_token),
-  })
-  return response?.userProfileCollection.edges[0]?.node || null // || {}
+  const { data, error } = await supabase
+    .from('user_profile')
+    .select(`*, user_decks:user_deck(id, lang)`)
+    .maybeSingle()
+  if (error) console.log(`getProfile`, error)
+
+  return data
 }
