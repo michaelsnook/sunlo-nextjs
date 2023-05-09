@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import AppLayout from 'components/AppLayout'
 import { useGlobalState } from 'lib/global-store'
+import Provider from 'app/Provider'
 
 const AvatarSection = () => {
   const { profile } = useGlobalState()
@@ -44,11 +45,13 @@ const AvatarSection = () => {
 
 export default function AppProfileLayout({ children }) {
   return (
-    <AppLayout>
-      <>
-        <AvatarSection />
-        {children}
-      </>
-    </AppLayout>
+    <Provider>
+      <AppLayout>
+        <>
+          <AvatarSection />
+          {children}
+        </>
+      </AppLayout>
+    </Provider>
   )
 }

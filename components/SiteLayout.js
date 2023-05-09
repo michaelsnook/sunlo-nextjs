@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import Sidebar from 'components/old/Sidebar'
+import Sidebar from 'app/components/Sidebar'
 import Footer from 'app/Footer'
 
 export default function SiteLayout({
