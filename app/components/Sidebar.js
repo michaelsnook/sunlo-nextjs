@@ -38,10 +38,9 @@ export default function Sidebar({ shy = false }) {
 
   const loading = decksStatus === 'loading' || profileStatus === 'loading'
 
+  // close the sidebar when the user navigates
   useEffect(() => {
-    if (isOpen) {
-      setIsOpen(false)
-    }
+    setIsOpen(false)
   }, [pathname])
 
   const myMenus = loading
