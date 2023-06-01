@@ -70,7 +70,7 @@ export default function Page() {
                       ? // while loading the list of decks, all options enabled
                         false
                       : // otherwise, disable languages we're already learning
-                        deck.node.lang === option.value
+                        deck.lang === option.value
                   })
                 }
                 placeholder="Select a language..."

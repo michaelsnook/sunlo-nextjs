@@ -55,35 +55,6 @@ export const getAllPhraseDetails = async () => {
   return response?.phraseCollection ? response.phraseCollection.edges : []
 }
 
-export const getAllDecks = async () => {
-  const {
-    data: {
-      session: { access_token },
-    },
-    error,
-  } = await supabase.auth.getSession()
-  if (error) {
-    console.log(`Error in getAllDecks, useQuery, getSession`, error)
-    return null
-  }
-  if (!access_token) {
-    console.log(`Tried to access getAllDecks but session not valid`)
-    return null
-  }
-
-  const response = await request({
-    document: allDecksQuery,
-    ...requestOptions(access_token),
-  })
-  const sortedResponse = response.userDeckCollection.edges.sort((a, b) => {
-    return (
-      b.node.userCardCollection.edges.length -
-      a.node.userCardCollection.edges.length
-    )
-  })
-  return sortedResponse || null
-}
-
 export const getLanguageDetails = async (lang: string) => {
   const variables = {
     filter: <LanguageFilter>{
