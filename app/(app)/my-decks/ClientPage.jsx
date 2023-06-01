@@ -6,16 +6,16 @@ import Loading from 'app/loading'
 import languages from 'lib/languages'
 import ErrorList from 'app/components/ErrorList'
 
-function OneDeck({ node }) {
+function OneDeck({ deck }) {
   return (
     <Link
-      href={`/my-decks/${node.lang}`}
+      href={`/my-decks/${deck.lang}`}
       className="card w-100 shadow-lg p-6 my-4 hover:bg-primary/20"
     >
-      <h2 className="h2">{languages[node.lang]}</h2>
+      <h2 className="h2">{languages[deck.lang]}</h2>
       <p>
-        You&apos;re learning {languages[node.lang]}! There are{' '}
-        {node.userCardCollection.edges.length} cards in your deck.
+        You&apos;re learning {languages[deck.lang]}! There are{' '}
+        {deck.user_card.length} cards in your deck.
       </p>
     </Link>
   )
@@ -35,8 +35,8 @@ export default function ClientPage() {
             You have {data.length} active decks. Which one would you like to
             work on today?
           </p>
-          {data?.map(edge => (
-            <OneDeck key={edge.node.lang} node={edge.node} />
+          {data?.map(deck => (
+            <OneDeck key={deck.lang} deck={deck} />
           ))}
         </>
       ) : (

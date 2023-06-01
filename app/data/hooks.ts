@@ -8,6 +8,7 @@ import {
   getAllPhrasesInLanguage,
   getPhraseDetails,
 } from './fetchers'
+import supabase from 'lib/supabase-client'
 import type { Scalars, Maybe } from './gql/graphql'
 
 export type UseQueryResult = {
@@ -22,7 +23,19 @@ export type UseQueryResult = {
 export function useAllDecks(): UseQueryResult {
   return useQuery({
     queryKey: ['user_decks'],
-    queryFn: getAllDecks,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('user_deck')
+        .select(`id, lang, user_card(*)`)
+      if (error) throw error
+      try {
+        return data.sort((a, b) => {
+          return b.user_card.length - a.user_card.length
+        })
+      } catch {
+        return data
+      }
+    },
     enabled: true,
     // retry: false,
     staleTime: Infinity,

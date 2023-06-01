@@ -1,30 +1,5 @@
 import { graphql } from './gql/gql'
 
-// gets all decks for auth'd user, and
-// all the card IDs and statuses in those decks
-// which serve as metadata for the deck
-export const allDecksQuery = graphql(/* GraphQL */ `
-  query AllDecksQuery {
-    userDeckCollection {
-      edges {
-        node {
-          id
-          lang
-          userCardCollection {
-            edges {
-              node {
-                id
-                status
-                phraseId
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`)
-
 // this one is also redundant and can be removed in favor of phraseSetailsQuery
 // or even languageDetailsQuery (but loop through the data a bit differently).
 export const allPhraseDetailsQuery = graphql(/* GraphQL */ `
