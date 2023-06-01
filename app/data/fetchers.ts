@@ -1,51 +1,13 @@
 import { request } from 'graphql-request'
 import supabase from 'lib/supabase-client'
 import {
-  allDecksQuery,
   allPhraseDetailsQuery,
-  deckQuery,
   languageDetailsQuery,
   phraseDetailsQuery,
   onePhraseDetailsQuery,
 } from 'app/data/queries'
-import type {
-  UserDeckFilter,
-  LanguageFilter,
-  PhraseFilter,
-  Scalars,
-} from './gql/graphql'
+import type { LanguageFilter, PhraseFilter, Scalars } from './gql/graphql'
 import { requestOptions } from './constants'
-
-export const getDeck = async (deckLang: string) => {
-  const variables = {
-    filter: <UserDeckFilter>{
-      lang: {
-        eq: deckLang,
-      },
-    },
-  }
-  const {
-    data: {
-      session: { access_token },
-    },
-    error,
-  } = await supabase.auth.getSession()
-  if (error) {
-    console.log(`Error in getDeck, useQuery, getSession`, error)
-    return null
-  }
-  if (!access_token) {
-    console.log(`Tried to access getDeck but session not valid`)
-    return null
-  }
-
-  const response = await request({
-    document: deckQuery,
-    variables,
-    ...requestOptions(access_token),
-  })
-  return response?.userDeckCollection.edges[0]?.node || null
-}
 
 export const getAllPhraseDetails = async () => {
   const response = await request({

@@ -52,45 +52,6 @@ export const allPhraseDetailsQuery = graphql(/* GraphQL */ `
           }
 */
 
-// this query is redundant and should be removed in favor of the
-// below languageDetailsQuery.
-export const deckQuery = graphql(/* GraphQL */ `
-  query UserDeckQuery($filter: UserDeckFilter) {
-    userDeckCollection(filter: $filter) {
-      edges {
-        node {
-          id
-          uid
-          lang
-          userCardCollection {
-            edges {
-              node {
-                id
-                status
-                phrase {
-                  id
-                  text
-                  lang
-                  phraseTranslationCollection {
-                    edges {
-                      node {
-                        id
-                        text
-                        lang
-                        literal
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`)
-
 // this returns everything you need to know about a language which mostly
 // means: all its phrases and their public info, as well as whether a
 // potential logged-in user has a deck of that language and if so what cards
