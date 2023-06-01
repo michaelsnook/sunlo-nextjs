@@ -2,8 +2,6 @@
 
 import { useQuery } from '@tanstack/react-query'
 import {
-  getAllDecks,
-  getDeck,
   getProfile,
   getAllPhrasesInLanguage,
   getPhraseDetails,
@@ -60,10 +58,27 @@ export function useAllPhrasesInLanguage(lang: string): UseQueryResult {
 }
 
 export function useDeck(deckLang: string): UseQueryResult {
+  console.log(`useDeck`, deckLang)
   return useQuery({
     queryKey: ['user_deck', deckLang],
     // fix this. use queryKey[1]
-    queryFn: async () => getDeck(deckLang),
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('user_deck')
+        .select(
+          `
+          id, lang, user_card(
+            status, id, phrase_id, phrase(
+              text, lang, id, phrase_translation(*)
+            )
+          )
+        `
+        )
+        .eq('lang', deckLang)
+        .maybeSingle()
+      if (error) throw error
+      return data
+    },
     enabled: !!deckLang,
     retry: false,
     staleTime: Infinity,

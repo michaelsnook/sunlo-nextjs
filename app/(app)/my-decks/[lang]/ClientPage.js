@@ -36,20 +36,20 @@ export default function ClientPage({ lang }) {
   if (status === 'loading') return <Loading />
   if (status === 'error') return <ErrorList error={error} />
 
-  const cardNodes = (deckData?.userCardCollection.edges || []).map(e => e.node)
-  if (!cardNodes?.length) return <BrandNew lang={lang} />
+  const cardsData = deckData?.user_card || []
+  if (!cardsData?.length) return <BrandNew lang={lang} />
 
   // at this point data is loaded, the deck is present, there are
-  // one of more cards in it.
+  // one or more cards in it.
 
-  // Array!UUID, and Array!UserCardEdge, so we can safely map later
-  const disabledIds = cardNodes.map(node => node.phraseId) || []
+  // Array of UUIDs
+  const disabledIds = cardsData.map(card => card.phrase_id)
   // console.log(`disabled IDs`, disabledIds)
-  // unpack the card edges to nodes... why
+  // unpack the cards into categories
   const cards = {
-    active: cardNodes.filter(node => node.status === 'active'),
-    learned: cardNodes.filter(node => node.status === 'learned'),
-    skipped: cardNodes.filter(node => node.status === 'skipped'),
+    active: cardsData.filter(card => card.status === 'active'),
+    learned: cardsData.filter(card => card.status === 'learned'),
+    skipped: cardsData.filter(card => card.status === 'skipped'),
   }
 
   return (
