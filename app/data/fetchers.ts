@@ -4,7 +4,6 @@ import {
   allPhraseDetailsQuery,
   languageDetailsQuery,
   phraseDetailsQuery,
-  onePhraseDetailsQuery,
 } from 'app/data/queries'
 import type { LanguageFilter, PhraseFilter, Scalars } from './gql/graphql'
 import { requestOptions } from './constants'
@@ -34,26 +33,33 @@ export const getLanguageDetails = async (lang: string) => {
 }
 
 export const getPhraseDetails = async (id: Scalars['UUID']) => {
-  let { data, error } = await supabase.auth.getSession()
-  if (error) {
-    console.log(`Error in getPhraseDetails`, error)
-    return null
-  }
-  const access_token = data?.session?.access_token || null
-  const variables = {
-    filter: <PhraseFilter>{
-      id: {
-        eq: id,
-      },
-    },
-  }
-  const response = await request({
-    document: onePhraseDetailsQuery,
-    variables,
-    ...requestOptions(access_token),
-  })
+  let { data, error } = await supabase
+    .from('phrase')
+    .select(
+      `
+        id, text, lang,
+        phrase_translation(id, text, lang),
+        phrase_from:phrase_see_also!phrase_see_also_to_phrase_id_fkey(
+          id, from_phrase_id, phrase:phrase!phrase_see_also_from_phrase_id_fkey(id, text, lang)
+        ),
+        phrase_to:phrase_see_also!phrase_see_also_from_phrase_id_fkey(
+          id, to_phrase_id, phrase:phrase!phrase_see_also_to_phrase_id_fkey(id, text, lang)
+        ),
+        user_card(id, user_deck_id, status)
+      `
+    )
+    .eq('id', id)
+    .maybeSingle()
 
-  return response?.phraseCollection.edges[0]?.node || null // || {}
+  if (error) throw error
+  // console.log(`getPhraseDetails data`, data.phrase_to, data.phrase_from)
+  const see_also_phrases = (
+    data?.phrase_from?.map(s => s?.phrase) || []
+  ).concat(data?.phrase_to?.map(s => s?.phrase) || [])
+  delete data.phrase_from
+  delete data.phrase_to
+  data['see_also_phrases'] = see_also_phrases
+  return data
 }
 
 export const getAllPhrasesInLanguage = async (lang: String) => {
