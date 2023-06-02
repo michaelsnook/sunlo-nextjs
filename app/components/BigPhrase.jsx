@@ -89,24 +89,19 @@ const AddCardButtonsSection = ({
 
 export default function BigPhrase({ phraseId, onClose, onNavigate, noBox }) {
   const {
-    data: phraseData,
+    data: phrase,
     status: phraseStatus,
     error: phraseError,
   } = usePhrase(phraseId) // || initialData.id
   const queryClient = useQueryClient()
 
   if (!phraseId) return <p>no phrase info provided</p>
-  // use the hook info if present, else initial data, else null
-  const phrase = phraseData || null // || phraseInitial // || null -- unreachable
-  const translations =
-    phrase?.phraseTranslationCollection.edges.map(({ node }) => node) || null
-  const userCardId = phrase?.userCardCollection.edges[0]?.node.id || null
-  const userDeckId =
-    phrase?.language.userDeckCollection?.edges[0]?.node.id || null
-  const seeAlsos =
-    phrase?.phraseSeeAlsoCollection.edges.map(({ node }) => {
-      return node.toPhrase.id !== phraseId ? node.toPhrase : node.fromPhrase
-    }) || null
+  if (phraseStatus === 'loading') return <Loading />
+
+  const translations = phrase?.phrase_translation
+  const userCard = phrase?.user_card[0]
+
+  const seeAlsos = phrase?.see_also_phrases
 
   const clearCache = () => {
     console.log(`onSuccess data,`, phrase)
@@ -115,7 +110,6 @@ export default function BigPhrase({ phraseId, onClose, onNavigate, noBox }) {
     queryClient.invalidateQueries({ queryKey: ['user_decks'] })
   }
 
-  if (!phrase && phraseStatus === 'loading') return <Loading />
   if (phraseStatus === 'error') return <ErrorList error={phraseError} />
 
   return (
@@ -134,17 +128,15 @@ export default function BigPhrase({ phraseId, onClose, onNavigate, noBox }) {
             seeAlsos={seeAlsos}
             onNavigate={onNavigate}
           />
-          {!userDeckId ? (
-            <p>you may want to log in so you can learn this</p>
-          ) : userCardId ? (
+          {userCard ? (
             <EditCardButtonsSection
-              userCardId={userCardId}
+              userCardId={userCard?.id}
               onSuccess={clearCache}
               onClose={onClose}
             />
           ) : (
             <AddCardButtonsSection
-              userDeckId={userDeckId}
+              userDeckId={userCard?.deck_id}
               phraseId={phraseId}
               onSuccess={clearCache}
               onClose={onClose}
@@ -165,9 +157,9 @@ function BigPhraseInner({ translations, seeAlsos, onNavigate }) {
         <>
           <p className="mt-6">Translations:</p>
           <ul>
-            {translations.map(node => (
-              <li lang={node.lang} key={`translation-${node.id}`}>
-                <TinyPhrase {...node} />
+            {translations.map(trans => (
+              <li lang={trans.lang} key={`translation-${trans.id}`}>
+                <TinyPhrase {...trans} />
               </li>
             ))}
           </ul>
@@ -175,10 +167,10 @@ function BigPhraseInner({ translations, seeAlsos, onNavigate }) {
             <>
               <p className="mt-6">Related phrases:</p>
               <ul>
-                {seeAlsos.map(node => (
-                  <li key={node.id}>
-                    <a className="link" onClick={() => onNavigate(node.id)}>
-                      <TinyPhrase {...node} />
+                {seeAlsos.map(phrase => (
+                  <li key={phrase.id}>
+                    <a className="link" onClick={() => onNavigate(phrase.id)}>
+                      <TinyPhrase {...phrase} />
                     </a>
                   </li>
                 ))}
