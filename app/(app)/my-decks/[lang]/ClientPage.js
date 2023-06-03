@@ -36,21 +36,11 @@ export default function ClientPage({ lang }) {
   if (status === 'loading') return <Loading />
   if (status === 'error') return <ErrorList error={error} />
 
-  const cardsData = deckData?.user_card || []
-  if (!cardsData?.length) return <BrandNew lang={lang} />
+  if (!deckData?.cards) return <BrandNew lang={lang} />
 
+  console.log(`deck data client page`, deckData)
   // at this point data is loaded, the deck is present, there are
   // one or more cards in it.
-
-  // Array of UUIDs
-  const disabledIds = cardsData.map(card => card.phrase_id)
-  // console.log(`disabled IDs`, disabledIds)
-  // unpack the cards into categories
-  const cards = {
-    active: cardsData.filter(card => card.status === 'active'),
-    learned: cardsData.filter(card => card.status === 'learned'),
-    skipped: cardsData.filter(card => card.status === 'skipped'),
-  }
 
   return (
     <div>
@@ -99,14 +89,14 @@ export default function ClientPage({ lang }) {
       </div>
       <div>
         {tab === 'browse' ? (
-          <Browse lang={lang} disable={disabledIds} />
-        ) : !cards[tab]?.length ? (
+          <Browse lang={lang} disable={deckData.all_phrase_ids} />
+        ) : !deckData?.cards[tab]?.length ? (
           <Empty />
         ) : (
-          cards[tab].map(c => (
+          deckData.cards[tab].map(c => (
             <div
               onClick={() => {
-                setPhraseModalId(c.phrase.id)
+                setPhraseModalId(c.phrase_id)
                 // console.log(c)
               }}
               key={c.id}

@@ -20,11 +20,11 @@ export function useAllDecks(): UseQueryResult {
     queryFn: async () => {
       const { data, error } = await supabase
         .from('user_deck')
-        .select(`id, lang, user_card(*)`)
+        .select(`id, lang, cards:user_card(*)`)
       if (error) throw error
       try {
         return data.sort((a, b) => {
-          return b.user_card.length - a.user_card.length
+          return b.cards.length - a.cards.length
         })
       } catch {
         return data
@@ -53,27 +53,40 @@ export function useAllPhrasesInLanguage(lang: string): UseQueryResult {
   })
 }
 
+const fetchDeck = async (lang: string) => {
+  let { data, error } = await supabase
+    .from('user_deck')
+    .select(
+      `
+          id, lang, user_card(
+            status, id, phrase_id, phrase(
+              text, lang, id, translations:phrase_translation(*)
+            )
+          )
+        `
+    )
+    .eq('lang', lang)
+    .maybeSingle()
+  if (error) throw error
+
+  data['all_phrase_ids'] = data?.user_card?.map(card => card.phrase_id)
+
+  // unpack the cards into categories
+  data['cards'] = {
+    active: data?.user_card?.filter(card => card.status === 'active'),
+    learned: data?.user_card?.filter(card => card.status === 'learned'),
+    skipped: data?.user_card?.filter(card => card.status === 'skipped'),
+  }
+  return data
+}
+
 export function useDeck(deckLang: string): UseQueryResult {
   console.log(`useDeck`, deckLang)
   return useQuery({
     queryKey: ['user_deck', deckLang],
     // fix this. use queryKey[1]
     queryFn: async () => {
-      const { data, error } = await supabase
-        .from('user_deck')
-        .select(
-          `
-          id, lang, user_card(
-            status, id, phrase_id, phrase(
-              text, lang, id, phrase_translation(*)
-            )
-          )
-        `
-        )
-        .eq('lang', deckLang)
-        .maybeSingle()
-      if (error) throw error
-      return data
+      return await fetchDeck(deckLang)
     },
     enabled: !!deckLang,
     retry: false,
