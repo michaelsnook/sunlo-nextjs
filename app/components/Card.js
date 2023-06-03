@@ -16,7 +16,7 @@ function readStatus(status) {
 
 export default function Card({ status, phrase }) {
   const { emoji, classString } = readStatus(status)
-  console.log(`card phrase is:`, phrase)
+  // console.log(`card phrase is:`, phrase)
 
   return (
     <div

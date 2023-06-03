@@ -38,7 +38,7 @@ export default function ClientPage({ lang }) {
 
   if (!deckData?.cards) return <BrandNew lang={lang} />
 
-  console.log(`deck data client page`, deckData)
+  // console.log(`deck data client page`, deckData)
   // at this point data is loaded, the deck is present, there are
   // one or more cards in it.
 
