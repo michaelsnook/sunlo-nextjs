@@ -26,9 +26,9 @@ export default function PhraseCardSmall({ status, text, lang, translations }) {
       </p>
       {translations && translations?.length > 0 ? (
         <ul>
-          {translations.map(({ node }) => (
-            <li lang={node.lang} key={`translation-${node.id}`}>
-              <TinyPhrase {...node} />
+          {translations.map(trans => (
+            <li lang={trans.lang} key={`translation-${trans.id}`}>
+              <TinyPhrase {...trans} />
             </li>
           ))}
         </ul>
