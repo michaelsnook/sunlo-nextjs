@@ -12,9 +12,6 @@ export async function generateStaticParams() {
 
 export default async function Page({ params }) {
   let phrase = await getPhraseDetails(params.id)
-  const translations = phrase?.phrase_translation
-  const see_also_phrases = phrase?.see_also_phrases
-
   return (
     <div className="page-card flex flex-col gap-12">
       <div>
@@ -26,8 +23,8 @@ export default async function Page({ params }) {
       <div>
         <h2 className="h2">Translations</h2>
         <ul>
-          {translations?.length ? (
-            translations.map(trans => (
+          {phrase?.translations?.length ? (
+            phrase.translations.map(trans => (
               <li key={`translation/${trans.id}`}>
                 <TinyPhrase {...trans} />
               </li>
@@ -40,8 +37,8 @@ export default async function Page({ params }) {
       <div>
         <h2 className="h2 my-6">Related phrases</h2>
         <ul>
-          {see_also_phrases?.length ? (
-            see_also_phrases.map(p => {
+          {phrase.see_also_phrases?.length ? (
+            phrase.see_also_phrases.map(p => {
               return (
                 <li key={`seeAlso/${p.id}`}>
                   <TinyPhrase {...p} />

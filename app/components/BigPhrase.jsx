@@ -98,9 +98,9 @@ export default function BigPhrase({ phraseId, onClose, onNavigate, noBox }) {
   if (!phraseId) return <p>no phrase info provided</p>
   if (phraseStatus === 'loading') return <Loading />
 
-  const translations = phrase?.phrase_translation
-  const userCard = phrase?.user_card[0]
-
+  const translations = phrase?.translations
+  const userCard = phrase?.card
+  console.log(`bigPhrase look for userCard or phrase.card`, phrase)
   const seeAlsos = phrase?.see_also_phrases
 
   const clearCache = () => {

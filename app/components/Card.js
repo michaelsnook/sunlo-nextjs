@@ -16,7 +16,8 @@ function readStatus(status) {
 
 export default function Card({ status, phrase }) {
   const { emoji, classString } = readStatus(status)
-  const translations = phrase?.phrase_translation
+  console.log(`card phrase is:`, phrase)
+
   return (
     <div
       className={`card p-4 ${classString} shadow-lg hover:bg-primary hover:text-white mb-4 w-full inline-block`}
@@ -25,9 +26,9 @@ export default function Card({ status, phrase }) {
         {emoji}
         <TinyPhrase {...phrase} />
       </p>
-      {translations?.length > 0 ? (
+      {phrase?.translations?.length > 0 ? (
         <ul>
-          {translations.map(trans => (
+          {phrase.translations.map(trans => (
             <li lang={trans.lang} key={`translation-${trans.id}`}>
               <TinyPhrase {...trans} />
             </li>

@@ -15,7 +15,7 @@ function OneDeck({ deck }) {
       <h2 className="h2">{languages[deck.lang]}</h2>
       <p>
         You&apos;re learning {languages[deck.lang]}! There are{' '}
-        {deck.user_card.length} cards in your deck.
+        {deck.cards.length} cards in your deck.
       </p>
     </Link>
   )
