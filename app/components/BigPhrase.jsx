@@ -100,7 +100,7 @@ export default function BigPhrase({ phraseId, onClose, onNavigate, noBox }) {
 
   const translations = phrase?.translations
   const userCard = phrase?.card
-  console.log(`bigPhrase look for userCard or phrase.card`, phrase)
+  // console.log(`bigPhrase look for userCard or phrase.card`, phrase)
   const seeAlsos = phrase?.see_also_phrases
 
   const clearCache = () => {

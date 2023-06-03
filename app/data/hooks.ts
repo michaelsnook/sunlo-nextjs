@@ -85,9 +85,7 @@ export function useDeck(deckLang: string): UseQueryResult {
   return useQuery({
     queryKey: ['user_deck', deckLang],
     // fix this. use queryKey[1]
-    queryFn: async () => {
-      return await fetchDeck(deckLang)
-    },
+    queryFn: async () => fetchDeck(deckLang),
     enabled: !!deckLang,
     retry: false,
     staleTime: Infinity,
