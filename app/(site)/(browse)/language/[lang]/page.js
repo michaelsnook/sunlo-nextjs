@@ -22,20 +22,20 @@ export default async function LanguagePage({ params: { lang } }) {
       <h1 className="h1">
         {languages[lang]} ({lang})
       </h1>
-      {!language?.phraseCollection?.edges?.length ? (
+      {!language?.phrases?.length ? (
         <p>
           We don&apos;t have any phrases for you to learn {languages[lang]} yet.
           But you can be the first to add one!
         </p>
       ) : (
         <ul className="columns-1 sm:columns-2 lg:columns-3 gap-4">
-          {language.phraseCollection.edges.map(({ node }) => (
-            <li key={`phrase-${node.id}`}>
-              <Link href={`/phrase/${node.id}`}>
+          {language.phrases.map(phrase => (
+            <li key={`phrase-${phrase.id}`}>
+              <Link href={`/phrase/${phrase.id}`}>
                 <PhraseCardSmall
-                  text={node.text}
-                  lang={node.lang}
-                  translations={node.phraseTranslationCollection.edges}
+                  text={phrase.text}
+                  lang={phrase.lang}
+                  translations={phrase.translations}
                 />
               </Link>
             </li>
