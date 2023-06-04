@@ -3,7 +3,7 @@
 import { useQuery } from '@tanstack/react-query'
 import { getLanguageDetails, getPhraseDetails } from './fetchers'
 import supabase from 'lib/supabase-client'
-import type { Scalars, Maybe } from './gql/graphql'
+import type { Scalars, Maybe } from 'types/utils'
 import { Profile } from 'types/client-types'
 
 export type UseQueryResult = {

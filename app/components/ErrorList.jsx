@@ -1,6 +1,6 @@
 // @ts-ignore
 /*
-import type { Maybe } from 'app/data/gql/graphql'
+import type { Maybe } from 'types/utils'
 
 type ErrorListProps = {
   summary: Maybe<string>
