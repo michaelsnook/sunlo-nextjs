@@ -32,17 +32,18 @@ const EditCardButtonsSection = ({ userCardId, onSuccess }) => {
 }
 
 const AddCardButtonsSection = ({
-  userDeckId,
-  phraseId,
+  phrase_id,
+  deck_id: user_deck_id,
   onSuccess,
   onClose,
 }) => {
+  console.log(`AddCardButtonsSection args`, phrase_id, user_deck_id)
   const cardMutation = useMutation({
     mutationFn: (status /*: string*/) =>
       postNewCard({
         status,
-        phraseId,
-        userDeckId,
+        phrase_id,
+        user_deck_id,
       }),
     onSuccess,
   })
@@ -55,7 +56,7 @@ const AddCardButtonsSection = ({
       ) : cardMutation.isSuccess ? (
         <p className="text-lg">
           Success! added this phrase to your deck with status: &ldquo;
-          {cardMutation.data.insertIntoUserCardCollection.records[0].status}
+          {cardMutation.data[0]?.status}
           &rdquo;.&nbsp;
           <a href="#" className="text-primary link" onClick={onClose}>
             Keep browsing.
@@ -87,15 +88,16 @@ const AddCardButtonsSection = ({
   )
 }
 
-export default function BigPhrase({ phraseId, onClose, onNavigate, noBox }) {
+export default function BigPhrase({ deck_id, phrase_id, onClose, onNavigate, noBox }) {
   const {
     data: phrase,
     status: phraseStatus,
     error: phraseError,
-  } = usePhrase(phraseId) // || initialData.id
+  } = usePhrase(phrase_id) // || initialData.id
+
   const queryClient = useQueryClient()
 
-  if (!phraseId) return <p>no phrase info provided</p>
+  if (!phrase_id) return <p>no phrase info provided</p>
   if (phraseStatus === 'loading') return <Loading />
 
   const translations = phrase?.translations
@@ -105,7 +107,7 @@ export default function BigPhrase({ phraseId, onClose, onNavigate, noBox }) {
 
   const clearCache = () => {
     console.log(`onSuccess data,`, phrase)
-    queryClient.invalidateQueries({ queryKey: ['phrase', phraseId] })
+    queryClient.invalidateQueries({ queryKey: ['phrase', phrase_id] })
     queryClient.invalidateQueries({ queryKey: ['user_deck', phrase.lang] })
     queryClient.invalidateQueries({ queryKey: ['user_decks'] })
   }
@@ -136,8 +138,8 @@ export default function BigPhrase({ phraseId, onClose, onNavigate, noBox }) {
             />
           ) : (
             <AddCardButtonsSection
-              userDeckId={userCard?.deck_id}
-              phraseId={phraseId}
+              deck_id={deck_id}
+              phrase_id={phrase_id}
               onSuccess={clearCache}
               onClose={onClose}
             />
