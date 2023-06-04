@@ -32,7 +32,6 @@
     "**/*.ts",
     "**/*.tsx",
     "**/*.jsx",
-    "app/data/schema.graphql"
   ],
   "exclude": [
     "node_modules"

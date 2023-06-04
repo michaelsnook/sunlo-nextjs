@@ -1,7 +1,7 @@
 'use client'
 
 import supabase from 'lib/supabase-client'
-import { Scalars } from './gql/graphql'
+import { Scalars } from 'types/utils'
 import { DeckStub, CardStub, Phrase } from 'types/client-types'
 
 export const postNewDeck = async (lang: string): Promise<DeckStub | null> => {

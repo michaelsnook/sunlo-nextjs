@@ -1,4 +1,4 @@
-import { Scalars } from 'app/data/gql/graphql'
+import { Scalars } from './utils'
 
 export type Translation = {
   id: Scalars['UUID']

@@ -5,7 +5,6 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "codegen": "graphql-codegen --config codegen.ts",
     "lint": "next lint",
     "pretty": "prettier --write .",
     "prepare": "husky install"
@@ -14,7 +13,6 @@
     "@supabase/supabase-js": "^2.7.1",
     "@tanstack/react-query": "^4.24.10",
     "encoding": "^0.1.13",
-    "graphql-request": "^5.2.0",
     "next": "^13.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -22,9 +20,6 @@
     "react-select": "^5.7.0"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "3.2.2",
-    "@graphql-codegen/client-preset": "2.1.1",
-    "@graphql-codegen/introspection": "3.0.1",
     "@tailwindcss/forms": "^0.5.3",
     "@tailwindcss/line-clamp": "^0.4.2",
     "@tailwindcss/typography": "^0.5.8",
