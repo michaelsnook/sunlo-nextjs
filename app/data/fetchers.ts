@@ -1,16 +1,11 @@
-import { request } from 'graphql-request'
 import supabase from 'lib/supabase-client'
-import { allPhraseDetailsQuery } from 'app/data/queries'
 import type { Phrase } from 'types/client-types'
 import type { Scalars } from './gql/graphql'
-import { requestOptions } from './constants'
 
 export const getAllPhraseDetails = async () => {
-  const response = await request({
-    document: allPhraseDetailsQuery,
-    ...requestOptions(),
-  })
-  return response?.phraseCollection ? response.phraseCollection.edges : []
+  const { data, error } = await supabase.from('phrase').select(phraseFullSelect)
+  if (error) throw error
+  return data.map(phrase => phrasePostFetch(phrase))
 }
 
 export const getLanguageDetails = async (lang: string) => {
