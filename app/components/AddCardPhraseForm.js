@@ -89,13 +89,13 @@ export default function AddCardPhraseForm({
         text: event.target.text.value,
         lang,
       },
-      phraseTranslations: [
+      translations: [
         {
           text: event.target.translation_text.value,
           lang: selectLang,
         },
       ],
-      userDeckId: deck.id,
+      user_deck_id: deck.id,
     })
   }
   return (
