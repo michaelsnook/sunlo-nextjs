@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { getLanguageDetails, getPhraseDetails } from './fetchers'
 import supabase from 'lib/supabase-client'
 import type { Scalars, Maybe } from './gql/graphql'
+import { Profile } from 'types/client-types'
 
 export type UseQueryResult = {
   status: string
@@ -108,7 +109,7 @@ export function usePhrase(id: Scalars['UUID']): UseQueryResult {
 export function useProfile(): UseQueryResult {
   return useQuery({
     queryKey: ['user_profile'],
-    queryFn: async () => {
+    queryFn: async (): Promise<Profile | null> => {
       const { data, error } = await supabase
         .from('user_profile')
         .select(`*, user_decks:user_deck(id, lang)`)
