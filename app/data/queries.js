@@ -1,7 +1,6 @@
 import { graphql } from './gql/gql'
 
-// this one is also redundant and can be removed in favor of phraseSetailsQuery
-// or even languageDetailsQuery (but loop through the data a bit differently).
+// this one is also redundant and can be removed in favor of phraseDetailsQuery
 export const allPhraseDetailsQuery = graphql(/* GraphQL */ `
   query AllPhraseDetailsQuery {
     phraseCollection {
@@ -51,76 +50,6 @@ export const allPhraseDetailsQuery = graphql(/* GraphQL */ `
             }
           }
 */
-
-// this returns everything you need to know about a language which mostly
-// means: all its phrases and their public info, as well as whether a
-// potential logged-in user has a deck of that language and if so what cards
-// are in it.
-// It should be used to load up the "context" for language-based pages (which
-// is all of them).
-export const languageDetailsQuery = graphql(/* GraphQL */ `
-  query LanguageDetailsQuery($filter: LanguageFilter) {
-    languageCollection(filter: $filter) {
-      edges {
-        node {
-          lang
-          name
-          userDeckCollection {
-            edges {
-              node {
-                lang
-                id
-                userCardCollection {
-                  edges {
-                    node {
-                      phraseId
-                      id
-                      status
-                    }
-                  }
-                }
-              }
-            }
-          }
-          phraseCollection {
-            edges {
-              node {
-                id
-                text
-                lang
-                phraseTranslationCollection {
-                  edges {
-                    node {
-                      id
-                      lang
-                      text
-                    }
-                  }
-                }
-                phraseSeeAlsoCollection {
-                  edges {
-                    node {
-                      fromPhrase {
-                        id
-                        text
-                        lang
-                      }
-                      toPhrase {
-                        id
-                        text
-                        lang
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`)
 
 // this returns details of specific phrases, esp translations and see-alsos
 // and it includes userCards as well, if they're present.
