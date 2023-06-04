@@ -4,35 +4,27 @@ import { request } from 'graphql-request'
 import supabase from 'lib/supabase-client'
 import { requestOptions } from './constants'
 import {
-  newUserDeckMutation,
   newUserCardMutation,
   newPhraseMutation,
   newPhraseTranslationsMutation,
 } from 'app/data/mutations'
 import {
   PhraseInsertInput,
-  PhraseTranslation,
   PhraseTranslationInsertInput,
   Scalars,
   UserCardInsertInput,
 } from './gql/graphql'
+import { DeckStub } from 'types/client-types'
 
-export const postNewDeck = async (lang: string) => {
+export const postNewDeck = async (lang: string): Promise<DeckStub | null> => {
   // console.log(`postNewDeck ${lang}`)
-  const {
-    data: {
-      session: { access_token },
-    },
-    error,
-  } = await supabase.auth.getSession()
+  const { data, error } = await supabase
+    .from('user_deck')
+    .insert({ lang })
+    .select()
+  // console.log(`postNewDeck`, data, error)
   if (error) throw error
-  const result = await request({
-    ...requestOptions(access_token),
-    variables: { objects: [{ lang }] },
-    document: newUserDeckMutation,
-  })
-  // console.log(`RESULT: `, result)
-  return result.insertIntoUserDeckCollection.records[0]
+  return data[0] || null
 }
 
 export const postNewCard = async (object: UserCardInsertInput) => {
