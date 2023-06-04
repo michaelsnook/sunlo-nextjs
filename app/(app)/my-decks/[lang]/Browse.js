@@ -29,10 +29,10 @@ export default function Browse({ lang, disable }) {
     )
   }
 
-  const options = data.map(edge => {
+  const options = data.map(phrase => {
     return {
-      value: edge.node.id,
-      label: edge.node.text,
+      value: phrase.id,
+      label: phrase.text,
     }
   })
   const handleChange = ({ value }) => setActivePhraseId(value)

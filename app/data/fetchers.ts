@@ -1,8 +1,8 @@
 import { request } from 'graphql-request'
 import supabase from 'lib/supabase-client'
-import { allPhraseDetailsQuery, phraseDetailsQuery } from 'app/data/queries'
+import { allPhraseDetailsQuery } from 'app/data/queries'
 import type { Phrase } from 'types/client-types'
-import type { PhraseFilter, Scalars } from './gql/graphql'
+import type { Scalars } from './gql/graphql'
 import { requestOptions } from './constants'
 
 export const getAllPhraseDetails = async () => {
@@ -66,19 +66,13 @@ export const getPhraseDetails = async (id: Scalars['UUID']) => {
 }
 
 export const getAllPhrasesInLanguage = async (lang: String) => {
-  const variables = {
-    filter: <PhraseFilter>{
-      lang: {
-        eq: lang,
-      },
-    },
-  }
-  const response = await request({
-    ...requestOptions(),
-    document: phraseDetailsQuery,
-    variables,
-  })
-  return response?.phraseCollection.edges
+  const { data, error } = await supabase
+    .from('phrase')
+    .select(phraseFullSelect)
+    .eq('lang', lang)
+
+  if (error) throw error
+  return data.map(phrase => phrasePostFetch(phrase))
 }
 
 export const getProfile = async () => {
