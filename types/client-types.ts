@@ -26,3 +26,7 @@ export type CardStub = {
   deck_id: Scalars['UUID']
 }
 
+export type DeckStub = {
+  id: Scalars['UUID']
+  lang: string
+}
