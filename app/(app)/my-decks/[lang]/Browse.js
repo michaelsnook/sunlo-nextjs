@@ -5,17 +5,18 @@ import { useState } from 'react'
 import Select from 'react-select'
 import Loading from 'app/loading'
 import ErrorList from 'app/components/ErrorList'
-import { useAllPhrasesInLanguage } from 'app/data/hooks'
+import { useLanguageDetails } from 'app/data/hooks'
 import BigPhrase from 'app/components/BigPhrase'
 
 export default function Browse({ lang, disable }) {
   const [activePhraseId, setActivePhraseId] = useState()
 
-  const { data, error, status } = useAllPhrasesInLanguage(lang)
+  const { data, error, status } = useLanguageDetails(lang)
 
   if (status === 'loading') return <Loading />
   if (status === 'error') return <ErrorList error={error} />
-  if (!data?.length) {
+  // console.log(`Browse useLanguageDetails, `, data, error)
+  if (!data?.phrases?.length) {
     return (
       <p className="bg-primary/10 p-6 rounded-lg">
         There are no phrases for this language 💩{' '}
@@ -29,7 +30,7 @@ export default function Browse({ lang, disable }) {
     )
   }
 
-  const options = data.map(phrase => {
+  const options = data.phrases.map(phrase => {
     return {
       value: phrase.id,
       label: phrase.text,
@@ -55,7 +56,8 @@ export default function Browse({ lang, disable }) {
             &times; Clear selection
           </a>
           <BigPhrase
-            phraseId={activePhraseId}
+            phrase_id={activePhraseId}
+            deck_id={data?.deck.id}
             // initialData={activePhraseData}
             onClose={() => handleChange('')}
             onNavigate={handleChange}

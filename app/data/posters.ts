@@ -9,12 +9,10 @@ import {
   newPhraseTranslationsMutation,
 } from 'app/data/mutations'
 import {
-  PhraseInsertInput,
   PhraseTranslationInsertInput,
   Scalars,
-  UserCardInsertInput,
 } from './gql/graphql'
-import { DeckStub } from 'types/client-types'
+import { DeckStub, CardStub } from 'types/client-types'
 
 export const postNewDeck = async (lang: string): Promise<DeckStub | null> => {
   // console.log(`postNewDeck ${lang}`)
@@ -27,22 +25,23 @@ export const postNewDeck = async (lang: string): Promise<DeckStub | null> => {
   return data[0] || null
 }
 
-export const postNewCard = async (object: UserCardInsertInput) => {
-  console.log(`postNewCard`, object)
-  const {
-    data: {
-      session: { access_token },
-    },
-    error,
-  } = await supabase.auth.getSession()
+type UserCardInsertInput = {
+  phrase_id: Scalars['UUID']
+  status?: Scalars['String']
+  user_deck_id: Scalars['UUID']
+}
+
+export const postNewCard = async (
+  object: UserCardInsertInput
+): Promise<CardStub | null> => {
+  // console.log(`postNewCard`, object)
+  const { data, error } = await supabase
+    .from('user_card')
+    .insert(object)
+    .select()
+  // console.log(`postNewCard result: `, data, error)
   if (error) throw error
-  const result = await request({
-    ...requestOptions(access_token),
-    variables: { objects: [object] },
-    document: newUserCardMutation,
-  })
-  // console.log(`RESULT: `, result)
-  return result
+  return data[0] || null
 }
 
 type PhraseCardTranslationsInsertInput = {
@@ -54,21 +53,6 @@ type PhraseCardTranslationsInsertInput = {
   }>
   userDeckId: Scalars['UUID']
 }
-
-/*
-type PhraseCardTranslationsInsertResult = {
-  userDeckId: Scalars['UUID']
-  status: string
-  phrase: {
-    text: string
-    lang: string
-    phraseTranslationCollection: {
-      edges: Array<{
-        node: PhraseTranslation
-      }>
-    }
-  }
-} */
 
 export const postNewPhraseCardTranslations = async ({
   phrase,

@@ -30,3 +30,14 @@ export type DeckStub = {
   id: Scalars['UUID']
   lang: string
 }
+
+type LanguageStub = {
+  lang: string
+  name: string
+}
+
+export type Language = LanguageStub & {
+  phrases: Array<Phrase>
+  deck?: DeckStub
+}
+

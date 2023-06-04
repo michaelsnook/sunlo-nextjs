@@ -1,7 +1,7 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { getAllPhrasesInLanguage, getPhraseDetails } from './fetchers'
+import { getLanguageDetails, getPhraseDetails } from './fetchers'
 import supabase from 'lib/supabase-client'
 import type { Scalars, Maybe } from './gql/graphql'
 
@@ -39,11 +39,10 @@ export function useAllDecks(): UseQueryResult {
   })
 }
 
-export function useAllPhrasesInLanguage(lang: string): UseQueryResult {
+export function useLanguageDetails(lang: string): UseQueryResult {
   return useQuery({
     queryKey: ['phrases', 'lang', lang],
-    // fix this. use queryKey[2]
-    queryFn: async () => getAllPhrasesInLanguage(lang),
+    queryFn: async () => getLanguageDetails(lang),
     enabled: !!lang,
     // retry: 3,
     staleTime: Infinity,
