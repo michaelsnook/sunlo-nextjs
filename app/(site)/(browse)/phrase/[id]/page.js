@@ -4,9 +4,9 @@ import { TinyPhrase } from 'app/components/PhraseCardSmall'
 import languages from 'lib/languages'
 
 export async function generateStaticParams() {
-  let edges = await getAllPhraseDetails()
-  return edges.map(edge => ({
-    id: edge.node.id,
+  let phrases = await getAllPhraseDetails()
+  return phrases.map(phrase => ({
+    id: phrase.id,
   }))
 }
 

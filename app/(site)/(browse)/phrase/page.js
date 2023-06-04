@@ -20,13 +20,13 @@ export default async function Page() {
         </p>
       ) : (
         <ul className="columns-1 sm:columns-2 lg:columns-3 gap-4">
-          {phrases?.map(({ node }) => (
-            <li key={`/phrase/${node.id}`}>
+          {phrases?.map(phrase => (
+            <li key={`/phrase/${phrase.id}`}>
               <Link
-                href={`/phrase/${node.id}`}
+                href={`/phrase/${phrase.id}`}
                 className="card shadow p-4 hover:bg-primary hover:text-white mb-4"
               >
-                <PhraseCardSmall {...node} />
+                <PhraseCardSmall {...phrase} />
               </Link>
             </li>
           ))}
