@@ -88,7 +88,13 @@ const AddCardButtonsSection = ({
   )
 }
 
-export default function BigPhrase({ deck_id, phrase_id, onClose, onNavigate, noBox }) {
+export default function BigPhrase({
+  deck_id,
+  phrase_id,
+  onClose,
+  onNavigate,
+  noBox,
+}) {
   const {
     data: phrase,
     status: phraseStatus,

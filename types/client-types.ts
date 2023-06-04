@@ -41,3 +41,11 @@ export type Language = LanguageStub & {
   deck?: DeckStub
 }
 
+export type Profile = {
+  uid: Scalars['UUID']
+  username: string
+  avatar_url: string
+  languages_spoken: Array<string>
+  language_primary: string
+  user_deck?: Array<DeckStub>
+}

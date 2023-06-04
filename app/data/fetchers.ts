@@ -1,11 +1,11 @@
 import supabase from 'lib/supabase-client'
-import type { Phrase, Language } from 'types/client-types'
+import type { Phrase, Language, Profile } from 'types/client-types'
 import type { Scalars } from './gql/graphql'
 
-export const getAllPhraseDetails = async () => {
+export const getAllPhraseDetails = async (): Promise<Array<Phrase>> => {
   const { data, error } = await supabase.from('phrase').select(phraseFullSelect)
   if (error) throw error
-  return data.map(phrase => phrasePostFetch(phrase))
+  return data.map(phrase => phrasePostFetch(phrase)) || []
 }
 
 export const getLanguageDetails = async (lang: string): Promise<Language> => {
@@ -56,7 +56,9 @@ const phrasePostFetch = (phrase): Phrase => {
   return phrase
 }
 
-export const getPhraseDetails = async (id: Scalars['UUID']) => {
+export const getPhraseDetails = async (
+  id: Scalars['UUID']
+): Promise<Phrase> => {
   let { data, error } = await supabase
     .from('phrase')
     .select(phraseFullSelect)
@@ -68,9 +70,7 @@ export const getPhraseDetails = async (id: Scalars['UUID']) => {
   return phrasePostFetch(data)
 }
 
-
-
-export const getProfile = async () => {
+export const getProfile = async (): Promise<Profile> => {
   const { data, error } = await supabase
     .from('user_profile')
     .select(`*, user_decks:user_deck(id, lang)`)
