@@ -121,17 +121,17 @@ export interface Database {
       user_deck: {
         Row: {
           id: string
-          lang: string | null
+          lang: string
           uid: string
         }
         Insert: {
           id?: string
-          lang?: string | null
+          lang: string
           uid?: string
         }
         Update: {
           id?: string
-          lang?: string | null
+          lang?: string
           uid?: string
         }
       }
