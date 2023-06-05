@@ -19,17 +19,21 @@ export const getLanguageDetails = async (lang: string): Promise<Language> => {
       `
     )
     .eq('lang', lang)
-    .single()
-  // console.log(`getLanguageDetails result, `, data, error)
+    .maybeSingle()
+
   if (error) throw error
+  if (!data) throw 'Data is empty'
+  const language: Language = {
+    lang: data.lang,
+    name: data.name,
+    phrases: Array.isArray(data?.phrases)
+      ? data.phrases?.map(p => phrasePostFetch(p))
+      : [],
+    deck: data?.deck[0],
+  }
 
-  data['phrases'] = data.phrases?.length
-    ? data.phrases.map(p => phrasePostFetch(p))
-    : null
-
-  data['deck'] = data?.deck[0] || null
-  // console.log(`getLanguageDetails data`, data)
-  return data
+  // console.log(`getLanguageDetails result, `, language)
+  return language
 }
 
 const phraseFullSelect = `
