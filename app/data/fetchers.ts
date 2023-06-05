@@ -8,7 +8,9 @@ export const getAllPhraseDetails = async (): Promise<Array<Phrase>> => {
   return data.map(phrase => phrasePostFetch(phrase)) || []
 }
 
-export const getLanguageDetails = async (lang: string): Promise<Language> => {
+export const getLanguageDetails = async (
+  lang: string
+): Promise<Language | null> => {
   let { data, error } = await supabase
     .from('language')
     .select(
@@ -22,7 +24,7 @@ export const getLanguageDetails = async (lang: string): Promise<Language> => {
     .maybeSingle()
 
   if (error) throw error
-  if (!data) throw 'Data is empty'
+  if (!data) return null
   const language: Language = {
     lang: data.lang,
     name: data.name,
