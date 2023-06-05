@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { getLanguageDetails, getPhraseDetails } from './fetchers'
 import supabase from 'lib/supabase-client'
 import type { Scalars, Maybe } from 'types/utils'
-import { Profile } from 'types/client-types'
+import { Deck, Profile } from 'types/client-types'
 
 export type UseQueryResult = {
   status: string
@@ -53,7 +53,7 @@ export function useLanguageDetails(lang: string): UseQueryResult {
   })
 }
 
-const fetchDeck = async (lang: string) => {
+const fetchDeck = async (lang: string): Promise<Deck> => {
   let { data, error } = await supabase
     .from('user_deck')
     .select(
@@ -69,15 +69,22 @@ const fetchDeck = async (lang: string) => {
     .maybeSingle()
   if (error) throw error
 
-  data['all_phrase_ids'] = data?.user_card?.map(card => card.phrase_id)
+  const rawCards = Array.isArray(data?.user_card) ? data.user_card : []
 
-  // unpack the cards into categories
-  data['cards'] = {
-    active: data?.user_card?.filter(card => card.status === 'active'),
-    learned: data?.user_card?.filter(card => card.status === 'learned'),
-    skipped: data?.user_card?.filter(card => card.status === 'skipped'),
+  const deck: Deck = {
+    id: data.id,
+    lang: data.lang,
+    all_phrase_ids: !rawCards ? [] : rawCards.map(card => card.phrase_id),
+    cards: !rawCards
+      ? null
+      : {
+          active: rawCards.filter(card => card.status === 'active'),
+          learned: rawCards.filter(card => card.status === 'learned'),
+          skipped: rawCards.filter(card => card.status === 'skipped'),
+        },
   }
-  return data
+
+  return deck
 }
 
 export function useDeck(deckLang: string): UseQueryResult {

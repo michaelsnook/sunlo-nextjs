@@ -49,3 +49,18 @@ export type Profile = {
   language_primary: string
   user_deck?: Array<DeckStub>
 }
+
+// count_all: number
+// count_active: number
+// count_learned: number
+// count_skipped: number
+
+export type Deck = DeckStub & {
+  all_phrase_ids: Array<Scalars['UUID']>
+  cards: {
+    active: any[]
+    learned: any[]
+    skipped: any[]
+  }
+}
+
