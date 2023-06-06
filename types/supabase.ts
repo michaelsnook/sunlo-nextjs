@@ -169,23 +169,7 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      insert_card: {
-        Args: {
-          phrase_text: string
-          phrase_lang: string
-          translation_text: string
-          translation_lang: string
-          deck_id: number
-          auth_user_id: string
-          status: string
-        }
-        Returns: {
-          added_by: string | null
-          id: string
-          lang: string
-          text: string
-        }[]
-      }
+      [_ in never]: never
     }
     Enums: {
       [_ in never]: never
