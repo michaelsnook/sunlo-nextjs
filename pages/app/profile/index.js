@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Link from 'next/link'
+import { useQueryClient } from '@tanstack/react-query'
 import supabase from 'lib/supabase-client'
 import AppProfileLayout from 'components/AppProfileLayout'
 import { useGlobalState } from 'lib/global-store'
@@ -7,9 +8,19 @@ import ErrorList from 'app/components/ErrorList'
 import { convertNodeListToCheckedValues } from 'lib/data-helpers'
 import languages from 'lib/languages'
 import Loading from 'app/loading'
+import { useProfile } from 'app/data/hooks'
 
 const ProfileCard = () => {
-  const { profile, mergeProfileData, isLoading } = useGlobalState()
+  const queryClient = useQueryClient()
+
+  const {
+    data: profile,
+    error: profileError,
+    status: profileStatus,
+  } = useProfile()
+
+  // console.log(`profile is: `, profile, profileError, profileStatus)
+
   const [errors, setErrors] = useState()
   const [isSubmitting, setIsSubmitting] = useState()
   const onSubmit = event => {
@@ -36,16 +47,16 @@ const ProfileCard = () => {
           setErrors(error)
           console.log('error', error)
         } else {
-          // merge the objects, which will rebuild context
-          mergeProfileData(data)
+          // success
+          queryClient.invalidateQueries({ queryKey: ['user_profile'] })
         }
       })
   }
-
+  // console.log(profile)
   return (
     <form className="big-card flex flex-col space-y-4" onSubmit={onSubmit}>
       <h2 className="h3">Profile</h2>
-      {!profile || isLoading ? (
+      {profileStatus === 'loading' ? (
         <Loading />
       ) : (
         <fieldset
