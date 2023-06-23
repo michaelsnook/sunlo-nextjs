@@ -150,7 +150,7 @@ export interface Database {
           created_at?: string
           language_primary?: string
           languages_spoken?: string[]
-          uid: string
+          uid?: string
           updated_at?: string | null
           username?: string | null
         }
