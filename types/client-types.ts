@@ -63,4 +63,3 @@ export type Deck = DeckStub & {
     skipped: any[]
   }
 }
-
