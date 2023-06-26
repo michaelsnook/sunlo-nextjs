@@ -58,6 +58,8 @@ const ProfileCard = () => {
       <h2 className="h3">Profile</h2>
       {profileStatus === 'loading' ? (
         <Loading />
+      ) : profileError ? (
+        <ErrorList error={profileError} />
       ) : (
         <fieldset
           className="grid grid-cols-1 sm:grid-cols-2 gap-4"
