@@ -2,11 +2,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import AppLayout from 'components/AppLayout'
-import { useGlobalState } from 'lib/global-store'
+import { useProfile } from 'app/data/hooks'
 import Provider from 'app/Provider'
 
 const AvatarSection = () => {
-  const { profile } = useGlobalState()
+  const { data: profile } = useProfile()
   const pathname = usePathname()
   return (
     <>
