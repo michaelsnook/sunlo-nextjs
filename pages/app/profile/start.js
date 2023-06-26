@@ -4,24 +4,34 @@ import { useGlobalState } from 'lib/global-store'
 import supabase from 'lib/supabase-client'
 import ErrorList from 'app/components/ErrorList'
 import Link from 'next/link'
+import { useProfile } from 'app/data/hooks'
 import { prependAndDedupe } from 'lib/data-helpers'
+import { useQueryClient } from '@tanstack/react-query'
 import languages from 'lib/languages'
 
-export default function Start() {
-  const { user, profile, mergeProfileData, decks, insertDeckData, isLoading } =
-    useGlobalState()
+export default function Page() {
+  const { user, isLoading } = useGlobalState()
+  const {
+    data: profile,
+    status: profileStatus,
+    error: profileError,
+  } = useProfile()
+  const queryClient = useQueryClient()
 
   console.log(
-    `render Start, isLoading: ${isLoading}. User, Profile:`,
+    `render Start, isLoading: ${
+      isLoading || profileStatus === 'loading'
+    }. User, Profile:`,
     user,
     profile
   )
 
-  const [tempLanguagePrimary, setTempLanguagePrimary] = useState(
-    profile?.language_primary
-  )
+  const [tempLanguagePrimary, setTempLanguagePrimary] = useState()
+  const tempLanguagePrimaryToUse =
+    tempLanguagePrimary ?? profile?.language_primary
   const [tempDeckToAdd, setTempDeckToAdd] = useState()
-  const [tempUsername, setTempUsername] = useState(profile?.username)
+  const [tempUsername, setTempUsername] = useState()
+  const tempUsernameToUse = tempUsername ?? profile?.username
   const [errors, setErrors] = useState()
   const [isSubmitting, setIsSubmitting] = useState()
   const [successfulSetup, setSuccessfulSetup] = useState()
@@ -38,9 +48,8 @@ export default function Start() {
     supabase
       .from('user_profile')
       .upsert({
-        uid: user.id,
-        username: tempUsername,
-        language_primary: tempLanguagePrimary,
+        username: tempUsernameToUse,
+        language_primary: tempLanguagePrimaryToUse,
         languages_spoken: newLanguagesSpoken,
       })
       .match({ uid: user.id })
@@ -50,21 +59,18 @@ export default function Start() {
           console.log('error upserting', error)
           setIsSubmitting(false)
         } else {
-          // merge the objects so we keep avatar_public_url
-          mergeProfileData(data)
           console.log('upsert profile data')
 
           if (typeof tempDeckToAdd === 'string' && tempDeckToAdd.length > 0) {
             supabase
               .from('user_deck')
-              .upsert({ lang: tempDeckToAdd, user_profile_id: user.id })
-              .match({ user_profile_id: user.id, lang: tempDeckToAdd })
+              .upsert({ lang: tempDeckToAdd, uid: user.id })
+              .match({ lang: tempDeckToAdd, uid: user.id })
               .then(({ data, error }) => {
                 console.log('create new deck', data, error)
                 if (error) {
                   setErrors(error)
                 } else {
-                  insertDeckData(data)
                   setSuccessfulSetup(true)
                 }
                 setIsSubmitting(false)
@@ -74,6 +80,9 @@ export default function Start() {
             setSuccessfulSetup(true)
           }
         }
+      })
+      .finally(() => {
+        queryClient.invalidateQueries('user_profile')
       })
   }
 
@@ -124,15 +133,15 @@ export default function Start() {
           <div className="max-w-prose">
             <p className="text-2xl my-4 mb-10">Let&apos;s get started</p>
             <SetPrimaryLanguageStep
-              value={tempLanguagePrimary}
+              value={tempLanguagePrimaryToUse}
               set={setTempLanguagePrimary}
             />
             <CreateFirstDeckStep value={tempDeckToAdd} set={setTempDeckToAdd} />
-            <SetUsernameStep value={tempUsername} set={setTempUsername} />
+            <SetUsernameStep value={tempUsernameToUse} set={setTempUsername} />
 
-            {tempLanguagePrimary &&
-            (tempDeckToAdd || decks?.length > 0) &&
-            tempUsername ? (
+            {tempLanguagePrimaryToUse &&
+            (tempDeckToAdd || profile.user_decks?.length > 0) &&
+            tempUsernameToUse ? (
               <div className="my-6 flex flex-row-reverse justify-around items-center">
                 <button
                   onClick={handleMainForm}
@@ -221,7 +230,11 @@ const SetPrimaryLanguageStep = ({ value, set }) => {
 }
 
 const CreateFirstDeckStep = ({ value, set }) => {
-  const { decks } = useGlobalState()
+  const {
+    data: { user_decks: decks },
+    error,
+    status,
+  } = useProfile()
   const [closed, setClosed] = useState(decks?.length > 0)
   return closed ? (
     <Completed>
@@ -369,8 +382,6 @@ const Completed = ({ children }) => (
   </div>
 )
 
-// <span className="px-1 -skew-x-6 font-bold bg-accent bg-opacity-60 inline">
-// <span className="font-bold italic inline">{children}</span>
 const Highlight = ({ children }) => (
   <span className="px-1 font-bold bg-accent bg-opacity-60 inline">
     {children}
