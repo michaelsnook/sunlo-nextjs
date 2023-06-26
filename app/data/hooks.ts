@@ -105,7 +105,6 @@ export function useDeck(deckLang: string): UseQueryResult {
 export function usePhrase(id: Scalars['UUID']): UseQueryResult {
   return useQuery({
     queryKey: ['phrase', id],
-    // fix this. use queryKey[1]
     queryFn: async () => getPhraseDetails(id),
     enabled: !!id,
     staleTime: Infinity,
