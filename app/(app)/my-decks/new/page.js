@@ -26,7 +26,7 @@ export default function Page() {
     mutationFn: postNewDeck,
     onSuccess: data => {
       // console.log(`onSuccess data,`, data)
-      queryClient.invalidateQueries({ queryKey: ['decks'] })
+      queryClient.invalidateQueries({ queryKey: ['user_decks'] })
       router.push(`/my-decks/${data.lang}`)
     },
   })
