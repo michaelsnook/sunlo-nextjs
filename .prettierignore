@@ -2,3 +2,4 @@
 node_modules
 tsconfig.json
 supabase/.temp
+types/supabase.ts
