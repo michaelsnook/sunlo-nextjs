@@ -108,7 +108,7 @@ export default function Page() {
           <div className="flex flex-col space-y-4">
             {tempDeckToAdd ? (
               <Link
-                href={`/deck/${tempDeckToAdd}`}
+                href={`/my-decks/${tempDeckToAdd}`}
                 className="mx-auto btn btn-secondary"
               >
                 Get started learning {languages[tempDeckToAdd]}
