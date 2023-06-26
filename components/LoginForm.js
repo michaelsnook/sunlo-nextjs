@@ -13,8 +13,8 @@ export default function Login({ signup }) {
   const [sentConfirmationEmail, setSentConfirmationEmail] = useState()
 
   const router = useRouter()
-  const { user, profile, signOut } = useGlobalState()
-  if (profile && user) router.push('/app/profile')
+  const { session } = useGlobalState()
+  if (session) router.push('/my-decks')
   // const [isSignup, setIsSignup] = useState(signup)
 
   const onSubmit = event => {
@@ -46,7 +46,7 @@ export default function Login({ signup }) {
           setIsSubmitting(false)
           if (error) setErrors(error)
           if (data) {
-            router.push('/app/profile')
+            router.push('/my-decks')
           }
         })
         .catch(e => {
