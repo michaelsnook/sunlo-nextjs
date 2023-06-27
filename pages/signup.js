@@ -1,5 +1,5 @@
 import SiteLayout from 'components/SiteLayout'
-import LoginForm from 'components/LoginForm'
+import SignupForm from 'components/SignupForm'
 import Banner from 'app/components/Banner'
 
 export default function Login() {
@@ -8,7 +8,7 @@ export default function Login() {
       <main>
         <Banner>
           <div className="section-card">
-            <LoginForm signup />
+            <SignupForm />
           </div>
         </Banner>
       </main>
