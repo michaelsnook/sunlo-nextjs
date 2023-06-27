@@ -4,10 +4,10 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Garlic from 'app/components/Garlic'
 import { staticMenu, convertDecksToMenu } from 'lib/menus'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useProfile, useAllDecks } from 'app/data/hooks'
-import { useAuthContext } from 'lib/auth-context'
 import Loading from 'app/loading'
+import supabase from 'lib/supabase-client'
 
 const Navlink = ({ href, children }) => {
   const pathname = usePathname()
@@ -29,6 +29,7 @@ const Navlink = ({ href, children }) => {
 export default function Sidebar({ shy = false }) {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
+  const router = useRouter()
 
   const { data: decks, status: decksStatus, error: decksError } = useAllDecks()
   const {
@@ -36,7 +37,6 @@ export default function Sidebar({ shy = false }) {
     status: profileStatus,
     error: profileError,
   } = useProfile()
-  const { signOut } = useAuthContext()
 
   const loading = decksStatus === 'loading' || profileStatus === 'loading'
 
@@ -98,7 +98,14 @@ export default function Sidebar({ shy = false }) {
               </div>
             ))}
             <p>
-              <button className="btn btn-quiet" onClick={() => signOut(`/`)}>
+              <button
+                className="btn btn-quiet"
+                onClick={() =>
+                  supabase.auth.signOut().then(() => {
+                    router?.push('/')
+                  })
+                }
+              >
                 Sign out
               </button>
             </p>
