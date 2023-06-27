@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import supabase from 'lib/supabase-client'
-import { useGlobalState } from 'lib/global-store'
+import { useAuthContext } from 'lib/auth-context'
 import ErrorList from 'app/components/ErrorList'
 
 export default function Login({ signup }) {
@@ -13,8 +13,8 @@ export default function Login({ signup }) {
   const [sentConfirmationEmail, setSentConfirmationEmail] = useState()
 
   const router = useRouter()
-  const { session } = useGlobalState()
-  if (session) router.push('/my-decks')
+  const { user } = useAuthContext()
+  if (user) router.push('/my-decks')
   // const [isSignup, setIsSignup] = useState(signup)
 
   const onSubmit = event => {

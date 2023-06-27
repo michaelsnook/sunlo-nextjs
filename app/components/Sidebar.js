@@ -6,7 +6,7 @@ import Garlic from 'app/components/Garlic'
 import { staticMenu, convertDecksToMenu } from 'lib/menus'
 import { usePathname } from 'next/navigation'
 import { useProfile, useAllDecks } from 'app/data/hooks'
-import { useGlobalState } from 'lib/global-store'
+import { useAuthContext } from 'lib/auth-context'
 import Loading from 'app/loading'
 
 const Navlink = ({ href, children }) => {
@@ -36,7 +36,7 @@ export default function Sidebar({ shy = false }) {
     status: profileStatus,
     error: profileError,
   } = useProfile()
-  const { signOut } = useGlobalState()
+  const { signOut } = useAuthContext()
 
   const loading = decksStatus === 'loading' || profileStatus === 'loading'
 
