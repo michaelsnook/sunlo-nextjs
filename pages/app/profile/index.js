@@ -56,10 +56,10 @@ const ProfileCard = () => {
   return (
     <form className="big-card flex flex-col space-y-4" onSubmit={onSubmit}>
       <h2 className="h3">Profile</h2>
-      {profileStatus === 'loading' ? (
-        <Loading />
-      ) : profileError ? (
+      {profileError ? (
         <ErrorList error={profileError} />
+      ) : profileStatus === 'loading' || !profile ? (
+        <Loading />
       ) : (
         <fieldset
           className="grid grid-cols-1 sm:grid-cols-2 gap-4"

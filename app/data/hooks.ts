@@ -1,6 +1,7 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
+import { useRouter, usePathname } from 'next/navigation'
 import { getLanguageDetails, getPhraseDetails } from './fetchers'
 import supabase from 'lib/supabase-client'
 import type { Scalars, Maybe } from 'types/utils'
@@ -113,22 +114,28 @@ export function usePhrase(id: Scalars['UUID']): UseQueryResult {
 }
 
 export function useProfile(): UseQueryResult {
+  const router = useRouter()
+  const pathname = usePathname()
   return useQuery({
     queryKey: ['user_profile'],
     queryFn: async (): Promise<Profile | null> => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession()
+      console.log('session is', session)
+      if (!session) return null
+      const uid = session.user.id
       const { data, error } = await supabase
         .from('user_profile')
         .select(`*, user_decks:user_deck(id, lang)`)
+        .eq('uid', uid)
         .maybeSingle()
       if (error) throw error
-
-      return data
+      if (!data && pathname !== '/app/profile/start') {
+        router.push('/app/profile/start')
+      }
+      return data || null
     },
-    enabled: true,
-    // retry: false,
-    // staleTime: Infinity,
-    // cacheTime: Infinity,
-    // refetchOnMount: false,
-    // refetchOnWindowFocus: false,
+    enabled: router && pathname ? true : false,
   })
 }
