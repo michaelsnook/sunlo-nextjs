@@ -10,21 +10,9 @@ import { useQueryClient } from '@tanstack/react-query'
 import languages from 'lib/languages'
 
 export default function Page() {
-  const { user, isLoading } = useAuthContext()
-  const {
-    data: profile,
-    status: profileStatus,
-    error: profileError,
-  } = useProfile()
+  const { user } = useAuthContext()
+  const { data: profile } = useProfile()
   const queryClient = useQueryClient()
-
-  console.log(
-    `render Start, isLoading: ${
-      isLoading || profileStatus === 'loading'
-    }. User, Profile:`,
-    user,
-    profile
-  )
 
   const [tempLanguagePrimary, setTempLanguagePrimary] = useState()
   const tempLanguagePrimaryToUse =
@@ -53,7 +41,7 @@ export default function Page() {
         languages_spoken: newLanguagesSpoken,
       })
       .match({ uid: user.id })
-      .then(({ data, error }) => {
+      .then(({ error }) => {
         if (error) {
           setErrors(error)
           console.log('error upserting', error)
@@ -86,7 +74,7 @@ export default function Page() {
       })
   }
 
-  return !profile ? null : (
+  return profile === null ? null : (
     <BannerLayout>
       {successfulSetup ? (
         <div className="p2 md:p-6 lg:p-10 max-w-prose text-white min-h-85vh flex flex-col gap-12 justify-center">
@@ -230,11 +218,8 @@ const SetPrimaryLanguageStep = ({ value, set }) => {
 }
 
 const CreateFirstDeckStep = ({ value, set }) => {
-  const {
-    data: { user_decks: decks },
-    error,
-    status,
-  } = useProfile()
+  const { data } = useProfile()
+  const decks = data?.user_decks || []
   const [closed, setClosed] = useState(decks?.length > 0)
   return closed ? (
     <Completed>
