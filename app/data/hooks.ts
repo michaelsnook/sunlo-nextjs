@@ -118,11 +118,11 @@ export function useProfile(): UseQueryResult {
   const pathname = usePathname()
   return useQuery({
     queryKey: ['user_profile'],
-    queryFn: async (): Promise<Profile | null> => {
+    queryFn: async (): Promise<Profile | null | false> => {
       const {
         data: { session },
       } = await supabase.auth.getSession()
-      console.log('session is', session)
+      // console.log('session is', session)
       if (!session) return null
       const uid = session.user.id
       const { data, error } = await supabase
@@ -131,9 +131,10 @@ export function useProfile(): UseQueryResult {
         .eq('uid', uid)
         .maybeSingle()
       if (error) throw error
-      if (!data && pathname !== '/app/profile/start') {
-        router.push('/app/profile/start')
-      }
+      if (!data)
+        if (pathname !== '/app/profile/start') {
+          router.push('/app/profile/start')
+        } else return false
       return data || null
     },
     enabled: router && pathname ? true : false,
