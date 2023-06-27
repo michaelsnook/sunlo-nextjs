@@ -1,8 +1,8 @@
 import AppProfileLayout from 'components/AppProfileLayout'
-import { useGlobalState } from 'lib/global-store'
+import { useAuthContext } from 'lib/auth-context'
 
 export default function ChangePassword() {
-  const { user } = useGlobalState()
+  const { user } = useAuthContext()
   return (
     <AppProfileLayout>
       <main className="section-card">

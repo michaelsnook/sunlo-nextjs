@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import BannerLayout from 'components/BannerLayout'
-import { useGlobalState } from 'lib/global-store'
+import { useAuthContext } from 'lib/auth-context'
 import supabase from 'lib/supabase-client'
 import ErrorList from 'app/components/ErrorList'
 import Link from 'next/link'
@@ -10,7 +10,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import languages from 'lib/languages'
 
 export default function Page() {
-  const { user, isLoading } = useGlobalState()
+  const { user, isLoading } = useAuthContext()
   const {
     data: profile,
     status: profileStatus,

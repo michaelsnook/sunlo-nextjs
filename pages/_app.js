@@ -1,13 +1,13 @@
 import 'styles/globals.css'
-import { GlobalStateProvider } from 'lib/global-store'
+import { AuthProvider } from 'lib/auth-context'
 import Provider from 'app/Provider'
 
 function App({ Component, pageProps }) {
   return (
     <Provider>
-      <GlobalStateProvider>
+      <AuthProvider>
         <Component {...pageProps} />
-      </GlobalStateProvider>
+      </AuthProvider>
     </Provider>
   )
 }
