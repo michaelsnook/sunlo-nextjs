@@ -2,6 +2,16 @@ import { useState } from 'react'
 import supabase from 'lib/supabase-client'
 import ErrorList from 'app/components/ErrorList'
 
+const baseUrl =
+  process.env.NEXT_PUBLIC_VERCEL_ENV === 'development'
+    ? 'http://localhost:3000'
+    : process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview'
+    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+    : 'https://sunlo.co'
+
+const redirectUrl = `${baseUrl}/app/profile/change-password`
+console.log(`redirectUrl is ${redirectUrl}`)
+
 export default function ForgotPasswordForm() {
   const [errors, setErrors] = useState()
   const [isSubmitting, setIsSubmitting] = useState()
@@ -17,7 +27,7 @@ export default function ForgotPasswordForm() {
     setYourEmail(email)
     supabase.auth
       .resetPasswordForEmail(email, {
-        redirectTo: `https://www.sunlo.co/app/profile/change-password`,
+        redirectTo: redirectUrl,
       })
       .then(({ data, error }) => {
         setIsSubmitting(false)
