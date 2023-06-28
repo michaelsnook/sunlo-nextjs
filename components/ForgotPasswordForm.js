@@ -15,17 +15,21 @@ export default function ForgotPasswordForm() {
 
     const email = event.target.email.value
     setYourEmail(email)
-    supabase.auth.api.resetPasswordForEmail(email).then(({ data, error }) => {
-      setIsSubmitting(false)
-      if (!error) {
-        setSuccessfulSubmit(true)
-        setErrors()
-        console.log(data)
-      } else {
-        setErrors(error)
-        console.log(error)
-      }
-    })
+    supabase.auth
+      .resetPasswordForEmail(email, {
+        redirectTo: `https://www.sunlo.co/app/profile/change-password`,
+      })
+      .then(({ data, error }) => {
+        setIsSubmitting(false)
+        if (!error) {
+          setSuccessfulSubmit(true)
+          setErrors()
+          console.log(data)
+        } else {
+          setErrors(error)
+          console.log(error)
+        }
+      })
   }
 
   return (
