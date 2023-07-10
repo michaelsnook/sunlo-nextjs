@@ -9,7 +9,7 @@ import { useAllDecks } from 'app/data/hooks'
 import ErrorList from 'app/components/ErrorList'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { postNewDeck } from 'app/data/posters'
-// import { createNewDeck } from 'app/data/mutations'
+import { toast } from 'react-hot-toast'
 
 function TinyError({ text }) {
   return <p className="my-4 text-error/70">{text}</p>
@@ -27,6 +27,7 @@ export default function Page() {
     onSuccess: data => {
       // console.log(`onSuccess data,`, data)
       queryClient.invalidateQueries({ queryKey: ['user_decks'] })
+      toast.success(`Created a new deck to learn ${languages[data.lang]}`)
       router.push(`/my-decks/${data.lang}`)
     },
   })
