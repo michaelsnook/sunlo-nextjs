@@ -10,7 +10,7 @@ export default function Page({ params: { lang } }) {
       </Link>
       <h1 className="h1">Add a new card</h1>
       <div className="section-card">
-        <AddCardPhraseForm lang={lang} offerRefresh />
+        <AddCardPhraseForm lang={lang} />
       </div>
     </>
   )

@@ -61,7 +61,9 @@ export default function AddCardPhraseForm({
     mutationFn: postNewPhraseCardTranslations,
     onSuccess: data => {
       // console.log(`postNewPhraseCardTranslations success`, data)
+      // toast.success(t => <Success />)
       queryClient.invalidateQueries({ queryKey: ['user_deck', lang] })
+      queryClient.invalidateQueries({ queryKey: ['user_decks'] })
     },
     onError: error => {
       throw error
@@ -134,23 +136,21 @@ export default function AddCardPhraseForm({
           <ErrorList error={addCardPhrase.error} />
         ) : addCardPhrase.isSuccess ? (
           <div className="bg-success/50 border-success text-black rounded-lg border py-4 px-6 mb-4">
-            <p className="text-lg">
-              Success! added this new phrase to your deck!{' '}
-              <a className="link text-primary" onClick={() => onCancel()}>
+            <p className="">
+              Success! added this new phrase to your deck.{' '}
+              <a className="link text-primary" onClick={onCancel}>
                 Go back
               </a>{' '}
-              {offerRefresh ? (
-                <>
-                  or add{' '}
-                  <a
-                    className="link text-primary"
-                    onClick={() => location.reload()}
-                  >
-                    another new card
-                  </a>
-                  .
-                </>
-              ) : null}
+              or you can{' '}
+              <a
+                className="link text-primary"
+                onClick={() =>
+                  (window.location.href = `/my-decks/${lang}/new-card`)
+                }
+              >
+                add another card
+              </a>
+              .
             </p>
           </div>
         ) : (
