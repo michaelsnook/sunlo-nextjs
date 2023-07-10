@@ -1,12 +1,8 @@
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import languages from 'lib/languages'
 import AddCardPhraseForm from 'app/components/AddCardPhraseForm'
 
 export default function Page({ params: { lang } }) {
-  const router = useRouter()
-  const underPage = `/my-decks/${lang}`
-
   return (
     <>
       <Link href={`/my-decks/${lang}`} className="link">
