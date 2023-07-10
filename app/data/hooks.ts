@@ -59,12 +59,12 @@ const fetchDeck = async (lang: string): Promise<Deck> => {
     .from('user_deck')
     .select(
       `
-          id, lang, user_card(
-            status, id, phrase_id, phrase(
-              text, lang, id, translations:phrase_translation(*)
-            )
-          )
-        `
+      id, lang, user_card(
+        status, id, phrase_id, phrase(
+          text, lang, id, translations:phrase_translation(*)
+        )
+      )
+    `
     )
     .eq('lang', lang)
     .maybeSingle()
