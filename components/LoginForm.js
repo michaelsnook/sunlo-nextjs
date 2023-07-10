@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { toast } from 'react-hot-toast'
 import supabase from 'lib/supabase-client'
 import { useAuthContext } from 'lib/auth-context'
 import ErrorList from 'app/components/ErrorList'
@@ -31,6 +32,7 @@ export default function Login() {
         setIsSubmitting(false)
         if (error) setErrors(error)
         if (data) {
+          toast.success(`You're logged in as ${data.user.email}`)
           router.push('/my-decks')
         }
       })
