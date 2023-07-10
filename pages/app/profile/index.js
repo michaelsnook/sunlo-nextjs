@@ -9,6 +9,7 @@ import { convertNodeListToCheckedValues } from 'lib/data-helpers'
 import languages from 'lib/languages'
 import Loading from 'app/loading'
 import { useProfile } from 'app/data/hooks'
+import { toast } from 'react-hot-toast'
 
 const ProfileCard = () => {
   const queryClient = useQueryClient()
@@ -48,6 +49,7 @@ const ProfileCard = () => {
           console.log('error', error)
         } else {
           // success
+          toast.success(`Successfully updated your profile`)
           queryClient.invalidateQueries({ queryKey: ['user_profile'] })
         }
       })

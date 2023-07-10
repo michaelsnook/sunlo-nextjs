@@ -7,6 +7,7 @@ import { usePhrase } from 'app/data/hooks'
 import { useMutation } from '@tanstack/react-query'
 import { postNewCard } from 'app/data/posters'
 import { useQueryClient } from '@tanstack/react-query'
+import { toast } from 'react-hot-toast'
 
 export const TinyPhrase = ({ lang, text } /*: TinyPhraseProps*/) => (
   <>
@@ -15,13 +16,17 @@ export const TinyPhrase = ({ lang, text } /*: TinyPhraseProps*/) => (
   </>
 )
 
-const EditCardButtonsSection = ({ userCardId, onSuccess }) => {
+const EditCardButtonsSection = ({ userCardId, clearCache }) => {
   const cardMutation = useMutation({
     // mutationFn: status => editExistingCard(status, card.id)
     mutationFn: status => {
       console.log(`edit a card mutation here: ${status}, ${userCardId}`)
     },
-    onSuccess,
+    onSuccess: data => {
+      toast.success(`Card successfully updated with status: ${data.status}`)
+      console.log(`Card update return data:`, data)
+      clearCache(data)
+    },
   })
   return (
     <p className="my-4">
@@ -34,10 +39,10 @@ const EditCardButtonsSection = ({ userCardId, onSuccess }) => {
 const AddCardButtonsSection = ({
   phrase_id,
   deck_id: user_deck_id,
-  onSuccess,
+  clearCache,
   onClose,
 }) => {
-  console.log(`AddCardButtonsSection args`, phrase_id, user_deck_id)
+  // console.log(`AddCardButtonsSection args`, phrase_id, user_deck_id)
   const cardMutation = useMutation({
     mutationFn: (status /*: string*/) =>
       postNewCard({
@@ -45,7 +50,14 @@ const AddCardButtonsSection = ({
         phrase_id,
         user_deck_id,
       }),
-    onSuccess,
+    onSuccess: data => {
+      setTimeout(async () => {
+        onClose()
+      }, 5000)
+      toast.success(`Card successfully added with status: "${data.status}"`)
+      console.log(`Return data from adding card:`, data)
+      clearCache(data)
+    },
   })
   return (
     <div className="my-6 flex gap-8 text-2xl">
@@ -112,7 +124,7 @@ export default function BigPhrase({
   const seeAlsos = phrase?.see_also_phrases
 
   const clearCache = () => {
-    console.log(`onSuccess data,`, phrase)
+    console.log(`Clearing cache for phrase:`, phrase)
     queryClient.invalidateQueries({ queryKey: ['phrase', phrase_id] })
     queryClient.invalidateQueries({ queryKey: ['user_deck', phrase.lang] })
     queryClient.invalidateQueries({ queryKey: ['user_decks'] })
@@ -139,14 +151,14 @@ export default function BigPhrase({
           {userCard ? (
             <EditCardButtonsSection
               userCardId={userCard?.id}
-              onSuccess={clearCache}
+              clearCache={clearCache}
               onClose={onClose}
             />
           ) : (
             <AddCardButtonsSection
               deck_id={deck_id}
               phrase_id={phrase_id}
-              onSuccess={clearCache}
+              clearCache={clearCache}
               onClose={onClose}
             />
           )}
