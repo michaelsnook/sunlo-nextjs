@@ -8,6 +8,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { useProfile, useAllDecks } from 'app/data/hooks'
 import Loading from 'app/loading'
 import supabase from 'lib/supabase-client'
+import { toast } from 'react-hot-toast'
 
 const Navlink = ({ href, children }) => {
   const pathname = usePathname()
@@ -102,6 +103,7 @@ export default function Sidebar({ shy = false }) {
                 className="btn btn-quiet"
                 onClick={() =>
                   supabase.auth.signOut().then(() => {
+                    toast(`You have logged out`)
                     router?.push('/')
                   })
                 }
