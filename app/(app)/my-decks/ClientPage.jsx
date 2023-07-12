@@ -10,7 +10,7 @@ function OneDeck({ deck }) {
   return (
     <Link
       href={`/my-decks/${deck.lang}`}
-      className="card w-100 shadow-lg p-6 my-4 hover:bg-primary/20"
+      className="card border max-w-lg w-100 shadow-lg p-6 my-4 hover:bg-primary/20"
     >
       <h2 className="h2">{languages[deck.lang]}</h2>
       <p>
