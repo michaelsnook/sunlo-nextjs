@@ -14,28 +14,28 @@ function OneDeck({ deck }) {
     >
       <h2 className="h2">{languages[deck.lang]}</h2>
       <p>
-        You&apos;re learning {languages[deck.lang]}! There are{' '}
-        {deck.cards.length} cards in your deck.
+        You&apos;re learning {languages[deck.lang]}! There are {deck.size} cards
+        in your deck.
       </p>
     </Link>
   )
 }
 
 export default function ClientPage() {
-  const { status, data, error } = useAllDecks()
+  const { status, data: decks, error } = useAllDecks()
   if (status === 'loading') return <Loading />
 
   if (status === 'error') return <ErrorList error={error} />
 
   return (
     <>
-      {data.length ? (
+      {decks.length ? (
         <>
           <p>
-            You have {data.length} active decks. Which one would you like to
+            You have {decks.length} active decks. Which one would you like to
             work on today?
           </p>
-          {data?.map(deck => (
+          {decks?.map(deck => (
             <OneDeck key={deck.lang} deck={deck} />
           ))}
         </>

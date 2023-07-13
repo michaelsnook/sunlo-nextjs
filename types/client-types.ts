@@ -31,13 +31,17 @@ export type DeckStub = {
   lang: string
 }
 
+export type DeckResponse = DeckStub & {
+  cards: CardStub[]
+}
+
 type LanguageStub = {
   lang: string
   name: string
 }
 
 export type Language = LanguageStub & {
-  phrases: Array<Phrase>
+  phrases: Phrase[]
   deck?: DeckStub
 }
 
@@ -45,21 +49,17 @@ export type Profile = {
   uid: Scalars['UUID']
   username: string
   avatar_url: string
-  languages_spoken: Array<string>
+  languages_spoken: string[]
   language_primary: string
-  user_deck?: Array<DeckStub>
+  user_deck?: DeckStub[]
 }
 
-// count_all: number
-// count_active: number
-// count_learned: number
-// count_skipped: number
-
 export type Deck = DeckStub & {
-  all_phrase_ids: Array<Scalars['UUID']>
+  all_phrase_ids: Scalars['UUID'][]
+  size: number
   cards: {
-    active: any[]
-    learned: any[]
-    skipped: any[]
+    active: CardStub[]
+    learned: CardStub[]
+    skipped: CardStub[]
   }
 }

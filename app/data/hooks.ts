@@ -1,13 +1,13 @@
 'use client'
 
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useRouter, usePathname } from 'next/navigation'
 import { getLanguageDetails, getPhraseDetails } from './fetchers'
 import supabase from 'lib/supabase-client'
 import type { Scalars, Maybe } from 'types/utils'
-import { Deck, Profile } from 'types/client-types'
+import { Deck, DeckResponse, Profile, Language } from 'types/client-types'
 
-export type UseQueryResult = {
+type UseQueryResult = {
   status: string
   error: Maybe<any>
   data: Maybe<any>
@@ -16,21 +16,55 @@ export type UseQueryResult = {
   isError: boolean
 }
 
-export function useAllDecks(): UseQueryResult {
+type UseAllDecksQueryResult = UseQueryResult & {
+  data: Deck[]
+}
+
+type UseLanguageDetailsQueryResult = UseQueryResult & {
+  data: Language[]
+}
+
+type UseProfileQueryResult = UseQueryResult & {
+  data: Profile
+}
+
+const parseDeckResponse = (deckResponse: DeckResponse): Deck => {
+  let deck = {
+    id: deckResponse.id,
+    lang: deckResponse.lang,
+    all_phrase_ids: [],
+    size: 0,
+    cards: {
+      active: [],
+      skipped: [],
+      learned: [],
+    },
+  }
+  // for loop is very fast
+  for (var i = 0; i < deckResponse.cards.length; i++) {
+    deck.all_phrase_ids.push(deckResponse.cards[i].id)
+    deck.cards[deckResponse.cards[i].status].push(deckResponse.cards[i])
+  }
+  deck.size = deck.cards.active.length + deck.cards.learned.length
+  console.log(`Parsed deck: ${deck.lang}`, deck)
+  return deck
+}
+
+export function useAllDecks(): UseAllDecksQueryResult {
   return useQuery({
     queryKey: ['user_decks'],
     queryFn: async () => {
-      const { data, error } = await supabase
+      let { data, error } = await supabase
         .from('user_deck')
         .select(`id, lang, cards:user_card(*)`)
       if (error) throw error
-      try {
-        return data.sort((a, b) => {
-          return b.cards.length - a.cards.length
+
+      console.log(`useAllDecks, data response:`, data)
+      return data
+        .map(d => parseDeckResponse(d))
+        .sort((a, b) => {
+          return b.size - a.size
         })
-      } catch {
-        return data
-      }
     },
     enabled: true,
     // retry: false,
@@ -41,7 +75,9 @@ export function useAllDecks(): UseQueryResult {
   })
 }
 
-export function useLanguageDetails(lang: string): UseQueryResult {
+export function useLanguageDetails(
+  lang: string
+): UseLanguageDetailsQueryResult {
   return useQuery({
     queryKey: ['phrases', 'lang', lang],
     queryFn: async () => getLanguageDetails(lang),
@@ -70,20 +106,7 @@ const fetchDeck = async (lang: string): Promise<Deck> => {
     .maybeSingle()
   if (error) throw error
 
-  const rawCards = Array.isArray(data?.user_card) ? data.user_card : []
-
-  const deck: Deck = {
-    id: data.id,
-    lang: data.lang,
-    all_phrase_ids: !rawCards ? [] : rawCards.map(card => card.phrase_id),
-    cards: !rawCards
-      ? null
-      : {
-          active: rawCards.filter(card => card.status === 'active'),
-          learned: rawCards.filter(card => card.status === 'learned'),
-          skipped: rawCards.filter(card => card.status === 'skipped'),
-        },
-  }
+  const deck: Deck = parseDeckResponse(data)
 
   return deck
 }
@@ -113,7 +136,7 @@ export function usePhrase(id: Scalars['UUID']): UseQueryResult {
   })
 }
 
-export function useProfile(): UseQueryResult {
+export function useProfile(): UseProfileQueryResult {
   const router = useRouter()
   const pathname = usePathname()
   return useQuery({
