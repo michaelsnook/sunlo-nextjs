@@ -90,40 +90,14 @@ export function useLanguageDetails(
   })
 }
 
-const fetchDeck = async (lang: string): Promise<Deck> => {
-  let { data, error } = await supabase
-    .from('user_deck')
-    .select(
-      `
-      id, lang, user_card(
-        status, id, phrase_id, phrase(
-          text, lang, id, translations:phrase_translation(*)
-        )
-      )
-    `
-    )
-    .eq('lang', lang)
-    .maybeSingle()
-  if (error) throw error
-
-  const deck: Deck = parseDeckResponse(data)
-
-  return deck
-}
-
-export function useDeck(deckLang: string): UseQueryResult {
-  console.log(`useDeck`, deckLang)
-  return useQuery({
-    queryKey: ['user_deck', deckLang],
-    // fix this. use queryKey[1]
-    queryFn: async () => fetchDeck(deckLang),
-    enabled: !!deckLang,
-    retry: false,
-    staleTime: Infinity,
-    cacheTime: Infinity,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  })
+export function useDeck(lang: string): UseQueryResult {
+  const hook = useAllDecks()
+  return hook.data
+    ? {
+        ...hook,
+        data: hook.data.find(d => d.lang === lang),
+      }
+    : hook
 }
 
 export function usePhrase(id: Scalars['UUID']): UseQueryResult {

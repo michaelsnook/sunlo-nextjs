@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Loading from 'app/loading'
 import ErrorList from 'app/components/ErrorList'
-import { useDeck } from 'app/data/hooks'
+import { useDeck, useLanguageDetails } from 'app/data/hooks'
 import Garlic from 'app/components/Garlic'
 import BigPhrase from 'app/components/BigPhrase'
 import MyModal from 'app/components/Modal'
@@ -33,14 +33,19 @@ const BrandNew = ({ lang }) => {
 export default function ClientPage({ lang }) {
   const [tab, setTab] = useState('active')
   const [phraseModalId, setPhraseModalId] = useState()
-  const { status, data: deckData, error } = useDeck(lang)
+  const { status, data: deck, error } = useDeck(lang)
+  const {
+    status: languageStatus,
+    data: languageData,
+    error: languageError,
+  } = useLanguageDetails(lang)
 
   if (status === 'loading') return <Loading />
   if (status === 'error') return <ErrorList error={error} />
 
-  if (!deckData?.cards) return <BrandNew lang={lang} />
+  if (!deck?.cards) return <BrandNew lang={lang} />
 
-  // console.log(`deck data client page`, deckData)
+  // console.log(`deck data client page`, deck)
   // at this point data is loaded, the deck is present, there are
   // one or more cards in it.
 
@@ -52,7 +57,7 @@ export default function ClientPage({ lang }) {
       >
         <BigPhrase
           phrase_id={phraseModalId}
-          deck_id={deckData.id}
+          deck_id={deck.id}
           onClose={() => setPhraseModalId('')}
           onNavigate={setPhraseModalId}
           noBox={true}
@@ -92,11 +97,11 @@ export default function ClientPage({ lang }) {
       </div>
       <div>
         {tab === 'browse' ? (
-          <Browse lang={lang} disable={deckData.all_phrase_ids} />
-        ) : !deckData?.cards[tab]?.length ? (
+          <Browse lang={lang} disable={deck.all_phrase_ids} />
+        ) : !deck?.cards[tab]?.length ? (
           <Empty />
         ) : (
-          deckData.cards[tab].map(c => (
+          deck.cards[tab].map(c => (
             <div
               onClick={() => {
                 setPhraseModalId(c.phrase_id)

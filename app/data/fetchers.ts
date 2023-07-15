@@ -2,6 +2,18 @@ import supabase from 'lib/supabase-client'
 import type { Phrase, Language, Profile } from 'types/client-types'
 import type { Scalars } from 'types/utils'
 
+const phraseFullSelect = `
+    id, text, lang,
+    translations:phrase_translation(id, text, lang),
+    phrase_from:phrase_see_also!phrase_see_also_to_phrase_id_fkey(
+      id, from_phrase_id, phrase:phrase!phrase_see_also_from_phrase_id_fkey(id, text, lang)
+    ),
+    phrase_to:phrase_see_also!phrase_see_also_from_phrase_id_fkey(
+      id, to_phrase_id, phrase:phrase!phrase_see_also_to_phrase_id_fkey(id, text, lang)
+    ),
+    card:user_card(id, user_deck_id, status)
+  `
+
 export const getAllPhraseDetails = async (): Promise<Array<Phrase>> => {
   const { data, error } = await supabase.from('phrase').select(phraseFullSelect)
   if (error) throw error
@@ -17,7 +29,6 @@ export const getLanguageDetails = async (
       `
         lang, name,
         phrases:phrase(${phraseFullSelect}),
-        deck:user_deck(id, lang)
       `
     )
     .eq('lang', lang)
@@ -25,30 +36,19 @@ export const getLanguageDetails = async (
 
   if (error) throw error
   if (!data) return null
+
+  const phrases = Array.isArray(data?.phrases)
+    ? data.phrases?.map(p => phrasePostFetch(p))
+    : []
   const language: Language = {
     lang: data.lang,
     name: data.name,
-    phrases: Array.isArray(data?.phrases)
-      ? data.phrases?.map(p => phrasePostFetch(p))
-      : [],
-    deck: data?.deck[0],
+    phrases,
   }
 
   // console.log(`getLanguageDetails result, `, language)
   return language
 }
-
-const phraseFullSelect = `
-    id, text, lang,
-    translations:phrase_translation(id, text, lang),
-    phrase_from:phrase_see_also!phrase_see_also_to_phrase_id_fkey(
-      id, from_phrase_id, phrase:phrase!phrase_see_also_from_phrase_id_fkey(id, text, lang)
-    ),
-    phrase_to:phrase_see_also!phrase_see_also_from_phrase_id_fkey(
-      id, to_phrase_id, phrase:phrase!phrase_see_also_to_phrase_id_fkey(id, text, lang)
-    ),
-    card:user_card(id, user_deck_id, status)
-  `
 
 const phrasePostFetch = (phrase): Phrase => {
   const see_also_phrases = (
