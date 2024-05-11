@@ -7,15 +7,13 @@ import { toast } from 'react-hot-toast'
 import supabase from 'lib/supabase-client'
 import { useAuth } from 'lib/auth-context'
 import ErrorList from 'app/components/ErrorList'
-import Loading from 'app/loading'
 
 export default function Login() {
   const [errors, setErrors] = useState()
   const [isSubmitting, setIsSubmitting] = useState()
 
   const router = useRouter()
-  const { user, isLoading } = useAuthContext()
-  if (user) router.push('/my-decks')
+  const { user, isAuth } = useAuth()
 
   const onSubmit = event => {
     setErrors()
@@ -43,9 +41,7 @@ export default function Login() {
       })
   }
 
-  return isLoading ? (
-    <Loading />
-  ) : (
+  return (
     <div className="section-card-inner">
       <h1 className="h3 text-gray-700">Please log in</h1>
       <form role="form" onSubmit={onSubmit} className="form">
