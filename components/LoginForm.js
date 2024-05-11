@@ -8,12 +8,16 @@ import supabase from 'lib/supabase-client'
 import { useAuth } from 'lib/auth-context'
 import ErrorList from 'app/components/ErrorList'
 
-export default function Login() {
+export default function Login({ asModal = false }) {
   const [errors, setErrors] = useState()
   const [isSubmitting, setIsSubmitting] = useState()
 
   const router = useRouter()
   const { user, isAuth } = useAuth()
+  if (user && isAuth) {
+    if (asModal) return null
+    router.push('/my-decks')
+  }
 
   const onSubmit = event => {
     setErrors()
@@ -31,7 +35,9 @@ export default function Login() {
         setIsSubmitting(false)
         if (error) setErrors(error)
         if (data) {
+          // console.log(`login data`, data)
           toast.success(`You're logged in as ${data.user.email}`)
+          if (asModal) return null
           router.push('/my-decks')
         }
       })
@@ -40,6 +46,7 @@ export default function Login() {
         setErrors(e)
       })
   }
+  // console.log(`mounting/rendering the LoginForm`, user, isAuth)
 
   return (
     <div className="section-card-inner">
