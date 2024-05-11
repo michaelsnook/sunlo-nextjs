@@ -1,4 +1,5 @@
 import QueryProvider from 'app/query-provider'
+import { AuthProvider } from 'lib/auth-context'
 import { Toaster } from 'react-hot-toast'
 import 'styles/globals.css'
 
@@ -12,8 +13,10 @@ export default function RootLayout({ children }) {
       <body>
         <Toaster />
         <QueryProvider>
-          {children}
-          <div id="modal-root" />
+          <AuthProvider>
+            {children}
+            <div id="modal-root" />
+          </AuthProvider>
         </QueryProvider>
       </body>
     </html>
