@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import BannerLayout from 'components/BannerLayout'
-import { useAuthContext } from 'lib/auth-context'
+import { useAuth } from 'lib/auth-context'
 import supabase from 'lib/supabase-client'
 import ErrorList from 'app/components/ErrorList'
 import Link from 'next/link'
@@ -10,7 +10,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import languages from 'lib/languages'
 
 export default function Page() {
-  const { user } = useAuthContext()
+  const { user } = useAuth()
   const { data: profile } = useProfile()
   const queryClient = useQueryClient()
 

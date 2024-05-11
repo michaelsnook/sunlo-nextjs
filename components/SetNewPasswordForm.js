@@ -2,10 +2,10 @@ import { useState } from 'react'
 import Link from 'next/link'
 import supabase from 'lib/supabase-client'
 import ErrorList from 'app/components/ErrorList'
-import { useAuthContext } from 'lib/auth-context'
+import { useAuth } from 'lib/auth-context'
 
 export default function SetNewPasswordForm() {
-  const { user } = useAuthContext()
+  const { user } = useAuth()
   const [errors, setErrors] = useState()
   const [isSubmitting, setIsSubmitting] = useState()
   const [successfulSubmit, setSuccessfulSubmit] = useState()

@@ -1,10 +1,10 @@
 import { useState } from 'react'
 import supabase from 'lib/supabase-client'
-import { useAuthContext } from 'lib/auth-context'
+import { useAuth } from 'lib/auth-context'
 import ErrorList from 'app/components/ErrorList'
 
 export default function SetNewEmailForm() {
-  const { user } = useAuthContext()
+  const { user } = useAuth()
   const [errors, setErrors] = useState()
   const [isSubmitting, setIsSubmitting] = useState()
   const [successfulSubmit, setSuccessfulSubmit] = useState()

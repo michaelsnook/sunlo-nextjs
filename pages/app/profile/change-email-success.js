@@ -1,8 +1,8 @@
 import AppProfileLayout from 'components/AppProfileLayout'
-import { useAuthContext } from 'lib/auth-context'
+import { useAuth } from 'lib/auth-context'
 
 export default function ChangePassword() {
-  const { user } = useAuthContext()
+  const { user } = useAuth()
   return (
     <AppProfileLayout>
       <main className="section-card">

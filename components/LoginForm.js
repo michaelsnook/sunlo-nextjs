@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-hot-toast'
 import supabase from 'lib/supabase-client'
-import { useAuthContext } from 'lib/auth-context'
+import { useAuth } from 'lib/auth-context'
 import ErrorList from 'app/components/ErrorList'
 import Loading from 'app/loading'
 
