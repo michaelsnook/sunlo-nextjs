@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useQueryClient } from '@tanstack/react-query'
 import supabase from 'lib/supabase-client'
 import AppProfileLayout from 'components/AppProfileLayout'
-import { useAuthContext } from 'lib/auth-context'
+import { useAuth } from 'lib/auth-context'
 import ErrorList from 'app/components/ErrorList'
 import { convertNodeListToCheckedValues } from 'lib/data-helpers'
 import languages from 'lib/languages'
@@ -143,7 +143,7 @@ const ProfileCard = () => {
 }
 
 const UserAuthCard = () => {
-  const { user } = useAuthContext()
+  const { user } = useAuth()
   return (
     <div className="big-card flex flex-col space-y-4">
       <h2 className="h3">Login credentials</h2>
