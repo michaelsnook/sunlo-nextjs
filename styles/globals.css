@@ -64,9 +64,6 @@
   .card {
     @apply bg-white;
   }
-  .ReactModal__Body--open #sidebar-all {
-    display: none;
-  }
 }
 @layer utilities {
   .h1 {
