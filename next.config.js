@@ -1,9 +1,15 @@
 module.exports = {
   reactStrictMode: true,
-  experimental: {
-    appDir: true,
-  },
   images: {
-    domains: ['next.sunlo.co', 'hepudeougzlgnuqvybrj.supabase.co'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'hepudeougzlgnuqvybrj.supabase.co',
+      },
+      {
+        protocol: 'https',
+        hostname: 'next.sunlo.co',
+      },
+    ],
   },
 }
