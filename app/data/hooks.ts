@@ -75,6 +75,12 @@ const fetchDeck = async (lang: string): Promise<Deck> => {
   const deck: Deck = {
     id: data?.id,
     lang: data?.lang,
+    all_phrase_ids: rawCards.map(card => card.phrase_id),
+    cards: {
+      active: rawCards.filter(card => card.status === 'active'),
+      learned: rawCards.filter(card => card.status === 'learned'),
+      skipped: rawCards.filter(card => card.status === 'skipped'),
+    },
   }
 
   return deck
