@@ -10,7 +10,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.7.1",
+    "@supabase/supabase-js": "^2.43.1",
     "@tanstack/react-query": "^4.24.10",
     "encoding": "^0.1.13",
     "next": "^13.4.1",
