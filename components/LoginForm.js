@@ -43,7 +43,7 @@ export default function Login() {
       })
   }
 
-  return isLoading || user ? (
+  return isLoading ? (
     <Loading />
   ) : (
     <div className="section-card-inner">
