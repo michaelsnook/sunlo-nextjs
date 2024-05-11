@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { getPhraseDetails, getAllPhraseDetails } from 'app/data/fetchers'
+import { getAllPhraseDetails } from 'app/data/fetchers'
 import { TinyPhrase } from 'app/components/PhraseCardSmall'
 import languages from 'lib/languages'
 
@@ -11,7 +11,9 @@ export async function generateStaticParams() {
 }
 
 export default async function Page({ params }) {
-  let phrase = await getPhraseDetails(params.id)
+  const phrases = await getAllPhraseDetails()
+  const phrase = phrases.find(p => p.id === params.id)
+
   return (
     <div className="page-card flex flex-col gap-12">
       <div>
