@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import AppLayout from 'components/AppLayout'
 import { useProfile } from 'app/data/hooks'
-import Provider from 'app/Provider'
+import QueryProvider from 'app/query-provider'
 
 const AvatarSection = () => {
   const { data: profile } = useProfile()
@@ -45,13 +45,13 @@ const AvatarSection = () => {
 
 export default function AppProfileLayout({ children }) {
   return (
-    <Provider>
+    <QueryProvider>
       <AppLayout>
         <>
           <AvatarSection />
           {children}
         </>
       </AppLayout>
-    </Provider>
+    </QueryProvider>
   )
 }

@@ -1,4 +1,4 @@
-import Provider from 'app/Provider'
+import QueryProvider from 'app/query-provider'
 import { Toaster } from 'react-hot-toast'
 import 'styles/globals.css'
 
@@ -11,10 +11,10 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <Toaster />
-        <Provider>
+        <QueryProvider>
           {children}
           <div id="modal-root" />
-        </Provider>
+        </QueryProvider>
       </body>
     </html>
   )
