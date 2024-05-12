@@ -36,10 +36,10 @@ export default function ForgotPasswordForm() {
         if (!error) {
           setSuccessfulSubmit(true)
           setErrors()
-          console.log(data)
+          console.log(`Succeeded submitting the form`, data)
         } else {
           setErrors(error)
-          console.log(error)
+          console.log(`There was an error submitting the form`, error)
         }
       })
   }

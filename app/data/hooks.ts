@@ -87,7 +87,7 @@ const fetchDeck = async (lang: string): Promise<Deck> => {
 }
 
 export function useDeck(deckLang: string): UseQueryResult {
-  console.log(`useDeck`, deckLang)
+  // console.log(`useDeck`, deckLang)
   return useQuery({
     queryKey: ['user_deck', deckLang],
     // fix this. use queryKey[1]
