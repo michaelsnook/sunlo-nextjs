@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import supabase from 'lib/supabase-client'
 import ErrorList from 'app/components/ErrorList'
 
-export default function Signup() {
+export default function SignupForm() {
   const [errors, setErrors] = useState()
   const [isSubmitting, setIsSubmitting] = useState()
   const [sentConfirmationEmail, setSentConfirmationEmail] = useState()

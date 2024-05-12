@@ -8,7 +8,7 @@ import supabase from 'lib/supabase-client'
 import { useAuth } from 'lib/auth-context'
 import ErrorList from 'app/components/ErrorList'
 
-export default function Login({ asModal = false }) {
+export default function LoginForm({ asModal = false }) {
   const [errors, setErrors] = useState()
   const [isSubmitting, setIsSubmitting] = useState()
 
