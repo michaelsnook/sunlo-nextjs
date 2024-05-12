@@ -100,7 +100,7 @@ const SuccessfulSubmit = () => (
     <h1 className="h3 text-gray-700">Update Successful!</h1>
     <p>
       You can close this window or go{' '}
-      <Link href="/app/profile" className="link">
+      <Link href="/profile" className="link">
         back to your profile
       </Link>
       .

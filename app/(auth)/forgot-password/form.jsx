@@ -11,7 +11,7 @@ const baseUrl =
     ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
     : 'https://sunlo.co'
 
-const redirectUrl = `${baseUrl}/app/profile/change-password`
+const redirectUrl = `${baseUrl}/profile/change-password`
 console.log(`redirectUrl is ${redirectUrl}`)
 
 export default function ForgotPasswordForm() {
