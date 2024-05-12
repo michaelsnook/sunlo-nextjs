@@ -1,4 +1,4 @@
-import SetNewPasswordForm from 'components/SetNewPasswordForm'
+import SetNewPasswordForm from './form'
 
 export default function SetNewPassword() {
   return <SetNewPasswordForm />
