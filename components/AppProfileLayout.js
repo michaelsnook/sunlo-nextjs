@@ -29,7 +29,7 @@ const AvatarSection = () => {
         <h2 className="text-4xl">Hi, {profile?.username} 👋</h2>
         <p className="my-4">
           {pathname === '/profile' ? (
-            <Link href="/profile/start" className="link md:link-hover">
+            <Link href="/getting-started" className="link md:link-hover">
               Go to profile setup
             </Link>
           ) : (
