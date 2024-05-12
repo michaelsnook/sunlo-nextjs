@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import BannerLayout from 'components/BannerLayout'
 import { useAuth } from 'lib/auth-context'
 import supabase from 'lib/supabase-client'
 import ErrorList from 'app/components/ErrorList'

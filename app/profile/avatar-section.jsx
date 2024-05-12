@@ -2,12 +2,10 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import AppLayout from 'components/AppLayout'
 import { useProfile } from 'app/data/hooks'
-import QueryProvider from 'app/query-provider'
+import { usePathname } from 'next/navigation'
 
-export const AvatarSection = () => {
+export default function AvatarSection() {
   const { data: profile } = useProfile()
   const pathname = usePathname()
   return (
@@ -42,18 +40,5 @@ export const AvatarSection = () => {
         </p>
       </div>
     </>
-  )
-}
-
-export default function AppProfileLayout({ children }) {
-  return (
-    <QueryProvider>
-      <AppLayout>
-        <>
-          <AvatarSection />
-          {children}
-        </>
-      </AppLayout>
-    </QueryProvider>
   )
 }

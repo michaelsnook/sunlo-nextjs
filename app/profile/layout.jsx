@@ -1,5 +1,5 @@
 import Sidebar from 'app/components/Sidebar'
-import { AvatarSection } from 'components/AppProfileLayout'
+import AvatarSection from './avatar-section'
 
 export default function Layout({ children }) {
   return (
