@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from 'react'
 import supabase from 'lib/supabase-client'
 import { useAuth } from 'lib/auth-context'

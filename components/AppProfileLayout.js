@@ -1,3 +1,5 @@
+'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -5,7 +7,7 @@ import AppLayout from 'components/AppLayout'
 import { useProfile } from 'app/data/hooks'
 import QueryProvider from 'app/query-provider'
 
-const AvatarSection = () => {
+export const AvatarSection = () => {
   const { data: profile } = useProfile()
   const pathname = usePathname()
   return (
