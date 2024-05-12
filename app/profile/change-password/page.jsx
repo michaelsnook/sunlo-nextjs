@@ -1,4 +1,4 @@
-import SetNewPasswordForm from '../set-new-password/form'
+import SetNewPasswordForm from 'app/(auth)/set-new-password/form'
 
 export default function Page() {
   return (
