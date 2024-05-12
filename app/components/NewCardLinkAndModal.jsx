@@ -1,7 +1,7 @@
 'use client'
 
-import MyModal from 'app/components/Modal'
 import { useState } from 'react'
+import MyModal from 'app/components/Modal'
 import AddCardPhraseForm from 'app/components/AddCardPhraseForm'
 
 export default function NewCardLinkAndModal({ lang }) {

@@ -1,5 +1,5 @@
 import ForgotPasswordForm from './form'
 
-export default function ForgotPassword() {
+export default function Page() {
   return <ForgotPasswordForm />
 }

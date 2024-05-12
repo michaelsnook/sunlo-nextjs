@@ -4,7 +4,7 @@ import { getLanguageDetails } from 'app/data/fetchers'
 import languages from 'lib/languages'
 import { notFound } from 'next/navigation'
 
-export default async function LanguagePage({ params: { lang } }) {
+export default async function Page({ params: { lang } }) {
   if (!languages[lang]) {
     return notFound()
   }
