@@ -20,7 +20,7 @@ export default function SetNewPasswordForm() {
     const password = event.target.password.value
 
     supabase.auth.updateUser({ password }).then(({ data, error }) => {
-      console.log(data, error)
+      console.log(`Updated user, received:`, data, error)
       setIsSubmitting(false)
       setErrors(error)
       setSuccessfulSubmit(!error)

@@ -36,7 +36,7 @@ export default function Page() {
     event.preventDefault()
     if (!value) {
       setFormError(`Please select a language to start learning...`)
-      console.log(`detected aform error`)
+      console.log(`detected a form error`)
       return
     }
     // console.log(`submit the form`, event, value)

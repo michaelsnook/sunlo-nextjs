@@ -55,7 +55,7 @@ const AddCardButtonsSection = ({
         onClose()
       }, 5000)
       toast.success(`Card successfully added with status: "${data.status}"`)
-      console.log(`Return data from adding card:`, data)
+      // console.log(`Return data from adding card:`, data)
       clearCache(data)
     },
   })
@@ -124,7 +124,7 @@ export default function BigPhrase({
   const seeAlsos = phrase?.see_also_phrases
 
   const clearCache = () => {
-    console.log(`Clearing cache for phrase:`, phrase)
+    // console.log(`Clearing cache for phrase:`, phrase)
     queryClient.invalidateQueries({ queryKey: ['phrase', phrase_id] })
     queryClient.invalidateQueries({ queryKey: ['user_deck', phrase.lang] })
     queryClient.invalidateQueries({ queryKey: ['user_decks'] })
