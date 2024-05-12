@@ -130,8 +130,8 @@ export function useProfile(): UseQueryResult {
         .maybeSingle()
       if (error) throw error
       if (!data)
-        if (pathname !== '/profile/start') {
-          router.push('/profile/start')
+        if (pathname !== '/getting-started') {
+          router.push('/getting-started')
         } else return false
       return data || null
     },

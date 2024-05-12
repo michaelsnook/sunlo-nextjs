@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from 'react'
 import BannerLayout from 'components/BannerLayout'
 import { useAuth } from 'lib/auth-context'
@@ -74,89 +76,85 @@ export default function Page() {
       })
   }
 
-  return profile === null ? null : (
-    <BannerLayout>
-      {successfulSetup ? (
-        <div className="p2 md:p-6 lg:p-10 max-w-prose text-white min-h-85vh flex flex-col gap-12 justify-center">
-          <div className="flex flex-row justify-center space-x-4">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-16 w-16 text-accent bg-white rounded-full"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path
-                fillRule="evenodd"
-                d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                clipRule="evenodd"
-              />
-            </svg>
-            <h1 className="h1">You&apos;re all set!</h1>
-          </div>
-          <div className="flex flex-col space-y-4">
-            {tempDeckToAdd ? (
-              <Link
-                href={`/my-decks/${tempDeckToAdd}`}
-                className="mx-auto btn btn-secondary"
-              >
-                Get started learning {languages[tempDeckToAdd]}
-                &nbsp;&rarr;
-              </Link>
-            ) : null}
-            <Link href="/app/profile" className="mx-auto btn btn-quiet-dark">
-              Go to your profile&nbsp;&rarr;
-            </Link>
-          </div>
+  return profile === null ? null : successfulSetup ? (
+    <div className="p2 md:p-6 lg:p-10 max-w-prose text-white min-h-85vh flex flex-col gap-12 justify-center">
+      <div className="flex flex-row justify-center space-x-4">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-16 w-16 text-accent bg-white rounded-full"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fillRule="evenodd"
+            d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+            clipRule="evenodd"
+          />
+        </svg>
+        <h1 className="h1">You&apos;re all set!</h1>
+      </div>
+      <div className="flex flex-col space-y-4">
+        {tempDeckToAdd ? (
+          <Link
+            href={`/my-decks/${tempDeckToAdd}`}
+            className="mx-auto btn btn-secondary"
+          >
+            Get started learning {languages[tempDeckToAdd]}
+            &nbsp;&rarr;
+          </Link>
+        ) : null}
+        <Link href="/profile" className="mx-auto btn btn-quiet-dark">
+          Go to your profile&nbsp;&rarr;
+        </Link>
+      </div>
+    </div>
+  ) : (
+    <div className="text-white p2 md:p-6 lg:p-10">
+      {profile ? (
+        <div className="absolute top-4 md:top-10">
+          <Link href="/profile" className="link md:link-hover">
+            &larr; Back to profile
+          </Link>
         </div>
-      ) : (
-        <div className="text-white p2 md:p-6 lg:p-10">
-          {profile ? (
-            <div className="absolute top-4 md:top-10">
-              <Link href="/app/profile" className="link md:link-hover">
-                &larr; Back to profile
-              </Link>
-            </div>
-          ) : null}
-          <h1 className="d1">Welcome to Sunlo</h1>
-          <div className="max-w-prose">
-            <p className="text-2xl my-4 mb-10">Let&apos;s get started</p>
-            <SetPrimaryLanguageStep
-              value={tempLanguagePrimaryToUse}
-              set={setTempLanguagePrimary}
-            />
-            <CreateFirstDeckStep value={tempDeckToAdd} set={setTempDeckToAdd} />
-            <SetUsernameStep value={tempUsernameToUse} set={setTempUsername} />
+      ) : null}
+      <h1 className="d1">Welcome to Sunlo</h1>
+      <div className="max-w-prose">
+        <p className="text-2xl my-4 mb-10">Let&apos;s get started</p>
+        <SetPrimaryLanguageStep
+          value={tempLanguagePrimaryToUse}
+          set={setTempLanguagePrimary}
+        />
+        <CreateFirstDeckStep value={tempDeckToAdd} set={setTempDeckToAdd} />
+        <SetUsernameStep value={tempUsernameToUse} set={setTempUsername} />
 
-            {tempLanguagePrimaryToUse &&
-            (tempDeckToAdd || profile.user_decks?.length > 0) &&
-            tempUsernameToUse ? (
-              <div className="my-6 flex flex-row-reverse justify-around items-center">
-                <button
-                  onClick={handleMainForm}
-                  className="btn btn-accent md:btn-lg"
-                  disabled={isSubmitting}
-                >
-                  Confirm and get started!
-                </button>
-                <button
-                  onClick={() => {
-                    setErrors()
-                    setIsSubmitting()
-                    setTempLanguagePrimary(profile?.language_primary)
-                    setTempDeckToAdd()
-                    setTempUsername(profile?.username)
-                  }}
-                  className="btn btn-primary"
-                >
-                  Reset page
-                </button>
-              </div>
-            ) : null}
+        {tempLanguagePrimaryToUse &&
+        (tempDeckToAdd || profile.user_decks?.length > 0) &&
+        tempUsernameToUse ? (
+          <div className="my-6 flex flex-row-reverse justify-around items-center">
+            <button
+              onClick={handleMainForm}
+              className="btn btn-accent md:btn-lg"
+              disabled={isSubmitting}
+            >
+              Confirm and get started!
+            </button>
+            <button
+              onClick={() => {
+                setErrors()
+                setIsSubmitting()
+                setTempLanguagePrimary(profile?.language_primary)
+                setTempDeckToAdd()
+                setTempUsername(profile?.username)
+              }}
+              className="btn btn-primary"
+            >
+              Reset page
+            </button>
           </div>
-          <ErrorList summary="Couldn't save profile" error={errors?.message} />
-        </div>
-      )}
-    </BannerLayout>
+        ) : null}
+      </div>
+      <ErrorList summary="Couldn't save profile" error={errors?.message} />
+    </div>
   )
 }
 
