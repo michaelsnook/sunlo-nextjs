@@ -2,7 +2,7 @@ import Link from 'next/link'
 import Banner from 'app/components/Banner'
 import Garlic from 'app/components/Garlic'
 
-export default function SiteHome() {
+export default function Page() {
   return (
     <Banner>
       <main className="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-7 gap-8 md:gap-12 lg:gap-20">

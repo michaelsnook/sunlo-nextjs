@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import languages from 'lib/languages'
 
-export default async function Languages() {
+export default async function Page() {
   return (
     <div className="page-card">
       <h1 className="h1">Languages</h1>
