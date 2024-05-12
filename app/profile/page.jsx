@@ -1,8 +1,9 @@
+'use client'
+
 import { useState } from 'react'
 import Link from 'next/link'
 import { useQueryClient } from '@tanstack/react-query'
 import supabase from 'lib/supabase-client'
-import AppProfileLayout from 'components/AppProfileLayout'
 import { useAuth } from 'lib/auth-context'
 import ErrorList from 'app/components/ErrorList'
 import { convertNodeListToCheckedValues } from 'lib/data-helpers'
@@ -10,6 +11,15 @@ import languages from 'lib/languages'
 import Loading from 'app/loading'
 import { useProfile } from 'app/data/hooks'
 import { toast } from 'react-hot-toast'
+
+export default function Page() {
+  return (
+    <>
+      <ProfileCard />
+      <UserAuthCard />
+    </>
+  )
+}
 
 const ProfileCard = () => {
   const queryClient = useQueryClient()
@@ -156,7 +166,7 @@ const UserAuthCard = () => {
             value={user?.email ?? 'loading...'}
             disabled
           />
-          <Link href="/app/profile/change-email" className="btn btn-quiet">
+          <Link href="/profile/change-email" className="btn btn-quiet">
             Change
           </Link>
         </div>
@@ -170,20 +180,11 @@ const UserAuthCard = () => {
             value="***************"
             disabled
           />
-          <Link href="/app/profile/change-password" className="btn btn-quiet">
+          <Link href="/profile/change-password" className="btn btn-quiet">
             Change
           </Link>
         </div>
       </div>
     </div>
-  )
-}
-
-export default function Profile() {
-  return (
-    <AppProfileLayout>
-      <ProfileCard />
-      <UserAuthCard />
-    </AppProfileLayout>
   )
 }
