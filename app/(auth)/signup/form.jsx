@@ -26,7 +26,7 @@ export default function Signup() {
         setIsSubmitting(false)
         setErrors(error)
         if (user && session) {
-          router.push('/app/profile/start')
+          router.push('/profile/start')
         } else if (user && !session) {
           setSentConfirmationEmail(true)
         }

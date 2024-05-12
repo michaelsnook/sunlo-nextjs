@@ -74,7 +74,7 @@ export default function Sidebar({ shy = false }) {
         ) : (
           <>
             {profile ? (
-              <Navlink href="/app/profile">
+              <Navlink href="/profile">
                 <p className="flex flex-row gap-2">
                   <ProfileIcon /> {profile?.username}
                 </p>
