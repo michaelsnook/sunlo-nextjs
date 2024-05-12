@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Modal from 'react-modal'
 import { useAuth } from 'lib/auth-context'
-import Login from 'components/LoginForm'
+import LoginForm from 'app/(auth)/login/form'
 
 Modal.setAppElement('#modal-root')
 
@@ -19,7 +19,7 @@ export default function LoginChallenge() {
       noScroll={true}
       handleCloseModal={() => setIsDismissed(true)}
     >
-      <Login asModal />
+      <LoginForm asModal />
     </Modal>
   )
 }
