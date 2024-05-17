@@ -8,7 +8,7 @@ import Loading from 'app/loading'
 import supabase from 'lib/supabase-client'
 import ErrorList from 'app/components/ErrorList'
 import { toast } from 'react-hot-toast'
-import { SuccessCheckmark } from 'app/getting-started/page'
+import SuccessCheckmark from 'app/components/SvgComponents'
 
 function shuffle(array) {
   if (!array?.length > 0) return []
