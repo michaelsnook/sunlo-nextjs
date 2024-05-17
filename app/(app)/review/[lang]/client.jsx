@@ -72,66 +72,68 @@ const CardInner = ({ card, advance, addReview, hidden }) => {
   })
 
   return hidden ? null : (
-    <div className="flex flex-col justify-center text-center gap-8">
-      <h2 className="h2 text-center">{card?.phrase?.text}</h2>
-      {status === 'loading' ? (
-        <div className="absolute bg-white/70 top-0 left-0 right-0 bottom-0 content-center">
-          <Loading />
-        </div>
-      ) : null}
-      {status === 'error' ? (
-        <div className="absolute bg-white/50 top-0 left-0 right-0 bottom-0">
-          <ErrorList error={error} />
-        </div>
-      ) : null}
-      {!isRevealed ? (
-        <div className="flex gap-4 justify-center">
-          <button className="btn btn-success" onClick={reveal}>
-            Yes I know it
-          </button>
-          <button className="btn btn-warning" onClick={reveal}>
-            I don&apos;t know it
-          </button>
-        </div>
-      ) : (
-        <>
-          <div>
-            {card.phrase.translations.map(t => (
-              <p key={t.id}>&ldquo;{t.text}&rdquo;</p>
-            ))}
+    <div className="big-card">
+      <div className="flex flex-col justify-center text-center gap-8">
+        <h2 className="h2 text-center">{card?.phrase?.text}</h2>
+        {status === 'loading' ? (
+          <div className="absolute bg-white/70 top-0 left-0 right-0 bottom-0 content-center">
+            <Loading />
           </div>
+        ) : null}
+        {status === 'error' ? (
+          <div className="absolute bg-white/50 top-0 left-0 right-0 bottom-0">
+            <ErrorList error={error} />
+          </div>
+        ) : null}
+        {!isRevealed ? (
           <div className="flex gap-4 justify-center">
-            <button
-              className={`btn btn-success ${data ? 'btn-outline' : ''}`}
-              onClick={() => mutate({ score: 2 })}
-              disabled={data?.score === 2}
-            >
-              Nailed it!
+            <button className="btn btn-success" onClick={reveal}>
+              Yes I know it
             </button>
-            <button
-              className={`btn btn-info ${data ? 'btn-outline' : ''}`}
-              onClick={() => mutate({ score: 1 })}
-              disabled={data?.score === 1}
-            >
-              Got it
-            </button>
-            <button
-              className={`btn btn-warning ${data ? 'btn-outline' : ''}`}
-              onClick={() => mutate({ score: -1 })}
-              disabled={data?.score === -1}
-            >
-              It was hard
-            </button>
-            <button
-              className={`btn btn-error ${data ? 'btn-outline' : ''}`}
-              onClick={() => mutate({ score: -2 })}
-              disabled={data?.score === -2}
-            >
-              Didn&apos;t get it
+            <button className="btn btn-warning" onClick={reveal}>
+              I don&apos;t know it
             </button>
           </div>
-        </>
-      )}
+        ) : (
+          <>
+            <div>
+              {card.phrase.translations.map(t => (
+                <p key={t.id}>&ldquo;{t.text}&rdquo;</p>
+              ))}
+            </div>
+            <div className="flex gap-4 justify-center">
+              <button
+                className={`btn btn-success ${data ? 'btn-outline' : ''}`}
+                onClick={() => mutate({ score: 2 })}
+                disabled={data?.score === 2}
+              >
+                Nailed it!
+              </button>
+              <button
+                className={`btn btn-info ${data ? 'btn-outline' : ''}`}
+                onClick={() => mutate({ score: 1 })}
+                disabled={data?.score === 1}
+              >
+                Got it
+              </button>
+              <button
+                className={`btn btn-warning ${data ? 'btn-outline' : ''}`}
+                onClick={() => mutate({ score: -1 })}
+                disabled={data?.score === -1}
+              >
+                It was hard
+              </button>
+              <button
+                className={`btn btn-error ${data ? 'btn-outline' : ''}`}
+                onClick={() => mutate({ score: -2 })}
+                disabled={data?.score === -2}
+              >
+                Didn&apos;t get it
+              </button>
+            </div>
+          </>
+        )}
+      </div>
     </div>
   )
 }
@@ -189,24 +191,21 @@ export default function ClientPage({ lang }) {
           Next card
         </button>
       </div>
-      <div className="big-card">
-        {cardIndex === reviewCards.length ? (
-          <div className="flex flex-row mx-auto gap-6 place-items-center">
-            <SuccessCheckmark />
-            <p>All done for the day, nice work!</p>
-          </div>
-        ) : (
-          reviewCards.map(c => (
-            <CardInner
-              key={c.id}
-              card={c}
-              advance={advanceCard}
-              addReview={addReview}
-              hidden={c.id !== reviewCards[cardIndex].id}
-            />
-          ))
-        )}
-      </div>
+      {cardIndex < reviewCards.length ? null : (
+        <div className="flex flex-row mx-auto gap-6 place-items-center my-10">
+          <SuccessCheckmark />
+          <p>All done for the day, nice work!</p>
+        </div>
+      )}
+      {reviewCards.map(c => (
+        <CardInner
+          key={c.id}
+          card={c}
+          advance={advanceCard}
+          addReview={addReview}
+          hidden={c.id !== reviewCards[cardIndex]?.id}
+        />
+      ))}
       <pre>{JSON.stringify(reviews, null, 2)}</pre>
       <pre>{JSON.stringify(card, null, 2)}</pre>
     </div>
