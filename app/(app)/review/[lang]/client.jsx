@@ -144,8 +144,8 @@ export default function ClientPage({ lang }) {
   if (status === 'loading') return <Loading />
   if (!data?.cards?.active?.length > 0) return <Empty />
 
-  const canBackup = cardIndex !== 0
-  const canAdvance = cardIndex !== reviewCards.length - 1
+  const canBackup = cardIndex > 0
+  const canAdvance = cardIndex < reviewCards.length - 1
   const gobackaCard = () => setCardIndex(cardIndex - 1)
   const advanceCard = () => setCardIndex(cardIndex + 1)
 
@@ -156,8 +156,12 @@ export default function ClientPage({ lang }) {
       <p className="inline-block">
         <span className="alert alert-info inline-block text-white text-center">
           Reviewing {languages[lang]} flash cards.{' '}
-          {reviewCards.length - cardIndex} cards left today! ({cardIndex + 1}{' '}
-          out of {reviewCards.length})
+          {reviewCards.length - cardIndex} cards left today!{' '}
+          {cardIndex < reviewCards.length ? (
+            <>
+              ({cardIndex + 1} out of {reviewCards.length})
+            </>
+          ) : null}
         </span>
       </p>
       <div className="flex justify-center gap-4">
