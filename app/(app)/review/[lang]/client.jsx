@@ -43,13 +43,12 @@ const postReview = async ({ card_id, score, prevId }) => {
         .select()
 
   if (error) throw Error(error)
-  console.log(`We posted the review,`, data, error)
+  // console.log(`We posted the review,`, data, error)
   return data[0]
 }
 
-const CardInner = ({ card, advance, hidden }) => {
+const CardInner = ({ card, advance, addReview, hidden }) => {
   const [isRevealed, setIsRevealed] = useState(false)
-  const [reviewId, setReviewId] = useState()
   const reveal = () => {
     setIsRevealed(true)
   }
@@ -59,7 +58,7 @@ const CardInner = ({ card, advance, hidden }) => {
       postReview({ ...submission, card_id: card.id, prevId: data?.id }),
     onSuccess: result => {
       // console.log(`onSuccess firing with`, result)
-      setReviewId(data.id)
+      addReview(result)
       if (result.score === -2)
         toast('got it', { icon: '👍️', position: 'bottom-center' })
       if (result.score === -1)
@@ -141,6 +140,7 @@ export default function ClientPage({ lang }) {
   const { data, status } = useDeck(lang)
   const reviewCards = useMemo(() => shuffle(data?.cards?.active), [data])
   const [cardIndex, setCardIndex] = useState(0)
+  const [reviews, setReviews] = useState([])
 
   if (status === 'loading') return <Loading />
   if (!data?.cards?.active?.length > 0) return <Empty />
@@ -149,6 +149,14 @@ export default function ClientPage({ lang }) {
   const canAdvance = cardIndex < reviewCards.length - 1
   const gobackaCard = () => setCardIndex(cardIndex - 1)
   const advanceCard = () => setCardIndex(cardIndex + 1)
+
+  const addReview = review => {
+    const index = reviews.findIndex(r => r.id === review.id)
+    let newReviews = reviews
+    if (index === -1) newReviews.push(review)
+    else newReviews[index] = review
+    setReviews(newReviews)
+  }
 
   const card = reviewCards[cardIndex]
 
@@ -193,11 +201,13 @@ export default function ClientPage({ lang }) {
               key={c.id}
               card={c}
               advance={advanceCard}
+              addReview={addReview}
               hidden={c.id !== reviewCards[cardIndex].id}
             />
           ))
         )}
       </div>
+      <pre>{JSON.stringify(reviews, null, 2)}</pre>
       <pre>{JSON.stringify(card, null, 2)}</pre>
     </div>
   )
