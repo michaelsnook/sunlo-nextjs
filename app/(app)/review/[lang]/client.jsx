@@ -47,7 +47,7 @@ const postReview = async ({ card_id, score, prevId }) => {
   return data[0]
 }
 
-const CardInner = ({ card, advance }) => {
+const CardInner = ({ card, advance, hidden }) => {
   const [isRevealed, setIsRevealed] = useState(false)
   const [reviewId, setReviewId] = useState()
   const reveal = () => {
@@ -72,8 +72,9 @@ const CardInner = ({ card, advance }) => {
     },
   })
 
-  return (
+  return hidden ? null : (
     <div className="flex flex-col justify-center text-center gap-8">
+      <h2 className="h2 text-center">{card?.phrase?.text}</h2>
       {status === 'loading' ? (
         <div className="absolute bg-white/70 top-0 left-0 right-0 bottom-0 content-center">
           <Loading />
@@ -187,10 +188,14 @@ export default function ClientPage({ lang }) {
             <p>All done for the day, nice work!</p>
           </div>
         ) : (
-          <>
-            <h2 className="h2 text-center">{card?.phrase?.text}</h2>
-            <CardInner key={card.id} card={card} advance={advanceCard} />
-          </>
+          reviewCards.map(c => (
+            <CardInner
+              key={c.id}
+              card={c}
+              advance={advanceCard}
+              hidden={c.id !== reviewCards[cardIndex].id}
+            />
+          ))
         )}
       </div>
       <pre>{JSON.stringify(card, null, 2)}</pre>
