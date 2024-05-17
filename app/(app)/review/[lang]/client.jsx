@@ -7,6 +7,8 @@ import { useDeck } from 'app/data/hooks'
 import Loading from 'app/loading'
 import supabase from 'lib/supabase-client'
 import ErrorList from 'app/components/ErrorList'
+import { toast } from 'react-hot-toast'
+import { SuccessCheckmark } from 'app/getting-started/page'
 
 function shuffle(array) {
   if (!array?.length > 0) return []
@@ -58,6 +60,14 @@ const CardInner = ({ card, advance }) => {
     onSuccess: data => {
       console.log(`onSuccess firing with`, data)
       setReviewId(data.id)
+      if (data.score === -2)
+        toast('got it', { icon: '👍️', position: 'bottom-center' })
+      if (data.score === -1)
+        toast('got it', { icon: '👍️', position: 'bottom-center' })
+      if (data.score === 1)
+        toast('got it', { icon: '👍️', position: 'bottom-center' })
+      if (data.score === 2)
+        toast.success('got it', { position: 'bottom-center' })
       setTimeout(advance, 2000)
     },
   })
@@ -167,8 +177,17 @@ export default function ClientPage({ lang }) {
         </button>
       </div>
       <div className="big-card">
-        <h2 className="h2 text-center">{card?.phrase?.text}</h2>
-        <CardInner key={card.id} card={card} />
+        {cardIndex === reviewCards.length ? (
+          <div className="flex flex-row mx-auto gap-6 place-items-center">
+            <SuccessCheckmark />
+            <p>All done for the day, nice work!</p>
+          </div>
+        ) : (
+          <>
+            <h2 className="h2 text-center">{card?.phrase?.text}</h2>
+            <CardInner key={card.id} card={card} advance={advanceCard} />
+          </>
+        )}
       </div>
       <pre>{JSON.stringify(card, null, 2)}</pre>
     </div>
