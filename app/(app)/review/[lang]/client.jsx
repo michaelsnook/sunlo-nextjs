@@ -1,0 +1,116 @@
+'use client'
+
+import { useMemo, useState } from 'react'
+import languages from 'lib/languages'
+import { useDeck } from 'app/data/hooks'
+import Loading from 'app/loading'
+
+function shuffle(array) {
+  if (!array?.length > 0) return []
+  for (let currentIndex = array.length - 1; currentIndex > 0; currentIndex--) {
+    const randomIndex = Math.floor(Math.random() * (currentIndex + 1))
+    let temp = array[currentIndex]
+    array[currentIndex] = array[randomIndex]
+    array[randomIndex] = temp
+  }
+  return array
+}
+
+const Empty = () => (
+  <p>
+    This is empty. You don&apos;t have any active cards. go choose some more
+    pls.
+  </p>
+)
+
+const CardInner = ({ card }) => {
+  const [isRevealed, setIsRevealed] = useState(false)
+  const reveal = () => {
+    setIsRevealed(true)
+  }
+  return (
+    <div className="flex flex-col justify-center text-center gap-8">
+      {!isRevealed ? (
+        <div className="flex gap-4 justify-center">
+          <button className="btn btn-success" onClick={reveal}>
+            Yes I know it
+          </button>
+          <button className="btn btn-warning" onClick={reveal}>
+            I don&apos;t know it
+          </button>
+        </div>
+      ) : (
+        <>
+          <div>
+            {card.phrase.translations.map(t => (
+              <p key={t.id}>&ldquo;{t.text}&rdquo;</p>
+            ))}
+          </div>
+          <div className="flex gap-4 justify-center">
+            <button className="btn btn-success" onClick={reveal}>
+              Nailed it!
+            </button>
+            <button className="btn btn-info" onClick={reveal}>
+              Got it
+            </button>
+            <button className="btn btn-warning" onClick={reveal}>
+              It was hard
+            </button>
+            <button className="btn btn-error" onClick={reveal}>
+              Didn&apos;t get it
+            </button>
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
+export default function ClientPage({ lang }) {
+  const { data, status } = useDeck(lang)
+  const reviewCards = useMemo(() => shuffle(data?.cards?.active), [data])
+  const [cardIndex, setCardIndex] = useState(0)
+
+  if (status === 'loading') return <Loading />
+  if (!data?.cards?.active?.length > 0) return <Empty />
+
+  const canBackup = cardIndex !== 0
+  const canAdvance = cardIndex !== reviewCards.length - 1
+  const gobackaCard = () => setCardIndex(cardIndex - 1)
+  const advanceCard = () => setCardIndex(cardIndex + 1)
+
+  const card = reviewCards[cardIndex]
+
+  return (
+    <div className="h-full grid gap-8 max-w-xl mx-auto">
+      <p className="inline-block">
+        <span className="alert alert-info inline-block text-white">
+          Reviewing {languages[lang]} flash cards.{' '}
+          {reviewCards.length - cardIndex} cards left today! ({cardIndex + 1}{' '}
+          out of {reviewCards.length})
+        </span>
+      </p>
+      <div className="flex justify-center gap-4">
+        <button
+          className="btn btn-outline btn-primary bg-white"
+          onClick={gobackaCard}
+          disabled={!canBackup}
+        >
+          Prev card
+        </button>
+        <button
+          className="btn btn-outline btn-primary bg-white"
+          onClick={advanceCard}
+          disabled={!canAdvance}
+        >
+          Next card
+        </button>
+      </div>
+      <div className="big-card">
+        <h2 className="h2 text-center">{card?.phrase?.text}</h2>
+        <CardInner key={card.id} card={card} />
+      </div>
+      <pre>{JSON.stringify(card, null, 2)}</pre>
+    </div>
+  )
+}
