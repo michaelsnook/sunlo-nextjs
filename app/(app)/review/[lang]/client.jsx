@@ -55,18 +55,18 @@ const CardInner = ({ card, advance, hidden }) => {
   }
 
   const { data, error, mutate, status } = useMutation({
-    mutationFn: data =>
-      postReview({ ...data, card_id: card.id, prevId: reviewId }),
-    onSuccess: data => {
-      console.log(`onSuccess firing with`, data)
+    mutationFn: submission =>
+      postReview({ ...submission, card_id: card.id, prevId: data?.id }),
+    onSuccess: result => {
+      // console.log(`onSuccess firing with`, result)
       setReviewId(data.id)
-      if (data.score === -2)
+      if (result.score === -2)
         toast('got it', { icon: '👍️', position: 'bottom-center' })
-      if (data.score === -1)
+      if (result.score === -1)
         toast('got it', { icon: '👍️', position: 'bottom-center' })
-      if (data.score === 1)
+      if (result.score === 1)
         toast('got it', { icon: '👍️', position: 'bottom-center' })
-      if (data.score === 2)
+      if (result.score === 2)
         toast.success('got it', { position: 'bottom-center' })
       setTimeout(advance, 2000)
     },
@@ -103,28 +103,28 @@ const CardInner = ({ card, advance, hidden }) => {
           </div>
           <div className="flex gap-4 justify-center">
             <button
-              className={`btn btn-success ${reviewId ? 'btn-outline' : ''}`}
+              className={`btn btn-success ${data ? 'btn-outline' : ''}`}
               onClick={() => mutate({ score: 2 })}
               disabled={data?.score === 2}
             >
               Nailed it!
             </button>
             <button
-              className={`btn btn-info ${reviewId ? 'btn-outline' : ''}`}
+              className={`btn btn-info ${data ? 'btn-outline' : ''}`}
               onClick={() => mutate({ score: 1 })}
               disabled={data?.score === 1}
             >
               Got it
             </button>
             <button
-              className={`btn btn-warning ${reviewId ? 'btn-outline' : ''}`}
+              className={`btn btn-warning ${data ? 'btn-outline' : ''}`}
               onClick={() => mutate({ score: -1 })}
               disabled={data?.score === -1}
             >
               It was hard
             </button>
             <button
-              className={`btn btn-error ${reviewId ? 'btn-outline' : ''}`}
+              className={`btn btn-error ${data ? 'btn-outline' : ''}`}
               onClick={() => mutate({ score: -2 })}
               disabled={data?.score === -2}
             >
