@@ -1,9 +1,12 @@
 'use client'
 
 import { useMemo, useState } from 'react'
+import { useMutation } from '@tanstack/react-query'
 import languages from 'lib/languages'
 import { useDeck } from 'app/data/hooks'
 import Loading from 'app/loading'
+import supabase from 'lib/supabase-client'
+import ErrorList from 'app/components/ErrorList'
 
 function shuffle(array) {
   if (!array?.length > 0) return []
@@ -23,13 +26,54 @@ const Empty = () => (
   </p>
 )
 
-const CardInner = ({ card }) => {
+const postReview = async ({ card_id, score, prevId }) => {
+  if (!card_id || !score) throw Error('Invalid review; cannot log')
+
+  const { data, error } = prevId
+    ? await supabase
+        .from('user_card_review')
+        .update({ score })
+        .eq('id', prevId)
+        .select()
+    : await supabase
+        .from('user_card_review')
+        .insert({ card_id, score })
+        .select()
+
+  if (error) throw Error(error)
+  console.log(`We posted the review,`, data, error)
+  return data[0]
+}
+
+const CardInner = ({ card, advance }) => {
   const [isRevealed, setIsRevealed] = useState(false)
+  const [reviewId, setReviewId] = useState()
   const reveal = () => {
     setIsRevealed(true)
   }
+
+  const { data, error, mutate, status } = useMutation({
+    mutationFn: data =>
+      postReview({ ...data, card_id: card.id, prevId: reviewId }),
+    onSuccess: data => {
+      console.log(`onSuccess firing with`, data)
+      setReviewId(data.id)
+      setTimeout(advance, 2000)
+    },
+  })
+
   return (
     <div className="flex flex-col justify-center text-center gap-8">
+      {status === 'loading' ? (
+        <div className="absolute bg-white/70 top-0 left-0 right-0 bottom-0 content-center">
+          <Loading />
+        </div>
+      ) : null}
+      {status === 'error' ? (
+        <div className="absolute bg-white/50 top-0 left-0 right-0 bottom-0">
+          <ErrorList error={error} />
+        </div>
+      ) : null}
       {!isRevealed ? (
         <div className="flex gap-4 justify-center">
           <button className="btn btn-success" onClick={reveal}>
@@ -47,16 +91,32 @@ const CardInner = ({ card }) => {
             ))}
           </div>
           <div className="flex gap-4 justify-center">
-            <button className="btn btn-success" onClick={reveal}>
+            <button
+              className={`btn btn-success ${reviewId ? 'btn-outline' : ''}`}
+              onClick={() => mutate({ score: 2 })}
+              disabled={data?.score === 2}
+            >
               Nailed it!
             </button>
-            <button className="btn btn-info" onClick={reveal}>
+            <button
+              className={`btn btn-info ${reviewId ? 'btn-outline' : ''}`}
+              onClick={() => mutate({ score: 1 })}
+              disabled={data?.score === 1}
+            >
               Got it
             </button>
-            <button className="btn btn-warning" onClick={reveal}>
+            <button
+              className={`btn btn-warning ${reviewId ? 'btn-outline' : ''}`}
+              onClick={() => mutate({ score: -1 })}
+              disabled={data?.score === -1}
+            >
               It was hard
             </button>
-            <button className="btn btn-error" onClick={reveal}>
+            <button
+              className={`btn btn-error ${reviewId ? 'btn-outline' : ''}`}
+              onClick={() => mutate({ score: -2 })}
+              disabled={data?.score === -2}
+            >
               Didn&apos;t get it
             </button>
           </div>
@@ -84,7 +144,7 @@ export default function ClientPage({ lang }) {
   return (
     <div className="h-full grid gap-8 max-w-xl mx-auto">
       <p className="inline-block">
-        <span className="alert alert-info inline-block text-white">
+        <span className="alert alert-info inline-block text-white text-center">
           Reviewing {languages[lang]} flash cards.{' '}
           {reviewCards.length - cardIndex} cards left today! ({cardIndex + 1}{' '}
           out of {reviewCards.length})
