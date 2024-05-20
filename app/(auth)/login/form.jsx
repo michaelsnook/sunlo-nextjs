@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { redirect } from 'next/navigation'
 import { toast } from 'react-hot-toast'
 import supabase from 'lib/supabase-client'
 import { useAuth } from 'lib/auth-context'
@@ -12,17 +12,14 @@ export default function LoginForm({ asModal = false }) {
   const [errors, setErrors] = useState()
   const [isSubmitting, setIsSubmitting] = useState()
 
-  const router = useRouter()
-  const { user, isAuth } = useAuth()
-  if (user && isAuth) {
-    if (asModal) return null
-    router.push('/my-decks')
-  }
+  const { isAuth } = useAuth()
+
+  if (isAuth) return null
 
   const onSubmit = event => {
+    event.preventDefault()
     setErrors()
     setIsSubmitting(true)
-    event.preventDefault()
     const email = event.target.email.value
     const password = event.target.password.value
 
@@ -35,10 +32,8 @@ export default function LoginForm({ asModal = false }) {
         setIsSubmitting(false)
         if (error) setErrors(error)
         if (data) {
-          // console.log(`login data`, data)
           toast.success(`You're logged in as ${data.user.email}`)
-          if (asModal) return null
-          router.push('/my-decks')
+          if (!asModal) redirect('/my-decks')
         }
       })
       .catch(e => {
@@ -46,7 +41,6 @@ export default function LoginForm({ asModal = false }) {
         setErrors(e)
       })
   }
-  // console.log(`mounting/rendering the LoginForm`, user, isAuth)
 
   return (
     <div className="section-card-inner">
