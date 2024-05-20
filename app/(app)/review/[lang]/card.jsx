@@ -10,16 +10,10 @@ import { toast } from 'react-hot-toast'
 const postReview = async ({ card_id, score, prevId }) => {
   if (!card_id || !score) throw Error('Invalid review; cannot log')
 
-  const { data, error } = prevId
-    ? await supabase
-        .from('user_card_review')
-        .update({ score })
-        .eq('id', prevId)
-        .select()
-    : await supabase
-        .from('user_card_review')
-        .insert({ card_id, score })
-        .select()
+  const { data, error } = await supabase
+    .from('user_card_review')
+    .upsert({ score, card_id, id: prevId })
+    .select()
 
   if (error) throw Error(error)
   // console.log(`We posted the review,`, data, error)
