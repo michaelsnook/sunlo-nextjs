@@ -68,7 +68,8 @@ const fetchDeck = async (lang: string): Promise<Deck> => {
     )
     .eq('lang', lang)
     .maybeSingle()
-  if (error) throw error
+  if (error) throw Error(error.message)
+  if (!data) return null
 
   const rawCards = Array.isArray(data?.user_card) ? data.user_card : []
 
