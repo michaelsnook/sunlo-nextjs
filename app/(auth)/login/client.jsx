@@ -9,7 +9,7 @@ export default function ClientPage({ children }) {
 
   useEffect(() => {
     if (isAuth) {
-      redirect('/my-decks') // go to home page
+      redirect('/home') // go to home page
     }
   }, [isAuth])
 
