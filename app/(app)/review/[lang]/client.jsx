@@ -47,8 +47,6 @@ export default function ClientPage({ lang }) {
     setReviews(newReviews)
   }
 
-  const card = reviewCards[cardIndex]
-
   return (
     <div className="h-full grid gap-8 max-w-xl mx-auto">
       <p className="inline-block">
@@ -93,8 +91,6 @@ export default function ClientPage({ lang }) {
           hidden={c.id !== reviewCards[cardIndex]?.id}
         />
       ))}
-      <pre>{JSON.stringify(reviews, null, 2)}</pre>
-      <pre>{JSON.stringify(card, null, 2)}</pre>
     </div>
   )
 }
