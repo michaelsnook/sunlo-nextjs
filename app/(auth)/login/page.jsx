@@ -1,5 +1,10 @@
 import LoginForm from './form'
+import ClientPage from './client'
 
 export default function Page() {
-  return <LoginForm />
+  return (
+    <ClientPage>
+      <LoginForm />
+    </ClientPage>
+  )
 }
