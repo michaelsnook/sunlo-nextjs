@@ -17,7 +17,7 @@ const RecentReviewsSummary = ({ lang }) => {
   const countPositive = data?.filter(r => r.score > 0).length
 
   return (
-    <div className="block alert text-base-content text-left align-left">
+    <div className="text-base-content bg-base-200 card-body">
       {countReviews > 5 &&
         `You've been studying ${countReviews > 40 && 'a lot'}!`}{' '}
       I see {countReviews} cards reviewed in the last week
@@ -33,7 +33,7 @@ const CardsSummary = ({ cards }) => {
   const cardsLearned = cards.learned.length
   const beHappy = cardsLearned > 5
   return (
-    <div className="block alert text-base-content text-left align-left">
+    <div className="text-base-content bg-base-200 card-body">
       You have:
       <ul className="ml-2 block">
         <li>🎴 {cardsInDeck} cards in your deck</li>
@@ -70,23 +70,29 @@ export default function Page({ params: { lang } }) {
         </p>
       ) : (
         <div>
-          <div className="w-100 md:w-1/2 p-4 grid gap-4">
-            <RecentReviewsSummary lang={lang} />
-            <Link
-              href={`/review/${lang}`}
-              className="alert glass py-10 text-center"
-            >
-              Start a review session
-            </Link>
+          <div className="md:w-1/2 p-4 grid gap-4">
+            <div className="card w-96 glass">
+              <figure>
+                <RecentReviewsSummary lang={lang} />
+              </figure>
+              <div className="card-body">
+                <Link href={`/review/${lang}`} className="mx-auto btn">
+                  Start a review session
+                </Link>
+              </div>
+            </div>
           </div>
           <div className="w-100 md:w-1/2 p-4 grid gap-4">
-            <CardsSummary cards={data?.cards} />
-            <Link
-              href={`/my-decks/${lang}`}
-              className="alert glass py-10 text-center"
-            >
-              Browse/manage on your deck
-            </Link>
+            <div className="card w-96 glass">
+              <figure>
+                <CardsSummary cards={data?.cards} />
+              </figure>
+              <div className="card-body">
+                <Link href={`/my-decks/${lang}`} className="mx-auto btn">
+                  Browse/manage on your deck
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       )}
