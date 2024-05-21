@@ -18,7 +18,7 @@ export default function PhraseCardSmall({ status, text, lang, translations }) {
   const { emoji, classString } = readStatus(status)
   return (
     <div
-      className={`card p-4 ${classString} shadow-lg hover:bg-primary hover:text-white mb-4 w-full inline-block`}
+      className={`card-white p-4 ${classString} shadow-lg hover:bg-primary hover:text-white mb-4 w-full inline-block`}
     >
       <p lang={lang} className="mb-2 font-bold">
         {emoji}

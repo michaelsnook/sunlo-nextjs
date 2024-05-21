@@ -19,13 +19,10 @@ export default async function Page() {
           But you can be the first to add one!
         </p>
       ) : (
-        <ul className="columns-1 sm:columns-2 lg:columns-3 gap-4">
+        <ul className="columns-1 sm:columns-2 lg:columns-3 gap-4 p-4">
           {phrases?.map(phrase => (
             <li key={`/phrase/${phrase.id}`}>
-              <Link
-                href={`/phrase/${phrase.id}`}
-                className="card shadow p-4 hover:bg-primary hover:text-white mb-4"
-              >
+              <Link href={`/phrase/${phrase.id}`}>
                 <PhraseCardSmall {...phrase} />
               </Link>
             </li>

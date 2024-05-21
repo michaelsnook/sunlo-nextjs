@@ -34,7 +34,7 @@
     @apply btn-link hover:underline hover:bg-primary/10 border-transparent hover:border-white;
   }
   .btn-quiet-dark {
-    @apply btn btn-outline border-none text-white hover:btn-secondary;
+    @apply btn btn-outline border-none bg-base-100 hover:btn-secondary;
     background-color: hsla(var(--p) / var(--tw-bg-opacity, 1));
   }
   .link {
@@ -42,7 +42,7 @@
   }
   /* used when you want a card section, width lg */
   .section-card {
-    @apply card shadow-lg bg-white text-gray-800 max-w-lg p-10;
+    @apply card shadow-lg bg-base-100 text-base-content max-w-lg p-10;
   }
   /* used inside .section-card to provide optional spacing and 
   ability to use the section inside other elements */
@@ -51,18 +51,18 @@
   }
   /* used when you want a big card area, that goes as wide as prose */
   .big-card {
-    @apply card bg-white text-gray-800 p-6 border shadow-lg mb-6 max-w-prose;
+    @apply card bg-base-100 text-base-content p-6 border shadow-lg mb-6 max-w-prose;
   }
   /* used for a whole page */
   .page-card {
-    @apply container mx-auto card bg-white text-gray-800 px-3 md:px-6 lg:px-10 border shadow-lg mb-6 pt-10 pb-16 min-h-50vh;
+    @apply container mx-auto card bg-base-100 text-base-content px-3 md:px-6 lg:px-10 border shadow-lg mb-6 pt-10 pb-16 min-h-50vh;
   }
   .page-card > .h1,
   .page-card > .h2 {
     @apply mb-8 text-gray-700;
   }
-  .card {
-    @apply bg-white;
+  .card-white {
+    @apply card bg-base-100 text-base-content;
   }
 }
 @layer utilities {
