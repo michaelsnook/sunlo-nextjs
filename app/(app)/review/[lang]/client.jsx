@@ -52,7 +52,7 @@ export default function ClientPage({ lang }) {
       <p className="inline-block">
         <span className="alert alert-info inline-block text-white text-center">
           Reviewing {languages[lang]} flash cards.{' '}
-          {reviewCards.length - cardIndex} cards left today!{' '}
+          {reviewCards.length - cardIndex} cards left today{' '}
           {cardIndex < reviewCards.length ? (
             <>
               ({cardIndex + 1} out of {reviewCards.length})
