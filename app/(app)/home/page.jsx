@@ -9,8 +9,10 @@ export default function Page() {
   const router = useRouter()
 
   return (
-    <div className="form-control p-4 md:px-6 lg:px-10">
-      <label className="label">Which language are you working on today?</label>
+    <div className="form-control max-w-sm">
+      <label className="label h2">
+        Which language are you working on today?
+      </label>
       <select
         onChange={event => router.push(`/home/${event.target.value}`)}
         className="select select-secondary text-base-content text-xl h-12"

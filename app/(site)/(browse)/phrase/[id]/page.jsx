@@ -15,7 +15,7 @@ export default async function Page({ params }) {
   const phrase = phrases.find(p => p.id === params.id)
 
   return (
-    <div className="page-card flex flex-col gap-12">
+    <div className="page-card gap-8 lg:w-[50vw] w-96">
       <div>
         <Link href={`/language/${phrase.lang}`} className="link text-primary">
           &larr; Back to {languages[phrase.lang]}
