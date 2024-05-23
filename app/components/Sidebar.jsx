@@ -27,7 +27,7 @@ const Navlink = ({ href, children }) => {
   )
 }
 
-export default function Sidebar({ shy = false }) {
+export default function Sidebar({ shy = true }) {
   const [isOpen, setIsOpen] = useState(false)
   const pathname = usePathname()
   const router = useRouter()
@@ -52,7 +52,7 @@ export default function Sidebar({ shy = false }) {
 
   return (
     <div id="sidebar-all">
-      <SidebarOpener isOpen={isOpen} setIsOpen={setIsOpen} shy={shy} />
+      <SidebarOpener isOpen={isOpen} setIsOpen={setIsOpen} shy={true} />
       <div
         className={`z-20 bg-black bg-opacity-50 pt-10 ${
           isOpen ? 'fixed' : 'hidden'
@@ -61,7 +61,7 @@ export default function Sidebar({ shy = false }) {
       />
       <nav
         aria-label="Main navigation"
-        className={`overflow-y-auto overflow-x-hidden z-30 top-0 w-72 p-6 bg-white text-gray-800 h-screen ${
+        className={`overflow-y-auto overflow-x-hidden z-30 top-0 w-72 p-6 bg-base-300 text-base-content h-screen ${
           isOpen ? 'fixed' : 'hidden'
         } ${shy && !isOpen ? '' : 'md:sticky md:flex'}  flex-col gap-4`}
       >

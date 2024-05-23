@@ -1,6 +1,7 @@
 import QueryProvider from 'app/query-provider'
 import { AuthProvider } from 'lib/auth-context'
 import { Toaster } from 'react-hot-toast'
+import Sidebar from 'app/components/Sidebar'
 import 'styles/globals.css'
 
 export const metadata = {
@@ -16,12 +17,19 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body className="bg-primary text-white">
         <Toaster />
         <QueryProvider>
           <AuthProvider>
-            {children}
             <div id="modal-root" />
+            <div className="flex flex-row">
+              <Sidebar shy={true} />
+              <main className="flex-grow flex-col pt-6 md:pt-10 pb-10 md:pb-16 px-[2%] md:px-[5%] min-h-screen content-center">
+                <div className="content-center grid justify-center mb-8">
+                  {children}
+                </div>
+              </main>
+            </div>
           </AuthProvider>
         </QueryProvider>
       </body>

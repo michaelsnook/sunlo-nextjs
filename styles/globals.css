@@ -23,10 +23,6 @@
     --tab-radius:0.5rem;
     */
   }
-  body {
-    background-color: #eee;
-    min-height: 100vh;
-  }
 }
 
 @layer components {
@@ -42,7 +38,7 @@
   }
   /* used when you want a card section, width lg */
   .section-card {
-    @apply card shadow-lg bg-base-100 text-base-content max-w-lg p-10;
+    @apply card mx-auto shadow-lg bg-base-100 text-base-content max-w-lg p-10;
   }
   /* used inside .section-card to provide optional spacing and 
   ability to use the section inside other elements */
@@ -55,7 +51,7 @@
   }
   /* used for a whole page */
   .page-card {
-    @apply container mx-auto card bg-base-100 text-base-content px-3 md:px-6 lg:px-10 border shadow-lg mb-6 pt-10 pb-16 min-h-50vh;
+    @apply container mx-auto card bg-base-100 text-base-content px-3 md:px-6 lg:px-10 border shadow-lg mb-6 pt-10 pb-16 min-h-50vh min-w-72;
   }
   .page-card > .h1,
   .page-card > .h2 {
