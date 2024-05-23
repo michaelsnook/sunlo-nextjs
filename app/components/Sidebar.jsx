@@ -29,6 +29,7 @@ const Navlink = ({ href, children }) => {
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false)
+  const toggle = () => setIsOpen(!isOpen)
   const pathname = usePathname()
   const router = useRouter()
 
@@ -52,12 +53,12 @@ export default function Sidebar() {
 
   return (
     <div id="sidebar-all">
-      <SidebarOpener isOpen={isOpen} setIsOpen={setIsOpen} />
+      <SidebarOpener isOpen={isOpen} toggle={toggle} />
       <div
         className={`z-20 bg-black bg-opacity-50 pt-10 ${
           isOpen ? 'fixed' : 'hidden'
         } md:hidden top-0 left-0 right-0 bottom-0`}
-        onClick={() => setIsOpen(false)}
+        onClick={toggle}
       />
       <nav
         aria-label="Main navigation"
@@ -118,7 +119,7 @@ export default function Sidebar() {
   )
 }
 
-const SidebarOpener = ({ isOpen, setIsOpen }) => (
+const SidebarOpener = ({ isOpen, toggle }) => (
   <button
     className={`z-50 fixed bottom-4 left-3 p-2 btn-outline rounded-full bg-white btn-primary border border-primary`}
     role="button"
@@ -126,7 +127,7 @@ const SidebarOpener = ({ isOpen, setIsOpen }) => (
     aria-label="Toggle main menu"
     aria-expanded={isOpen ? 'true' : 'false'}
     aria-controls="main-menu"
-    onClick={() => setIsOpen(!isOpen)}
+    onClick={toggle}
     tabIndex="0"
   >
     <svg
