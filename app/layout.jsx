@@ -22,9 +22,26 @@ export default function RootLayout({ children }) {
         <QueryProvider>
           <AuthProvider>
             <div id="modal-root" />
-            <div className="flex flex-row min-h-screen">
+            {/*
+              This is the root of the layout. The flex, with 2 children
+              a) Sidebar with fixed width, and b) and main content/app area
+              with .flex-grow
+            */}
+            <div className="flex min-h-screen">
               <Sidebar />
-              <div className="flex-grow flex place-content-center place-items-center py-6">
+              {/*
+                This flexbox only ever has 1 child, the <main> element, so it
+                can use items-center and justify-center to always center the
+                page contents
+              */}
+              <div
+                className="
+                flex-grow
+                flex
+                items-center justify-center
+                py-6
+              "
+              >
                 <main>{children}</main>
               </div>
             </div>
