@@ -9,7 +9,7 @@ export default function AvatarSection() {
   const { data: profile } = useProfile()
   const pathname = usePathname()
   return (
-    <div className="text-center max-w-xl">
+    <header className="text-center max-w-prose">
       <div className="avatar relative">
         <label
           className="mb-8 w-36 h-36 mask mask-circle shadow-lg bg-gray-200"
@@ -39,6 +39,6 @@ export default function AvatarSection() {
           )}
         </p>
       </div>
-    </div>
+    </header>
   )
 }
