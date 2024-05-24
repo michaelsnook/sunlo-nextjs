@@ -3,7 +3,7 @@ import Garlic from 'app/components/Garlic'
 
 export default function Page() {
   return (
-    <main className="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-7 gap-8 md:gap-12 lg:gap-20">
+    <main className="container grid grid-cols-3 md:grid-cols-6 lg:grid-cols-7 gap-8 md:gap-12 lg:gap-20">
       <article className="pt-20 md:pt-4 md:pb-10 grid grid-cols-1 gap-6 col-span-3 lg:col-span-4 place-content-center">
         <h1 className="text-4xl">
           Sunlo is a social
