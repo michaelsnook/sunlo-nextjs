@@ -22,11 +22,11 @@ export default function RootLayout({ children }) {
         <QueryProvider>
           <AuthProvider>
             <div id="modal-root" />
-            <div className="flex flex-row">
+            <div className="flex min-h-screen">
               <Sidebar />
-              <main className="flex-grow flex-col pt-6 md:pt-10 pb-10 md:pb-16 px-[2%] md:px-[5%] min-h-screen content-center">
-                <div className="content-center grid justify-center mb-8">
-                  {children}
+              <main className="flex flex-grow">
+                <div className="container">
+                  <div className="">{children}</div>
                 </div>
               </main>
             </div>
