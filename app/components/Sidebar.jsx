@@ -3,12 +3,14 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Garlic from 'app/components/Garlic'
-import { staticMenu, convertDecksToMenu } from 'lib/menus'
+import languages from 'lib/languages'
 import { usePathname, useRouter } from 'next/navigation'
 import { useProfile, useAllDecks } from 'app/data/hooks'
 import Loading from 'app/loading'
+import ErrorList from './ErrorList'
 import supabase from 'lib/supabase-client'
 import { toast } from 'react-hot-toast'
+import { useAuth } from 'lib/auth-context'
 
 const Navlink = ({ href, children }) => {
   const pathname = usePathname()
@@ -27,29 +29,78 @@ const Navlink = ({ href, children }) => {
   )
 }
 
+const staticMenu = {
+  name: 'Menu',
+  links: [
+    {
+      name: 'Home',
+      href: '/',
+    },
+    {
+      name: 'Log in or sign up',
+      href: '/login',
+    },
+    {
+      name: 'Browse Languages',
+      href: '/language',
+    },
+  ],
+}
+
+const GenericMenu = ({ menu }) => {
+  return (
+    <div>
+      <p className="font-bold my-4">
+        {menu.href ? (
+          <Navlink href={menu.href}>{menu.name}</Navlink>
+        ) : (
+          menu.name
+        )}
+      </p>
+      <ul className="flex flex-col gap-2">
+        {menu.links?.map(i => (
+          <li key={i.href}>
+            <Navlink href={i.href}>{i.name}</Navlink>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+const StaticMenu = () => <GenericMenu menu={staticMenu} />
+
+const DeckMenu = () => {
+  const { data, status, error } = useAllDecks()
+  if (status === 'loading') return null
+  if (error) return <ErrorList error={error.message} />
+
+  const menuData = {
+    name: 'Learning decks',
+    href: '/home',
+    links: data?.map(deck => {
+      return {
+        name: languages[deck.lang],
+        href: `/home/${deck.lang}`,
+      }
+    }),
+  }
+  return <GenericMenu menu={menuData} />
+}
+
 export default function Sidebar() {
+  const { isAuth } = useAuth()
   const [isOpen, setIsOpen] = useState(false)
   const toggle = () => setIsOpen(!isOpen)
   const pathname = usePathname()
   const router = useRouter()
 
-  const { data: decks, status: decksStatus, error: decksError } = useAllDecks()
-  const {
-    data: profile,
-    status: profileStatus,
-    error: profileError,
-  } = useProfile()
-
-  const loading = decksStatus === 'loading' || profileStatus === 'loading'
+  const { data: profile, isLoading, error } = useProfile()
 
   // close the sidebar when the user navigates
   useEffect(() => {
     setIsOpen(false)
   }, [pathname])
-
-  const myMenus = loading
-    ? [staticMenu]
-    : [convertDecksToMenu(decks), staticMenu]
 
   return (
     <div id="sidebar-all">
@@ -70,49 +121,35 @@ export default function Sidebar() {
           <Garlic size={50} />
           Sunlo
         </span>
-        {loading ? (
+        {isLoading ? (
           <Loading />
         ) : (
-          <>
-            {profile ? (
-              <Navlink href="/profile">
-                <p className="flex flex-row gap-2">
-                  <ProfileIcon /> {profile?.username}
-                </p>
-              </Navlink>
-            ) : null}
-            {myMenus.map(menu => (
-              <div key={menu.name}>
-                <p className="font-bold my-4">
-                  {menu.href ? (
-                    <Navlink href={menu.href}>{menu.name}</Navlink>
-                  ) : (
-                    menu.name
-                  )}
-                </p>
-                <ul className="flex flex-col gap-2">
-                  {menu.links?.map(i => (
-                    <li key={i.href}>
-                      <Navlink href={i.href}>{i.name}</Navlink>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-            <p>
-              <button
-                className="btn btn-ghost"
-                onClick={() =>
-                  supabase.auth.signOut().then(() => {
-                    toast(`You have logged out`)
-                    router?.push('/')
-                  })
-                }
-              >
-                Sign out
-              </button>
-            </p>
-          </>
+          profile && (
+            <Navlink href="/profile">
+              <p className="flex flex-row gap-2">
+                <ProfileIcon /> {profile?.username}
+              </p>
+            </Navlink>
+          )
+        )}
+
+        <DeckMenu />
+        <StaticMenu />
+
+        {isAuth && (
+          <p>
+            <button
+              className="btn btn-ghost"
+              onClick={() =>
+                supabase.auth.signOut().then(() => {
+                  toast(`You have logged out`)
+                  router?.push('/')
+                })
+              }
+            >
+              Sign out
+            </button>
+          </p>
         )}
       </nav>
     </div>
