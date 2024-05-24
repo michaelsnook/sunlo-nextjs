@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import supabase from 'lib/supabase-client'
 import ErrorList from 'app/components/ErrorList'
+import { useMutation } from '@tanstack/react-query'
 
 const baseUrl =
   process.env.NEXT_PUBLIC_VERCEL_ENV === 'development'
@@ -15,38 +16,26 @@ const redirectUrl = `${baseUrl}/profile/change-password`
 console.log(`redirectUrl is ${redirectUrl}`)
 
 export default function ForgotPasswordForm() {
-  const [errors, setErrors] = useState()
-  const [isSubmitting, setIsSubmitting] = useState()
-  const [successfulSubmit, setSuccessfulSubmit] = useState()
   const [yourEmail, setYourEmail] = useState()
 
-  const onSubmit = event => {
-    setErrors()
-    setIsSubmitting(true)
+  const onSubmit = async event => {
     event.preventDefault()
-
     const email = event.target.email.value
     setYourEmail(email)
-    supabase.auth
-      .resetPasswordForEmail(email, {
-        redirectTo: redirectUrl,
-      })
-      .then(({ data, error }) => {
-        setIsSubmitting(false)
-        if (!error) {
-          setSuccessfulSubmit(true)
-          setErrors()
-          console.log(`Succeeded submitting the form`, data)
-        } else {
-          setErrors(error)
-          console.log(`There was an error submitting the form`, error)
-        }
-      })
+    const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: redirectUrl,
+    })
+    if (error) throw Error(error)
+    return data
   }
+
+  const useRequestPasswordForm = useMutation({
+    mutationFn: onSubmit,
+  })
 
   return (
     <div className="section-card-inner">
-      {successfulSubmit ? (
+      {useRequestPasswordForm.isSuccess ? (
         <div className="flex flex-col space-y-4">
           <h1 className="h3 text-base-content/90">Check your email</h1>
           <p>We&apos;ve sent a password reset link to {yourEmail}.</p>
@@ -55,8 +44,15 @@ export default function ForgotPasswordForm() {
       ) : (
         <>
           <h1 className="h3 text-base-content/90">Request a password reset</h1>
-          <form role="form" onSubmit={onSubmit} className="form">
-            <fieldset className="flex flex-col gap-y-4" disabled={isSubmitting}>
+          <form
+            role="form"
+            onSubmit={useRequestPasswordForm.mutate}
+            className="form"
+          >
+            <fieldset
+              className="flex flex-col gap-y-4"
+              disabled={useRequestPasswordForm.isSubmitting}
+            >
               <div>
                 <p>
                   <label htmlFor="email">Email</label>
@@ -65,10 +61,10 @@ export default function ForgotPasswordForm() {
                   id="email"
                   name="email"
                   required="required"
-                  aria-invalid={errors?.email ? 'true' : 'false'}
+                  aria-invalid={useRequestPasswordForm.error ? 'true' : 'false'}
                   className={`${
-                    errors?.email ? 'border-error/60' : ''
-                  } rounded-md w-full`}
+                    useRequestPasswordForm.error ? 'border-error' : ''
+                  } rounded-md w-full border-2`}
                   tabIndex="1"
                   type="text"
                   placeholder="email@domain"
@@ -79,8 +75,8 @@ export default function ForgotPasswordForm() {
                   tabIndex="3"
                   className="btn btn-primary"
                   type="submit"
-                  disabled={isSubmitting}
-                  aria-disabled={isSubmitting}
+                  disabled={useRequestPasswordForm.isSubmitting}
+                  aria-disabled={useRequestPasswordForm.isSubmitting}
                 >
                   Send password reset email
                 </button>
@@ -89,7 +85,7 @@ export default function ForgotPasswordForm() {
           </form>
           <ErrorList
             summary="Error sending password reset"
-            error={errors?.message}
+            error={`${useRequestPasswordForm.error}`}
           />
         </>
       )}
