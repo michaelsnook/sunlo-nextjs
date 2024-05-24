@@ -44,7 +44,7 @@
   }
   /* used for a whole page */
   .page-card {
-    @apply container mx-auto card bg-base-100 text-base-content px-3 md:px-6 lg:px-10 border shadow-lg mb-6 pt-10 pb-16 min-h-50vh min-w-72;
+    @apply container card border shadow-lg bg-base-100 text-base-content px-3 md:px-6 lg:px-10 mb-6 pt-10 pb-16 mx-auto;
   }
   .page-card > .h1,
   .page-card > .h2 {
