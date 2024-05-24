@@ -32,7 +32,7 @@ export default function SetNewEmailForm() {
         <SuccessfulSubmit />
       ) : (
         <>
-          <h1 className="h3 text-gray-700">Choose a new email</h1>
+          <h1 className="h3 text-base-content/90">Choose a new email</h1>
           <form role="form" onSubmit={onSubmit} className="form">
             <fieldset
               className="flex flex-col gap-y-4"
@@ -81,7 +81,7 @@ export default function SetNewEmailForm() {
 
 const SuccessfulSubmit = () => (
   <div className="flex flex-col space-y-4">
-    <h1 className="h3 text-gray-700">Please confirm email</h1>
+    <h1 className="h3 text-base-content/90">Please confirm email</h1>
     <p>
       We&apos;ve sent a confirmation email to the address you entered. Please
       click the confirmation link in your email.

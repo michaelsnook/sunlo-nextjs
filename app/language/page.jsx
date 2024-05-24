@@ -8,7 +8,7 @@ export default async function Page() {
       <ul className="columns-3xs space-y-4">
         {Object.keys(languages).map(lang => (
           <li key={lang}>
-            <Link href={`/language/${lang}`} className="btn btn-quiet">
+            <Link href={`/language/${lang}`} className="btn btn-ghost">
               <p>
                 {languages[lang]} ({lang})
               </p>

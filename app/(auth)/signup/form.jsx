@@ -39,7 +39,7 @@ export default function SignupForm() {
         <SuccessfulSubmit />
       ) : (
         <>
-          <h1 className="h3 text-gray-700">Create your account</h1>
+          <h1 className="h3 text-base-content/90">Create your account</h1>
           <form role="form" onSubmit={onSubmit} className="form">
             <fieldset className="flex flex-col gap-y-4" disabled={isSubmitting}>
               <div>
@@ -86,7 +86,7 @@ export default function SignupForm() {
                 >
                   Sign up
                 </button>
-                <Link tabIndex="4" href="/login" className="btn btn-quiet">
+                <Link tabIndex="4" href="/login" className="btn btn-ghost">
                   Log in
                 </Link>
               </div>
@@ -106,7 +106,7 @@ export default function SignupForm() {
 
 const SuccessfulSubmit = () => (
   <div className="flex flex-col space-y-4 p-4 sm:p-6 md:p-10">
-    <h1 className="h3 text-gray-700">Please confirm email</h1>
+    <h1 className="h3 text-base-content/90">Please confirm email</h1>
     <p>
       We&apos;ve sent a confirmation email to the address you entered. Please
       click the confirmation link in your email.

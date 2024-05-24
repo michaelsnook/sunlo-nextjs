@@ -166,7 +166,7 @@ const UserAuthCard = () => {
             value={user?.email ?? 'loading...'}
             disabled
           />
-          <Link href="/profile/change-email" className="btn btn-quiet">
+          <Link href="/profile/change-email" className="btn btn-ghost">
             Change
           </Link>
         </div>
@@ -180,7 +180,7 @@ const UserAuthCard = () => {
             value="***************"
             disabled
           />
-          <Link href="/profile/change-password" className="btn btn-quiet">
+          <Link href="/profile/change-password" className="btn btn-ghost">
             Change
           </Link>
         </div>

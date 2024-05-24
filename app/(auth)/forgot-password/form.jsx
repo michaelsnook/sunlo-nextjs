@@ -48,13 +48,13 @@ export default function ForgotPasswordForm() {
     <div className="section-card-inner">
       {successfulSubmit ? (
         <div className="flex flex-col space-y-4">
-          <h1 className="h3 text-gray-700">Check your email</h1>
+          <h1 className="h3 text-base-content/90">Check your email</h1>
           <p>We&apos;ve sent a password reset link to {yourEmail}.</p>
           <p>You can close this window.</p>
         </div>
       ) : (
         <>
-          <h1 className="h3 text-gray-700">Request a password reset</h1>
+          <h1 className="h3 text-base-content/90">Request a password reset</h1>
           <form role="form" onSubmit={onSubmit} className="form">
             <fieldset className="flex flex-col gap-y-4" disabled={isSubmitting}>
               <div>
