@@ -92,7 +92,7 @@ export default function Page() {
             &nbsp;&rarr;
           </Link>
         ) : null}
-        <Link href="/profile" className="mx-auto btn btn-quiet-dark">
+        <Link href="/profile" className="mx-auto btn btn-ghost">
           Go to your profile&nbsp;&rarr;
         </Link>
       </div>
@@ -316,7 +316,7 @@ const SetUsernameStep = ({ value, set }) => {
           }}
         />
       </div>
-      <button onClick={setClosed} className="btn btn-quiet my-4" type="submit">
+      <button onClick={setClosed} className="btn btn-ghost my-4" type="submit">
         Do the thing
       </button>
     </form>
@@ -326,7 +326,7 @@ const SetUsernameStep = ({ value, set }) => {
 const X = ({ set, plus }) => (
   <button
     onClick={() => set()}
-    className={`btn btn-quiet-dark rounded-full block flex-none ${
+    className={`btn btn-ghost rounded-full block flex-none ${
       plus ? 'rotate-45' : ''
     }`}
   >

@@ -44,7 +44,7 @@ export default function LoginForm({ asModal = false }) {
 
   return (
     <div className="section-card-inner">
-      <h1 className="h3 text-gray-700">Please log in</h1>
+      <h1 className="h3 text-base-content/90">Please log in</h1>
       <form role="form" onSubmit={onSubmit} className="form">
         <fieldset className="flex flex-col gap-y-4" disabled={isSubmitting}>
           <div>
@@ -91,7 +91,7 @@ export default function LoginForm({ asModal = false }) {
             >
               Log in
             </button>
-            <Link tabIndex="4" href="/signup" className="btn btn-quiet">
+            <Link tabIndex="4" href="/signup" className="btn btn-ghost">
               Create account
             </Link>
           </div>

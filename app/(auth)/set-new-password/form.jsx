@@ -35,7 +35,7 @@ export default function SetNewPasswordForm() {
         <InvalidLink />
       ) : (
         <>
-          <h1 className="h3 text-gray-700">Choose a new password</h1>
+          <h1 className="h3 text-base-content/90">Choose a new password</h1>
           <form role="form" onSubmit={onSubmit} className="form">
             <fieldset className="flex flex-col gap-y-4" disabled={isSubmitting}>
               <div>
@@ -80,7 +80,7 @@ export default function SetNewPasswordForm() {
 
 const InvalidLink = () => (
   <div className="flex flex-col space-y-4">
-    <h1 className="h3 text-gray-700">Invalid link</h1>
+    <h1 className="h3 text-base-content/90">Invalid link</h1>
     <p>
       Perhaps you&apos;ve received more than one password reset email? try the
       most recent one.
@@ -97,7 +97,7 @@ const InvalidLink = () => (
 
 const SuccessfulSubmit = () => (
   <div className="flex flex-col space-y-4">
-    <h1 className="h3 text-gray-700">Update Successful!</h1>
+    <h1 className="h3 text-base-content/90">Update Successful!</h1>
     <p>
       You can close this window or go{' '}
       <Link href="/profile" className="link">

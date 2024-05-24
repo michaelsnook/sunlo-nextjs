@@ -26,13 +26,6 @@
 }
 
 @layer components {
-  .btn-quiet {
-    @apply btn-link hover:underline hover:bg-primary/10 border-transparent hover:border-white;
-  }
-  .btn-quiet-dark {
-    @apply btn btn-outline border-none bg-base-100 hover:btn-secondary;
-    background-color: hsla(var(--p) / var(--tw-bg-opacity, 1));
-  }
   .link {
     @apply hover:underline cursor-pointer;
   }
@@ -55,7 +48,7 @@
   }
   .page-card > .h1,
   .page-card > .h2 {
-    @apply mb-8 text-gray-700;
+    @apply mb-8 text-base-content/90;
   }
   .card-white {
     @apply card bg-base-100 text-base-content;

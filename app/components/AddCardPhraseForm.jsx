@@ -163,7 +163,7 @@ export default function AddCardPhraseForm({
               Submit
             </button>
             <a
-              className="place-self-center btn btn-quiet"
+              className="place-self-center btn btn-ghost"
               onClick={() => onCancel()}
             >
               Cancel

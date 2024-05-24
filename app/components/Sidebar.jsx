@@ -101,7 +101,7 @@ export default function Sidebar() {
             ))}
             <p>
               <button
-                className="btn btn-quiet"
+                className="btn btn-ghost"
                 onClick={() =>
                   supabase.auth.signOut().then(() => {
                     toast(`You have logged out`)
