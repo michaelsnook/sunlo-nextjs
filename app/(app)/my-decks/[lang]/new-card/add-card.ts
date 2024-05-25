@@ -1,5 +1,3 @@
-'use client'
-
 import supabase from 'lib/supabase-client'
 import { Scalars } from 'types/utils'
 import { CardStub, Phrase } from 'types/client-types'

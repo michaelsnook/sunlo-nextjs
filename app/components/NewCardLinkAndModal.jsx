@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import MyModal from 'app/components/Modal'
-import AddCardPhraseForm from 'app/components/AddCardPhraseForm'
+import AddCardPhraseForm from 'app/(app)/my-decks/[lang]/new-card/form'
 
 export default function NewCardLinkAndModal({ lang }) {
   const [showModal, setShowModal] = useState(false)

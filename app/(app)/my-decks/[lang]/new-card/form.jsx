@@ -10,7 +10,7 @@ import languages, {
 import { useDeck } from 'app/data/hooks'
 import ErrorList from 'app/components/ErrorList'
 import Loading from 'app/loading'
-import { postNewPhraseCardTranslations } from 'app/data/posters'
+import { postNewPhraseCardTranslations } from './add-card'
 import { useProfile } from 'app/data/hooks'
 import { useRouter } from 'next/navigation'
 
