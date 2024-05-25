@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useMutation } from '@tanstack/react-query'
 import Link from 'next/link'
 import supabase from 'lib/supabase-client'
 import ErrorList from 'app/components/ErrorList'
@@ -8,36 +8,39 @@ import { useAuth } from 'lib/auth-context'
 
 export default function SetNewPasswordForm() {
   const { user } = useAuth()
-  const [errors, setErrors] = useState()
-  const [isSubmitting, setIsSubmitting] = useState()
-  const [successfulSubmit, setSuccessfulSubmit] = useState()
 
-  const onSubmit = event => {
-    setErrors()
-    setIsSubmitting(true)
-    event.preventDefault()
+  const submitNewPassword = useMutation({
+    mutationFn: async event => {
+      event.preventDefault()
+      const password = event.target.password.value
 
-    const password = event.target.password.value
-
-    supabase.auth.updateUser({ password }).then(({ data, error }) => {
-      console.log(`Updated user, received:`, data, error)
-      setIsSubmitting(false)
-      setErrors(error)
-      setSuccessfulSubmit(!error)
-    })
-  }
+      const { data, error } = await supabase.auth.updateUser({ password })
+      if (error) throw error
+      return data
+    },
+    onSuccess: data => {
+      console.log(`Updated user, received:`, data)
+    },
+  })
 
   return (
     <div className="section-card-inner">
-      {successfulSubmit ? (
+      {submitNewPassword.isSuccess ? (
         <SuccessfulSubmit />
       ) : !user ? (
         <InvalidLink />
       ) : (
         <>
           <h1 className="h3 text-base-content/90">Choose a new password</h1>
-          <form role="form" onSubmit={onSubmit} className="form">
-            <fieldset className="flex flex-col gap-y-4" disabled={isSubmitting}>
+          <form
+            role="form"
+            onSubmit={submitNewPassword.mutate}
+            className="form"
+          >
+            <fieldset
+              className="flex flex-col gap-y-4"
+              disabled={submitNewPassword.isSubmitting}
+            >
               <div>
                 <p>
                   <label htmlFor="password">New password</label>
@@ -46,9 +49,13 @@ export default function SetNewPasswordForm() {
                   id="password"
                   name="password"
                   required="required"
-                  aria-invalid={errors?.password ? 'true' : 'false'}
+                  aria-invalid={
+                    submitNewPassword.error?.errors?.password ? 'true' : 'false'
+                  }
                   className={`${
-                    errors?.password ? 'border-error/60' : ''
+                    submitNewPassword.error?.errors?.password
+                      ? 'border-error/60'
+                      : ''
                   } rounded-md w-full`}
                   tabIndex="1"
                   type="password"
@@ -60,8 +67,8 @@ export default function SetNewPasswordForm() {
                   tabIndex="3"
                   className="btn btn-primary"
                   type="submit"
-                  disabled={isSubmitting}
-                  aria-disabled={isSubmitting}
+                  disabled={submitNewPassword.isSubmitting}
+                  aria-disabled={submitNewPassword.isSubmitting}
                 >
                   Set new password
                 </button>
@@ -70,7 +77,10 @@ export default function SetNewPasswordForm() {
           </form>
           <ErrorList
             summary="Error setting new password"
-            error={errors?.message}
+            error={
+              submitNewPassword.error &&
+              submitNewPassword.error?.errors?.message
+            }
           />
         </>
       )}
