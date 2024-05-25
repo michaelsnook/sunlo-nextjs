@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import languages from 'lib/languages'
-import AddCardPhraseForm from 'app/components/AddCardPhraseForm'
+import AddCardPhraseForm from './form'
 
 export default function Page({ params: { lang } }) {
   return (

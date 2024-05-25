@@ -5,7 +5,7 @@ import Loading from 'app/loading'
 import ErrorList from 'app/components/ErrorList'
 import { usePhrase } from 'app/data/hooks'
 import { useMutation } from '@tanstack/react-query'
-import { postNewCard } from 'app/data/posters'
+import { postNewCard } from 'app/(app)/my-decks/[lang]/new-card/add-card'
 import { useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
 
