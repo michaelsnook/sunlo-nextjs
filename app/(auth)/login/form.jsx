@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useMutation } from '@tanstack/react-query'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { toast } from 'react-hot-toast'
@@ -9,44 +9,38 @@ import { useAuth } from 'lib/auth-context'
 import ErrorList from 'app/components/ErrorList'
 
 export default function LoginForm({ asModal = false }) {
-  const [errors, setErrors] = useState()
-  const [isSubmitting, setIsSubmitting] = useState()
-
   const { isAuth } = useAuth()
 
-  if (isAuth) return null
+  const login = useMutation({
+    mutationFn: async event => {
+      event.preventDefault()
 
-  const onSubmit = event => {
-    event.preventDefault()
-    setErrors()
-    setIsSubmitting(true)
-    const email = event.target.email.value
-    const password = event.target.password.value
+      const email = event.target.email.value
+      const password = event.target.password.value
 
-    supabase.auth
-      .signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       })
-      .then(({ data, error }) => {
-        setIsSubmitting(false)
-        if (error) setErrors(error)
-        if (data) {
-          toast.success(`You're logged in as ${data.user.email}`)
-          if (!asModal) redirect('/my-decks')
-        }
-      })
-      .catch(e => {
-        setIsSubmitting(false)
-        setErrors(e)
-      })
-  }
+      if (error) throw error
+      return data
+    },
+    onSuccess: data => {
+      toast.success(`You're logged in as ${data.user.email}`)
+      if (!asModal) redirect('/home')
+    },
+  })
+
+  if (isAuth) return <p>You are logged in; pls wait while we redirect you.</p>
 
   return (
     <div className="section-card-inner">
       <h1 className="h3 text-base-content/90">Please log in</h1>
-      <form role="form" onSubmit={onSubmit} className="form">
-        <fieldset className="flex flex-col gap-y-4" disabled={isSubmitting}>
+      <form role="form" onSubmit={login.mutate} className="form">
+        <fieldset
+          className="flex flex-col gap-y-4"
+          disabled={login.isSubmitting}
+        >
           <div>
             <p>
               <label htmlFor="email">Email</label>
@@ -55,9 +49,9 @@ export default function LoginForm({ asModal = false }) {
               id="email"
               name="email"
               required="required"
-              aria-invalid={errors?.email ? 'true' : 'false'}
+              aria-invalid={login.error?.email ? 'true' : 'false'}
               className={`${
-                errors?.email ? 'border-error/60' : ''
+                login.error?.email ? 'border-error/60' : ''
               } rounded-md w-full`}
               tabIndex="1"
               type="text"
@@ -72,9 +66,9 @@ export default function LoginForm({ asModal = false }) {
               id="password"
               name="password"
               required="required"
-              aria-invalid={errors?.password ? 'true' : 'false'}
+              aria-invalid={login.error?.password ? 'true' : 'false'}
               className={`${
-                errors?.password ? 'border-error/60' : ''
+                login.error?.password ? 'border-error/60' : ''
               } rounded-md w-full`}
               tabIndex="2"
               type="password"
@@ -86,8 +80,8 @@ export default function LoginForm({ asModal = false }) {
               tabIndex="3"
               className="btn btn-primary"
               type="submit"
-              disabled={isSubmitting}
-              aria-disabled={isSubmitting}
+              disabled={login.isSubmitting}
+              aria-disabled={login.isSubmitting}
             >
               Log in
             </button>
@@ -95,7 +89,7 @@ export default function LoginForm({ asModal = false }) {
               Create account
             </Link>
           </div>
-          <ErrorList summary="Problem logging in" error={errors?.message} />
+          <ErrorList summary="Problem logging in" error={login.error} />
           <p>
             <Link href="/forgot-password" className="link text-sm">
               Forgot password?
