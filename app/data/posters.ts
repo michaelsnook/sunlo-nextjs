@@ -2,18 +2,7 @@
 
 import supabase from 'lib/supabase-client'
 import { Scalars } from 'types/utils'
-import { DeckStub, CardStub, Phrase } from 'types/client-types'
-
-export const postNewDeck = async (lang: string): Promise<DeckStub | null> => {
-  // console.log(`postNewDeck ${lang}`)
-  const { data, error } = await supabase
-    .from('user_deck')
-    .insert({ lang })
-    .select()
-  // console.log(`postNewDeck`, data, error)
-  if (error) throw error
-  return data[0] || null
-}
+import { CardStub, Phrase } from 'types/client-types'
 
 type UserCardInsertInput = {
   phrase_id: Scalars['UUID']
