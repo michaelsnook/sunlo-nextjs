@@ -4,6 +4,7 @@ import { useState } from 'react'
 import supabase from 'lib/supabase-client'
 import { useAuth } from 'lib/auth-context'
 import ErrorList from 'app/components/ErrorList'
+import { BASE_URL } from 'lib/helpers'
 
 export default function SetNewEmailForm() {
   const { user } = useAuth()
@@ -18,12 +19,19 @@ export default function SetNewEmailForm() {
 
     const email = event.target.email.value
 
-    supabase.auth.updateUser({ email }).then(({ data, error }) => {
-      console.log(data, error)
-      setIsSubmitting(false)
-      setSuccessfulSubmit(!error)
-      setErrors(error)
-    })
+    supabase.auth
+      .updateUser({
+        email,
+        options: {
+          emailRedirectTo: `${BASE_URL}/change-email-success`,
+        },
+      })
+      .then(({ data, error }) => {
+        console.log(data, error)
+        setIsSubmitting(false)
+        setSuccessfulSubmit(!error)
+        setErrors(error)
+      })
   }
 
   return (

@@ -6,9 +6,6 @@ import ErrorList from 'app/components/ErrorList'
 import { useMutation } from '@tanstack/react-query'
 import { BASE_URL } from 'lib/helpers'
 
-const redirectUrl = `${BASE_URL}/profile/change-password`
-console.log(`redirectUrl is ${redirectUrl}`)
-
 export default function ForgotPasswordForm() {
   const [yourEmail, setYourEmail] = useState()
 
@@ -17,7 +14,7 @@ export default function ForgotPasswordForm() {
     const email = event.target.email.value
     setYourEmail(email)
     const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: redirectUrl,
+      redirectTo: `${BASE_URL}/profile/change-password`,
     })
     if (error) throw Error(error)
     return data
