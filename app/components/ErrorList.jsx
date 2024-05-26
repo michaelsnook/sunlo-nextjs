@@ -1,14 +1,3 @@
-// @ts-ignore
-/*
-import type { Maybe } from 'types/utils'
-
-type ErrorListProps = {
-  summary: Maybe<string>
-  error: Maybe<any>
-  errors: Maybe<Array<any>>
-}
-*/
-// const ErrorList = ({ summary, error, errors }: ErrorListProps) => {
 const ErrorList = ({ summary, error, errors }) => {
   const pickSummary =
     summary ?? error?.message ?? error?.response?.errors[0]?.message ?? null
@@ -17,14 +6,14 @@ const ErrorList = ({ summary, error, errors }) => {
   const errorString = JSON.stringify(error, null, 2)
 
   return !error && !errors?.length ? null : (
-    <div className="ErrorList border-gray-900 p-4 rounded-lg mt-6 mb-2 bg-gray-700 w-full">
+    <div className="ErrorList border-error-content p-4 rounded-lg mt-6 mb-2 bg-base-content/80 w-full">
       {displaySummary ? (
         <p className="font-bold text-error border-b border-error inline">
           Error: {displaySummary}
           <br />
         </p>
       ) : null}
-      <ul className="pl-5 text-error list-disc w-full">
+      <ul className="pl-5 text-error list-disc flex flex-col">
         <pre>
           {errorString ? <p>{errorString}</p> : null}
           {errors
