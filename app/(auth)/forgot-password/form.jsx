@@ -4,15 +4,9 @@ import { useState } from 'react'
 import supabase from 'lib/supabase-client'
 import ErrorList from 'app/components/ErrorList'
 import { useMutation } from '@tanstack/react-query'
+import { BASE_URL } from 'lib/helpers'
 
-const baseUrl =
-  process.env.NEXT_PUBLIC_VERCEL_ENV === 'development'
-    ? 'http://localhost:3000'
-    : process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview'
-    ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-    : 'https://sunlo.co'
-
-const redirectUrl = `${baseUrl}/profile/change-password`
+const redirectUrl = `${BASE_URL}/profile/change-password`
 console.log(`redirectUrl is ${redirectUrl}`)
 
 export default function ForgotPasswordForm() {
