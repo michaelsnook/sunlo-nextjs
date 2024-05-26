@@ -1,47 +1,46 @@
 'use client'
 
-import { useState } from 'react'
+import { useMutation } from '@tanstack/react-query'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import supabase from 'lib/supabase-client'
 import ErrorList from 'app/components/ErrorList'
+import { BASE_URL } from 'lib/helpers'
 
 export default function SignupForm() {
-  const [errors, setErrors] = useState()
-  const [isSubmitting, setIsSubmitting] = useState()
-  const [sentConfirmationEmail, setSentConfirmationEmail] = useState()
-
   const router = useRouter()
 
-  const onSubmit = event => {
-    setErrors()
-    setIsSubmitting(true)
-    event.preventDefault()
-    const email = event.target.email.value
-    const password = event.target.password.value
+  const submitSignup = useMutation({
+    mutationFn: async event => {
+      event.preventDefault()
+      const email = event.target.email.value
+      const password = event.target.password.value
 
-    supabase.auth
-      .signUp({ email, password })
-      .then(({ user, session, error }) => {
-        setIsSubmitting(false)
-        setErrors(error)
-        if (user && session) {
-          router.push('/getting-started')
-        } else if (user && !session) {
-          setSentConfirmationEmail(true)
-        }
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          redirectTo: `${BASE_URL}/getting-started`,
+        },
       })
-  }
+
+      if (error) throw error
+      if (data?.user && data?.session) router.push('/getting-started')
+    },
+  })
 
   return (
     <div className="section-card-inner">
-      {sentConfirmationEmail ? (
+      {submitSignup.isSuccess ? (
         <SuccessfulSubmit />
       ) : (
         <>
           <h1 className="h3 text-base-content/90">Create your account</h1>
-          <form role="form" onSubmit={onSubmit} className="form">
-            <fieldset className="flex flex-col gap-y-4" disabled={isSubmitting}>
+          <form role="form" onSubmit={submitSignup.mutate} className="form">
+            <fieldset
+              className="flex flex-col gap-y-4"
+              disabled={submitSignup.isSubmitting}
+            >
               <div>
                 <p>
                   <label htmlFor="email">Email</label>
@@ -50,9 +49,11 @@ export default function SignupForm() {
                   id="email"
                   name="email"
                   required="required"
-                  aria-invalid={errors?.email ? 'true' : 'false'}
+                  aria-invalid={
+                    submitSignup.error?.errors?.email ? 'true' : 'false'
+                  }
                   className={`${
-                    errors?.email ? 'border-error/60' : ''
+                    submitSignup.error?.errors?.email ? 'border-error/60' : ''
                   } rounded-md w-full`}
                   tabIndex="1"
                   type="text"
@@ -67,9 +68,13 @@ export default function SignupForm() {
                   id="password"
                   name="password"
                   required="required"
-                  aria-invalid={errors?.password ? 'true' : 'false'}
+                  aria-invalid={
+                    submitSignup.error?.errors?.password ? 'true' : 'false'
+                  }
                   className={`${
-                    errors?.password ? 'border-error/60' : ''
+                    submitSignup.error?.errors?.password
+                      ? 'border-error/60'
+                      : ''
                   } rounded-md w-full`}
                   tabIndex="2"
                   type="password"
@@ -81,8 +86,8 @@ export default function SignupForm() {
                   tabIndex="3"
                   className="btn btn-primary"
                   type="submit"
-                  disabled={isSubmitting}
-                  aria-disabled={isSubmitting}
+                  disabled={submitSignup.isSubmitting}
+                  aria-disabled={submitSignup.isSubmitting}
                 >
                   Sign up
                 </button>
@@ -90,7 +95,10 @@ export default function SignupForm() {
                   Log in
                 </Link>
               </div>
-              <ErrorList summary="Problem logging in" error={errors?.message} />
+              <ErrorList
+                summary="Problem logging in"
+                error={submitSignup.error}
+              />
               <p>
                 <Link href="/forgot-password" className="link text-sm">
                   Forgot password?
