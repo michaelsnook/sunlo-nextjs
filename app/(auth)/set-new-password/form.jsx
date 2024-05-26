@@ -5,6 +5,7 @@ import Link from 'next/link'
 import supabase from 'lib/supabase-client'
 import ErrorList from 'app/components/ErrorList'
 import { useAuth } from 'lib/auth-context'
+import { toast } from 'react-hot-toast'
 
 export default function SetNewPasswordForm() {
   const { user } = useAuth()
@@ -20,6 +21,7 @@ export default function SetNewPasswordForm() {
     },
     onSuccess: data => {
       console.log(`Updated user, received:`, data)
+      toast.success('Successfully updated your password')
     },
   })
 
