@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useMutation } from '@tanstack/react-query'
 import { useAuth } from 'lib/auth-context'
 import supabase from 'lib/supabase-client'
 import ErrorList from 'app/components/ErrorList'
@@ -17,66 +18,76 @@ export default function Page() {
   const queryClient = useQueryClient()
 
   const [tempLanguagePrimary, setTempLanguagePrimary] = useState()
-  const tempLanguagePrimaryToUse =
-    tempLanguagePrimary ?? profile?.language_primary
   const [tempDeckToAdd, setTempDeckToAdd] = useState()
   const [tempUsername, setTempUsername] = useState()
+  const tempLanguagePrimaryToUse =
+    tempLanguagePrimary ?? profile?.language_primary
   const tempUsernameToUse = tempUsername ?? profile?.username
-  const [errors, setErrors] = useState()
-  const [isSubmitting, setIsSubmitting] = useState()
-  const [successfulSetup, setSuccessfulSetup] = useState()
+  const newLanguagesSpoken = prependAndDedupe(
+    tempLanguagePrimary,
+    profile?.languages_spoken
+  )
 
-  const handleMainForm = () => {
-    setErrors()
-    setIsSubmitting(true)
+  const reset = () => {
+    setTempLanguagePrimary(profile?.language_primary)
+    setTempDeckToAdd()
+    setTempUsername(profile?.username)
+  }
 
-    // an array with the new item at front, removing dupes of that same item
-    const newLanguagesSpoken = prependAndDedupe(
-      tempLanguagePrimary,
-      profile.languages_spoken
-    )
-    supabase
-      .from('user_profile')
-      .upsert({
-        username: tempUsernameToUse,
-        language_primary: tempLanguagePrimaryToUse,
-        languages_spoken: newLanguagesSpoken,
-      })
-      .match({ uid: user.id })
-      .then(({ error }) => {
-        if (error) {
-          setErrors(error)
-          console.log('error upserting', error)
-          setIsSubmitting(false)
-        } else {
-          console.log('upsert profile data')
+  const mainForm = useMutation({
+    mutationFn: async event => {
+      event.preventDefault()
+      if (
+        !tempUsername &&
+        !tempLanguagePrimary &&
+        typeof tempDeckToAdd !== 'string'
+      )
+        throw 'Nothing to update'
 
-          if (typeof tempDeckToAdd === 'string' && tempDeckToAdd.length > 0) {
-            supabase
+      const profileUpsert =
+        !tempUsername && !tempLanguagePrimary
+          ? null
+          : await supabase
+              .from('user_profile')
+              .upsert({
+                username: tempUsernameToUse,
+                language_primary: tempLanguagePrimaryToUse,
+                languages_spoken: newLanguagesSpoken,
+              })
+              .match({ uid: user.id })
+              .select()
+
+      if (profileUpsert?.error) {
+        console.log('Profile upsert error', profileUpsert.error)
+        throw profileUpsert.error
+      }
+
+      const deckInsert =
+        typeof tempDeckToAdd !== 'string'
+          ? null
+          : await supabase
               .from('user_deck')
               .upsert({ lang: tempDeckToAdd, uid: user.id })
               .match({ lang: tempDeckToAdd, uid: user.id })
-              .then(({ data, error }) => {
-                console.log('create new deck', data, error)
-                if (error) {
-                  setErrors(error)
-                } else {
-                  setSuccessfulSetup(true)
-                }
-                setIsSubmitting(false)
-              })
-          } else {
-            setIsSubmitting(false)
-            setSuccessfulSetup(true)
-          }
-        }
-      })
-      .finally(() => {
-        queryClient.invalidateQueries('user_profile')
-      })
-  }
+              .select()
 
-  return profile === null ? null : successfulSetup ? (
+      if (deckInsert?.error) {
+        console.log(`Deck insert error`, deckInsert?.error)
+        throw deckInsert?.error
+      }
+
+      return {
+        deck: deckInsert?.data[0],
+        profile: profileUpsert?.data[0],
+      }
+    },
+    onSuccess: data => {
+      console.log(`Success! deck, profile`, data)
+      queryClient.invalidateQueries(['user_profile'])
+    },
+  })
+
+  return profile === null ? null : mainForm.isSuccess ? (
     <div className="p2 md:p-6 lg:p-10 max-w-prose text-white min-h-85vh flex flex-col gap-12 justify-center">
       <div className="flex flex-row justify-center space-x-4">
         <SuccessCheckmark />
@@ -109,46 +120,40 @@ export default function Page() {
       <h1 className="d1">Welcome to Sunlo</h1>
       <div className="max-w-prose">
         <p className="text-2xl my-4 mb-10">Let&apos;s get started</p>
+        <SetUsernameStep value={tempUsernameToUse} set={setTempUsername} />
         <SetPrimaryLanguageStep
           value={tempLanguagePrimaryToUse}
           set={setTempLanguagePrimary}
         />
         <CreateFirstDeckStep value={tempDeckToAdd} set={setTempDeckToAdd} />
-        <SetUsernameStep value={tempUsernameToUse} set={setTempUsername} />
 
         {tempLanguagePrimaryToUse &&
         (tempDeckToAdd || profile.user_decks?.length > 0) &&
         tempUsernameToUse ? (
           <div className="my-6 flex flex-row-reverse justify-around items-center">
             <button
-              onClick={handleMainForm}
+              onClick={mainForm.mutate}
               className="btn btn-accent md:btn-lg"
-              disabled={isSubmitting}
+              disabled={mainForm.isSubmitting}
             >
               Confirm and get started!
             </button>
-            <button
-              onClick={() => {
-                setErrors()
-                setIsSubmitting()
-                setTempLanguagePrimary(profile?.language_primary)
-                setTempDeckToAdd()
-                setTempUsername(profile?.username)
-              }}
-              className="btn btn-primary"
-            >
+            <button onClick={reset} className="btn btn-primary">
               Reset page
             </button>
           </div>
         ) : null}
       </div>
-      <ErrorList summary="Couldn't save profile" error={errors?.message} />
+      <ErrorList
+        summary="Problem inserting profile or making deck"
+        error={mainForm.error}
+      />
     </div>
   )
 }
 
 const SetPrimaryLanguageStep = ({ value, set }) => {
-  const [closed, setClosed] = useState(!!value)
+  const [closed, setClosed] = useState(true)
   return closed && value?.length > 0 ? (
     <Completed>
       <p className="h4">
@@ -172,7 +177,6 @@ const SetPrimaryLanguageStep = ({ value, set }) => {
           value={value || ''}
           name="language_primary"
           onChange={e => {
-            e.preventDefault()
             set(e.target.value)
             setClosed(true)
           }}
@@ -207,8 +211,8 @@ const SetPrimaryLanguageStep = ({ value, set }) => {
 const CreateFirstDeckStep = ({ value, set }) => {
   const { data } = useProfile()
   const decks = data?.user_decks || []
-  const [closed, setClosed] = useState(decks?.length > 0)
-  return closed ? (
+  const [closed, setClosed] = useState(true)
+  return closed && decks?.length ? (
     <Completed>
       <h2 className="h4 flex-none">
         {!value && decks?.length > 0 ? (
@@ -283,20 +287,20 @@ const CreateFirstDeckStep = ({ value, set }) => {
 }
 
 const SetUsernameStep = ({ value, set }) => {
-  const [closed, setClosed] = useState(value?.length > 0)
+  const [closed, setClosed] = useState(true)
   return closed && value ? (
     <Completed>
       <p className="h4 block">
         Your username is <Highlight>{value}</Highlight>
       </p>
-      <X set={() => setClosed()} />
+      <X set={() => setClosed(false)} />
     </Completed>
   ) : (
     <form
       className="big-card mb-16"
       onSubmit={e => {
         e.preventDefault()
-        set(e.target.username.value)
+        if (e.target.username.value) setClosed(true)
       }}
     >
       <h2 className="h2">Pick a username</h2>
@@ -311,12 +315,11 @@ const SetUsernameStep = ({ value, set }) => {
           placeholder="Lernie McSanders"
           value={value || ''}
           onChange={e => {
-            setClosed()
             set(e.target.value)
           }}
         />
       </div>
-      <button onClick={setClosed} className="btn btn-ghost my-4" type="submit">
+      <button className="btn btn-ghost my-4" type="submit">
         Do the thing
       </button>
     </form>
