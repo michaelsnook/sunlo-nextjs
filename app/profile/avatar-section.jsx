@@ -11,19 +11,19 @@ export default function AvatarSection() {
   return (
     <header className="text-center max-w-prose">
       <div className="avatar relative">
-        <label
-          className="mb-8 w-36 h-36 mask mask-circle shadow-lg bg-gray-200"
-          htmlFor="single"
-        >
-          {profile?.avatar_public_url ? (
+        {profile?.avatar_url && (
+          <label
+            className="mb-8 w-36 h-36 mask mask-circle shadow-lg bg-gray-200"
+            htmlFor="single"
+          >
             <Image
-              src={profile?.avatar_public_url}
+              src={profile?.avatar_url}
               width="144"
               height="144"
               alt={`${profile?.username}'s profile image`}
             />
-          ) : null}
-        </label>
+          </label>
+        )}
       </div>
       <div>
         <h2 className="text-4xl">Hi, {profile?.username} 👋</h2>
