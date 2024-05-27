@@ -13,8 +13,7 @@ import languages from 'lib/languages'
 import SuccessCheckmark from 'app/components/SvgComponents'
 
 export default function Page() {
-  const { user } = useAuth()
-  const userId = user?.id
+  const { userId } = useAuth()
   const { data: profile } = useProfile()
   const queryClient = useQueryClient()
 
