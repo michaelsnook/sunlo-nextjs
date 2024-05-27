@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import Link from 'next/link'
 import { useQueryClient } from '@tanstack/react-query'
@@ -11,9 +12,11 @@ import languages from 'lib/languages'
 import Loading from 'app/loading'
 import { useProfile } from 'app/data/hooks'
 import { toast } from 'react-hot-toast'
+import AvatarEditor from './avatar-edit'
 
 export const ProfileCard = () => {
   const queryClient = useQueryClient()
+  const [newAvatarUrl, setNewAvatarUrl] = useState()
 
   const {
     data: profile,
@@ -30,12 +33,14 @@ export const ProfileCard = () => {
       const languages_spoken_array = convertNodeListToCheckedValues(
         event.target.languages_spoken
       )
+
       const { data, error } = await supabase
         .from('user_profile')
         .update({
           username,
           language_primary,
           languages_spoken: [language_primary, ...languages_spoken_array],
+          avatar_url: newAvatarUrl || profile?.avatar_url,
         })
         .match({ uid: profile.uid })
         .select()
@@ -121,6 +126,14 @@ export const ProfileCard = () => {
                 </p>
               ))}
             </div>
+          </div>
+          <div className="flex flex-col">
+            <label className="font-bold px-3">Profile picture</label>
+
+            <AvatarEditor
+              url={newAvatarUrl || profile?.avatar_url}
+              onUpload={setNewAvatarUrl}
+            />
           </div>
           <div className="flex flex-col-reverse">
             <button
