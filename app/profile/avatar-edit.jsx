@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import { useMutation } from '@tanstack/react-query'
 import supabase from 'lib/supabase-client'
 import ErrorList from 'app/components/ErrorList'
@@ -49,14 +50,22 @@ export default function AvatarEditor({ url, onUpload }) {
     },
   })
 
-  console.log(`the url`, url)
   return (
-    <div className="relative border min-h-40 flex-shrink">
+    <div className="relative border border-dashed h-40 flex-shrink p-2">
       <label
         htmlFor="avatarUploadInput"
-        className="z-10 relative border border-dashed rounded text-center flex flex-col fit-content h-full"
+        className="z-10 relative rounded text-center flex flex-col fit-content h-full"
       >
-        {url && <img src={url} alt="Avatar" className="avatar image" />}
+        {url && (
+          <span className="w-36 h-36 mask mask-circle mx-auto grid place-content-center">
+            <Image
+              src={url}
+              width="144"
+              height="144"
+              alt={`Your profile image`}
+            />
+          </span>
+        )}
         <input
           className="z-90 absolute opacity-0 top-0 left-0 right-0 bottom-0"
           type="file"
