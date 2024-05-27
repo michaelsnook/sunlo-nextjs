@@ -53,7 +53,7 @@ export default function SetNewEmailForm() {
                   tabIndex="1"
                   type="text"
                   placeholder="email@domain"
-                  defaultValue={user?.email}
+                  defaultValue={user ? user.email : null}
                 />
               </div>
               <div className="flex flex-row justify-between">
