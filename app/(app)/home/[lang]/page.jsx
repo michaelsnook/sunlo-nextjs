@@ -51,11 +51,10 @@ export default function Page({ params: { lang } }) {
   const { data, error, status } = useDeck(lang)
   if (status === 'loading') return <Loading />
   if (error) return <ErrorList error={error} />
+
   // the long name
   const language = languages[lang]
-
   if (typeof language !== 'string') notFound()
-  console.log('this is the language variable', language)
 
   return (
     <>
