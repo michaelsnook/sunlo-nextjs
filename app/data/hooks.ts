@@ -5,7 +5,7 @@ import { useRouter, usePathname } from 'next/navigation'
 import { getLanguageDetails, getPhraseDetails } from './fetchers'
 import supabase from 'lib/supabase-client'
 import type { Scalars, Maybe } from 'types/utils'
-import { Deck, Profile } from 'types/client-types'
+import { Deck, DeckStub, Profile } from 'types/client-types'
 
 export type UseQueryResult = {
   status: string
@@ -16,7 +16,7 @@ export type UseQueryResult = {
   isError: boolean
 }
 
-export function useAllDecks(): UseQueryResult {
+export function useAllDecks(): UseQueryResult & { data: Array<DeckStub> } {
   return useQuery({
     queryKey: ['user_decks'],
     queryFn: async () => {
