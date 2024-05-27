@@ -14,6 +14,7 @@ import SuccessCheckmark from 'app/components/SvgComponents'
 
 export default function Page() {
   const { user } = useAuth()
+  const userId = user?.id
   const { data: profile } = useProfile()
   const queryClient = useQueryClient()
 
@@ -37,6 +38,7 @@ export default function Page() {
   const mainForm = useMutation({
     mutationFn: async event => {
       event.preventDefault()
+      if (typeof userId !== 'string') throw 'No logged in user'
       if (
         !tempUsername &&
         !tempLanguagePrimary &&
@@ -54,7 +56,7 @@ export default function Page() {
                 language_primary: tempLanguagePrimaryToUse,
                 languages_spoken: newLanguagesSpoken,
               })
-              .match({ uid: user.id })
+              .match({ uid: userId })
               .select()
 
       if (profileUpsert?.error) {
@@ -67,8 +69,8 @@ export default function Page() {
           ? null
           : await supabase
               .from('user_deck')
-              .upsert({ lang: tempDeckToAdd, uid: user.id })
-              .match({ lang: tempDeckToAdd, uid: user.id })
+              .upsert({ lang: tempDeckToAdd, uid: userId })
+              .match({ lang: tempDeckToAdd, uid: userId })
               .select()
 
       if (deckInsert?.error) {
