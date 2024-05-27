@@ -79,10 +79,7 @@ export default function SetNewPasswordForm() {
           </form>
           <ErrorList
             summary="Error setting new password"
-            error={
-              submitNewPassword.error &&
-              submitNewPassword.error?.errors?.message
-            }
+            error={submitNewPassword.error?.message}
           />
         </>
       )}
