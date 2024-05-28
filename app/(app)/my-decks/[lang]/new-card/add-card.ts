@@ -10,15 +10,16 @@ type UserCardInsertInput = {
 
 export const postNewCard = async (
   object: UserCardInsertInput
-): Promise<CardStub | null> => {
+): Promise<CardStub> => {
   // console.log(`postNewCard`, object)
   const { data, error } = await supabase
     .from('user_card')
     .insert(object)
     .select()
-  // console.log(`postNewCard result: `, data, error)
   if (error) throw error
-  return data[0] || null
+
+  // console.log(`postNewCard result: `, data)
+  return data[0]
 }
 
 type PhraseInsertInput = {
