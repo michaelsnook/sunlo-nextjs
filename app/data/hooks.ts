@@ -6,6 +6,7 @@ import { getLanguageDetails, getPhraseDetails } from './fetchers'
 import supabase from 'lib/supabase-client'
 import type { Scalars, Maybe } from 'types/utils'
 import { Deck, DeckStub, Profile, CardStub } from 'types/client-types'
+import { useAuth } from 'lib/auth-context'
 
 export type UseQueryResult = {
   status: string
@@ -135,27 +136,22 @@ export function usePhrase(id: Scalars['UUID']): UseQueryResult {
 export function useProfile(): UseQueryResult {
   const router = useRouter()
   const pathname = usePathname()
+  const { userId } = useAuth()
   return useQuery({
     queryKey: ['user_profile'],
     queryFn: async (): Promise<Profile | null | false> => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession()
-      // console.log('session is', session)
-      if (!session) return null
-      const uid = session.user.id
       const { data, error } = await supabase
         .from('user_profile')
         .select(`*, user_decks:user_deck(id, lang)`)
-        .eq('uid', uid)
+        .eq('uid', userId)
         .maybeSingle()
       if (error) throw error
       if (!data)
         if (pathname !== '/getting-started') {
           router.push('/getting-started')
-        } else return false
+        }
       return data || null
     },
-    enabled: router && pathname ? true : false,
+    enabled: router && pathname && userId ? true : false,
   })
 }
