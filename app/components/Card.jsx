@@ -1,10 +1,4 @@
-export function TinyPhrase({ lang, text }) {
-  return (
-    <>
-      [{lang}] {text}
-    </>
-  )
-}
+import TinyPhrase from './TinyPhrase'
 
 function readStatus(status) {
   if (!status) return { emoji: '', classString: '' }
@@ -23,8 +17,7 @@ export default function Card({ status, phrase }) {
       className={`card p-4 ${classString} shadow-lg hover:bg-primary hover:text-white mb-4 w-full inline-block`}
     >
       <p lang={phrase?.lang} className="mb-2 font-bold">
-        {emoji}
-        <TinyPhrase {...phrase} />
+        <TinyPhrase {...phrase}>{emoji}</TinyPhrase>
       </p>
       {phrase?.translations?.length > 0 ? (
         <ul>

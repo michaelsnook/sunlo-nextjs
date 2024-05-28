@@ -8,13 +8,7 @@ import { postNewCard } from 'app/(app)/my-decks/[lang]/new-card/add-card'
 import { useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
 import EditCardStatusButtons from './edit-status-buttons'
-
-export const TinyPhrase = ({ lang, text } /*: TinyPhraseProps*/) => (
-  <>
-    {lang ? <span className="text-gray-500">[{lang}]&nbsp;</span> : null}
-    &ldquo;{text}&rdquo;
-  </>
-)
+import TinyPhrase from './TinyPhrase'
 
 const AddCardButtonsSection = ({
   phrase_id,
