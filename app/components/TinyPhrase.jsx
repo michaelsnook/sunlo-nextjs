@@ -1,9 +1,9 @@
 const TinyPhrase = ({ lang, text, children }) => (
-  <p className="block">
+  <span>
     {children}
     {lang ? <span className="text-gray-500">[{lang}]&nbsp;</span> : null}
     &ldquo;{text}&rdquo;
-  </p>
+  </span>
 )
 
 export default TinyPhrase
