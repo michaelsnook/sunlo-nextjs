@@ -3,7 +3,7 @@
 import supabase from 'lib/supabase-client'
 import { DeckStub } from 'types/client-types'
 
-export const postNewDeck = async (lang: string): Promise<DeckStub | null> => {
+export const postNewDeck = async (lang: string): Promise<DeckStub> => {
   // console.log(`postNewDeck ${lang}`)
   if (typeof lang !== 'string' || lang.length !== 3)
     throw 'Form not right. Maybe refresh. Or tell the devs.'
@@ -13,5 +13,5 @@ export const postNewDeck = async (lang: string): Promise<DeckStub | null> => {
     .select()
   // console.log(`postNewDeck`, data, error)
   if (error) throw error
-  return data[0] ?? null
+  return data[0]
 }
