@@ -5,7 +5,7 @@ import { useRouter, usePathname } from 'next/navigation'
 import { getLanguageDetails, getPhraseDetails } from './fetchers'
 import supabase from 'lib/supabase-client'
 import type { Scalars, Maybe } from 'types/utils'
-import { Deck, DeckStub, Profile } from 'types/client-types'
+import { Deck, DeckStub, Profile, CardStub } from 'types/client-types'
 
 export type UseQueryResult = {
   status: string
@@ -15,6 +15,28 @@ export type UseQueryResult = {
   isSuccess: boolean
   isError: boolean
 }
+
+export const useCard = (
+  id: string
+): UseQueryResult & { data: Maybe<CardStub> } =>
+  useQuery({
+    queryKey: ['card', id],
+    queryFn: async ({ queryKey }) => {
+      const { data, error } = await supabase
+        .from('user_card')
+        .select('*')
+        .eq('id', queryKey[1])
+        .maybeSingle()
+      if (error) throw error
+      else return data
+    },
+    enabled: typeof id === 'string' && id.length > 0,
+    // retry: false,
+    staleTime: Infinity,
+    cacheTime: Infinity,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+  })
 
 export function useAllDecks(): UseQueryResult & { data: Array<DeckStub> } {
   return useQuery({

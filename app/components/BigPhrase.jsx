@@ -1,4 +1,3 @@
-// @ts-ignore
 'use client'
 
 import Loading from 'app/loading'
@@ -8,6 +7,7 @@ import { useMutation } from '@tanstack/react-query'
 import { postNewCard } from 'app/(app)/my-decks/[lang]/new-card/add-card'
 import { useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
+import EditCardStatusButtons from './edit-status-buttons'
 
 export const TinyPhrase = ({ lang, text } /*: TinyPhraseProps*/) => (
   <>
@@ -15,26 +15,6 @@ export const TinyPhrase = ({ lang, text } /*: TinyPhraseProps*/) => (
     &ldquo;{text}&rdquo;
   </>
 )
-
-const EditCardButtonsSection = ({ userCardId, clearCache }) => {
-  const cardMutation = useMutation({
-    // mutationFn: status => editExistingCard(status, card.id)
-    mutationFn: status => {
-      console.log(`edit a card mutation here: ${status}, ${userCardId}`)
-    },
-    onSuccess: data => {
-      toast.success(`Card successfully updated with status: ${data.status}`)
-      console.log(`Card update return data:`, data)
-      clearCache(data)
-    },
-  })
-  return (
-    <p className="my-4">
-      there&apos;s already a card here and now you can modify it with buttons
-      &lt; button &gt;
-    </p>
-  )
-}
 
 const AddCardButtonsSection = ({
   phrase_id,
@@ -119,7 +99,7 @@ export default function BigPhrase({
   if (phraseStatus === 'loading') return <Loading />
 
   const translations = phrase?.translations
-  const userCard = phrase?.card
+  const card = phrase?.card
   // console.log(`bigPhrase look for userCard or phrase.card`, phrase)
   const seeAlsos = phrase?.see_also_phrases
 
@@ -148,12 +128,8 @@ export default function BigPhrase({
             seeAlsos={seeAlsos}
             onNavigate={onNavigate}
           />
-          {userCard ? (
-            <EditCardButtonsSection
-              userCardId={userCard?.id}
-              clearCache={clearCache}
-              onClose={onClose}
-            />
+          {card ? (
+            <EditCardStatusButtons cardId={card?.id} />
           ) : (
             <AddCardButtonsSection
               deck_id={deck_id}
