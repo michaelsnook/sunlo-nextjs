@@ -1,10 +1,4 @@
-export function TinyPhrase({ lang, text }) {
-  return (
-    <>
-      [{lang}] {text}
-    </>
-  )
-}
+import TinyPhrase from './TinyPhrase'
 
 function readStatus(status) {
   if (!status) return { emoji: '', classString: '' }
