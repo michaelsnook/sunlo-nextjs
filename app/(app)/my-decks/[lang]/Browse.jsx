@@ -57,7 +57,7 @@ export default function Browse({ lang, disable }) {
           </a>
           <BigPhrase
             phrase_id={activePhraseId}
-            deck_id={data?.deck.id}
+            user_deck_id={data?.deck.id}
             // initialData={activePhraseData}
             onClose={() => handleChange('')}
             onNavigate={handleChange}

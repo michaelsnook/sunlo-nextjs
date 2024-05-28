@@ -9,14 +9,14 @@ import { toast } from 'react-hot-toast'
 import EditCardStatusButtons from './edit-status-buttons'
 import TinyPhrase from './TinyPhrase'
 
-const AddCardButtonsSection = ({ phrase_id, deck_id, onClose }) => {
+const AddCardButtonsSection = ({ phrase_id, user_deck_id, onClose }) => {
   const queryClient = useQueryClient()
   const makeNewCard = useMutation({
     mutationFn: status =>
       postNewCard({
         status,
         phrase_id,
-        user_deck_id: deck_id,
+        user_deck_id,
       }),
     onSuccess: data => {
       setTimeout(async () => {
@@ -81,7 +81,7 @@ const AddCardButtonsSection = ({ phrase_id, deck_id, onClose }) => {
 }
 
 export default function BigPhrase({
-  deck_id,
+  user_deck_id,
   phrase_id,
   onClose,
   onNavigate,
@@ -123,7 +123,7 @@ export default function BigPhrase({
             <EditCardStatusButtons cardId={card?.id} />
           ) : (
             <AddCardButtonsSection
-              deck_id={deck_id}
+              user_deck_id={user_deck_id}
               phrase_id={phrase_id}
               onClose={onClose}
             />

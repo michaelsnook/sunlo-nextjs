@@ -52,7 +52,7 @@ export default function ClientPage({ lang }) {
       >
         <BigPhrase
           phrase_id={phraseModalId}
-          deck_id={deckData.id}
+          user_deck_id={deckData.id}
           onClose={() => setPhraseModalId('')}
           onNavigate={setPhraseModalId}
           noBox={true}
