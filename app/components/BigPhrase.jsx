@@ -41,14 +41,14 @@ const AddCardButtonsSection = ({ phrase_id, deck_id, onClose }) => {
   })
   return (
     <div className="my-6 flex gap-8 text-2xl">
-      {makeNewCard.isLoading ? (
+      {makeNewCard.isSubmitting ? (
         <Loading />
       ) : makeNewCard.isError ? (
         <ErrorList error={makeNewCard.error} />
       ) : makeNewCard.isSuccess ? (
         <p className="text-lg">
-          Success! added this phrase to your deck with status: &ldquo;
-          {makeNewCard.data[0]?.status}
+          This phrase is in your deck with status: &ldquo;
+          {makeNewCard.data?.status}
           &rdquo;.&nbsp;
           <a href="#" className="text-primary link" onClick={onClose}>
             Keep browsing.
