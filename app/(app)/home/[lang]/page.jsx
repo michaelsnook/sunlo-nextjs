@@ -18,6 +18,7 @@ const RecentReviewsSummary = ({ lang }) => {
 
   return (
     <div className="text-base-content bg-base-200 card-body">
+      <div className="card-title">Review flash cards</div>
       {countReviews > 5 &&
         `You've been studying ${countReviews > 40 && 'a lot'}!`}{' '}
       I see {countReviews} cards reviewed in the last week
@@ -34,6 +35,7 @@ const CardsSummary = ({ cards }) => {
   const beHappy = cardsLearned > 5
   return (
     <div className="text-base-content bg-base-200 card-body">
+      <div className="card-title">Manage your deck</div>
       You have:
       <ul className="ml-2 block">
         <li>🎴 {cardsInDeck} cards in your deck</li>
@@ -58,7 +60,7 @@ export default function Page({ params: { lang } }) {
 
   return (
     <>
-      <h1 className="text-2xl mt-6 mb-4">Learn {language}</h1>
+      <h1 className="text-4xl mt-6 mb-4">Learn {language}</h1>
       {data === null ? (
         <p>
           Are you sure you&apos;re learning this language? To create a deck and{' '}
