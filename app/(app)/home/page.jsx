@@ -17,6 +17,7 @@ export default function Page() {
         onChange={event => router.push(`/home/${event.target.value}`)}
         className="select select-secondary text-base-content text-xl h-12"
       >
+        <option>-- select a deck to work on --</option>
         {data?.map(deck => (
           <option key={deck.lang} value={deck.lang}>
             {languages[deck.lang]}
