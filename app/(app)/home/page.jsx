@@ -44,6 +44,7 @@ const useRecentReviewActivity = () => {
 export default function Page() {
   const { data: profile, isLoading } = useProfile()
   const { data: reviews, error } = useRecentReviewActivity()
+  const activeDecks = reviews?.keysInOrder
 
   console.log(`This is the profile and reviews objects`, profile, reviews)
   const remainingDecks = useMemo(() => {
@@ -64,30 +65,20 @@ export default function Page() {
   return isLoading ? (
     <Loading />
   ) : (
-    <div className="form-control max-w-sm flex flex-col gap-4">
-      <label className="label h2">
-        Which language are you working on today?
-      </label>
-      {reviews?.keysInOrder?.map(lang => (
-        <div key={lang} className="hover:glass p-2 rounded">
+    <div className="form-control max-w-sm flex flex-col gap-4 p-2">
+      <label className="label h2 text-center">Continue learning...</label>
+      {[...activeDecks, ...remainingDecks]?.map(lang => (
+        <div key={lang} className="glass p-2 rounded text-center">
           <Link href={`home/${lang}`}>
-            <p className="text-xl">{languages[lang]}</p>
-            <p>{reviews?.collated[lang].length} reviews</p>
-            <p>
-              Last reviewed on{' '}
-              {reviews?.collated[lang][0]?.created_at?.split('T')[0]}
-            </p>
+            <p className="text-xl py-2">{languages[lang]}</p>
           </Link>
         </div>
       ))}
-      <p className="my-4">Or start your first review for these:</p>
-      <ol>
-        {remainingDecks?.map(lang => (
-          <li key={lang} className="hover:link my-2">
-            <Link href={`/home/${lang}`}>{languages[lang]}</Link>
-          </li>
-        ))}
-      </ol>
+      <div className="mx-auto">
+        <Link href={`/my-decks/new`}>
+          <span className="btn btn-ghost">+ Start a new language</span>
+        </Link>
+      </div>
     </div>
   )
 }
