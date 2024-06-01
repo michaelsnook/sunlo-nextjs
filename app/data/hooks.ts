@@ -5,7 +5,7 @@ import { useRouter, usePathname } from 'next/navigation'
 import { getLanguageDetails, getPhraseDetails } from './fetchers'
 import supabase from 'lib/supabase-client'
 import type { Scalars, Maybe } from 'types/utils'
-import { Deck, DeckStub, Profile, CardStub } from 'types/client-types'
+import { Deck, DeckPlus, Profile, CardStub } from 'types/client-types'
 import { useAuth } from 'lib/auth-context'
 
 export type UseQueryResult = {
@@ -38,31 +38,6 @@ export const useCard = (
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   })
-
-export function useAllDecks(): UseQueryResult & { data: Array<DeckStub> } {
-  return useQuery({
-    queryKey: ['user_decks'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('user_deck')
-        .select(`id, lang, cards:user_card(*)`)
-      if (error) throw error
-      try {
-        return data.sort((a, b) => {
-          return b.cards.length - a.cards.length
-        })
-      } catch {
-        return data
-      }
-    },
-    enabled: true,
-    // retry: false,
-    staleTime: Infinity,
-    cacheTime: Infinity,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  })
-}
 
 export function useLanguageDetails(lang: string): UseQueryResult {
   return useQuery({
@@ -142,7 +117,9 @@ export function useProfile(): UseQueryResult & { data?: Profile } {
     queryFn: async (): Promise<Profile | null> => {
       const { data, error } = await supabase
         .from('user_profile')
-        .select(`*, user_decks:user_deck(id, lang, created_at)`)
+        .select(
+          `*, user_deck_plus(id, lang, created_at, cards_active, cards_learned, cards_skipped, lang_total_phrases, most_recent_review_at)`
+        )
         .eq('uid', userId)
         .maybeSingle()
       if (error) throw error
@@ -157,11 +134,11 @@ export function useProfile(): UseQueryResult & { data?: Profile } {
         avatar_url,
         languages_spoken,
         language_primary,
-        user_decks,
+        user_deck_plus,
       } = data
 
       const deck_stubs =
-        user_decks?.sort((left: DeckStub, right: DeckStub) => {
+        user_deck_plus?.sort((left: DeckPlus, right: DeckPlus) => {
           return left == right ? 0 : left.created_at > right.created_at ? -1 : 1
         }) || []
 
