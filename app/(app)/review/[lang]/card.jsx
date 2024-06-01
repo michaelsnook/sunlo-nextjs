@@ -20,7 +20,7 @@ const postReview = async ({ card_id, score, prevId }) => {
   return data[0]
 }
 
-export default function CardInner({ card, advance, addReview, hidden }) {
+export default function CardInner({ card, nextCard, addReview, hidden }) {
   const [isRevealed, setIsRevealed] = useState(false)
   const reveal = () => {
     setIsRevealed(true)
@@ -40,7 +40,7 @@ export default function CardInner({ card, advance, addReview, hidden }) {
         toast('got it', { icon: '👍️', position: 'bottom-center' })
       if (result.score === 2)
         toast.success('got it', { position: 'bottom-center' })
-      setTimeout(advance, 2000)
+      setTimeout(nextCard, 1500)
     },
   })
 
