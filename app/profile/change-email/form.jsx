@@ -7,7 +7,7 @@ import ErrorList from 'app/components/ErrorList'
 import { BASE_URL } from 'lib/helpers'
 
 export default function SetNewEmailForm() {
-  const { user } = useAuth()
+  const { userEmail } = useAuth()
 
   const changeEmail = useMutation({
     mutationFn: async event => {
@@ -34,7 +34,7 @@ export default function SetNewEmailForm() {
           <form role="form" onSubmit={changeEmail.mutate} className="form">
             <fieldset
               className="flex flex-col gap-y-4"
-              disabled={!user || changeEmail.isSubmitting}
+              disabled={!userEmail || changeEmail.isSubmitting}
             >
               <div>
                 <p>
@@ -53,7 +53,7 @@ export default function SetNewEmailForm() {
                   tabIndex="1"
                   type="text"
                   placeholder="email@domain"
-                  defaultValue={user ? user.email : null}
+                  defaultValue={userEmail}
                 />
               </div>
               <div className="flex flex-row justify-between">
@@ -61,7 +61,7 @@ export default function SetNewEmailForm() {
                   tabIndex="3"
                   className="btn btn-primary"
                   type="submit"
-                  disabled={!user || changeEmail.isSubmitting}
+                  disabled={!userEmail || changeEmail.isSubmitting}
                   aria-disabled={changeEmail.isSubmitting}
                 >
                   Set new Email

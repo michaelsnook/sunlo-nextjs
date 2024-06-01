@@ -154,7 +154,7 @@ export const ProfileCard = () => {
 }
 
 export const UserAuthCard = () => {
-  const { user } = useAuth()
+  const { userEmail } = useAuth()
   return (
     <div className="big-card flex flex-col space-y-4">
       <h2 className="h3">Login credentials</h2>
@@ -164,7 +164,7 @@ export const UserAuthCard = () => {
           <input
             type="text"
             className="border rounded p-3 flex-grow"
-            value={user?.email ?? 'loading...'}
+            value={userEmail ?? 'loading...'}
             disabled
           />
           <Link href="/profile/change-email" className="btn btn-ghost">
