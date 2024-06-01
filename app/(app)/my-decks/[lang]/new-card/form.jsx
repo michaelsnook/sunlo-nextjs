@@ -64,6 +64,7 @@ export default function AddCardPhraseForm({
       // toast.success(t => <Success />)
       queryClient.invalidateQueries({ queryKey: ['user_deck', lang] })
       queryClient.invalidateQueries({ queryKey: ['user_decks'] })
+      // deck stubs don't need to be updated here
     },
     onError: error => {
       throw error

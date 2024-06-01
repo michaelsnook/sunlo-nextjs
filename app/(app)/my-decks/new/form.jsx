@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import Select from 'react-select'
 import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
-import { useAllDecks } from 'app/data/hooks'
+import { useProfile } from 'app/data/hooks'
 import ErrorList from 'app/components/ErrorList'
 import languages, { allLanguageOptions } from 'lib/languages'
 import { postNewDeck } from './add-new-deck'
@@ -26,13 +26,15 @@ export default function Form() {
     },
     onSuccess: data => {
       // console.log(`onSuccess data,`, data)
+      queryClient.invalidateQueries({ queryKey: ['all-deck-stubs'] })
       queryClient.invalidateQueries({ queryKey: ['user_decks'] })
       toast.success(`Created a new deck to learn ${languages[data.lang]}`)
       router.push(`/my-decks/${data.lang}`)
     },
   })
 
-  const { data, error, status } = useAllDecks()
+  const { data, error, status } = useProfile()
+  const decks = data?.deck_stubs
 
   return (
     <div>
@@ -45,7 +47,7 @@ export default function Form() {
         <Select
           options={allLanguageOptions}
           isOptionDisabled={option =>
-            data?.some(deck => {
+            decks?.some(deck => {
               return status === 'loading'
                 ? // while loading the list of decks, all options enabled
                   false
