@@ -129,7 +129,7 @@ export default function Page() {
         <CreateFirstDeckStep value={tempDeckToAdd} set={setTempDeckToAdd} />
 
         {tempLanguagePrimaryToUse &&
-        (tempDeckToAdd || profile.user_decks?.length > 0) &&
+        (tempDeckToAdd || profile.deck_stubs?.length > 0) &&
         tempUsernameToUse ? (
           <div className="my-6 flex flex-row-reverse justify-around items-center">
             <button
@@ -211,7 +211,7 @@ const SetPrimaryLanguageStep = ({ value, set }) => {
 
 const CreateFirstDeckStep = ({ value, set }) => {
   const { data } = useProfile()
-  const decks = data?.user_decks || []
+  const decks = data?.deck_stubs || []
   const [closed, setClosed] = useState(true)
   return closed && decks?.length ? (
     <Completed>
