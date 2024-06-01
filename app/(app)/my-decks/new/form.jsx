@@ -26,8 +26,7 @@ export default function Form() {
     },
     onSuccess: data => {
       // console.log(`onSuccess data,`, data)
-      queryClient.invalidateQueries({ queryKey: ['all-deck-stubs'] })
-      queryClient.invalidateQueries({ queryKey: ['user_decks'] })
+      queryClient.invalidateQueries({ queryKey: ['user_profile'] })
       toast.success(`Created a new deck to learn ${languages[data.lang]}`)
       router.push(`/my-decks/${data.lang}`)
     },

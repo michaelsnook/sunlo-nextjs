@@ -46,11 +46,7 @@ const SelectLanguageYouKnow = ({ onChange, disabledLang }) => {
   )
 }
 
-export default function AddCardPhraseForm({
-  lang,
-  offerRefresh = false,
-  cancel,
-}) {
+export default function AddCardPhraseForm({ lang, cancel }) {
   const { status, data: deck } = useDeck(lang)
   const [selectLang, setSelectLang] = useState()
   const queryClient = useQueryClient()
@@ -59,11 +55,11 @@ export default function AddCardPhraseForm({
 
   const addCardPhrase = useMutation({
     mutationFn: postNewPhraseCardTranslations,
-    onSuccess: data => {
+    onSuccess: () => {
       // console.log(`postNewPhraseCardTranslations success`, data)
       // toast.success(t => <Success />)
       queryClient.invalidateQueries({ queryKey: ['user_deck', lang] })
-      queryClient.invalidateQueries({ queryKey: ['user_decks'] })
+      queryClient.invalidateQueries({ queryKey: ['user_profile'] })
       // deck stubs don't need to be updated here
     },
     onError: error => {

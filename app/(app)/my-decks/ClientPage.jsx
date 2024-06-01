@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useAllDecks } from 'app/data/hooks'
+import { useProfile } from 'app/data/hooks'
 import Loading from 'app/loading'
 import languages from 'lib/languages'
 import ErrorList from 'app/components/ErrorList'
@@ -15,27 +15,28 @@ function OneDeck({ deck }) {
       <h2 className="h2">{languages[deck.lang]}</h2>
       <p>
         You&apos;re learning {languages[deck.lang]}! There are{' '}
-        {deck.cards.length} cards in your deck.
+        {deck.cards_active} cards in your deck.
       </p>
     </Link>
   )
 }
 
 export default function ClientPage() {
-  const { status, data, error } = useAllDecks()
+  const { status, data, error } = useProfile()
   if (status === 'loading') return <Loading />
-
   if (status === 'error') return <ErrorList error={error} />
+
+  const decks = data?.deck_stubs
 
   return (
     <>
-      {data.length ? (
+      {decks.length ? (
         <>
           <p>
-            You have {data.length} active decks. Which one would you like to
+            You have {decks.length} active decks. Which one would you like to
             work on today?
           </p>
-          {data?.map(deck => (
+          {decks?.map(deck => (
             <OneDeck key={deck.lang} deck={deck} />
           ))}
         </>

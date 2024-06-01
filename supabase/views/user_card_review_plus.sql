@@ -16,3 +16,4 @@ CREATE OR REPLACE VIEW
       JOIN public.user_card AS c ON (r.card_id = c.id)
       JOIN public.user_deck AS d ON (c.user_deck_id = d.id)
   );
+
