@@ -75,13 +75,3 @@ export const getPhraseDetails = async (
   // console.log(`getPhraseDetails data`, data.phrase_to, data.phrase_from)
   return phrasePostFetch(data)
 }
-
-export const getProfile = async (): Promise<Profile> => {
-  const { data, error } = await supabase
-    .from('user_profile')
-    .select(`*, user_decks:user_deck(id, lang)`)
-    .maybeSingle()
-  if (error) console.log(`getProfile`, error)
-
-  return data
-}

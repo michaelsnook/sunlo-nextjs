@@ -5,7 +5,7 @@ import Link from 'next/link'
 import Garlic from 'app/components/Garlic'
 import languages from 'lib/languages'
 import { usePathname, useRouter } from 'next/navigation'
-import { useProfile, useAllDecks } from 'app/data/hooks'
+import { useProfile } from 'app/data/hooks'
 import Loading from 'app/loading'
 import ErrorList from './ErrorList'
 import supabase from 'lib/supabase-client'
@@ -71,14 +71,15 @@ const GenericMenu = ({ menu }) => {
 const StaticMenu = () => <GenericMenu menu={staticMenu} />
 
 const DeckMenu = () => {
-  const { data, status, error } = useAllDecks()
+  const { data, status, error } = useProfile()
   if (status === 'loading') return null
   if (error) return <ErrorList error={error.message} />
 
+  const decks = data?.deck_stubs
   const menuData = {
     name: 'Learning decks',
     href: '/home',
-    links: data?.map(deck => {
+    links: decks?.map(deck => {
       return {
         name: languages[deck.lang],
         href: `/home/${deck.lang}`,
