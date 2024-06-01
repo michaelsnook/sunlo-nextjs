@@ -36,8 +36,11 @@ export default function ClientPage({ lang }) {
 
   const canBackup = cardIndex > 0
   const canAdvance = cardIndex < reviewCards.length - 1
-  const gobackaCard = () => setCardIndex(cardIndex - 1)
-  const advanceCard = () => setCardIndex(cardIndex + 1)
+  const gobackaCard = () => setCardIndex(i => i - 1)
+  const advanceCard = () => setCardIndex(i => i + 1)
+  // This is different from advanceCard because it only wants to move forward
+  // by 1 after submitting a review, not to stack with button-clicks.
+  const nextCard = () => setCardIndex(cardIndex + 1)
 
   const addReview = review => {
     const index = reviews.findIndex(r => r.id === review.id)
@@ -86,7 +89,7 @@ export default function ClientPage({ lang }) {
         <CardInner
           key={c.id}
           card={c}
-          advance={advanceCard}
+          nextCard={nextCard}
           addReview={addReview}
           hidden={c.id !== reviewCards[cardIndex]?.id}
         />
