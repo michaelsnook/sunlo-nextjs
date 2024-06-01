@@ -133,16 +133,16 @@ export function usePhrase(id: Scalars['UUID']): UseQueryResult {
   })
 }
 
-export function useProfile(): UseQueryResult {
+export function useProfile(): UseQueryResult & { data?: Profile } {
   const router = useRouter()
   const pathname = usePathname()
   const { userId } = useAuth()
   return useQuery({
     queryKey: ['user_profile'],
-    queryFn: async (): Promise<Profile | null | false> => {
+    queryFn: async (): Promise<Profile | null> => {
       const { data, error } = await supabase
         .from('user_profile')
-        .select(`*, user_decks:user_deck(id, lang)`)
+        .select(`*, user_decks:user_deck(id, lang, created_at)`)
         .eq('uid', userId)
         .maybeSingle()
       if (error) throw error
@@ -150,7 +150,29 @@ export function useProfile(): UseQueryResult {
         if (pathname !== '/getting-started') {
           router.push('/getting-started')
         }
-      return data || null
+
+      const {
+        uid,
+        username,
+        avatar_url,
+        languages_spoken,
+        language_primary,
+        user_decks,
+      } = data
+
+      const deck_stubs =
+        user_decks?.sort((left: DeckStub, right: DeckStub) => {
+          return left == right ? 0 : left.created_at > right.created_at ? -1 : 1
+        }) || []
+
+      return {
+        uid,
+        username,
+        avatar_url,
+        languages_spoken,
+        language_primary,
+        deck_stubs,
+      }
     },
     enabled: router && pathname && userId ? true : false,
   })

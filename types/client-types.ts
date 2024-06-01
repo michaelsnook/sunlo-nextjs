@@ -28,6 +28,7 @@ export type CardStub = {
 
 export type DeckStub = {
   id: Scalars['UUID']
+  created_at?: string
   lang: string
 }
 
@@ -47,7 +48,7 @@ export type Profile = {
   avatar_url: string
   languages_spoken: Array<string>
   language_primary: string
-  user_deck?: Array<DeckStub>
+  deck_stubs: Array<DeckStub>
 }
 
 // count_all: number
