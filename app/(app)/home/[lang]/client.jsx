@@ -71,7 +71,7 @@ export default function Client({ lang }) {
       ) : (
         <div>
           <div className="md:w-1/2 p-4 grid gap-4">
-            <div className="card w-96 glass">
+            <div className="card glass">
               <figure>
                 <RecentReviewsSummary lang={lang} />
               </figure>
@@ -83,7 +83,7 @@ export default function Client({ lang }) {
             </div>
           </div>
           <div className="w-100 md:w-1/2 p-4 grid gap-4">
-            <div className="card w-96 glass">
+            <div className="card glass">
               <figure>
                 <CardsSummary deck={deck} />
               </figure>

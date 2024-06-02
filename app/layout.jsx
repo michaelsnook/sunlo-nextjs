@@ -27,7 +27,7 @@ export default function RootLayout({ children }) {
               a) Sidebar with fixed width, and b) and main content/app area
               with .flex-grow
             */}
-            <div className="flex min-h-screen">
+            <div className="flex min-h-screen p-px">
               <Sidebar />
               {/*
                 This flexbox only ever has 1 child, the <main> element, so it
