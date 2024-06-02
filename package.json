@@ -12,6 +12,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "tauri": "tauri",
     "lint": "next lint",
     "pretty": "prettier --write .",
     "prepare": "husky install"
@@ -33,6 +34,7 @@
     "@tailwindcss/line-clamp": "^0.4.2",
     "@tailwindcss/typography": "^0.5.8",
     "@tanstack/react-query-devtools": "^4.24.12",
+    "@tauri-apps/cli": "^1.5.14",
     "@types/node": "^20.12.12",
     "@types/react": "^18.3.1",
     "autoprefixer": "^10.4.13",

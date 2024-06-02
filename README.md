@@ -35,3 +35,13 @@ npx supabase start
 The first time you run this it will download and build all the docker images for postgres, the postgrest server, the auth server, storage server, GraphQL API server, etc. After that, it will just start.
 
 When your local supabase starts up it will spit out the environment variables you need for your environment file. You can either change your values in `.env.local` or add another file `.env.development.local` which overrides its values.
+
+### Using Tauri Desktop Apps
+
+The app is set to deploy as static HTML outputs, so it should generally work with the Tauri system for compiling to WASM/Rust.
+
+```
+npm run tauri dev
+```
+
+And it should work.
