@@ -76,9 +76,9 @@ const fetchDeck = async (lang: string): Promise<Deck> => {
     lang: data?.lang,
     all_phrase_ids: rawCards.map(card => card.phrase_id),
     cards: {
-      active: rawCards.filter(card => card.status === 'active'),
-      learned: rawCards.filter(card => card.status === 'learned'),
-      skipped: rawCards.filter(card => card.status === 'skipped'),
+      active: rawCards.filter(({ status }) => status === 'active'),
+      learned: rawCards.filter(({ status }) => status === 'learned'),
+      skipped: rawCards.filter(({ status }) => status === 'skipped'),
     },
   }
 
