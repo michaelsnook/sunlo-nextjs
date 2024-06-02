@@ -166,3 +166,38 @@ export function useProfile(): UseQueryResult & { data?: Profile } {
     enabled: router && pathname && userId ? true : false,
   })
 }
+
+const collateArray = (data: Array<Object>, key: string): Object => {
+  let result = {}
+  for (let i in data) {
+    let item = data[i]
+    let itemKey = item[key]
+    if (Array.isArray(result[itemKey])) result[itemKey].push(item)
+    else result[itemKey] = [item]
+  }
+  return result
+}
+
+export const useRecentReviewActivity = (): UseQueryResult & {
+  data?: ReviewsCollated
+} => {
+  return useQuery({
+    queryKey: ['all-reviews'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('user_card_review_plus')
+        .select('*')
+        .order('created_at', { ascending: false })
+      if (error) throw error
+
+      const result = collateArray(data, 'lang')
+      console.log(`The collated array`, result)
+
+      return {
+        list: data,
+        collated: result,
+        keysInOrder: Object.keys(result),
+      }
+    },
+  })
+}

@@ -2,44 +2,9 @@
 
 import { useMemo } from 'react'
 import Link from 'next/link'
-import { useQuery } from '@tanstack/react-query'
-import { useProfile } from 'app/data/hooks'
+import { useProfile, useRecentReviewActivity } from 'app/data/hooks'
 import languages from 'lib/languages'
-import supabase from 'lib/supabase-client'
 import Loading from 'app/loading'
-
-const collateArray = (data, key) => {
-  let result = {}
-  for (let i in data) {
-    let item = data[i]
-    let itemKey = item[key]
-    if (Array.isArray(result[itemKey])) result[itemKey].push(item)
-    else result[itemKey] = [item]
-  }
-  return result
-}
-
-const useRecentReviewActivity = () => {
-  return useQuery({
-    queryKey: ['all-reviews'],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from('user_card_review_plus')
-        .select('*')
-        .order('created_at', { ascending: false })
-      if (error) throw error
-
-      const result = collateArray(data, 'lang')
-      console.log(`The collated array`, result)
-
-      return {
-        list: data,
-        collated: result,
-        keysInOrder: Object.keys(result),
-      }
-    },
-  })
-}
 
 export default function Page() {
   const { data: profile, isLoading } = useProfile()

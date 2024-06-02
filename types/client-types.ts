@@ -72,3 +72,17 @@ export type Deck = DeckStub & {
     skipped: any[]
   }
 }
+
+export type Review = {
+  id: Scalars['UUID']
+  created_at: string
+  card_id: Scalars['UUID']
+  score: number
+  lang: string
+}
+
+export type ReviewsCollated = {
+  list: Array<Review>
+  collated: Object
+  keysInOrder: Array<string>
+}
