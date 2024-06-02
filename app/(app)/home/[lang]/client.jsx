@@ -69,29 +69,26 @@ export default function Client({ lang }) {
           .
         </p>
       ) : (
-        <div>
-          <div className="md:w-1/2 p-4 grid gap-4">
-            <div className="card glass">
-              <figure>
-                <RecentReviewsSummary lang={lang} />
-              </figure>
-              <div className="card-body">
-                <Link href={`/review/${lang}`} className="mx-auto btn">
-                  Start a review session
-                </Link>
-              </div>
+        <div className="grid gap-4 min-w-44 w-[90vw] max-w-[22rem]">
+          <div className="card glass">
+            <figure>
+              <RecentReviewsSummary lang={lang} />
+            </figure>
+            <div className="card-body">
+              <Link href={`/review/${lang}`} className="mx-auto btn">
+                Start a review session
+              </Link>
             </div>
           </div>
-          <div className="w-100 md:w-1/2 p-4 grid gap-4">
-            <div className="card glass">
-              <figure>
-                <CardsSummary deck={deck} />
-              </figure>
-              <div className="card-body">
-                <Link href={`/my-decks/${lang}`} className="mx-auto btn">
-                  Browse/manage on your deck
-                </Link>
-              </div>
+
+          <div className="card glass">
+            <figure>
+              <CardsSummary deck={deck} />
+            </figure>
+            <div className="card-body">
+              <Link href={`/my-decks/${lang}`} className="mx-auto btn">
+                Browse/manage on your deck
+              </Link>
             </div>
           </div>
         </div>
