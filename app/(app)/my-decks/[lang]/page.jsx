@@ -19,3 +19,9 @@ export default function Page({ params: { lang } }) {
     </>
   )
 }
+
+export async function generateStaticParams() {
+  return Object.keys(languages).map(lang => ({
+    lang,
+  }))
+}
