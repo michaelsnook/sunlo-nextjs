@@ -11,7 +11,8 @@
   ],
   "settings": {
     "files.exclude": {
-      "supabase/functions/": true
+      "supabase/functions/": true,
+      "out/": true
     }
   }
 }
