@@ -52,6 +52,8 @@ export default function CardInner({ card, nextCard, addReview, hidden }) {
     },
   })
 
+  const btnClasses = `max-md:grow w-44 md:shrink`
+
   return hidden ? null : (
     <div className="big-card">
       <div className="flex flex-col justify-center text-center gap-8">
@@ -82,30 +84,38 @@ export default function CardInner({ card, nextCard, addReview, hidden }) {
                 <p key={t.id}>&ldquo;{t.text}&rdquo;</p>
               ))}
             </div>
-            <div className="flex gap-4 justify-center">
+            <div className="flex gap-2 flex-row flex-wrap justify-center">
               <button
-                className={`btn btn-success ${data ? 'btn-outline' : ''}`}
+                className={`${btnClasses} btn btn-success ${
+                  data ? 'btn-outline' : ''
+                }`}
                 onClick={() => mutate({ score: 2 })}
                 disabled={data?.score === 2}
               >
                 Nailed it!
               </button>
               <button
-                className={`btn btn-info ${data ? 'btn-outline' : ''}`}
+                className={`${btnClasses} btn btn-info ${
+                  data ? 'btn-outline' : ''
+                }`}
                 onClick={() => mutate({ score: 1 })}
                 disabled={data?.score === 1}
               >
                 Got it
               </button>
               <button
-                className={`btn btn-warning ${data ? 'btn-outline' : ''}`}
+                className={`${btnClasses} btn btn-warning ${
+                  data ? 'btn-outline' : ''
+                }`}
                 onClick={() => mutate({ score: -1 })}
                 disabled={data?.score === -1}
               >
                 It was hard
               </button>
               <button
-                className={`btn btn-error ${data ? 'btn-outline' : ''}`}
+                className={`${btnClasses} btn btn-error ${
+                  data ? 'btn-outline' : ''
+                }`}
                 onClick={() => mutate({ score: -2 })}
                 disabled={data?.score === -2}
               >
