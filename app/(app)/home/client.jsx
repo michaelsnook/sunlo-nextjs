@@ -10,8 +10,8 @@ export default function Client() {
   const { data: profile, isLoading } = useProfile()
   const { data: reviews } = useRecentReviewActivity()
   const activeDecks = reviews?.keysInOrder ?? []
+  // console.log(`This is the profile and reviews objects`, profile, reviews)
 
-  console.log(`This is the profile and reviews objects`, profile, reviews)
   const remainingDecks = useMemo(() => {
     if (!profile?.deck_stubs?.length) return null
     return profile.deck_stubs
