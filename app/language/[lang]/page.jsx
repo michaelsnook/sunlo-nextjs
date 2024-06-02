@@ -47,9 +47,7 @@ export default async function Page({ params: { lang } }) {
 }
 
 export async function generateStaticParams() {
-  const data = languages
-
-  return Object.keys(data).map(lang => ({
+  return Object.keys(languages).map(lang => ({
     lang,
   }))
 }
