@@ -11,7 +11,9 @@ import languages, { allLanguageOptions } from 'lib/languages'
 import { postNewDeck } from './add-new-deck'
 
 function TinyError({ text }) {
-  return <p className="my-4 text-error/70">{text}</p>
+  return (
+    <p className="my-4 text-error-content bg-error/20 rounded-sm p-2">{text}</p>
+  )
 }
 
 export default function Form() {
@@ -63,7 +65,9 @@ export default function Form() {
           Start learning
         </button>
       </form>
-      {createNewDeck.error && <TinyError text={`${createNewDeck.error}`} />}
+      {createNewDeck.error && (
+        <TinyError text={`${createNewDeck.error.message}`} />
+      )}
     </div>
   )
 }
