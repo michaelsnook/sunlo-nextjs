@@ -32,6 +32,14 @@ export type DeckStub = {
   lang: string
 }
 
+export type DeckPlus = DeckStub & {
+  cards_learned: number
+  cards_active: number
+  cards_skipped: number
+  lang_total_phrases: number | null
+  most_recent_review: string | null
+}
+
 type LanguageStub = {
   lang: string
   name: string
