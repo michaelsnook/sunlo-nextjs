@@ -2,7 +2,7 @@
 
 import ErrorList from 'app/components/ErrorList'
 import { notFound } from 'next/navigation'
-import { useDeck } from 'app/data/hooks'
+import { useProfile } from 'app/data/hooks'
 import { useRecentReviews } from 'app/data/reviews'
 import Loading from 'app/loading'
 import languages from 'lib/languages'
@@ -20,7 +20,7 @@ const RecentReviewsSummary = ({ lang }) => {
     <div className="text-base-content bg-base-200 card-body">
       <div className="card-title">Review flash cards</div>
       {countReviews > 5 &&
-        `You've been studying ${countReviews > 40 && 'a lot'}!`}{' '}
+        `You've been studying ${countReviews > 40 ? 'a lot!' : ' – '}`}{' '}
       I see {countReviews} cards reviewed in the last week
       {countPositive > 0 && ` and you remembered ${countPositive} of them`}.
       Keep at it!
@@ -28,20 +28,19 @@ const RecentReviewsSummary = ({ lang }) => {
   )
 }
 
-const CardsSummary = ({ cards }) => {
-  const cardsInDeck = cards.active.length + cards.learned.length
-  const cardsActive = cards.active.length
-  const cardsLearned = cards.learned.length
-  const beHappy = cardsLearned > 5
+const CardsSummary = ({ deck }) => {
+  const { cards_active, cards_learned } = deck
+  const cardsInDeck = cards_active + cards_learned
+  const beHappy = cards_learned > 5
   return (
     <div className="text-base-content bg-base-200 card-body">
       <div className="card-title">Manage your deck</div>
       You have:
       <ul className="ml-2 block">
         <li>🎴 {cardsInDeck} cards in your deck</li>
-        <li>🤓 studying {cardsActive} currently</li>
+        <li>🤓 studying {cards_active} currently</li>
         <li>
-          🎊 and you&apos;ve learned {cardsLearned + ' '}
+          🎊 and you&apos;ve learned {cards_learned + ' '}
           of them{beHappy ? '!' : '.'}
         </li>
       </ul>
@@ -50,7 +49,8 @@ const CardsSummary = ({ cards }) => {
 }
 
 export default function Page({ params: { lang } }) {
-  const { data, error, status } = useDeck(lang)
+  const { data, error, status } = useProfile()
+  const deck = data?.deck_stubs?.find(d => d.lang === lang) || null
   if (status === 'loading') return <Loading />
   if (error) return <ErrorList error={error} />
 
@@ -86,7 +86,7 @@ export default function Page({ params: { lang } }) {
           <div className="w-100 md:w-1/2 p-4 grid gap-4">
             <div className="card w-96 glass">
               <figure>
-                <CardsSummary cards={data?.cards} />
+                <CardsSummary deck={deck} />
               </figure>
               <div className="card-body">
                 <Link href={`/my-decks/${lang}`} className="mx-auto btn">
