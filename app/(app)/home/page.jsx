@@ -44,7 +44,7 @@ const useRecentReviewActivity = () => {
 export default function Page() {
   const { data: profile, isLoading } = useProfile()
   const { data: reviews, error } = useRecentReviewActivity()
-  const activeDecks = reviews?.keysInOrder
+  const activeDecks = reviews?.keysInOrder ?? []
 
   console.log(`This is the profile and reviews objects`, profile, reviews)
   const remainingDecks = useMemo(() => {
