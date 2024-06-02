@@ -5,7 +5,15 @@ import { useRouter, usePathname } from 'next/navigation'
 import { getLanguageDetails, getPhraseDetails } from './fetchers'
 import supabase from 'lib/supabase-client'
 import type { Scalars, Maybe } from 'types/utils'
-import { Deck, DeckPlus, Profile, CardStub } from 'types/client-types'
+import {
+  Deck,
+  DeckPlus,
+  Profile,
+  CardStub,
+  ReviewsCollated,
+  Phrase,
+  Language,
+} from 'types/client-types'
 import { useAuth } from 'lib/auth-context'
 
 export type UseQueryResult = {
@@ -18,8 +26,8 @@ export type UseQueryResult = {
 }
 
 export const useCard = (
-  id: string
-): UseQueryResult & { data: Maybe<CardStub> } =>
+  id: Scalars['UUID']
+): UseQueryResult & { data?: CardStub } =>
   useQuery({
     queryKey: ['card', id],
     queryFn: async ({ queryKey }) => {
@@ -39,7 +47,9 @@ export const useCard = (
     refetchOnWindowFocus: false,
   })
 
-export function useLanguageDetails(lang: string): UseQueryResult {
+export function useLanguageDetails(
+  lang: string
+): UseQueryResult & { data?: Language } {
   return useQuery({
     queryKey: ['phrases', 'lang', lang],
     queryFn: async () => getLanguageDetails(lang),
@@ -85,7 +95,7 @@ const fetchDeck = async (lang: string): Promise<Deck> => {
   return deck
 }
 
-export function useDeck(deckLang: string): UseQueryResult {
+export function useDeck(deckLang: string): UseQueryResult & { data?: Deck } {
   return useQuery({
     queryKey: ['user_deck', deckLang],
     queryFn: ({ queryKey }) => fetchDeck(queryKey[1]),
@@ -98,7 +108,9 @@ export function useDeck(deckLang: string): UseQueryResult {
   })
 }
 
-export function usePhrase(id: Scalars['UUID']): UseQueryResult {
+export function usePhrase(
+  id: Scalars['UUID']
+): UseQueryResult & { data?: Phrase } {
   return useQuery({
     queryKey: ['phrase', id],
     queryFn: async ({ queryKey }) => getPhraseDetails(queryKey[1]),
