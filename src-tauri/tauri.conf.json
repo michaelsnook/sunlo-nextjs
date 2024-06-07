@@ -1,7 +1,7 @@
 {
-  "productName": "sunlo",
+  "productName": "Sunlo.app",
   "version": "0.1.0",
-  "identifier": "com.tauri.dev",
+  "identifier": "app.sunlo",
   "build": {
     "frontendDist": "../out",
     "devUrl": "http://localhost:3000",
@@ -11,7 +11,7 @@
   "app": {
     "windows": [
       {
-        "title": "sunlo",
+        "title": "Sunlo.app: The Social Language Learning App",
         "width": 800,
         "height": 600,
         "resizable": true,
