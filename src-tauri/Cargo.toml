@@ -1,5 +1,5 @@
 [package]
-name = "Sunlo.app"
+name = "sunlo"
 version = "0.3.0"
 description = "The Social Language Learning App"
 authors = ["@michaelsnook"]

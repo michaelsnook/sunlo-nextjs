@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import Garlic from 'app/components/Garlic'
+import { Garlic } from 'app/components/Garlic'
 import languages from 'lib/languages'
 import { usePathname, useRouter } from 'next/navigation'
 import { useProfile } from 'app/data/hooks'
