@@ -96,7 +96,7 @@ export default function Sidebar() {
   const pathname = usePathname()
   const router = useRouter()
 
-  const { data: profile, isLoading, error } = useProfile()
+  const { data: profile, isPending, error } = useProfile()
 
   // close the sidebar when the user navigates
   useEffect(() => {
@@ -122,17 +122,15 @@ export default function Sidebar() {
           <Garlic size={50} />
           Sunlo
         </span>
-        {isLoading ? (
+        {isPending ? (
           <Loading />
-        ) : (
-          profile && (
-            <Navlink href="/profile">
-              <p className="flex flex-row gap-2">
-                <ProfileIcon /> {profile?.username}
-              </p>
-            </Navlink>
-          )
-        )}
+        ) : profile ? (
+          <Navlink href="/profile">
+            <p className="flex flex-row gap-2">
+              <ProfileIcon /> {profile?.username}
+            </p>
+          </Navlink>
+        ) : null}
 
         <DeckMenu />
         <StaticMenu />
