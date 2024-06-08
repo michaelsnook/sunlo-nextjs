@@ -8,7 +8,7 @@ import { useAuth } from 'lib/auth-context'
 import { toast } from 'react-hot-toast'
 
 export default function SetNewPasswordForm() {
-  const { user } = useAuth()
+  const { isAuth } = useAuth()
 
   const submitNewPassword = useMutation({
     mutationFn: async event => {
@@ -29,7 +29,7 @@ export default function SetNewPasswordForm() {
     <div className="section-card-inner">
       {submitNewPassword.isSuccess ? (
         <SuccessfulSubmit />
-      ) : !user ? (
+      ) : !isAuth ? (
         <InvalidLink />
       ) : (
         <>

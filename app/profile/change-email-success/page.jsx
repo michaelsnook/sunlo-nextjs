@@ -3,13 +3,13 @@
 import { useAuth } from 'lib/auth-context'
 
 export default function Page() {
-  const { user } = useAuth()
+  const { userEmail } = useAuth()
   return (
     <main className="section-card">
-      {user ? (
+      {userEmail ? (
         <div className="flex flex-col space-y-4">
           <h1 className="h3 text-base-content/90">Email address changed!</h1>
-          <p>You&apos;ve successfully changed your email to {user?.email}</p>
+          <p>You&apos;ve successfully changed your email to {userEmail}</p>
           <p>You can close this tab.</p>
         </div>
       ) : (
