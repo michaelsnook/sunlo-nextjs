@@ -13,15 +13,12 @@ export const Garlic = ({ size = 50, className = '' }) => (
   />
 )
 
-export const GarlicBroccoli = ({ size = 50, className = '' }) => (
+export const GarlicBroccoli = ({ size = 240, className = '' }) => (
   <Image
     src="/images/logo-pair.png"
     alt="a smiling garlic"
     width={size}
-    height={size / 1.5878}
-    style={{
-      filter: 'drop-shadow(0px 5px 15px #fff)',
-    }}
+    height={size / 1.5}
     className={`place-self-center ${className}`}
   />
 )

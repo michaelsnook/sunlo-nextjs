@@ -17,7 +17,7 @@ export default function Page() {
       </article>
       <aside className="py-5 px-0 md:px-3 lg:px-5 col-span-3">
         <div className="justify-center flex flex-col gap-2 content-center">
-          <GarlicBroccoli size={180} />
+          <GarlicBroccoli />
 
           <Link
             href="/login"
