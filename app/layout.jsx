@@ -42,7 +42,7 @@ export default function RootLayout({ children }) {
                 py-6
               "
               >
-                <main>{children}</main>
+                <div>{children}</div>
               </div>
             </div>
           </AuthProvider>
