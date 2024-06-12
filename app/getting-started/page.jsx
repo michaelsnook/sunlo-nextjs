@@ -89,7 +89,7 @@ export default function Page() {
   })
 
   return profile === null ? null : mainForm.isSuccess ? (
-    <div className="p2 md:p-6 lg:p-10 max-w-prose text-white min-h-85vh flex flex-col gap-12 justify-center">
+    <main className="p2 md:p-6 lg:p-10 max-w-prose text-white min-h-85vh flex flex-col gap-12 justify-center">
       <div className="flex flex-row justify-center space-x-4">
         <SuccessCheckmark />
         <h1 className="h1">You&apos;re all set!</h1>
@@ -108,9 +108,9 @@ export default function Page() {
           Go to your profile&nbsp;&rarr;
         </Link>
       </div>
-    </div>
+    </main>
   ) : (
-    <div className="text-white p2 md:p-6 lg:p-10">
+    <main className="text-white p2 md:p-6 lg:p-10">
       {profile ? (
         <div className="absolute top-4 md:top-10">
           <Link href="/profile" className="link md:link-hover">
@@ -149,7 +149,7 @@ export default function Page() {
         summary="Problem inserting profile or making deck"
         error={mainForm.error}
       />
-    </div>
+    </main>
   )
 }
 

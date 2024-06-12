@@ -3,8 +3,10 @@ import ClientPage from './client'
 
 export default function Page() {
   return (
-    <ClientPage>
-      <LoginForm />
-    </ClientPage>
+    <main className="section-card">
+      <ClientPage>
+        <LoginForm />
+      </ClientPage>
+    </main>
   )
 }

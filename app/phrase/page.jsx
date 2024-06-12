@@ -6,7 +6,7 @@ export default async function Page() {
   let phrases = await getAllPhraseDetails()
 
   return (
-    <>
+    <main>
       <div className="py-10">
         <h1 className="h1">Browse all phrases in all languages</h1>
         <p>
@@ -29,6 +29,6 @@ export default async function Page() {
           ))}
         </ul>
       )}
-    </>
+    </main>
   )
 }

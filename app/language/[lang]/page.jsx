@@ -15,7 +15,7 @@ export default async function Page({ params: { lang } }) {
   }
 
   return (
-    <div className="page-card">
+    <main className="page-card">
       <Link href="/language" className="hover:underline text-primary">
         &larr; Back to languages
       </Link>
@@ -42,7 +42,7 @@ export default async function Page({ params: { lang } }) {
           ))}
         </ul>
       )}
-    </div>
+    </main>
   )
 }
 

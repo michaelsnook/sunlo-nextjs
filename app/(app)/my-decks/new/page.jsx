@@ -3,7 +3,7 @@ import Form from './form'
 
 export default function Page() {
   return (
-    <>
+    <main>
       <Link href="/my-decks" className="hover:underline">
         &larr; Back to decks
       </Link>
@@ -11,6 +11,6 @@ export default function Page() {
       <div className="page-card">
         <Form />
       </div>
-    </>
+    </main>
   )
 }
