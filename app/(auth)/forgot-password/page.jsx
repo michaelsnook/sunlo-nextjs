@@ -1,5 +1,9 @@
 import ForgotPasswordForm from './form'
 
 export default function Page() {
-  return <ForgotPasswordForm />
+  return (
+    <main className="section-card">
+      <ForgotPasswordForm />
+    </main>
+  )
 }

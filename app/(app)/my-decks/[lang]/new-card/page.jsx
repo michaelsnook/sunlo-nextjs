@@ -4,7 +4,7 @@ import AddCardPhraseForm from './form'
 
 export default function Page({ params: { lang } }) {
   return (
-    <>
+    <main>
       <Link href={`/my-decks/${lang}`} className="link">
         &larr; Back to {languages[lang]} deck
       </Link>
@@ -12,7 +12,7 @@ export default function Page({ params: { lang } }) {
       <div className="section-card">
         <AddCardPhraseForm lang={lang} />
       </div>
-    </>
+    </main>
   )
 }
 

@@ -21,7 +21,7 @@ export default async function Page({ params: { id } }) {
   if (!phrase) notFound()
 
   return (
-    <div className="page-card gap-8 lg:w-[50vw] w-96">
+    <main className="page-card gap-8 lg:w-[50vw] w-96">
       <div>
         <Link href={`/language/${phrase.lang}`} className="link text-primary">
           &larr; Back to {languages[phrase.lang]}
@@ -60,6 +60,6 @@ export default async function Page({ params: { id } }) {
           )}
         </ul>
       </div>
-    </div>
+    </main>
   )
 }

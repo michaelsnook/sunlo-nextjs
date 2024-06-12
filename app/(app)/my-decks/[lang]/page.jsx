@@ -5,7 +5,7 @@ import ClientPage from './ClientPage'
 
 export default function Page({ params: { lang } }) {
   return (
-    <>
+    <main>
       <Link className="link" href="/my-decks">
         &larr; Back to decks
       </Link>
@@ -16,7 +16,7 @@ export default function Page({ params: { lang } }) {
       <div className="page-card">
         <ClientPage lang={lang} />
       </div>
-    </>
+    </main>
   )
 }
 

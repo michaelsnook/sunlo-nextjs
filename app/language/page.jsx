@@ -3,7 +3,7 @@ import languages from 'lib/languages'
 
 export default async function Page() {
   return (
-    <div className="page-card">
+    <main className="page-card">
       <h1 className="h1">Languages</h1>
       <ul className="columns-1 sm:columns-2 lg:columns-3 gap-4">
         {Object.keys(languages).map(lang => (
@@ -17,6 +17,6 @@ export default async function Page() {
           </li>
         ))}
       </ul>
-    </div>
+    </main>
   )
 }

@@ -1,5 +1,9 @@
 import SetNewPasswordForm from './form'
 
 export default function SetNewPassword() {
-  return <SetNewPasswordForm />
+  return (
+    <main className="section-card">
+      <SetNewPasswordForm />
+    </main>
+  )
 }

@@ -3,7 +3,7 @@ import ClientPage from './ClientPage'
 
 export default function Page() {
   return (
-    <>
+    <main>
       <div className="flex justify-between">
         <div className="grow">
           <h1 className="h1">My decks</h1>
@@ -18,6 +18,6 @@ export default function Page() {
       <div className="page-card">
         <ClientPage />
       </div>
-    </>
+    </main>
   )
 }

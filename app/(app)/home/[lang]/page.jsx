@@ -7,10 +7,10 @@ export default function Page({ params: { lang } }) {
   if (typeof language !== 'string') notFound()
 
   return (
-    <>
+    <main>
       <h1 className="text-4xl mt-6 mb-4">Learn {language}</h1>
       <Client lang={lang} />
-    </>
+    </main>
   )
 }
 

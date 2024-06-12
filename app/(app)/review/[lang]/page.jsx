@@ -2,7 +2,11 @@ import languages from 'lib/languages'
 import ClientPage from './client'
 
 export default function Page({ params: { lang } }) {
-  return <ClientPage lang={lang} />
+  return (
+    <main>
+      <ClientPage lang={lang} />
+    </main>
+  )
 }
 
 export async function generateStaticParams() {
