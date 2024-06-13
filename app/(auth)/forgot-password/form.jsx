@@ -27,11 +27,11 @@ export default function ForgotPasswordForm() {
   return (
     <>
       {useRequestPasswordForm.isSuccess ? (
-        <div className="flex flex-col space-y-4">
+        <>
           <h1 className="h3 text-base-content/90">Check your email</h1>
           <p>We&apos;ve sent a password reset link to {yourEmail}.</p>
           <p>You can close this window.</p>
-        </div>
+        </>
       ) : (
         <>
           <h1 className="h3 text-base-content/90">Request a password reset</h1>

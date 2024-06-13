@@ -34,7 +34,7 @@ export default function LoginForm({ asModal = false }) {
   if (isAuth) return <p>You are logged in; pls wait while we redirect you.</p>
 
   return (
-    <div className="section-card-inner">
+    <>
       <h1 className="h3 text-base-content/90">Please log in</h1>
       <form role="form" onSubmit={login.mutate} className="form">
         <fieldset
@@ -97,6 +97,6 @@ export default function LoginForm({ asModal = false }) {
           </p>
         </fieldset>
       </form>
-    </div>
+    </>
   )
 }
