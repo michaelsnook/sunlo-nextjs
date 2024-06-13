@@ -1,5 +1,7 @@
 .next
+.vercel
 node_modules
+pnpm-lock.yaml
 tsconfig.json
 supabase/.temp
 types/supabase.ts

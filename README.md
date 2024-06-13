@@ -5,7 +5,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 The first time you run the server, you'll need to make sure you're running a modern nodejs (18+) and install packages
 
 ```bash
-npm install
+pnpm install
 ```
 
 Set the environment variables
@@ -19,7 +19,7 @@ And then enter the supabase API url and public key.
 Then you can install npm packages and run the development server:
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -39,5 +39,5 @@ When your local supabase starts up it will spit out the environment variables yo
 ### Using Tauri for Native Apps
 
 The app is set to deploy as static HTML outputs, so it should generally work
-with the Tauri system for compiling to WASM/Rust. e.g. `npm run tauri dev`,
-`npm run tauri android dev`, `npm run tauri android open` and so on.
+with the Tauri system for compiling to WASM/Rust. e.g. `pnpm tauri dev`,
+`pnpm tauri android dev`, `pnpm tauri android open` and so on.
