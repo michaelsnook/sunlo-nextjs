@@ -9,11 +9,11 @@ export default function AvatarSection() {
   const { data: profile } = useProfile()
   const pathname = usePathname()
   return (
-    <header className="text-center max-w-prose">
+    <header className="text-center my-4 max-w-sm mx-auto">
       <div className="avatar relative">
         {profile?.avatar_url && (
           <label
-            className="mb-8 w-36 h-36 mask mask-circle shadow-lg bg-gray-200"
+            className="mb-2 w-36 h-36 mask mask-circle shadow-lg bg-gray-200"
             htmlFor="single"
           >
             <Image
@@ -26,7 +26,7 @@ export default function AvatarSection() {
         )}
       </div>
       <div>
-        <h2 className="text-4xl">Hi, {profile?.username} 👋</h2>
+        <h2 className="text-4xl">Hello {profile?.username} 👋</h2>
         <p className="my-4">
           {pathname === '/profile' ? (
             <Link href="/getting-started" className="link md:link-hover">
