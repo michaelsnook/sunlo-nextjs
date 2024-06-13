@@ -30,7 +30,7 @@ export default function AvatarSection() {
         <p className="my-4">
           {pathname === '/profile' ? (
             <Link href="/getting-started" className="link md:link-hover">
-              Go to profile setup
+              Go to profile setup &rarr;
             </Link>
           ) : (
             <Link href="/profile" className="link md:link-hover">

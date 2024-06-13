@@ -163,11 +163,11 @@ export const UserAuthCard = () => {
         <div className="flex flex-row">
           <input
             type="text"
-            className="border rounded p-3 flex-grow"
+            className="border rounded p-3 flex-grow bg-base-300 text-base-content/70"
             value={userEmail ?? 'loading...'}
             disabled
           />
-          <Link href="/profile/change-email" className="btn btn-ghost">
+          <Link href="/profile/change-email" className="btn btn-link">
             Change
           </Link>
         </div>
@@ -177,11 +177,11 @@ export const UserAuthCard = () => {
         <div className="flex flex-row">
           <input
             type="text"
-            className="border rounded p-3 flex-grow"
+            className="border rounded p-3 flex-grow bg-base-300 text-base-content/70"
             value="***************"
             disabled
           />
-          <Link href="/profile/change-password" className="btn btn-ghost">
+          <Link href="/profile/change-password" className="btn btn-link">
             Change
           </Link>
         </div>
