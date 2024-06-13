@@ -17,17 +17,17 @@ export default function Page() {
           </p>
         </article>
         <aside className="space-y-4 sm:basis-1/3 flex-none text-center">
-            <GarlicBroccoli />
-            <Link
-              href="/login"
-              className="btn btn-lg btn-outline btn-primary bg-white"
-            >
-              Log in or sign up &rarr;
-            </Link>
+          <GarlicBroccoli />
+          <Link
+            href="/login"
+            className="btn btn-lg btn-outline btn-primary bg-white"
+          >
+            Log in or sign up &rarr;
+          </Link>
         </aside>
       </main>
 
-      <div className="fixed top-0 left-0 right-0 bg-black/70 text-warning">
+      <div className="fixed top-0 left-0 h-20 right-0 bg-black/70 text-warning">
         <p className="md:container md:max-w-[70vw] p-4 text-center">
           ⚠️ Sunlo is under development; it is very incomplete but most of
           what&apos;s there should work so if you do spot a problem, please let

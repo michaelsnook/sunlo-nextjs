@@ -27,22 +27,27 @@ export default function RootLayout({ children }) {
               a) Sidebar with fixed width, and b) and main content/app area
               with .flex-grow
             */}
-            <div className="flex min-h-screen p-px">
+            <div className="flex min-h-screen">
               <Sidebar />
               {/*
-                This flexbox only ever has 1 child, the <main> element, so it
-                can use items-center and justify-center to always center the
-                page contents
+                This is the main container for the app. Its child applies some
+                container-relative padding and width, ensuring that the app's
+                business happens in a consistent sizing box, no matter the
+                contents on screen at the time.
               */}
-              <div
-                className="
-                flex-grow
-                flex
-                items-center justify-center
-                py-6
-              "
-              >
-                <div>{children}</div>
+              <div className="@container w-full py-4">
+                <div
+                  className="
+                    w-[98cqw] max-w-[900px] px-[1cqw]
+                    mx-auto
+                    min-h-screen
+                    flex flex-col
+                    justify-center
+                  "
+                >
+                  {children}
+                  
+                </div>
               </div>
             </div>
           </AuthProvider>
