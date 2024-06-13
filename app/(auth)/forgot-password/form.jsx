@@ -25,7 +25,7 @@ export default function ForgotPasswordForm() {
   })
 
   return (
-    <div className="section-card-inner">
+    <>
       {useRequestPasswordForm.isSuccess ? (
         <div className="flex flex-col space-y-4">
           <h1 className="h3 text-base-content/90">Check your email</h1>
@@ -82,6 +82,6 @@ export default function ForgotPasswordForm() {
           ) : null}
         </>
       )}
-    </div>
+    </>
   )
 }

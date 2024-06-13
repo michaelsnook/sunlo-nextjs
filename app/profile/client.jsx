@@ -57,10 +57,10 @@ export const ProfileCard = () => {
   // console.log(profile)
   return (
     <form
-      className="big-card flex flex-col space-y-4"
+      className="card card-body text-base-content bg-base-100 space-y-4"
       onSubmit={updateProfile.mutate}
     >
-      <h2 className="h3">Profile</h2>
+      <h2 className="card-title">Basic info</h2>
       {profileError ? (
         <ErrorList error={profileError} />
       ) : profileStatus === 'loading' || !profile ? (
@@ -156,8 +156,8 @@ export const ProfileCard = () => {
 export const UserAuthCard = () => {
   const { userEmail } = useAuth()
   return (
-    <div className="big-card flex flex-col space-y-4">
-      <h2 className="h3">Login credentials</h2>
+    <div className="card card-body bg-base-100 text-base-content space-y-4">
+      <h2 className="card-title">Login credentials</h2>
       <div className="flex flex-col w-full">
         <label className="font-bold px-3">Your email</label>
         <div className="flex flex-row">
