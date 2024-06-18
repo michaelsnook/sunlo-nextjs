@@ -25,7 +25,7 @@ export default function SetNewEmailForm() {
   })
 
   return (
-    <div className="section-card-inner">
+    <>
       {changeEmail.isSuccess ? (
         <SuccessfulSubmit />
       ) : (
@@ -75,7 +75,7 @@ export default function SetNewEmailForm() {
           />
         </>
       )}
-    </div>
+    </>
   )
 }
 

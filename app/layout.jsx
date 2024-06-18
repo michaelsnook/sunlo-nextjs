@@ -35,18 +35,16 @@ export default function RootLayout({ children }) {
                 business happens in a consistent sizing box, no matter the
                 contents on screen at the time.
               */}
-              <div className="@container w-full py-4">
+              <div className="@container w-full py-8">
                 <div
                   className="
                     w-[98cqw] max-w-[900px] px-[1cqw]
                     mx-auto
                     min-h-screen
                     flex flex-col
-                    justify-center
                   "
                 >
                   {children}
-                  
                 </div>
               </div>
             </div>

@@ -2,7 +2,7 @@ import SetNewEmailForm from './form'
 
 export default function Page() {
   return (
-    <main className="section-card">
+    <main className="card card-body bg-base-100 text-base-content">
       <SetNewEmailForm />
     </main>
   )

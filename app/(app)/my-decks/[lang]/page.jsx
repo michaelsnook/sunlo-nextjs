@@ -13,7 +13,7 @@ export default function Page({ params: { lang } }) {
         <h1 className="h1">Learn {languages[lang]}</h1>
         <NewCardLinkAndModal lang={lang} />
       </div>
-      <div className="page-card">
+      <div className="card card-body bg-base-100 text-base-content">
         <ClientPage lang={lang} />
       </div>
     </main>
