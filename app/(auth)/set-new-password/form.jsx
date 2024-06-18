@@ -25,65 +25,57 @@ export default function SetNewPasswordForm() {
     },
   })
 
-  return (
-    <div className="section-card-inner">
-      {submitNewPassword.isSuccess ? (
-        <SuccessfulSubmit />
-      ) : !isAuth ? (
-        <InvalidLink />
-      ) : (
-        <>
-          <h1 className="h3 text-base-content/90">Choose a new password</h1>
-          <form
-            role="form"
-            onSubmit={submitNewPassword.mutate}
-            className="form"
-          >
-            <fieldset
-              className="flex flex-col gap-y-4"
+  return submitNewPassword.isSuccess ? (
+    <SuccessfulSubmit />
+  ) : !isAuth ? (
+    <InvalidLink />
+  ) : (
+    <>
+      <h1 className="h3 text-base-content/90">Choose a new password</h1>
+      <form role="form" onSubmit={submitNewPassword.mutate} className="form">
+        <fieldset
+          className="flex flex-col gap-y-4"
+          disabled={submitNewPassword.isSubmitting}
+        >
+          <div>
+            <p>
+              <label htmlFor="password">New password</label>
+            </p>
+            <input
+              id="password"
+              name="password"
+              required="required"
+              aria-invalid={
+                submitNewPassword.error?.errors?.password ? 'true' : 'false'
+              }
+              className={`${
+                submitNewPassword.error?.errors?.password
+                  ? 'border-error/60'
+                  : ''
+              } rounded-md w-full`}
+              tabIndex="1"
+              type="password"
+              placeholder="new password"
+            />
+          </div>
+          <div className="flex flex-row justify-between">
+            <button
+              tabIndex="3"
+              className="btn btn-primary"
+              type="submit"
               disabled={submitNewPassword.isSubmitting}
+              aria-disabled={submitNewPassword.isSubmitting}
             >
-              <div>
-                <p>
-                  <label htmlFor="password">New password</label>
-                </p>
-                <input
-                  id="password"
-                  name="password"
-                  required="required"
-                  aria-invalid={
-                    submitNewPassword.error?.errors?.password ? 'true' : 'false'
-                  }
-                  className={`${
-                    submitNewPassword.error?.errors?.password
-                      ? 'border-error/60'
-                      : ''
-                  } rounded-md w-full`}
-                  tabIndex="1"
-                  type="password"
-                  placeholder="new password"
-                />
-              </div>
-              <div className="flex flex-row justify-between">
-                <button
-                  tabIndex="3"
-                  className="btn btn-primary"
-                  type="submit"
-                  disabled={submitNewPassword.isSubmitting}
-                  aria-disabled={submitNewPassword.isSubmitting}
-                >
-                  Set new password
-                </button>
-              </div>
-            </fieldset>
-          </form>
-          <ErrorList
-            summary="Error setting new password"
-            error={submitNewPassword.error?.message}
-          />
-        </>
-      )}
-    </div>
+              Set new password
+            </button>
+          </div>
+        </fieldset>
+      </form>
+      <ErrorList
+        summary="Error setting new password"
+        error={submitNewPassword.error?.message}
+      />
+    </>
   )
 }
 
