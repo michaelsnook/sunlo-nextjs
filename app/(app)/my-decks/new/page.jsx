@@ -8,7 +8,7 @@ export default function Page() {
         &larr; Back to decks
       </Link>
       <h1 className="h1">Start a new deck</h1>
-      <div className="page-card">
+      <div className="card card-body bg-base-100 text-base-content">
         <Form />
       </div>
     </main>

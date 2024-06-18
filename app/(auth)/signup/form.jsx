@@ -30,7 +30,7 @@ export default function SignupForm() {
   })
 
   return (
-    <div className="section-card-inner">
+    <div>
       {submitSignup.isSuccess ? (
         <SuccessfulSubmit />
       ) : (
