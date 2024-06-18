@@ -4,7 +4,7 @@ import { GarlicBroccoli } from 'app/components/Garlic'
 export default function Page() {
   return (
     <>
-      <main className="flex flex-row flex-wrap gap-4 justify-around">
+      <main className="flex flex-row flex-wrap gap-4 my-20">
         <article className="space-y-4 flex flex-col basis-11/12 sm:basis-3/5 justify-center">
           <h1 className="text-4xl">
             Sunlo is a social
@@ -27,7 +27,7 @@ export default function Page() {
         </aside>
       </main>
 
-      <div className="fixed top-0 left-0 h-20 right-0 bg-black/70 text-warning">
+      <div className="max-w-prose mx-auto bg-black/70 text-warning">
         <p className="md:container md:max-w-[70vw] p-4 text-center">
           ⚠️ Sunlo is under development; it is very incomplete but most of
           what&apos;s there should work so if you do spot a problem, please let

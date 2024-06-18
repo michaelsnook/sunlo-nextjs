@@ -2,7 +2,7 @@ import SetNewPasswordForm from 'app/(auth)/set-new-password/form'
 
 export default function Page() {
   return (
-    <main className="section-card">
+    <main className="card card-body bg-base-100 text-base-content">
       <SetNewPasswordForm />
     </main>
   )

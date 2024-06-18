@@ -3,7 +3,7 @@ import Client from './client'
 
 export default function Page() {
   return (
-    <main className="max-w-sm flex flex-col gap-4 p-2">
+    <main className="flex flex-col gap-4 p-2">
       <label className="label h2 text-center">Continue learning...</label>
       <Client />
       <div className="mx-auto">

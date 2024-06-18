@@ -9,7 +9,7 @@ export default function Page({ params: { lang } }) {
         &larr; Back to {languages[lang]} deck
       </Link>
       <h1 className="h1">Add a new card</h1>
-      <div className="section-card">
+      <div className="card bg-base-100 text-base-content card-body">
         <AddCardPhraseForm lang={lang} />
       </div>
     </main>

@@ -31,12 +31,12 @@
   }
   /* used when you want a card section, width lg */
   .section-card {
-    @apply card mx-auto shadow-lg bg-base-100 text-base-content max-w-lg p-10;
+    @apply card mx-auto shadow-lg bg-base-100 text-base-content max-w-lg p-4;
   }
   /* used inside .section-card to provide optional spacing and 
   ability to use the section inside other elements */
   .section-card-inner {
-    @apply max-w-lg md:px-4 lg:px-8;
+    @apply md:px-4 lg:px-8 gap-8;
   }
   /* used when you want a big card area, that goes as wide as prose */
   .big-card {
@@ -68,7 +68,7 @@
     @apply lg:text-4xl md:text-3xl text-2xl my-4; /* font-display;*/
   }
   .h3 {
-    @apply md:text-2xl text-xl my-3; /* font-display;*/
+    @apply md:text-2xl text-xl mt-1 mb-3; /* font-display;*/
   }
   .h4 {
     @apply md:text-xl text-lg my-2; /* font-display;*/
