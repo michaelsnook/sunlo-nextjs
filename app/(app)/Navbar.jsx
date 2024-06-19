@@ -1,10 +1,13 @@
 'use client'
 
-import { useRouter, useSelectedLayoutSegments } from 'next/navigation'
+import {
+  useRouter,
+  //  useSelectedLayoutSegments
+} from 'next/navigation'
 import { useState } from 'react'
 
-export default function Navbar() {
-  const segments = useSelectedLayoutSegments()
+export default function Navbar({ title }) {
+  // const segments = useSelectedLayoutSegments()
   const router = useRouter()
   const [isContextMenuOpen, setIsContextMenuOpen] = useState()
   const openContextMenu = () => setIsContextMenuOpen(true)
@@ -17,7 +20,7 @@ export default function Navbar() {
         >
           <LeftArrow /> <span className="max-sm:hidden">Go back</span>
         </a>
-        <p className="grow px-4">Learn Arabic</p>
+        <p className="grow px-4">{title}</p>
         <a
           href="#"
           className="btn btn-ghost rounded-full gap-2"

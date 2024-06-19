@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation'
+import Navbar from 'app/(app)/Navbar'
 import languages from 'lib/languages'
 import Client from './client'
 
@@ -7,10 +8,12 @@ export default function Page({ params: { lang } }) {
   if (typeof language !== 'string') notFound()
 
   return (
-    <main>
-      <h1 className="text-4xl mt-6 mb-4">Learn {language}</h1>
+    <>
+      <Navbar title={`Learning ${language}`} />
+      <main className="mx-auto">
       <Client lang={lang} />
     </main>
+    </>
   )
 }
 
