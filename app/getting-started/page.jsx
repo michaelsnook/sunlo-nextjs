@@ -119,7 +119,7 @@ export default function Page() {
         </div>
       ) : null}
       <h1 className="d1">Welcome to Sunlo</h1>
-      <div className="max-w-prose">
+      <div className="w-app">
         <p className="text-2xl my-4 mb-10">Let&apos;s get started</p>
         <SetUsernameStep value={tempUsernameToUse} set={setTempUsername} />
         <SetPrimaryLanguageStep

@@ -26,12 +26,15 @@
 }
 
 @layer components {
+  .w-app {
+    @apply w-full max-w-[40rem] mx-auto;
+  }
   .link {
     @apply hover:underline cursor-pointer;
   }
   /* used when you want a big card area, that goes as wide as prose */
   .big-card {
-    @apply card bg-base-100 text-base-content p-6 border shadow-lg mb-6 max-w-prose;
+    @apply card bg-base-100 text-base-content p-6 border shadow-lg mb-6 w-app;
   }
   /* used for a whole page */
   .page-card {
