@@ -69,7 +69,7 @@ export default function Client({ lang }) {
           .
         </p>
       ) : (
-        <div className="grid gap-4 min-w-44 w-[90vw] max-w-[22rem]">
+        <div className="grid gap-4 max-w-[44rem]">
           <div className="card glass">
             <figure>
               <RecentReviewsSummary lang={lang} />
