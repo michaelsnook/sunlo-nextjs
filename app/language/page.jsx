@@ -5,7 +5,7 @@ export default async function Page() {
   return (
     <main className="page-card">
       <h1 className="h1">Languages</h1>
-      <ul className="columns-1 sm:columns-2 lg:columns-3 gap-4">
+      <ul className="columns-1 @lg:columns-2 @3xl:columns-3 gap-4">
         {Object.keys(languages).map(lang => (
           <li key={lang}>
             <Link href={`/language/${lang}`} className="btn btn-ghost">

@@ -52,7 +52,7 @@ export default function CardInner({ card, nextCard, addReview, hidden }) {
     },
   })
 
-  const btnClasses = `max-md:grow w-44 md:shrink`
+  const btnClasses = `grow basis-44`
 
   return hidden ? null : (
     <div className="card-white">
