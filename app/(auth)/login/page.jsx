@@ -3,7 +3,7 @@ import ClientPage from './client'
 
 export default function Page() {
   return (
-    <main className="card-white card-body">
+    <main className="card-white">
       <ClientPage>
         <LoginForm />
       </ClientPage>
