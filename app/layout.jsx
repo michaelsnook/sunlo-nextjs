@@ -12,6 +12,7 @@ export const metadata = {
 
 export const viewport = {
   themeColor: '#570df8',
+  viewportFit: 'cover',
 }
 
 export default function RootLayout({ children }) {
@@ -23,7 +24,7 @@ export default function RootLayout({ children }) {
           a) Sidebar with fixed width, and b) and main content/app area. 
           This flex allows the sidebar to shift the content right.
         */}
-        <Toaster />
+        <Toaster position="bottom-center" />
         <QueryProvider>
           <AuthProvider>
             <Sidebar />
