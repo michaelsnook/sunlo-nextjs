@@ -20,7 +20,7 @@ export default function Page() {
           <GarlicBroccoli className="mx-auto" />
           <Link
             href="/login"
-            className="btn btn-lg btn-outline btn-primary bg-white"
+            className="btn btn-lg btn-primary btn-outline bg-white"
           >
             Log in or sign up &rarr;
           </Link>

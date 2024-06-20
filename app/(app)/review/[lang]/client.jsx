@@ -53,7 +53,7 @@ export default function ClientPage({ lang }) {
   return (
     <div className="h-full grid gap-8 max-w-xl mx-auto">
       <p className="inline-block">
-        <span className="alert alert-info inline-block text-white text-center">
+        <span className="alert alert-info inline-block text-info-content text-center">
           Reviewing {languages[lang]} flash cards.{' '}
           {reviewCards.length - cardIndex} cards left today{' '}
           {cardIndex < reviewCards.length ? (
@@ -65,14 +65,14 @@ export default function ClientPage({ lang }) {
       </p>
       <div className="flex justify-center gap-4">
         <button
-          className="btn btn-outline btn-primary bg-white"
+          className="btn btn-primary"
           onClick={gobackaCard}
           disabled={!canBackup}
         >
           Prev card
         </button>
         <button
-          className="btn btn-outline btn-primary bg-white"
+          className="btn btn-primary"
           onClick={advanceCard}
           disabled={!canAdvance}
         >
