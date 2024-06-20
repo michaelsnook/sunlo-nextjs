@@ -6,7 +6,7 @@ import {
 } from 'next/navigation'
 import { useState } from 'react'
 
-export default function Navbar({ title }) {
+export default function Navbar({ title, children }) {
   // const segments = useSelectedLayoutSegments()
   const router = useRouter()
   const [isContextMenuOpen, setIsContextMenuOpen] = useState()
@@ -20,14 +20,18 @@ export default function Navbar({ title }) {
         >
           <LeftArrow /> <span className="sr-only">Go back</span>
         </a>
-        <h1 className="grow px-4 text-2xl my-0">{title}</h1>
+        <h1 className="grow px-4 text-2xl my-0 text-center">{title}</h1>
         <a
           href="#"
           className="btn btn-ghost rounded-full gap-2"
           onClick={openContextMenu}
         >
-          <span className="sr-only">More options</span>
-          <ContextMenuIcon />
+          {children ?? (
+            <>
+              <span className="sr-only">More options</span>
+              <ContextMenuIcon />
+            </>
+          )}
         </a>
       </nav>
     </div>
