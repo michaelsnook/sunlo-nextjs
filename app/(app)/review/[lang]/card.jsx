@@ -55,7 +55,7 @@ export default function CardInner({ card, nextCard, addReview, hidden }) {
   const btnClasses = `max-md:grow w-44 md:shrink`
 
   return hidden ? null : (
-    <div className="big-card">
+    <div className="card-white">
       <div className="flex flex-col justify-center text-center gap-8">
         <h2 className="h2 text-center">{card?.phrase?.text}</h2>
         {status === 'loading' ? (
@@ -64,7 +64,7 @@ export default function CardInner({ card, nextCard, addReview, hidden }) {
           </div>
         ) : null}
         {status === 'error' ? (
-          <div className="absolute bg-white/50 top-0 left-0 right-0 bottom-0">
+          <div className="absolute bg-base-100/50 top-0 left-0 right-0 bottom-0">
             <ErrorList error={error} />
           </div>
         ) : null}

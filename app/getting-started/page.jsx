@@ -164,7 +164,7 @@ const SetPrimaryLanguageStep = ({ value, set }) => {
     </Completed>
   ) : (
     <form
-      className="big-card mb-16"
+      className="card-white mb-16"
       onSubmit={e => {
         e.preventDefault()
         setClosed(true)
@@ -242,7 +242,7 @@ const CreateFirstDeckStep = ({ value, set }) => {
       />
     </Completed>
   ) : (
-    <form className="big-card mb-16">
+    <form className="card-white mb-16">
       <h2 className="h2">
         Create {decks?.length === 0 ? 'your first deck' : 'another deck'}
       </h2>
@@ -298,7 +298,7 @@ const SetUsernameStep = ({ value, set }) => {
     </Completed>
   ) : (
     <form
-      className="big-card mb-16"
+      className="card-white mb-16"
       onSubmit={e => {
         e.preventDefault()
         if (e.target.username.value) setClosed(true)

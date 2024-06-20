@@ -32,20 +32,16 @@
   .link {
     @apply hover:underline cursor-pointer;
   }
-  /* used when you want a big card area, that goes as wide as prose */
-  .big-card {
-    @apply card bg-base-100 text-base-content p-6 border shadow-lg mb-6 w-app;
+  .card-white {
+    @apply card card-body bg-base-100 text-base-content;
   }
   /* used for a whole page */
   .page-card {
-    @apply container card border shadow-lg bg-base-100 text-base-content px-3 md:px-6 lg:px-10 mb-6 pt-10 pb-16 mx-auto;
+    @apply card-white;
   }
   .page-card > .h1,
   .page-card > .h2 {
     @apply mb-8 text-base-content/90;
-  }
-  .card-white {
-    @apply card bg-base-100 text-base-content;
   }
 }
 @layer utilities {
