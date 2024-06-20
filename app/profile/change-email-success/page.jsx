@@ -5,7 +5,7 @@ import { useAuth } from 'lib/auth-context'
 export default function Page() {
   const { userEmail } = useAuth()
   return (
-    <main className="card card-body bg-base-100 text-base-content">
+    <main className="card card-body bg-base-100 text-base-content max-w-lg mx-auto">
       {userEmail ? (
         <div className="flex flex-col space-y-4">
           <h1 className="h3 text-base-content/90">Email address changed!</h1>

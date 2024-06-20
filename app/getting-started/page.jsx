@@ -89,8 +89,8 @@ export default function Page() {
   })
 
   return profile === null ? null : mainForm.isSuccess ? (
-    <main className="p2 md:p-6 lg:p-10 max-w-prose text-white min-h-85vh flex flex-col gap-12 justify-center">
-      <div className="flex flex-row justify-center space-x-4">
+    <main className="p2 md:p-6 lg:p-10 w-app text-white min-h-85vh flex flex-col gap-12 justify-center">
+      <div className="flex flex-row justify-center gap-4 place-items-center">
         <SuccessCheckmark />
         <h1 className="h1">You&apos;re all set!</h1>
       </div>
@@ -118,7 +118,7 @@ export default function Page() {
           </Link>
         </div>
       ) : null}
-      <h1 className="d1">Welcome to Sunlo</h1>
+      <h1 className="d1 text-center">Welcome to Sunlo</h1>
       <div className="w-app">
         <p className="text-2xl my-4 mb-10">Let&apos;s get started</p>
         <SetUsernameStep value={tempUsernameToUse} set={setTempUsername} />

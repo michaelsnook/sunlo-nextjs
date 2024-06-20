@@ -11,8 +11,8 @@ export default function Page({ params: { lang } }) {
     <>
       <Navbar title={`Learning ${language}`} />
       <main className="mx-auto">
-      <Client lang={lang} />
-    </main>
+        <Client lang={lang} />
+      </main>
     </>
   )
 }

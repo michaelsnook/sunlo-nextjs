@@ -74,9 +74,12 @@ export default function Client({ lang }) {
             <figure>
               <RecentReviewsSummary lang={lang} />
             </figure>
-            <div className="card-body">
-              <Link href={`/review/${lang}`} className="mx-auto btn">
+            <div className="card-body flex-row justify-between">
+              <Link href={`/review/${lang}`} className="btn">
                 Start a review session
+              </Link>
+              <Link href={`/review/${lang}`} className="btn">
+                See your review stats
               </Link>
             </div>
           </div>
@@ -86,8 +89,8 @@ export default function Client({ lang }) {
               <CardsSummary deck={deck} />
             </figure>
             <div className="card-body">
-              <Link href={`/my-decks/${lang}`} className="mx-auto btn">
-                Browse/manage on your deck
+              <Link href={`/my-decks/${lang}`} className="btn">
+                Browse/manage your deck
               </Link>
             </div>
           </div>

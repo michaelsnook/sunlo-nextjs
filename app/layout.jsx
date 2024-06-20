@@ -18,18 +18,17 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className="bg-primary text-white flex flex-row min-h-screen">
+        {/*
+          This is the root of the layout. The flex, with 2 children
+          a) Sidebar with fixed width, and b) and main content/app area. 
+          This flex allows the sidebar to shift the content right.
+        */}
         <Toaster />
         <QueryProvider>
           <AuthProvider>
-            {/*
-              This is the root of the layout. The flex, with 2 children
-              a) Sidebar with fixed width, and b) and main content/app area
-              with .flex-grow
-            */}
             <Sidebar />
             {/*
-              This is the main container for the app. Its child applies some
-              container-relative padding and width, ensuring that the app's
+              This is the main container for the site, ensuring that all the
               business happens in a consistent sizing box, no matter the
               contents on screen at the time.
             */}
@@ -38,7 +37,6 @@ export default function RootLayout({ children }) {
                 @container w-full max-w-[1100px] 
                 py-20 
                 mx-auto px-[1%]
-                flex flex-col
               "
             >
               {children}

@@ -6,7 +6,7 @@ export default function Page() {
     <>
       <main className="flex flex-row flex-wrap gap-4 mb-8 sm:my-20">
         <article className="space-y-4 flex flex-col basis-11/12 sm:basis-3/5 justify-center mx-auto max-w-[537px]">
-          <h1 className="text-4xl mt-8 max-sm:text-center sm:h-24 sm:mt-12 md:mt-16">
+          <h1 className="text-4xl max-sm:text-center sm:h-24 sm:mt-12 md:mt-16">
             Sunlo is a social
             <br />
             language&nbsp;learning app
@@ -27,8 +27,8 @@ export default function Page() {
         </aside>
       </main>
 
-      <div className="w-app bg-black/60 text-warning">
-        <p className="md:max-w-[70cqw] p-4 text-center">
+      <div className="w-app md:max-w-[70cqw] bg-black/60 text-warning">
+        <p className="p-4 text-center">
           ⚠️ Sunlo is under development; it is very incomplete but most of
           what&apos;s there should work so if you do spot a problem, please let
           me know! ⚠️
