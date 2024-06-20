@@ -12,21 +12,21 @@ export default function Navbar({ title }) {
   const [isContextMenuOpen, setIsContextMenuOpen] = useState()
   const openContextMenu = () => setIsContextMenuOpen(true)
   return (
-    <div className="w-full fixed left-0 right-0 top-0">
+    <div className="w-full fixed left-0 right-0 top-0 border-b border-base-100/30">
       <nav className="w-app p-2 border-bottom text-xl flex flex-row justify-between items-center">
         <a
           onClick={() => router.back()}
           className="btn btn-ghost rounded-full gap-2"
         >
-          <LeftArrow /> <span className="max-sm:hidden">Go back</span>
+          <LeftArrow /> <span className="sr-only">Go back</span>
         </a>
-        <p className="grow px-4">{title}</p>
+        <h1 className="grow px-4 text-2xl my-0">{title}</h1>
         <a
           href="#"
           className="btn btn-ghost rounded-full gap-2"
           onClick={openContextMenu}
         >
-          <span className="max-sm:hidden">More </span>
+          <span className="max-sm:hidden sr-only">More options</span>
           <ContextMenuIcon />
         </a>
       </nav>
