@@ -118,9 +118,11 @@ export default function Page() {
           </Link>
         </div>
       ) : null}
-      <h1 className="d1 text-center">Welcome to Sunlo</h1>
+      <h1 className="d1 @md:text-center">Welcome to Sunlo</h1>
       <div className="w-app">
-        <p className="text-2xl my-4 mb-10">Let&apos;s get started</p>
+        <p className="text-2xl my-4 mb-10 @md:text-center">
+          Let&apos;s get started
+        </p>
         <SetUsernameStep value={tempUsernameToUse} set={setTempUsername} />
         <SetPrimaryLanguageStep
           value={tempLanguagePrimaryToUse}
