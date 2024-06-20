@@ -59,7 +59,7 @@ export default function CardInner({ card, nextCard, addReview, hidden }) {
       <div className="flex flex-col justify-center text-center gap-8">
         <h2 className="h2 text-center">{card?.phrase?.text}</h2>
         {status === 'loading' ? (
-          <div className="absolute bg-white/70 top-0 left-0 right-0 bottom-0 content-center">
+          <div className="absolute bg-base-100/70 top-0 left-0 right-0 bottom-0 content-center">
             <Loading />
           </div>
         ) : null}
