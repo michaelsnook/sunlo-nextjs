@@ -10,7 +10,7 @@ export default function Page({ params: { lang } }) {
         <NewCardLinkAndModal lang={lang} />
       </Navbar>
       <main>
-        <div className="card card-body bg-base-100 text-base-content">
+        <div className="card-white">
           <ClientPage lang={lang} />
         </div>
       </main>

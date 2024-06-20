@@ -19,11 +19,7 @@ const Navlink = ({ href, children }) => {
       {children}
     </Link>
   ) : (
-    <a
-      href="#"
-      className="border-gray-400 pl-2 border-l-4 text-gray-600"
-      disabled
-    >
+    <a className="border-gray-400 pl-2 border-l-4 text-gray-600" disabled>
       {children}
     </a>
   )

@@ -8,11 +8,8 @@ export default function Page() {
       <Navbar title="My languages">
         <Link href="/my-decks/new">+ new deck</Link>
       </Navbar>
-      <main>
-        <div className="flex justify-between"></div>
-        <div className="page-card">
-          <ClientPage />
-        </div>
+      <main className="page-card">
+        <ClientPage />
       </main>
     </>
   )

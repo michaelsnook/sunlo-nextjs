@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { useAuth } from 'lib/auth-context'
 import supabase from 'lib/supabase-client'
+import Navbar from 'app/(app)/Navbar'
 import ErrorList from 'app/components/ErrorList'
 import Link from 'next/link'
 import { useProfile } from 'app/data/hooks'
@@ -110,48 +111,44 @@ export default function Page() {
       </div>
     </main>
   ) : (
-    <main className="text-white p2 md:p-6 lg:p-10">
-      {profile ? (
-        <div className="absolute top-4 md:top-10">
-          <Link href="/profile" className="link md:link-hover">
-            &larr; Back to profile
-          </Link>
-        </div>
-      ) : null}
-      <h1 className="d1 @md:text-center">Welcome to Sunlo</h1>
-      <div className="w-app">
-        <p className="text-2xl my-4 mb-10 @md:text-center">
-          Let&apos;s get started
-        </p>
-        <SetUsernameStep value={tempUsernameToUse} set={setTempUsername} />
-        <SetPrimaryLanguageStep
-          value={tempLanguagePrimaryToUse}
-          set={setTempLanguagePrimary}
-        />
-        <CreateFirstDeckStep value={tempDeckToAdd} set={setTempDeckToAdd} />
+    <>
+      <Navbar>&nbsp;</Navbar>
+      <main className="text-white p2 md:p-6 lg:p-10">
+        <h1 className="d1 @md:text-center">Welcome to Sunlo</h1>
+        <div className="w-app">
+          <p className="text-2xl my-4 mb-10 @md:text-center">
+            Let&apos;s get started
+          </p>
+          <SetUsernameStep value={tempUsernameToUse} set={setTempUsername} />
+          <SetPrimaryLanguageStep
+            value={tempLanguagePrimaryToUse}
+            set={setTempLanguagePrimary}
+          />
+          <CreateFirstDeckStep value={tempDeckToAdd} set={setTempDeckToAdd} />
 
-        {tempLanguagePrimaryToUse &&
-        (tempDeckToAdd || profile.deck_stubs?.length > 0) &&
-        tempUsernameToUse ? (
-          <div className="my-6 flex flex-row-reverse justify-around items-center">
-            <button
-              onClick={mainForm.mutate}
-              className="btn btn-accent md:btn-lg"
-              disabled={mainForm.isSubmitting}
-            >
-              Confirm and get started!
-            </button>
-            <button onClick={reset} className="btn btn-primary">
-              Reset page
-            </button>
-          </div>
-        ) : null}
-      </div>
-      <ErrorList
-        summary="Problem inserting profile or making deck"
-        error={mainForm.error}
-      />
-    </main>
+          {tempLanguagePrimaryToUse &&
+          (tempDeckToAdd || profile.deck_stubs?.length > 0) &&
+          tempUsernameToUse ? (
+            <div className="my-6 flex flex-row-reverse justify-around items-center">
+              <button
+                onClick={mainForm.mutate}
+                className="btn btn-accent md:btn-lg"
+                disabled={mainForm.isSubmitting}
+              >
+                Confirm and get started!
+              </button>
+              <button onClick={reset} className="btn btn-primary">
+                Reset page
+              </button>
+            </div>
+          ) : null}
+        </div>
+        <ErrorList
+          summary="Problem inserting profile or making deck"
+          error={mainForm.error}
+        />
+      </main>
+    </>
   )
 }
 
