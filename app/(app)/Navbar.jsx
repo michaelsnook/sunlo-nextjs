@@ -26,7 +26,7 @@ export default function Navbar({ title }) {
           className="btn btn-ghost rounded-full gap-2"
           onClick={openContextMenu}
         >
-          <span className="max-sm:hidden sr-only">More options</span>
+          <span className="sr-only">More options</span>
           <ContextMenuIcon />
         </a>
       </nav>
