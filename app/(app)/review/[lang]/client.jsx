@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react'
 import languages from 'lib/languages'
+import Navbar from 'app/(app)/Navbar'
 import { useDeck } from 'app/data/hooks'
 import Loading from 'app/loading'
 import SuccessCheckmark from 'app/components/SvgComponents'
@@ -51,19 +52,13 @@ export default function ClientPage({ lang }) {
   }
 
   return (
-    <div className="h-full grid gap-8 max-w-xl mx-auto">
-      <p className="inline-block">
-        <span className="alert alert-info inline-block text-info-content text-center">
-          Reviewing {languages[lang]} flash cards.{' '}
-          {reviewCards.length - cardIndex} cards left today{' '}
-          {cardIndex < reviewCards.length ? (
-            <>
-              ({cardIndex + 1} out of {reviewCards.length})
-            </>
-          ) : null}
-        </span>
-      </p>
-      <div className="flex justify-center gap-4">
+    <div className="h-full grid gap-8 pt-10 @lg:pt-0">
+      <Navbar
+        title={`Reviewing ${languages[lang]} (${cardIndex + 1} out of ${
+          reviewCards.length
+        })`}
+      />
+      <div className="flex justify-center gap-4 absolute @lg:static bottom-10 left-0 right-0">
         <button
           className="btn btn-primary"
           onClick={gobackaCard}
