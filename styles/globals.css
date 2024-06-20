@@ -23,6 +23,11 @@
     --tab-radius:0.5rem;
     */
   }
+  body,
+  #sidebar-all nav {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 }
 
 @layer components {
