@@ -113,7 +113,7 @@ export default function SignupForm() {
 }
 
 const SuccessfulSubmit = () => (
-  <div className="flex flex-col space-y-4 p-4 sm:p-6 md:p-10">
+  <div className="flex flex-col space-y-4 p-4 @md:p-6 @xl:p-10">
     <h1 className="h3 text-base-content/90">Please confirm email</h1>
     <p>
       We&apos;ve sent a confirmation email to the address you entered. Please

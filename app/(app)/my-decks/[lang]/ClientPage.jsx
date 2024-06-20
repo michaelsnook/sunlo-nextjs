@@ -86,8 +86,7 @@ export default function ClientPage({ lang }) {
           className={`tab tab-bordered ${tab === 'browse' ? 'tab-active' : ''}`}
           onClick={() => setTab('browse')}
         >
-          <>Browse&nbsp;</>
-          <span className="hidden md:block">for new&nbsp;</span>phrases...
+          Browse phrases...
         </a>
       </div>
       <div>

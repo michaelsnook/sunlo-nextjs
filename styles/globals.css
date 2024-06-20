@@ -27,7 +27,7 @@
 
 @layer components {
   .w-app {
-    @apply w-full max-w-[40rem] mx-auto;
+    @apply w-full max-w-[40rem] mx-auto; /* outline outline-dashed outline-white/50; */
   }
   .link {
     @apply hover:underline cursor-pointer;
