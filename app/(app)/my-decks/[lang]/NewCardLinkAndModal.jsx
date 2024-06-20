@@ -10,7 +10,7 @@ export default function NewCardLinkAndModal({ lang }) {
     <>
       <a
         onClick={() => setShowModal(true)}
-        className="flex-none link place-self-center"
+        className="flex-none place-self-center"
       >
         + new card
       </a>

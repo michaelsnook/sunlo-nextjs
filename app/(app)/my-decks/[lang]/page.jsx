@@ -1,22 +1,20 @@
-import Link from 'next/link'
 import languages from 'lib/languages'
-import NewCardLinkAndModal from 'app/components/NewCardLinkAndModal'
+import NewCardLinkAndModal from './NewCardLinkAndModal'
 import ClientPage from './ClientPage'
+import Navbar from 'app/(app)/Navbar'
 
 export default function Page({ params: { lang } }) {
   return (
-    <main>
-      <Link className="link" href="/my-decks">
-        &larr; Back to decks
-      </Link>
-      <div className="flex flex-row justify-between">
-        <h1 className="h1">Learn {languages[lang]}</h1>
+    <>
+      <Navbar title={`Manage your ${languages[lang]} flashcards`}>
         <NewCardLinkAndModal lang={lang} />
-      </div>
-      <div className="card card-body bg-base-100 text-base-content">
-        <ClientPage lang={lang} />
-      </div>
-    </main>
+      </Navbar>
+      <main>
+        <div className="card card-body bg-base-100 text-base-content">
+          <ClientPage lang={lang} />
+        </div>
+      </main>
+    </>
   )
 }
 
