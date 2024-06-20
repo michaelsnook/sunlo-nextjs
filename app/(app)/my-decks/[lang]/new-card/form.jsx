@@ -99,6 +99,10 @@ export default function AddCardPhraseForm({ lang, cancel }) {
   }
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+      <h2 className="h3">
+        Enter the {languages[lang]} phrase and a translation
+      </h2>
+
       <div className="">
         <div className="form-control">
           <label>{languages[lang]} phrase to learn</label>

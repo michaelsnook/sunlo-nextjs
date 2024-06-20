@@ -1,18 +1,15 @@
-import Link from 'next/link'
 import languages from 'lib/languages'
 import AddCardPhraseForm from './form'
+import Navbar from 'app/(app)/Navbar'
 
 export default function Page({ params: { lang } }) {
   return (
-    <main>
-      <Link href={`/my-decks/${lang}`} className="link">
-        &larr; Back to {languages[lang]} deck
-      </Link>
-      <h1 className="h1">Add a new card</h1>
-      <div className="card bg-base-100 text-base-content card-body">
+    <>
+      <Navbar title={`Add a new ${languages[lang]} phrase`}></Navbar>
+      <main className="card-white">
         <AddCardPhraseForm lang={lang} />
-      </div>
-    </main>
+      </main>
+    </>
   )
 }
 

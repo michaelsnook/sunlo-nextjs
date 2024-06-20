@@ -50,7 +50,7 @@ const AddCardButtonsSection = ({ phrase_id, user_deck_id, onClose }) => {
           This phrase is in your deck with status: &ldquo;
           {makeNewCard.data?.status}
           &rdquo;.&nbsp;
-          <a href="#" className="text-primary link" onClick={onClose}>
+          <a className="text-primary link" onClick={onClose}>
             Keep browsing.
           </a>
         </p>

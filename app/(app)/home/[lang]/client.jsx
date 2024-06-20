@@ -69,17 +69,14 @@ export default function Client({ lang }) {
           .
         </p>
       ) : (
-        <div className="grid gap-4 max-w-[44rem]">
+        <div className="grid gap-6 max-w-[44rem]">
           <div className="card glass">
             <figure>
               <RecentReviewsSummary lang={lang} />
             </figure>
-            <div className="card-body flex-row justify-between">
-              <Link href={`/review/${lang}`} className="btn">
+            <div className="card-body">
+              <Link href={`/review/${lang}`} className="btn btn-lg">
                 Start a review session
-              </Link>
-              <Link href={`/review/${lang}`} className="btn">
-                See your review stats
               </Link>
             </div>
           </div>
@@ -89,7 +86,7 @@ export default function Client({ lang }) {
               <CardsSummary deck={deck} />
             </figure>
             <div className="card-body">
-              <Link href={`/my-decks/${lang}`} className="btn">
+              <Link href={`/my-decks/${lang}`} className="btn btn-lg">
                 Browse/manage your deck
               </Link>
             </div>

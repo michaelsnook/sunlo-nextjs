@@ -22,7 +22,6 @@ export default function Navbar({ title, children }) {
         </a>
         <h1 className="grow px-4 text-2xl my-0 text-center">{title}</h1>
         <a
-          href="#"
           className="btn btn-ghost rounded-full gap-2"
           onClick={openContextMenu}
         >
