@@ -21,21 +21,21 @@ export default function Navbar({ title, children }) {
           <LeftArrow /> <span className="sr-only">Go back</span>
         </a>
         <h1 className="grow px-4 text-2xl my-0 text-center">{title}</h1>
-        <a
-          className="btn btn-ghost rounded-full gap-2"
-          onClick={openContextMenu}
-        >
-          {children ?? (
-            <>
-              <span className="sr-only">More options</span>
-              <ContextMenuIcon />
-            </>
-          )}
-        </a>
+        {children}
       </nav>
     </div>
   )
 }
+
+/*
+  <span
+    className="btn btn-ghost rounded-full gap-2"
+    onClick={openContextMenu}
+  >
+    <span className="sr-only">More options</span>
+    <ContextMenuIcon />
+  </span>
+*/
 
 const ContextMenuIcon = () => (
   <svg
