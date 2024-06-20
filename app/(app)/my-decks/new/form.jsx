@@ -45,6 +45,7 @@ export default function Form() {
         status === 'error' && <ErrorList summary={`${error.message}`} />
       )}
       <form name="new-deck" onSubmit={createNewDeck.mutate}>
+        <h2 className="h3">What language would you like to learn?</h2>
         <Select
           options={allLanguageOptions}
           isOptionDisabled={option =>
