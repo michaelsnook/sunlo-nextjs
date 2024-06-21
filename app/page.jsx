@@ -27,10 +27,10 @@ export default function Page() {
         </aside>
       </main>
 
-      <div className="w-app bg-black/60 text-warning">
-        <p className="p-4 text-center">
-          ⚠️ Sunlo is under development; it is very incomplete but most of
-          what&apos;s there should work so if you do spot a problem, please let
+      <div className="w-app bg-black/30 text-warning alert">
+        <p className="text-center">
+          ⚠️ Sunlo is under development; it is incomplete but most of
+          what&apos;s there should work, so if you do spot a problem, please let
           me know! ⚠️
         </p>
       </div>
