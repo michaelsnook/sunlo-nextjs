@@ -3,6 +3,7 @@ import PhraseCardSmall from 'app/components/PhraseCardSmall'
 import { getLanguageDetails } from 'app/data/fetchers'
 import languages from 'lib/languages'
 import { notFound } from 'next/navigation'
+import Navbar from 'app/(app)/Navbar'
 
 export default async function Page({ params: { lang } }) {
   if (!languages[lang]) {
@@ -15,34 +16,31 @@ export default async function Page({ params: { lang } }) {
   }
 
   return (
-    <main className="page-card">
-      <Link href="/language" className="hover:underline text-primary">
-        &larr; Back to languages
-      </Link>
-      <h1 className="h1">
-        {languages[lang]} ({lang})
-      </h1>
-      {!language?.phrases?.length ? (
-        <p>
-          We don&apos;t have any phrases for you to learn {languages[lang]} yet.
-          But you can be the first to add one!
-        </p>
-      ) : (
-        <ul className="columns-1 @lg:columns-2 @3xl:columns-3 gap-4">
-          {language.phrases.map(phrase => (
-            <li key={`phrase-${phrase.id}`}>
-              <Link href={`/language/${lang}/phrase/${phrase.id}`}>
-                <PhraseCardSmall
-                  text={phrase.text}
-                  lang={phrase.lang}
-                  translations={phrase.translations}
-                />
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
-    </main>
+    <>
+      <Navbar title={`${languages[lang]} (${lang})`}></Navbar>
+      <main className="page-card">
+        {!language?.phrases?.length ? (
+          <p>
+            We don&apos;t have any phrases for you to learn {languages[lang]}{' '}
+            yet. But you can be the first to add one!
+          </p>
+        ) : (
+          <ul className="columns-1 @lg:columns-2 @3xl:columns-3 gap-4">
+            {language.phrases.map(phrase => (
+              <li key={`phrase-${phrase.id}`}>
+                <Link href={`/language/${lang}/phrase/${phrase.id}`}>
+                  <PhraseCardSmall
+                    text={phrase.text}
+                    lang={phrase.lang}
+                    translations={phrase.translations}
+                  />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </main>
+    </>
   )
 }
 
