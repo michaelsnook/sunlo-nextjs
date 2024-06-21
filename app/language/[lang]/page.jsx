@@ -31,7 +31,7 @@ export default async function Page({ params: { lang } }) {
         <ul className="columns-1 @lg:columns-2 @3xl:columns-3 gap-4">
           {language.phrases.map(phrase => (
             <li key={`phrase-${phrase.id}`}>
-              <Link href={`/phrase/${phrase.id}`}>
+              <Link href={`/language/${lang}/phrase/${phrase.id}`}>
                 <PhraseCardSmall
                   text={phrase.text}
                   lang={phrase.lang}
