@@ -297,6 +297,9 @@ export default function Page() {
         >
           <CodeIcon /> &nbsp;GitHub
         </a>
+        <Link className="btn btn-ghost" href="/privacy-policy">
+          <PencilIcon /> &nbsp;Privacy Policy
+        </Link>
         <Link className="btn btn-ghost" href="/login">
           <LoginIcon /> &nbsp;Login
         </Link>
