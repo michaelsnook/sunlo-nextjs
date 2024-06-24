@@ -254,7 +254,17 @@ export default function Page() {
         </h2>
         <div className="columns-1 @xl:columns-3 @lg:columns-2 space-y-4 text-xl/8">
           <p>
-            Sunlo is a labour of love. If you&apos;re a developer or a language
+            For now Sunlo is just
+            me, trying to learn languages to connect with the people I love. It
+            is my humble wish that it may help others do the same 🙏
+          </p>
+          <p>
+            If you have feedback or suggestions or requests, please do get in
+            touch. Sunlo can&apos;t be everything to everyone, but it can always
+            get better! ❤️
+          </p>
+          <p>
+            If you&apos;re a developer or a language
             expert and would like to help,{' '}
             <a
               className="link decoration-white/50 hover:decoration-white"
@@ -277,16 +287,6 @@ export default function Page() {
               bsky
             </a>
             ).
-          </p>
-          <p>
-            Maybe one day Sunlo will become a business, but for now it is just
-            me, trying to learn languages to connect with the people I love. It
-            is my humble wish that it may help others do the same 🙏
-          </p>
-          <p>
-            If you have feedback or suggestions or requests, please do get in
-            touch. Sunlo can&apos;t be everything to everyone, but it can always
-            get better! ❤️
           </p>
         </div>
       </section>
