@@ -6,10 +6,8 @@ export default function Page() {
     <>
       <main className="flex flex-row flex-wrap gap-4 mb-8 @xl:my-20">
         <div className="space-y-4 flex flex-col basis-11/12 @xl:basis-3/5 justify-center mx-auto max-w-[537px]">
-          <h1 className="text-4xl text-center @xl:text-start @xl:h-24 @xl:mt-16">
-            Sunlo is a social
-            <br />
-            language&nbsp;learning app
+          <h1 className="d2 text-center @xl:text-start mt-12 md:mb-10 @xl:mt-8 @xl:mb-4">
+            Sunlo: social language&nbsp;learning
           </h1>
           <p className="text-xl @xl:h-[120px] text-center @xl:text-start">
             Create your own flash cards, pick from a crowd-sourced pool, or send
@@ -35,14 +33,11 @@ export default function Page() {
           me know! ⚠️
         </p>
       </div>
-      <section
-        data-theme="light"
-        className="card my-16 pt-4 @lg:pt-10 pb-8 @lg:pb-16 px-1 @lg:px-4"
-      >
+      <section className="card my-16 pt-4 @lg:pt-10 pb-8 @lg:pb-16 px-1 @lg:px-4 bg-base-100 text-base-content">
         <h2 className="h2 text-center px-4 @lg:pb-6">
           Our Approach to Language&nbsp;Learning
         </h2>
-        <div className="flex flex-col @lg:flex-row justify-center gap-4">
+        <div className="flex flex-col @xl:flex-row justify-center gap-4">
           <div className="card bg-base-200 basis-80 shadow-xl">
             <div className="card-body">
               <h3 className="card-title">
@@ -99,7 +94,7 @@ export default function Page() {
       </section>
       <section className="my-16 pt-4 @lg:pt-10 pb-16">
         <h2 className="h2 text-center px-4 pb-6">Who is Sunlo for?</h2>
-        <div className="flex flex-col @lg:flex-row justify-center gap-4">
+        <div className="flex flex-col @xl:flex-row justify-center gap-4">
           <div className="card bg-black/20 basis-80 shadow-xl">
             <div className="card-body">
               <h3 className="card-title">
@@ -165,10 +160,7 @@ export default function Page() {
         </Link>
       </section>
 
-      <section
-        data-theme="light"
-        className="card my-16 pt-4 @lg:pt-10 pb-16 px-4 @lg:px-8"
-      >
+      <section className="card my-16 pt-4 @lg:pt-10 pb-16 px-4 @lg:px-8 bg-base-100 text-base-content">
         <h2 className="h2 text-center px-4 pb-6">The Story Behind Sunlo</h2>
         <div className="columns-1 @lg:columns-2 space-y-4 text-xl/8">
           <p>
@@ -254,9 +246,9 @@ export default function Page() {
         </h2>
         <div className="columns-1 @xl:columns-3 @lg:columns-2 space-y-4 text-xl/8">
           <p>
-            For now Sunlo is just
-            me, trying to learn languages to connect with the people I love. It
-            is my humble wish that it may help others do the same 🙏
+            For now Sunlo is just me, trying to learn languages to connect with
+            the people I love. It is my humble wish that it may help others do
+            the same 🙏
           </p>
           <p>
             If you have feedback or suggestions or requests, please do get in
@@ -264,8 +256,8 @@ export default function Page() {
             get better! ❤️
           </p>
           <p>
-            If you&apos;re a developer or a language
-            expert and would like to help,{' '}
+            If you&apos;re a developer or a language expert and would like to
+            help,{' '}
             <a
               className="link decoration-white/50 hover:decoration-white"
               href="https://github.com/michaelsnook/sunlo-nextjs"
