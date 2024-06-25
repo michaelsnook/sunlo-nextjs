@@ -37,6 +37,18 @@
   .link {
     @apply hover:underline cursor-pointer;
   }
+  .card {
+    clip-path: polygon(
+      1rem 0,
+      calc(100% - 1.2rem) 0%,
+      100% 1rem,
+      100% calc(100% - 1.2rem),
+      calc(100% - 1.2rem) 100%,
+      1rem 100%,
+      0 calc(100% - 1.2rem),
+      0 1rem
+    );
+  }
   .card-white {
     @apply card card-body bg-base-100 text-base-content;
   }
