@@ -75,9 +75,8 @@ export default function AvatarEditor({ url, onUpload }) {
           onChange={sendImage.mutate}
           disabled={sendImage.isSubmitting}
         />
-        <div className="absolute opacity-0 hover:opacity-100 top-0 left-0 right-0 bottom-0 fit-content flex flex-col justify-center h-full bg-white/30">
-          <h3>Drag&amp;Drop files here</h3>
-          <span className="text-sm">or</span>
+        <div className="absolute opacity-0 hover:opacity-100 top-0 left-0 right-0 bottom-0 fit-content flex flex-col justify-center h-full bg-base-100/50 backdrop-blur">
+          <h3 className="text-base-content">drag &amp; drop image or</h3>
           <a className="btn btn-primary mx-auto">
             {sendImage.isSubmitting ? 'Uploading ...' : 'Browse Files'}
           </a>
