@@ -180,7 +180,7 @@ const SetPrimaryLanguageStep = ({ value, set }) => {
             set(e.target.value)
             setClosed(true)
           }}
-          className="border rounded p-3 mb-6"
+          className="border rounded p-3 mb-6 bg-base-100 text-base-content"
         >
           <option value="">-- select one --</option>
           <option value="eng">English</option>
@@ -261,7 +261,7 @@ const CreateFirstDeckStep = ({ value, set }) => {
             set(e.target.value)
             setClosed(true)
           }}
-          className="border rounded p-3 mb-6"
+          className="border rounded p-3 mb-6 bg-base-100 text-base-content"
         >
           <option value="">-- select one --</option>
           {Object.keys(languages).map(k => (
@@ -310,7 +310,7 @@ const SetUsernameStep = ({ value, set }) => {
         </label>
         <input
           type="text"
-          className="border rounded p-3"
+          className="border rounded p-3 bg-base-100 text-base-content"
           name="username"
           placeholder="Lernie McSanders"
           value={value || ''}

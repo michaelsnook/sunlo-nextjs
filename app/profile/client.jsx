@@ -77,7 +77,7 @@ export const ProfileCard = () => {
             <input
               id="username"
               type="text"
-              className="border rounded p-3"
+              className="border rounded p-3 bg-base-100 text-base-content"
               name="username"
               tabIndex="1"
               defaultValue={profile?.username || ''}
@@ -90,7 +90,7 @@ export const ProfileCard = () => {
             <select
               name="language_primary"
               defaultValue={profile.language_primary || ''}
-              className="border rounded p-3"
+              className="border rounded p-3 bg-base-100 text-base-content"
             >
               <option value="">-- select one --</option>
               {Object.keys(languages).map(k => (

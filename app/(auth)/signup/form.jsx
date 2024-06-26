@@ -54,7 +54,7 @@ export default function SignupForm() {
                   }
                   className={`${
                     submitSignup.error?.errors?.email ? 'border-error/60' : ''
-                  } rounded-md w-full`}
+                  } rounded-md w-full bg-base-100 text-base-content`}
                   tabIndex="1"
                   type="text"
                   placeholder="email@domain"
@@ -75,7 +75,7 @@ export default function SignupForm() {
                     submitSignup.error?.errors?.password
                       ? 'border-error/60'
                       : ''
-                  } rounded-md w-full`}
+                  } rounded-md w-full bg-base-100 text-base-content`}
                   tabIndex="2"
                   type="password"
                   placeholder="* * * * * * * *"
