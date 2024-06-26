@@ -107,13 +107,10 @@ export const ProfileCard = () => {
             <div className="py-3 border rounded overflow-auto h-40">
               {Object.keys(languages).map(k => (
                 <p key={`languages-spoken-${k}`} className="flex">
-                  <label className="group-checked:bg-primary group-checked:text-white w-full px-3 py-1">
+                  <label className="has-[:checked]:bg-primary has-[:checked]:text-white w-full px-3 py-1">
                     <input
                       type="checkbox"
-                      className={`rounded mr-2 select-none checked-${
-                        profile.languages_spoken.indexOf(k) !== -1 ||
-                        k === profile.language_primary
-                      }`}
+                      className="rounded mr-2"
                       value={k}
                       name="languages_spoken"
                       defaultChecked={
