@@ -212,10 +212,7 @@ export default function Page() {
           <p>
             There&apos;s a fantastic (and free) app called Anki – which I also
             use and love! – which takes this phrase-based approach, and{' '}
-            <a
-              className="link decoration-base-content/50 hover:decoration-base-content"
-              href="https://docs.ankiweb.net/background.html"
-            >
+            <a className="link" href="https://docs.ankiweb.net/background.html">
               their background doc
             </a>{' '}
             does a great job of explaining why it&apos;s so effective.{' '}
@@ -259,21 +256,18 @@ export default function Page() {
             If you&apos;re a developer or a language expert and would like to
             help,{' '}
             <a
-              className="link decoration-white/50 hover:decoration-white"
+              className="link"
               href="https://github.com/michaelsnook/sunlo-nextjs"
             >
               check out the code on GitHub
             </a>{' '}
             or find me on socials (
-            <a
-              className="link decoration-white/50 hover:decoration-white"
-              href="https://twitter.com/michaelsnook"
-            >
+            <a className="link" href="https://twitter.com/michaelsnook">
               tw
             </a>{' '}
             &amp;{' '}
             <a
-              className="link decoration-white/50 hover:decoration-white"
+              className="link"
               href="https://bsky.app/profile/michaelsnook.com"
             >
               bsky

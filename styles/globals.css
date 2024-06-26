@@ -35,7 +35,7 @@
     @apply w-full max-w-[40rem] mx-auto; /* outline outline-dashed outline-white/50; */
   }
   .link {
-    @apply hover:underline cursor-pointer;
+    @apply decoration-base-content/50 hover:decoration-base-content cursor-pointer;
   }
   .card-white {
     @apply card card-body bg-base-100 text-base-content;
