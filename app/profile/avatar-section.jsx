@@ -10,7 +10,7 @@ export default function AvatarSection() {
       <div className="avatar relative">
         {profile?.avatar_url && (
           <label
-            className="mb-2 w-36 h-36 mask mask-circle shadow-lg bg-gray-200"
+            className="mb-2 w-36 h-36 mask mask-circle shadow-lg bg-base-300"
             htmlFor="single"
           >
             <Image

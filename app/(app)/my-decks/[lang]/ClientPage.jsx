@@ -11,7 +11,7 @@ import Card from 'app/components/Card'
 import Browse from './Browse'
 
 const Empty = () => (
-  <p className="text-gray-600 my-4">🧄 No cards here 🥦 (yet)</p>
+  <p className="text-base-content/70 my-4">🧄 No cards here 🥦 (yet)</p>
 )
 const BrandNew = ({ lang }) => {
   return (

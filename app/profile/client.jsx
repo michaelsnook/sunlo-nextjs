@@ -110,7 +110,7 @@ export const ProfileCard = () => {
                   <label className="group-checked:bg-primary group-checked:text-white w-full px-3 py-1">
                     <input
                       type="checkbox"
-                      className={`rounded mr-2 focus:outline-gray-400 select-none checked-${
+                      className={`rounded mr-2 select-none checked-${
                         profile.languages_spoken.indexOf(k) !== -1 ||
                         k === profile.language_primary
                       }`}

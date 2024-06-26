@@ -108,7 +108,7 @@ export default function AddCardPhraseForm({ lang, cancel }) {
           <label>{languages[lang]} phrase to learn</label>
           <textarea
             autoFocus
-            className="textarea border-gray-400"
+            className="textarea border-base-content/50"
             name="text"
           />
         </div>
@@ -118,7 +118,7 @@ export default function AddCardPhraseForm({ lang, cancel }) {
         <div className="form-control">
           <label>Translation into a language you know</label>
           <textarea
-            className="textarea border-gray-400"
+            className="textarea border-base-content/50"
             name="translation_text"
           />
         </div>
