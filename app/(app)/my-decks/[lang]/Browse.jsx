@@ -46,6 +46,22 @@ export default function Browse({ lang, disable }) {
         isOptionDisabled={option => disable?.includes(option.value)}
         placeholder="Find a phrase"
         backspaceRemovesValue
+        classNames={{
+          control: () =>
+            'bg-base-100 text-base-content border border-base-content/50 rounded px-3',
+          menuList: () =>
+            'bg-base-100 text-base-content py-2 border rounded border-base-content/50 -mt-px',
+          option: () =>
+            'hover:bg-primary hover:text-white px-2 *:disabled:opacity-50',
+          singleValue: () =>
+            'enabled:hover:bg-primary enabled:hover:text-white px-2 *:disabled:opacity-50',
+        }}
+        unstyled
+        styles={{
+          option: (styles, { isDisabled }) => {
+            return isDisabled ? { opacity: 0.5 } : null
+          },
+        }}
         aria-label="Select a phrase to add to your deck"
         onChange={handleChange}
         className="my-4"
