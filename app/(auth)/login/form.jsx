@@ -58,7 +58,7 @@ export default function LoginForm({ asModal = false }) {
               aria-invalid={login.error?.email ? 'true' : 'false'}
               className={`${
                 login.error?.email ? 'border-error/60' : ''
-              } rounded-md w-full`}
+              } rounded-md w-full bg-base-100 text-base-content`}
               tabIndex="1"
               type="text"
               placeholder="email@domain"
@@ -75,7 +75,7 @@ export default function LoginForm({ asModal = false }) {
               aria-invalid={login.error?.password ? 'true' : 'false'}
               className={`${
                 login.error?.password ? 'border-error/60' : ''
-              } rounded-md w-full`}
+              } rounded-md w-full bg-base-100 text-base-content`}
               tabIndex="2"
               type="password"
               placeholder="* * * * * * * *"

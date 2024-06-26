@@ -28,8 +28,9 @@ export default function Card({ status, phrase }) {
           ))}
         </ul>
       ) : (
-        <p className="text-gray-600">
-          There aren&apos;t any translations sorry
+        <p className="text-base-content/70 italic">
+          There aren&apos;t any translations, sorry{' '}
+          <span className="not-italic">😢</span>
         </p>
       )}
     </div>

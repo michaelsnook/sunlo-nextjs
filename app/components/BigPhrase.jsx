@@ -165,7 +165,7 @@ function BigPhraseInner({ translations, seeAlsos, onNavigate }) {
           ) : null}
         </>
       ) : (
-        <p className="text-gray-600">
+        <p className="text-base-content/70">
           There aren&apos;t any translations sorry
         </p>
       )}
