@@ -79,7 +79,7 @@ export default function Page() {
                 <CuriosityIcon /> Driven by Curiosity
               </h3>
               <p>
-                Often times, trying to translate directly from one language to
+                Often times, trying to translate literally from one language to
                 another doesn&apos;t really work, but if you spend enough time
                 clicking around you will start to catch on to the patterns.
               </p>
