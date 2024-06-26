@@ -38,6 +38,19 @@ const SelectLanguageYouKnow = ({ onChange, disabledLang }) => {
     <Select
       name="translationLang"
       options={selectOptions}
+      classNames={{
+        control: () =>
+          'bg-base-100 text-base-content border border-base-content/50 rounded px-3',
+        menuList: () =>
+          'bg-base-100 text-base-content py-2 border rounded border-base-content/50 -mt-px',
+        option: () => 'hover:bg-primary hover:text-white px-2',
+      }}
+      unstyled
+      styles={{
+        option: (styles, { isDisabled }) => {
+          return isDisabled ? { opacity: 0.5 } : null
+        },
+      }}
       isOptionDisabled={option => option.value === disabledLang}
       placeholder="Select a language..."
       onChange={onChange}
