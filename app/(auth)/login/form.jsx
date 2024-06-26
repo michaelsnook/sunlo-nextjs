@@ -1,8 +1,9 @@
 'use client'
 
+import { useLayoutEffect } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { toast } from 'react-hot-toast'
 import supabase from 'lib/supabase-client'
 import { useAuth } from 'lib/auth-context'
@@ -10,6 +11,12 @@ import ErrorList from 'app/components/ErrorList'
 
 export default function LoginForm({ asModal = false }) {
   const { isAuth } = useAuth()
+  const router = useRouter()
+  useLayoutEffect(() => {
+    if (isAuth && router && !asModal) {
+      router.push('/home') // go to home page
+    }
+  }, [router, isAuth, asModal])
 
   const login = useMutation({
     mutationFn: async event => {
@@ -27,7 +34,6 @@ export default function LoginForm({ asModal = false }) {
     },
     onSuccess: data => {
       toast.success(`You're logged in as ${data.user.email}`)
-      if (!asModal) redirect('/home')
     },
   })
 
