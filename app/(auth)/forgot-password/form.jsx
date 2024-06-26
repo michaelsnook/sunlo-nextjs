@@ -55,7 +55,7 @@ export default function ForgotPasswordForm() {
                   aria-invalid={useRequestPasswordForm.error ? 'true' : 'false'}
                   className={`${
                     useRequestPasswordForm.error ? 'border-error' : ''
-                  } rounded-md w-full border-2`}
+                  } rounded-md w-full border bg-base-100 text-base-content`}
                   tabIndex="1"
                   type="text"
                   placeholder="email@domain"
