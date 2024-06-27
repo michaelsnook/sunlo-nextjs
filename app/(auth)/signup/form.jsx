@@ -99,7 +99,7 @@ export default function SignupForm() {
                 error={submitSignup.error}
               />
               <p>
-                <Link href="/forgot-password" className="link text-sm">
+                <Link href="/forgot-password" className="s-link text-sm">
                   Forgot password?
                 </Link>
               </p>

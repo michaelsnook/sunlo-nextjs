@@ -96,7 +96,7 @@ export default function LoginForm({ asModal = false }) {
           </div>
           <ErrorList summary="Problem logging in" error={login.error} />
           <p>
-            <Link href="/forgot-password" className="link text-sm">
+            <Link href="/forgot-password" className="s-link text-sm">
               Forgot password?
             </Link>
           </p>

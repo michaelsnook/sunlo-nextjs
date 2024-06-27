@@ -144,12 +144,12 @@ export default function AddCardPhraseForm({ lang, cancel }) {
           <div className="bg-success/50 border-success text-black rounded-lg border py-4 px-6 mb-4">
             <p className="">
               Success! added this new phrase to your deck.{' '}
-              <a className="link text-primary" onClick={onCancel}>
+              <a className="s-link text-primary" onClick={onCancel}>
                 Go back
               </a>{' '}
               or you can{' '}
               <a
-                className="link text-primary"
+                className="s-link text-primary"
                 onClick={() =>
                   (window.location.href = `/my-decks/${lang}/new-card`)
                 }

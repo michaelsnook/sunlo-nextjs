@@ -194,7 +194,7 @@ const SetPrimaryLanguageStep = ({ value, set }) => {
         </select>
         {value ? (
           <a
-            className="link"
+            className="s-link"
             onClick={e => {
               e.preventDefault()
               setClosed(true)
@@ -276,7 +276,7 @@ const CreateFirstDeckStep = ({ value, set }) => {
               e.preventDefault()
               setClosed(true)
             }}
-            className="link"
+            className="s-link"
           >
             Skip this step
           </a>

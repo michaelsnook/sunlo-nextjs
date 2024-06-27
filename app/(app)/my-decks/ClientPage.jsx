@@ -43,7 +43,7 @@ export default function ClientPage() {
       ) : (
         <p className="my-6">
           It looks like you&apos;re not learning any languages right now.{' '}
-          <Link className="link" href="/my-decks/new">
+          <Link className="s-link" href="/my-decks/new">
             Let&apos;s get started!
           </Link>
         </p>

@@ -50,7 +50,7 @@ const AddCardButtonsSection = ({ phrase_id, user_deck_id, onClose }) => {
           This phrase is in your deck with status: &ldquo;
           {makeNewCard.data?.status}
           &rdquo;.&nbsp;
-          <a className="text-primary link" onClick={onClose}>
+          <a className="text-primary s-link" onClick={onClose}>
             Keep browsing.
           </a>
         </p>
@@ -155,7 +155,7 @@ function BigPhraseInner({ translations, seeAlsos, onNavigate }) {
               <ul>
                 {seeAlsos.map(phrase => (
                   <li key={phrase.id}>
-                    <a className="link" onClick={() => onNavigate(phrase.id)}>
+                    <a className="s-link" onClick={() => onNavigate(phrase.id)}>
                       <TinyPhrase {...phrase} />
                     </a>
                   </li>

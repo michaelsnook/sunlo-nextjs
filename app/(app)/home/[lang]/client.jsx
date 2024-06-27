@@ -63,7 +63,7 @@ export default function Client({ lang }) {
       {data === null ? (
         <p>
           Are you sure you&apos;re learning this language? To create a deck and{' '}
-          <Link className="link" href="/my-decks/new">
+          <Link className="s-link" href="/my-decks/new">
             start learning {language}, click here
           </Link>
           .
