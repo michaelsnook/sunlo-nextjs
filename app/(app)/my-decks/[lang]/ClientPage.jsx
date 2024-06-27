@@ -5,10 +5,9 @@ import Loading from 'app/loading'
 import ErrorList from 'app/components/ErrorList'
 import { useDeck } from 'app/data/hooks'
 import { Garlic } from 'app/components/Garlic'
-import BigPhrase from 'app/components/BigPhrase'
-import MyModal from 'app/components/Modal'
 import Card from 'app/components/Card'
 import Browse from './Browse'
+import Link from 'next/link'
 
 const Empty = () => (
   <p className="text-base-content/70 my-4">🧄 No cards here 🥦 (yet)</p>
@@ -32,7 +31,6 @@ const BrandNew = ({ lang }) => {
 }
 export default function ClientPage({ lang }) {
   const [tab, setTab] = useState('active')
-  const [phraseModalId, setPhraseModalId] = useState()
   const { status, data: deckData, error } = useDeck(lang)
 
   if (status === 'loading') return <Loading />
@@ -46,19 +44,6 @@ export default function ClientPage({ lang }) {
 
   return (
     <div>
-      <MyModal
-        onRequestClose={() => setPhraseModalId('')}
-        isOpen={!!phraseModalId}
-      >
-        <BigPhrase
-          phrase_id={phraseModalId}
-          user_deck_id={deckData.id}
-          onClose={() => setPhraseModalId('')}
-          onNavigate={setPhraseModalId}
-          noBox={true}
-        />
-      </MyModal>
-
       <div className="tabs">
         <a
           className={`tab tab-bordered ${tab === 'active' ? 'tab-active' : ''}`}
@@ -96,16 +81,13 @@ export default function ClientPage({ lang }) {
           <Empty />
         ) : (
           deckData.cards[tab].map(c => (
-            <div
-              onClick={() => {
-                setPhraseModalId(c.phrase_id)
-                // console.log(c)
-              }}
+            <Link
+              href={`/my-decks/${lang}/phrase/${c.phrase_id}`}
               key={c.id}
               className="my-2"
             >
               <Card {...c} />
-            </div>
+            </Link>
           ))
         )}
       </div>
