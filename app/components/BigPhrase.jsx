@@ -114,11 +114,8 @@ export default function BigPhrase({
           <h2 lang={phrase.lang} className="h3 font-bold">
             <TinyPhrase text={phrase.text} />
           </h2>
-          <BigPhraseInner
-            translations={translations}
-            seeAlsos={seeAlsos}
-            onNavigate={onNavigate}
-          />
+          <SectionTranslations translations={translations} />
+          <SectionSeeAlsos seeAlsos={seeAlsos} onNavigate={onNavigate} />
           {card ? (
             <EditCardStatusButtons cardId={card?.id} />
           ) : (
@@ -130,13 +127,13 @@ export default function BigPhrase({
           )}
         </>
       ) : (
-        <>some issue</>
+        <>could not load this phrase</>
       )}
     </div>
   )
 }
 
-function BigPhraseInner({ translations, seeAlsos, onNavigate }) {
+function SectionTranslations({ translations }) {
   return (
     <>
       {translations?.length > 0 ? (
@@ -149,20 +146,6 @@ function BigPhraseInner({ translations, seeAlsos, onNavigate }) {
               </li>
             ))}
           </ul>
-          {seeAlsos.length ? (
-            <>
-              <p className="mt-6">Related phrases:</p>
-              <ul>
-                {seeAlsos.map(phrase => (
-                  <li key={phrase.id}>
-                    <a className="s-link" onClick={() => onNavigate(phrase.id)}>
-                      <TinyPhrase {...phrase} />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </>
-          ) : null}
         </>
       ) : (
         <p className="text-base-content/70">
@@ -171,4 +154,21 @@ function BigPhraseInner({ translations, seeAlsos, onNavigate }) {
       )}
     </>
   )
+}
+
+function SectionSeeAlsos({ seeAlsos, onNavigate }) {
+  return seeAlsos.length ? (
+    <>
+      <p className="mt-6">Related phrases:</p>
+      <ul>
+        {seeAlsos.map(phrase => (
+          <li key={phrase.id}>
+            <a className="s-link" onClick={() => onNavigate(phrase.id)}>
+              <TinyPhrase {...phrase} />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </>
+  ) : null
 }
