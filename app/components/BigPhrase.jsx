@@ -8,8 +8,9 @@ import { postNewCard } from 'app/(app)/my-decks/[lang]/new-card/add-card'
 import { toast } from 'react-hot-toast'
 import EditCardStatusButtons from './edit-status-buttons'
 import TinyPhrase from './TinyPhrase'
+import Link from 'next/link'
 
-const AddCardButtonsSection = ({ phrase_id, user_deck_id, onClose }) => {
+export const AddCardButtonsSection = ({ phrase_id, user_deck_id, onClose }) => {
   const queryClient = useQueryClient()
   const makeNewCard = useMutation({
     mutationFn: status =>
@@ -133,13 +134,15 @@ export default function BigPhrase({
   )
 }
 
-function SectionTranslations({ translations }) {
+export function SectionTranslations({ translations }) {
   return (
     <>
       {translations?.length > 0 ? (
         <>
-          <p className="mt-6">Translations:</p>
-          <ul>
+          <p className="mt-6 font-bold text-base-content/70 text-sm">
+            Translations
+          </p>
+          <ul className="text-2xl font-bold">
             {translations.map(trans => (
               <li lang={trans.lang} key={`translation-${trans.id}`}>
                 <TinyPhrase {...trans} />
@@ -156,19 +159,28 @@ function SectionTranslations({ translations }) {
   )
 }
 
-function SectionSeeAlsos({ seeAlsos, onNavigate }) {
-  return seeAlsos.length ? (
+export function SectionSeeAlsos({ seeAlsos, linkFactory }) {
+  return (
     <>
-      <p className="mt-6">Related phrases:</p>
-      <ul>
-        {seeAlsos.map(phrase => (
-          <li key={phrase.id}>
-            <a className="s-link" onClick={() => onNavigate(phrase.id)}>
-              <TinyPhrase {...phrase} />
-            </a>
-          </li>
-        ))}
-      </ul>
+      <p className="mt-6 font-bold text-base-content/70 text-sm">
+        Related phrases
+      </p>
+      {seeAlsos.length ? (
+        <ul className="text-xl/9">
+          {seeAlsos.map(phrase => (
+            <li key={phrase.id}>
+              <Link
+                className="group hover:bg-primary hover:text-white p-2 rounded"
+                href={linkFactory(phrase.lang, phrase.id)}
+              >
+                <TinyPhrase {...phrase} />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="mt-6">none. Add one?</p>
+      )}
     </>
-  ) : null
+  )
 }

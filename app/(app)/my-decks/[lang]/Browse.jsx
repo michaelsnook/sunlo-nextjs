@@ -71,7 +71,7 @@ export default function Browse({ lang, disable }) {
           <BigPhrase
             phrase_id={activePhraseId}
             user_deck_id={data?.deck.id}
-            // initialData={activePhraseData}
+            linkFactory={(lang, pid) => `/my-decks/${lang}/phrase/${pid}`}
             onClose={() => handleChange('')}
             onNavigate={handleChange}
           />
