@@ -48,19 +48,18 @@ export default function LoginForm({ asModal = false }) {
           disabled={login.isSubmitting}
         >
           <div>
-            <p>
-              <label htmlFor="email">Email</label>
-            </p>
+            <label htmlFor="email">Email</label>
             <input
               id="email"
               name="email"
               required="required"
+              pattern="[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*"
               aria-invalid={login.error?.email ? 'true' : 'false'}
               className={`${
                 login.error?.email ? 'border-error/60' : ''
-              } rounded-md w-full bg-base-100 text-base-content`}
+              } s-input`}
               tabIndex="1"
-              type="text"
+              type="email"
               placeholder="email@domain"
             />
           </div>
@@ -75,7 +74,7 @@ export default function LoginForm({ asModal = false }) {
               aria-invalid={login.error?.password ? 'true' : 'false'}
               className={`${
                 login.error?.password ? 'border-error/60' : ''
-              } rounded-md w-full bg-base-100 text-base-content`}
+              } s-input`}
               tabIndex="2"
               type="password"
               placeholder="* * * * * * * *"

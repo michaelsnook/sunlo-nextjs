@@ -44,14 +44,15 @@ export default function SetNewEmailForm() {
                   id="email"
                   name="email"
                   required="required"
+                  pattern="[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*"
                   aria-invalid={
                     changeEmail.error?.errors?.email ? 'true' : 'false'
                   }
                   className={`${
                     changeEmail.error?.errors?.email ? 'border-error/60' : ''
-                  } rounded-md w-full bg-base-100 text-base-content`}
+                  } s-input`}
                   tabIndex="1"
-                  type="text"
+                  type="email"
                   placeholder="email@domain"
                   defaultValue={userEmail}
                 />

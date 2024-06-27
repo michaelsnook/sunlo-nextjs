@@ -310,7 +310,7 @@ const SetUsernameStep = ({ value, set }) => {
         </label>
         <input
           type="text"
-          className="border rounded p-3 bg-base-100 text-base-content"
+          className="s-input"
           name="username"
           placeholder="Lernie McSanders"
           value={value || ''}
