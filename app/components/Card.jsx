@@ -3,9 +3,16 @@ import TinyPhrase from './TinyPhrase'
 function readStatus(status) {
   if (!status) return { emoji: '', classString: '' }
   if (status === 'learned')
-    return { emoji: `✅ `, classString: 'bg-success/20' }
-  if (status === 'active') return { emoji: `📖 `, classString: 'bg-info/20' }
-  return { emoji: `❌ `, classString: '' }
+    return {
+      emoji: `✅ `,
+      classString: 'bg-success/20 hover:bg-success hover:text-white',
+    }
+  if (status === 'active')
+    return {
+      emoji: `📖 `,
+      classString: 'bg-info/20 hover:bg-info hover:text-white',
+    }
+  return { emoji: `❌ `, classString: 'hover:bg-base-300' }
 }
 
 export default function Card({ status, phrase }) {
@@ -14,9 +21,9 @@ export default function Card({ status, phrase }) {
 
   return (
     <div
-      className={`card p-4 ${classString} shadow-lg hover:bg-primary hover:text-white mb-4 w-full inline-block`}
+      className={`group card p-4 ${classString} shadow-lg mb-4 w-full inline-block`}
     >
-      <p lang={phrase?.lang} className="mb-2 font-bold">
+      <p lang={phrase?.lang} className="mb-2 text-xl font-bold">
         <TinyPhrase {...phrase}>{emoji}</TinyPhrase>
       </p>
       {phrase?.translations?.length > 0 ? (
