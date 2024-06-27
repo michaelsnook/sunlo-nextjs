@@ -1,7 +1,7 @@
 const TinyPhrase = ({ lang, text, children }) => (
   <span>
     {children}
-    {lang ? <span className="text-base-content/70">[{lang}]&nbsp;</span> : null}
+    {lang ? <span className="opacity-70">[{lang}]&nbsp;</span> : null}
     &ldquo;{text}&rdquo;
   </span>
 )
