@@ -22,7 +22,7 @@ export default function Browse({ lang, disable }) {
         There are no phrases for this language 💩{' '}
         <Link
           href={`/my-decks/${lang}/new-card`}
-          className="flex-none link place-self-center text-primary"
+          className="flex-none s-link place-self-center text-primary"
         >
           you&apos;ll need to add some.
         </Link>
@@ -65,7 +65,7 @@ export default function Browse({ lang, disable }) {
       />
       {!activePhraseId ? null : (
         <>
-          <a className="text-primary link" onClick={() => handleChange('')}>
+          <a className="text-primary s-link" onClick={() => handleChange('')}>
             &times; Clear selection
           </a>
           <BigPhrase
