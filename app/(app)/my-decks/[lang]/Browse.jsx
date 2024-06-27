@@ -47,14 +47,11 @@ export default function Browse({ lang, disable }) {
         placeholder="Find a phrase"
         backspaceRemovesValue
         classNames={{
-          control: () =>
-            'bg-base-100 text-base-content border border-base-content/50 rounded px-3',
+          control: () => 's-input',
           menuList: () =>
             'bg-base-100 text-base-content py-2 border rounded border-base-content/50 -mt-px',
           option: () =>
             'hover:bg-primary hover:text-white px-2 *:disabled:opacity-50',
-          singleValue: () =>
-            'enabled:hover:bg-primary enabled:hover:text-white px-2 *:disabled:opacity-50',
         }}
         unstyled
         styles={{

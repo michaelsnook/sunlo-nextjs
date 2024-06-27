@@ -39,10 +39,9 @@ const SelectLanguageYouKnow = ({ onChange, disabledLang }) => {
       name="translationLang"
       options={selectOptions}
       classNames={{
-        control: () =>
-          'bg-base-100 text-base-content border border-base-content/50 rounded px-3',
+        control: () => 's-input',
         menuList: () =>
-          'bg-base-100 text-base-content py-2 border rounded border-base-content/50 -mt-px',
+          'bg-base-100 text-base-content py-2 rounded ring-1 -mt-px',
         option: () => 'hover:bg-primary hover:text-white px-2',
       }}
       unstyled
@@ -119,21 +118,14 @@ export default function AddCardPhraseForm({ lang, cancel }) {
       <div className="">
         <div className="form-control">
           <label>{languages[lang]} phrase to learn</label>
-          <textarea
-            autoFocus
-            className="textarea border-base-content/50"
-            name="text"
-          />
+          <textarea autoFocus className="s-input" name="text" />
         </div>
         <p className="mt-4">Phrase language: {languages[lang]}</p>
       </div>
       <div className="my-6">
         <div className="form-control">
           <label>Translation into a language you know</label>
-          <textarea
-            className="textarea border-base-content/50"
-            name="translation_text"
-          />
+          <textarea className="s-input" name="translation_text" />
         </div>
         <div className="form-control mt-4">
           <label>Translation language</label>

@@ -52,12 +52,13 @@ export default function ForgotPasswordForm() {
                   id="email"
                   name="email"
                   required="required"
+                  pattern="[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*"
                   aria-invalid={useRequestPasswordForm.error ? 'true' : 'false'}
                   className={`${
-                    useRequestPasswordForm.error ? 'border-error' : ''
-                  } rounded-md w-full border bg-base-100 text-base-content`}
+                    useRequestPasswordForm.error ? 'ring-error/60' : ''
+                  } s-input`}
                   tabIndex="1"
-                  type="text"
+                  type="email"
                   placeholder="email@domain"
                 />
               </div>

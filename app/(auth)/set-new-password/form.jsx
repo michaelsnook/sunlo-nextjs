@@ -52,7 +52,7 @@ export default function SetNewPasswordForm() {
                 submitNewPassword.error?.errors?.password
                   ? 'border-error/60'
                   : ''
-              } rounded-md w-full bg-base-100 text-base-content`}
+              } s-input`}
               tabIndex="1"
               type="password"
               placeholder="new password"

@@ -49,14 +49,15 @@ export default function SignupForm() {
                   id="email"
                   name="email"
                   required="required"
+                  pattern="[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*"
                   aria-invalid={
                     submitSignup.error?.errors?.email ? 'true' : 'false'
                   }
                   className={`${
-                    submitSignup.error?.errors?.email ? 'border-error/60' : ''
-                  } rounded-md w-full bg-base-100 text-base-content`}
+                    submitSignup.error?.errors?.email ? 'ring-error/60' : ''
+                  } s-input`}
                   tabIndex="1"
-                  type="text"
+                  type="email"
                   placeholder="email@domain"
                 />
               </div>
@@ -72,10 +73,8 @@ export default function SignupForm() {
                     submitSignup.error?.errors?.password ? 'true' : 'false'
                   }
                   className={`${
-                    submitSignup.error?.errors?.password
-                      ? 'border-error/60'
-                      : ''
-                  } rounded-md w-full bg-base-100 text-base-content`}
+                    submitSignup.error?.errors?.password ? 'ring-error/60' : ''
+                  } s-input`}
                   tabIndex="2"
                   type="password"
                   placeholder="* * * * * * * *"

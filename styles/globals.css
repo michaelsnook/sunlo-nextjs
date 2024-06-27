@@ -48,6 +48,9 @@
   .page-card > .h2 {
     @apply mb-8 text-base-content/90;
   }
+  .s-input {
+    @apply px-3 rounded bg-base-100 text-base-content ring-1 w-full;
+  }
 }
 @layer utilities {
   .h1 {
