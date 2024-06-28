@@ -20,26 +20,27 @@ export default function Card({ status, phrase }) {
   // console.log(`card phrase is:`, phrase)
 
   return (
-    <div
-      className={`group card p-4 ${classString} shadow-lg mb-4 w-full inline-block`}
-    >
-      <p lang={phrase?.lang} className="mb-2 text-xl font-bold">
-        <TinyPhrase {...phrase}>{emoji}</TinyPhrase>
-      </p>
-      {phrase?.translations?.length > 0 ? (
-        <ul>
-          {phrase.translations.map(trans => (
-            <li lang={trans.lang} key={`translation-${trans.id}`}>
-              <TinyPhrase {...trans} />
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p className="text-base-content/70 italic">
-          There aren&apos;t any translations, sorry{' '}
-          <span className="not-italic">😢</span>
+    <div className={`alert ${classString} shadow-lg justify-start my-2`}>
+      <div className="flex-none text-xl">{emoji}</div>
+      <div className="block">
+        <p lang={phrase?.lang} className="mb-2 text-xl font-bold">
+          <TinyPhrase {...phrase} />
         </p>
-      )}
+        {phrase?.translations?.length > 0 ? (
+          <ul>
+            {phrase.translations.map(trans => (
+              <li lang={trans.lang} key={`translation-${trans.id}`}>
+                <TinyPhrase {...trans} />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-base-content/70 italic">
+            There aren&apos;t any translations, sorry{' '}
+            <span className="not-italic">😢</span>
+          </p>
+        )}
+      </div>
     </div>
   )
 }
