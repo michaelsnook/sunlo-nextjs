@@ -5,6 +5,7 @@ import {
   SectionSeeAlsos,
   SectionTranslations,
 } from 'app/components/BigPhrase'
+import EditCardStatusButtons from 'app/components/edit-status-buttons'
 import TinyPhrase from 'app/components/TinyPhrase'
 import { usePhrase } from 'app/data/hooks'
 
@@ -26,11 +27,15 @@ export default function Client({ pid }) {
           seeAlsos={phrase?.see_also_phrases}
           linkFactory={(lang, pid) => `/my-decks/${lang}/phrase/${pid}`}
         />
-        <AddCardButtonsSection
-          phrase_id={pid}
-          user_deck_id={phrase?.card?.user_deck_id}
-          onClose={() => {}}
-        />
+        {phrase?.card ? (
+          <EditCardStatusButtons cardId={phrase?.card?.id} />
+        ) : (
+          <AddCardButtonsSection
+            phrase_id={pid}
+            user_deck_id={phrase?.card?.user_deck_id}
+            onClose={() => {}}
+          />
+        )}
       </main>
     )
   )
