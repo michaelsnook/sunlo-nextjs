@@ -40,7 +40,15 @@ module.exports = {
   ],
   daisyui: {
     styled: true,
-    themes: true,
+    themes: [
+      {
+        light: {
+          ...require('daisyui/src/colors/themes')['[data-theme=light]'],
+          primary: '#663399',
+        },
+      },
+      'dark',
+    ],
     base: true,
     utils: true,
     logs: true,
