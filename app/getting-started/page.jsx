@@ -90,7 +90,7 @@ export default function Page() {
   })
 
   return profile === null ? null : mainForm.isSuccess ? (
-    <main className="p2 md:p-6 lg:p-10 w-app text-white min-h-85vh flex flex-col gap-12 justify-center">
+    <main className="p2 md:p-6 lg:p-10 w-app text-white min-h-[85vh] flex flex-col gap-12 justify-center">
       <div className="flex flex-row justify-center gap-4 place-items-center">
         <SuccessCheckmark />
         <h1 className="h1">You&apos;re all set!</h1>

@@ -30,13 +30,6 @@ module.exports = {
           'sans-serif',
         ],
       },
-      minHeight: {
-        '100vh': '100vh',
-        '85vh': '85vh',
-        '70vh': '70vh',
-        '60vh': '60vh',
-        '50vh': '50vh',
-      },
     },
   },
   plugins: [
