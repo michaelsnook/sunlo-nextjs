@@ -14,7 +14,7 @@ import { postNewPhraseCardTranslations } from './add-card'
 import { useProfile } from 'app/data/hooks'
 import { useRouter } from 'next/navigation'
 
-const SelectLanguageYouKnow = ({ onChange, disabledLang }) => {
+export const SelectLanguageYouKnow = ({ onChange, disabledLang }) => {
   const { data, status } = useProfile()
   if (status === 'loading') return <Loading />
 

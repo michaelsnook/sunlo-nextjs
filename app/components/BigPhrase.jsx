@@ -7,6 +7,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { postNewCard } from 'app/(app)/my-decks/[lang]/new-card/add-card'
 import { toast } from 'react-hot-toast'
 import EditCardStatusButtons from './edit-status-buttons'
+import SectionTranslations from './translations-section'
 import TinyPhrase from './TinyPhrase'
 import Link from 'next/link'
 
@@ -115,7 +116,12 @@ export default function BigPhrase({
           <h2 lang={phrase.lang} className="h3 font-bold">
             <TinyPhrase text={phrase.text} />
           </h2>
-          <SectionTranslations translations={translations} />
+          <SectionTranslations
+            translations={translations}
+            lang={phrase.lang}
+            phraseId={phrase.id}
+            phraseText={phrase.text}
+          />
           <SectionSeeAlsos seeAlsos={seeAlsos} onNavigate={onNavigate} />
           {card ? (
             <EditCardStatusButtons cardId={card?.id} />
@@ -131,31 +137,6 @@ export default function BigPhrase({
         <>could not load this phrase</>
       )}
     </div>
-  )
-}
-
-export function SectionTranslations({ translations }) {
-  return (
-    <>
-      {translations?.length > 0 ? (
-        <>
-          <p className="mt-6 font-bold text-base-content/70 text-sm">
-            Translations
-          </p>
-          <ul className="text-2xl font-bold">
-            {translations.map(trans => (
-              <li lang={trans.lang} key={`translation-${trans.id}`}>
-                <TinyPhrase {...trans} />
-              </li>
-            ))}
-          </ul>
-        </>
-      ) : (
-        <p className="text-base-content/70">
-          There aren&apos;t any translations sorry
-        </p>
-      )}
-    </>
   )
 }
 
