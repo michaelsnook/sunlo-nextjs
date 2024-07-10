@@ -44,7 +44,7 @@ export default function SectionTranslations({
   return (
     <>
       <Modal
-        className="page-card"
+        className="page-card w-app"
         overlayClassName="bg-base-content/70 fixed top-0 bottom-0 left-0 right-0 flex place-items-center"
         isOpen={isModalOpen}
         onRequestClose={() => setIsModalOpen(false)}
@@ -114,6 +114,7 @@ export default function SectionTranslations({
                 console.log('click')
                 setIsModalOpen(true)
               }}
+              className="align-text-bottom hover:outline rounded-full"
             >
               <PlusCircleIcon />
             </button>
@@ -135,14 +136,14 @@ export default function SectionTranslations({
   )
 }
 
-const PlusCircleIcon = () => (
+const PlusCircleIcon = ({ className = 'size-4' }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
     strokeWidth={1.5}
     stroke="currentColor"
-    className="size-6"
+    className={className}
   >
     <path
       strokeLinecap="round"
