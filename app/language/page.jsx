@@ -2,7 +2,10 @@ import Link from 'next/link'
 import supabase from 'lib/supabase-client'
 
 export default async function Page() {
-  const { data, error } = await supabase.from('language_plus').select('*')
+  const { data, error } = await supabase
+    .from('language_plus')
+    .select('*')
+    .is('alias_of', null)
   return (
     <main className="page-card">
       <h1 className="h1">Languages</h1>
