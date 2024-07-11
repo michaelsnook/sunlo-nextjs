@@ -26,12 +26,9 @@ export default function Page() {
         </div>
       </main>
 
-      <div className="w-app bg-black/30 text-warning alert">
-        <p className="text-center">
-          ⚠️ Sunlo is under development; it is incomplete but most of
-          what&apos;s here should work, so if you do spot a problem, please let
-          me know! ⚠️
-        </p>
+      <div className="w-app bg-black/30 border-0 text-warning alert text-center">
+        ⚠️ Sunlo is under development; it is incomplete but most of what&apos;s
+        here should work, so if you do spot a problem, please let me know! ⚠️
       </div>
       <section className="card my-16 pt-4 @lg:pt-10 pb-8 @lg:pb-16 px-1 @lg:px-4 bg-base-100 text-base-content">
         <h2 className="h2 text-center px-4 @lg:pb-6">
