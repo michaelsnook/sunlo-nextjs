@@ -44,31 +44,27 @@ export default function ClientPage({ lang }) {
 
   return (
     <div>
-      <div className="tabs">
+      <div className="tabs tabs-bordered">
         <a
-          className={`tab tab-bordered ${tab === 'active' ? 'tab-active' : ''}`}
+          className={`tab ${tab === 'active' ? 'tab-active' : ''}`}
           onClick={() => setTab('active')}
         >
           Active cards
         </a>
         <a
-          className={`tab tab-bordered ${
-            tab === 'learned' ? 'tab-active' : ''
-          }`}
+          className={`tab ${tab === 'learned' ? 'tab-active' : ''}`}
           onClick={() => setTab('learned')}
         >
           Learned phrases
         </a>
         <a
-          className={`tab tab-bordered ${
-            tab === 'skipped' ? 'tab-active' : ''
-          }`}
+          className={`tab ${tab === 'skipped' ? 'tab-active' : ''}`}
           onClick={() => setTab('skipped')}
         >
           Skipped
         </a>
         <a
-          className={`tab tab-bordered ${tab === 'browse' ? 'tab-active' : ''}`}
+          className={`tab ${tab === 'browse' ? 'tab-active' : ''}`}
           onClick={() => setTab('browse')}
         >
           Browse phrases...
