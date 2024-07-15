@@ -5,12 +5,12 @@ function readStatus(status) {
   if (status === 'learned')
     return {
       emoji: `✅ `,
-      classString: 'bg-success/20 hover:bg-success hover:text-white',
+      classString: 'bg-success/20 hover:bg-success/30',
     }
   if (status === 'active')
     return {
       emoji: `📖 `,
-      classString: 'bg-info/20 hover:bg-info hover:text-white',
+      classString: 'bg-info/20 hover:bg-info/30',
     }
   return { emoji: `❌ `, classString: 'hover:bg-base-300' }
 }
@@ -35,7 +35,7 @@ export default function Card({ status, phrase }) {
             ))}
           </ul>
         ) : (
-          <p className="text-base-content/70 italic">
+          <p className="text-base-content/80 italic">
             There aren&apos;t any translations, sorry{' '}
             <span className="not-italic">😢</span>
           </p>
