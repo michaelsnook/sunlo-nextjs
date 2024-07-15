@@ -14,14 +14,6 @@
     --navbar-padding: 0.5rem; /* default padding for navbar */
     --border-btn: 2px; /* default border size for button */
     --btn-focus-scale: 0.5;
-
-    /*
-    font-family: Chalkboard, comic sans ms, sanssecondaryerif;
-    --border-color:var(--b3);
-    --btn-focus-scale:0.95;
-    --tab-border:1px;
-    --tab-radius:0.5rem;
-    */
   }
   body,
   #sidebar-all nav {
@@ -32,7 +24,7 @@
 
 @layer components {
   .w-app {
-    @apply w-full max-w-[40rem] mx-auto; /* outline outline-dashed outline-white/50; */
+    @apply w-full max-w-[40rem] mx-auto;
   }
   .s-link {
     @apply link decoration-base-content/50 hover:decoration-base-content cursor-pointer;
@@ -76,8 +68,5 @@
   }
   .h5 {
     @apply text-lg my-2 font-bold;
-  }
-  .px-min {
-    @apply px-2 sm:px-3 md:px-4 lg:px-6;
   }
 }
