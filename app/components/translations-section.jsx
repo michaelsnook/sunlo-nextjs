@@ -47,7 +47,10 @@ export default function SectionTranslations({
         className="page-card w-app"
         overlayClassName="bg-base-content/70 fixed top-0 bottom-0 left-0 right-0 flex place-items-center"
         isOpen={isModalOpen}
-        onRequestClose={() => setIsModalOpen(false)}
+        onRequestClose={() => {
+          setIsModalOpen(false)
+          addTranslation.reset()
+        }}
       >
         <h1 className="h2">Add a translation for &ldquo;{phraseText}&rdquo;</h1>
         <form
@@ -103,31 +106,31 @@ export default function SectionTranslations({
           </fieldset>
         </form>
       </Modal>
+      <p className="mt-6 font-bold text-base-content/70 text-sm">
+        Translations{' '}
+        <button
+          onClick={() => {
+            setIsModalOpen(true)
+          }}
+          className="align-text-bottom hover:outline rounded-full"
+        >
+          <PlusCircleIcon />
+        </button>
+      </p>
       {translations?.length > 0 ? (
-        <>
-          <p className="mt-6 font-bold text-base-content/70 text-sm">
-            Translations{' '}
-            <button
-              onClick={() => {
-                console.log('click')
-                setIsModalOpen(true)
-              }}
-              className="align-text-bottom hover:outline rounded-full"
-            >
-              <PlusCircleIcon />
-            </button>
-          </p>
-          <ul className="text-2xl font-bold">
-            {translations.map(trans => (
-              <li lang={trans.lang} key={`translation-${trans.id}`}>
-                <TinyPhrase {...trans} />
-              </li>
-            ))}
-          </ul>
-        </>
+        <ul className="text-2xl font-bold">
+          {translations.map(trans => (
+            <li lang={trans.lang} key={`translation-${trans.id}`}>
+              <TinyPhrase {...trans} />
+            </li>
+          ))}
+        </ul>
       ) : (
         <p className="text-base-content/70">
-          There aren&apos;t any translations sorry
+          There aren&apos;t any translations yet for this phrase,{' '}
+          <a className="s-link" onClick={() => setIsModalOpen(true)}>
+            you can be the first to add one.
+          </a>
         </p>
       )}
     </>
