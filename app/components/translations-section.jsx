@@ -45,7 +45,7 @@ export default function SectionTranslations({
     <>
       <Modal
         className="page-card w-app"
-        overlayClassName="bg-base-content/70 fixed top-0 bottom-0 left-0 right-0 flex place-items-center"
+        overlayClassName="bg-black/70 fixed top-0 bottom-0 left-0 right-0 flex place-items-center backdrop-blur-sm"
         isOpen={isModalOpen}
         onRequestClose={() => {
           setIsModalOpen(false)
