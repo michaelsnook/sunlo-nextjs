@@ -4,7 +4,6 @@
  */
 'use client'
 
-import { useState } from 'react'
 import { Label } from 'components/ui/label'
 import {
   Select,
@@ -19,13 +18,11 @@ import languages from 'lib/languages'
 
 export function SelectMultipleLanguagesInput({
   label = 'Which languages do you know?',
-  labelClassName,
+  selectedLanguages,
+  setSelectedLanguages,
 }) {
-  const [selectedLanguages, setSelectedLanguages] = useState([])
-  const handleSelectedLanguage = val => {
-    if (!selectedLanguages.includes(val)) {
-      setSelectedLanguages([val, ...selectedLanguages])
-    }
+  const handleSelectedLanguage = lang => {
+    setSelectedLanguages([lang, ...selectedLanguages.filter(l => l !== lang)])
   }
   const handleRemoveLanguage = lang => {
     setSelectedLanguages(selectedLanguages.filter(l => l !== lang))
@@ -60,7 +57,10 @@ export function SelectMultipleLanguagesInput({
                 variant="outline"
                 className="bg-background flex items-center gap-2 hover:bg-red-500 hover:text-red-50 rounded-full"
                 size="sm"
-                onClick={() => handleRemoveLanguage(lang)}
+                onClick={e => {
+                  e.preventDefault()
+                  handleRemoveLanguage(lang)
+                }}
               >
                 {languages[lang]}
                 <XIcon className="w-3 h-3" />
