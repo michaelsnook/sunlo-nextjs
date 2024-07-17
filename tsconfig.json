@@ -13,6 +13,9 @@
       ],
       "styles/*": [
         "./styles/*"
+      ],
+      "types/*": [
+        "./types/*"
       ]
     },
     "target": "es5",
@@ -50,6 +53,6 @@
   "exclude": [
     "node_modules",
     "src-tauri",
-    "out",
+    "out"
   ]
 }

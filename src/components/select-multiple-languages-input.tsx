@@ -36,7 +36,7 @@ export function SelectMultipleLanguagesInput({
           <SelectTrigger id="language" aria-label="Language">
             <SelectValue placeholder="Select a language..." />
           </SelectTrigger>
-          <SelectContent className="bg-base-100">
+          <SelectContent className="bg-base-100 text-base-content">
             {allLanguageOptions.map(option => (
               <SelectItem
                 key={option.value}
