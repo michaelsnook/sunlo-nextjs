@@ -18,7 +18,7 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-primary text-white flex flex-row min-h-screen">
+      <body className="bg-[hsl(210,100,15)] text-white flex flex-row min-h-screen">
         {/*
           This is the root of the layout. The flex, with 2 children
           a) Sidebar with fixed width, and b) and main content/app area. 
