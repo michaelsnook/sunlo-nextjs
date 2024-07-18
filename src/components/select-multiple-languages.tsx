@@ -16,16 +16,16 @@ import { Button } from 'components/ui/button'
 import { allLanguageOptions } from 'lib/languages'
 import languages from 'lib/languages'
 
-export function SelectMultipleLanguagesInput({
+export default function SelectMultipleLanguages({
   label = 'What other languages do you know?',
-  selectedLanguages,
+  selectedLanguages = [],
   setSelectedLanguages,
   except,
 }) {
-  const handleSelectedLanguage = lang => {
+  const handleSelectedLanguage = (lang: string) => {
     setSelectedLanguages([lang, ...selectedLanguages.filter(l => l !== lang)])
   }
-  const handleRemoveLanguage = lang => {
+  const handleRemoveLanguage = (lang: string) => {
     setSelectedLanguages(selectedLanguages.filter(l => l !== lang))
   }
 
@@ -58,9 +58,11 @@ export function SelectMultipleLanguagesInput({
           return (
             <div key={lang} className="flex items-center gap-2">
               <Button
+                tabIndex={-1}
                 variant="outline"
                 className="bg-background flex items-center gap-2 hover:bg-red-500 hover:text-red-50 rounded-full"
                 size="sm"
+                type="button"
                 onClick={e => {
                   e.preventDefault()
                   handleRemoveLanguage(lang)
