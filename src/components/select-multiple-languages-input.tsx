@@ -17,9 +17,10 @@ import { allLanguageOptions } from 'lib/languages'
 import languages from 'lib/languages'
 
 export function SelectMultipleLanguagesInput({
-  label = 'Which languages do you know?',
+  label = 'What other languages do you know?',
   selectedLanguages,
   setSelectedLanguages,
+  except,
 }) {
   const handleSelectedLanguage = lang => {
     setSelectedLanguages([lang, ...selectedLanguages.filter(l => l !== lang)])
@@ -41,7 +42,10 @@ export function SelectMultipleLanguagesInput({
               <SelectItem
                 key={option.value}
                 value={option.value}
-                disabled={selectedLanguages.includes(option.value)}
+                disabled={
+                  option.value === except ||
+                  selectedLanguages.includes(option.value)
+                }
               >
                 {option.label}
               </SelectItem>

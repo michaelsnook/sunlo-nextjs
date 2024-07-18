@@ -103,6 +103,7 @@ export const ProfileCard = () => {
             <SelectMultipleLanguagesInput
               selectedLanguages={languagesFinal}
               setSelectedLanguages={setSelectedLanguages}
+              except={profile?.language_primary}
             />
           </div>
           <div className="flex flex-col">
