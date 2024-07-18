@@ -113,7 +113,7 @@ export default function BigPhrase({
     >
       {phrase ? (
         <>
-          <h2 lang={phrase.lang} className="h3 font-bold">
+          <h2 lang={phrase.lang} className="h3 mb-3 font-bold">
             <TinyPhrase text={phrase.text} />
           </h2>
           <SectionTranslations

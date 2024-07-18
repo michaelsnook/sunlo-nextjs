@@ -61,7 +61,7 @@
     @apply lg:text-6xl md:text-5xl sm:text-4xl text-3xl; /* font-display;*/
   }
   .h3 {
-    @apply md:text-2xl text-xl mt-1 mb-3; /* font-display;*/
+    @apply md:text-2xl text-xl mt-1; /* font-display;*/
   }
   .h4 {
     @apply md:text-xl text-lg my-2; /* font-display;*/

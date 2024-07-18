@@ -41,7 +41,7 @@ export default function LoginForm({ asModal = false }) {
 
   return (
     <>
-      <h1 className="h3 text-base-content/90">Please log in</h1>
+      <h1 className="h3 mb-3 text-base-content/90">Please log in</h1>
       <form role="form" onSubmit={login.mutate} className="form">
         <fieldset
           className="flex flex-col gap-y-4"

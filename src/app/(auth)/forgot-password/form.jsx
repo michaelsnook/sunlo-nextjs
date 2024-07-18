@@ -28,13 +28,15 @@ export default function ForgotPasswordForm() {
     <>
       {useRequestPasswordForm.isSuccess ? (
         <>
-          <h1 className="h3 text-base-content/90">Check your email</h1>
+          <h1 className="h3 mb-3 text-base-content/90">Check your email</h1>
           <p>We&apos;ve sent a password reset link to {yourEmail}.</p>
           <p>You can close this window.</p>
         </>
       ) : (
         <>
-          <h1 className="h3 text-base-content/90">Request a password reset</h1>
+          <h1 className="h3 mb-3 text-base-content/90">
+            Request a password reset
+          </h1>
           <form
             role="form"
             onSubmit={useRequestPasswordForm.mutate}

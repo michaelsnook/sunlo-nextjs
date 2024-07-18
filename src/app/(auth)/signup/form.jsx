@@ -35,7 +35,7 @@ export default function SignupForm() {
         <SuccessfulSubmit />
       ) : (
         <>
-          <h1 className="h3 text-base-content/90">Create your account</h1>
+          <h1 className="h3 mb-3 text-base-content/90">Create your account</h1>
           <form role="form" onSubmit={submitSignup.mutate} className="form">
             <fieldset
               className="flex flex-col gap-y-4"

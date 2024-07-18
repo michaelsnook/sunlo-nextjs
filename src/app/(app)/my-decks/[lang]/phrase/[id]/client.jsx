@@ -16,7 +16,7 @@ export default function Client({ pid }) {
   return (
     phrase && (
       <main className="card-white">
-        <h2 lang={phrase.lang} className="h3 font-bold">
+        <h2 lang={phrase.lang} className="h3 mb-3 font-bold">
           <TinyPhrase lang={phrase.lang} text={phrase.text} />
         </h2>
         <SectionTranslations
