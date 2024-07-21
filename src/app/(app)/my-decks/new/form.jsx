@@ -12,7 +12,7 @@ import { postNewDeck } from './add-new-deck'
 
 function TinyError({ text }) {
   return (
-    <p className="my-4 text-error-content bg-error/20 rounded-sm p-2">{text}</p>
+    <p className="my-4 rounded-sm bg-error/20 p-2 text-error-content">{text}</p>
   )
 }
 
@@ -74,7 +74,7 @@ export default function Form() {
           aria-label="Select a language to start a new deck"
           onChange={event => setLang(event.value)}
         />
-        <button type="submit" className="my-6 btn rounded btn-primary">
+        <button type="submit" className="btn btn-primary my-6 rounded">
           Start learning
         </button>
       </form>

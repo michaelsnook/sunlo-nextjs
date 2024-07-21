@@ -32,10 +32,10 @@
 
 @layer components {
   .w-app {
-    @apply w-full max-w-[40rem] mx-auto; /* outline outline-dashed outline-white/50; */
+    @apply mx-auto w-full max-w-[40rem]; /* outline outline-dashed outline-white/50; */
   }
   .s-link {
-    @apply link decoration-base-content/50 hover:decoration-base-content cursor-pointer;
+    @apply link cursor-pointer decoration-base-content/50 hover:decoration-base-content;
   }
   .card-white {
     @apply card card-body bg-base-100 text-base-content;
@@ -49,36 +49,36 @@
     @apply text-base-content/90;
   }
   .s-input {
-    @apply px-3 rounded bg-base-100 text-base-content ring-1 w-full;
+    @apply w-full rounded bg-base-100 px-3 text-base-content ring-1;
   }
 }
 @layer utilities {
   .h1 {
-    @apply lg:text-6xl md:text-5xl sm:text-4xl text-3xl my-4; /* font-display;*/
+    @apply my-4 text-3xl sm:text-4xl md:text-5xl lg:text-6xl; /* font-display;*/
   }
   .d1 {
-    @apply lg:text-8xl md:text-6xl sm:text-5xl text-4xl my-4; /* font-display;*/
+    @apply my-4 text-4xl sm:text-5xl md:text-6xl lg:text-8xl; /* font-display;*/
   }
   .h1-sub {
-    @apply md:text-2xl sm:text-xl text-lg;
+    @apply text-lg sm:text-xl md:text-2xl;
   }
   .h2 {
-    @apply lg:text-4xl md:text-3xl text-2xl my-4; /* font-display;*/
+    @apply my-4 text-2xl md:text-3xl lg:text-4xl; /* font-display;*/
   }
   .d2 {
-    @apply lg:text-6xl md:text-5xl sm:text-4xl text-3xl; /* font-display;*/
+    @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl; /* font-display;*/
   }
   .h3 {
-    @apply md:text-2xl text-xl mt-1 mb-3; /* font-display;*/
+    @apply mb-3 mt-1 text-xl md:text-2xl; /* font-display;*/
   }
   .h3 > p {
-    @apply text-sm md:text-base opacity-80;
+    @apply text-sm opacity-80 md:text-base;
   }
   .h4 {
-    @apply text-lg md:text-xl my-2; /* font-display;*/
+    @apply my-2 text-lg md:text-xl; /* font-display;*/
   }
   .h5 {
-    @apply text-lg my-2 font-bold;
+    @apply my-2 text-lg font-bold;
   }
   .px-min {
     @apply px-2 sm:px-3 md:px-4 lg:px-6;

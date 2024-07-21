@@ -4,7 +4,7 @@ export default function Page() {
       <div className="prose">
         <h1>Privacy Policy</h1>
         <em>Last updated: June 24, 2024</em>
-        <div className="text-xl card bg-info/20 border border-info flex flex-col px-8 my-4">
+        <div className="card my-4 flex flex-col border border-info bg-info/20 px-8 text-xl">
           <p>
             <strong>tl;dr:</strong> In order to create an account you need to
             enter an email address, and logging in leaves a cookie on your

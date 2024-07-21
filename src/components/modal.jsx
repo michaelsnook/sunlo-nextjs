@@ -6,7 +6,7 @@ function MyModal({ onRequestClose, isOpen, children }) {
   return (
     <Modal
       isOpen={isOpen}
-      className="@container card-white w-app my-6 place-self-center outline-none max-sm:mx-1"
+      className="card-white w-app my-6 place-self-center outline-none @container max-sm:mx-1"
       overlayClassName="bg-black/70 fixed backdrop-blur-sm fixed inset-0 flex"
       noScroll={true}
       onRequestClose={onRequestClose}

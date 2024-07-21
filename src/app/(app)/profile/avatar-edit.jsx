@@ -51,13 +51,13 @@ export default function AvatarEditor({ url, onUpload }) {
   })
 
   return (
-    <div className="relative border border-dashed h-40 flex-shrink p-2">
+    <div className="relative h-40 flex-shrink border border-dashed p-2">
       <label
         htmlFor="avatarUploadInput"
-        className="z-10 relative rounded text-center flex flex-col fit-content h-full"
+        className="fit-content relative z-10 flex h-full flex-col rounded text-center"
       >
         {url && (
-          <span className="w-36 h-36 mask mask-circle mx-auto grid place-content-center">
+          <span className="mask mask-circle mx-auto grid h-36 w-36 place-content-center">
             <Image
               src={url}
               width="144"
@@ -67,7 +67,7 @@ export default function AvatarEditor({ url, onUpload }) {
           </span>
         )}
         <input
-          className="z-90 absolute opacity-0 top-0 left-0 right-0 bottom-0"
+          className="z-90 absolute bottom-0 left-0 right-0 top-0 opacity-0"
           type="file"
           id="avatarUploadInput"
           name="files[]"
@@ -75,7 +75,7 @@ export default function AvatarEditor({ url, onUpload }) {
           onChange={sendImage.mutate}
           disabled={sendImage.isSubmitting}
         />
-        <div className="absolute opacity-0 hover:opacity-100 top-0 left-0 right-0 bottom-0 fit-content flex flex-col justify-center h-full bg-base-100/50 backdrop-blur">
+        <div className="fit-content absolute bottom-0 left-0 right-0 top-0 flex h-full flex-col justify-center bg-base-100/50 opacity-0 backdrop-blur hover:opacity-100">
           <h3 className="text-base-content">drag &amp; drop image or</h3>
           <a className="btn btn-primary mx-auto">
             {sendImage.isSubmitting ? 'Uploading ...' : 'Browse Files'}

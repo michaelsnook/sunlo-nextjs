@@ -20,12 +20,12 @@ export default function Card({ status, phrase }) {
   // console.log(`card phrase is:`, phrase)
 
   return (
-    <div className={`alert ${classString} shadow-lg justify-start my-2`}>
+    <div className={`alert ${classString} my-2 justify-start shadow-lg`}>
       <div className="flex-none text-xl">{emoji}</div>
       <div className="block">
-        <p lang={phrase?.lang} className="mb-2 text-xl font-bold">
+        <div lang={phrase?.lang} className="mb-2 text-xl font-bold">
           <TinyPhrase {...phrase} />
-        </p>
+        </div>
         {phrase?.translations?.length > 0 ? (
           <ul>
             {phrase.translations.map(trans => (
@@ -35,7 +35,7 @@ export default function Card({ status, phrase }) {
             ))}
           </ul>
         ) : (
-          <p className="text-base-content/80 italic">
+          <p className="italic text-base-content/80">
             There aren&apos;t any translations, sorry{' '}
             <span className="not-italic">😢</span>
           </p>

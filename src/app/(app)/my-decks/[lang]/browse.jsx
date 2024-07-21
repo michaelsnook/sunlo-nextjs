@@ -18,11 +18,11 @@ export default function Browse({ lang, disable }) {
   // console.log(`Browse useLanguageDetails, `, data, error)
   if (!data?.phrases?.length) {
     return (
-      <p className="bg-primary/10 p-6 rounded-lg">
+      <p className="rounded-lg bg-primary/10 p-6">
         There are no phrases for this language 💩{' '}
         <Link
           href={`/my-decks/${lang}/new-card`}
-          className="flex-none s-link place-self-center text-primary"
+          className="s-link flex-none place-self-center text-primary"
         >
           you&apos;ll need to add some.
         </Link>
@@ -65,7 +65,7 @@ export default function Browse({ lang, disable }) {
       />
       {!activePhraseId ? null : (
         <>
-          <a className="text-primary s-link" onClick={() => handleChange('')}>
+          <a className="s-link text-primary" onClick={() => handleChange('')}>
             &times; Clear selection
           </a>
           <BigPhrase

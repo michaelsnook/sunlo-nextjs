@@ -18,7 +18,7 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-[hsl(210,100,15)] text-white flex flex-row min-h-screen">
+      <body className="flex min-h-screen flex-row bg-[hsl(210,100,15)] text-white">
         {/*
           This is the root of the layout. The flex, with 2 children
           a) Sidebar with fixed width, and b) and main content/app area. 
@@ -33,13 +33,7 @@ export default function RootLayout({ children }) {
               business happens in a consistent sizing box, no matter the
               contents on screen at the time.
             */}
-            <div
-              className="
-                @container w-full max-w-[1100px] 
-                py-20 
-                mx-auto px-[1%]
-              "
-            >
+            <div className="mx-auto w-full max-w-[1100px] px-[1%] py-20 @container">
               {children}
             </div>
             <div id="modal-root" />

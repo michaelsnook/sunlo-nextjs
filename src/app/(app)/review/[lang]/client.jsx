@@ -52,13 +52,13 @@ export default function ClientPage({ lang }) {
   }
 
   return (
-    <div className="h-full grid gap-8 pt-10 @lg:pt-0">
+    <div className="grid h-full gap-8 pt-10 @lg:pt-0">
       <Navbar
         title={`Reviewing ${languages[lang]} (${cardIndex + 1} out of ${
           reviewCards.length
         })`}
       />
-      <div className="flex justify-center gap-4 absolute @lg:static bottom-10 left-0 right-0">
+      <div className="absolute bottom-10 left-0 right-0 flex justify-center gap-4 @lg:static">
         <button
           className="btn btn-primary"
           onClick={gobackaCard}
@@ -75,7 +75,7 @@ export default function ClientPage({ lang }) {
         </button>
       </div>
       {cardIndex < reviewCards.length ? null : (
-        <div className="flex flex-row mx-auto gap-6 place-items-center my-10">
+        <div className="mx-auto my-10 flex flex-row place-items-center gap-6">
           <SuccessCheckmark />
           <p>All done for the day, nice work!</p>
         </div>

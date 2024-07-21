@@ -8,7 +8,7 @@ export default function Page() {
   return (
     <>
       <Navbar title="Email changed" />
-      <main className="card-white w-4/5 mx-auto">
+      <main className="card-white mx-auto w-4/5">
         {userEmail ? (
           <div className="flex flex-col space-y-4">
             <h1 className="h3 text-base-content/90">Email address changed!</h1>

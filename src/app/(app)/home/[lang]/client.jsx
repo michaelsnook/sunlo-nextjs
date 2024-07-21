@@ -17,7 +17,7 @@ const RecentReviewsSummary = ({ lang }) => {
   const countPositive = data?.filter(r => r.score > 0).length
 
   return (
-    <div className="text-base-content bg-base-200 card-body">
+    <div className="card-body bg-base-200 text-base-content">
       <div className="card-title">Review flash cards</div>
       {countReviews > 5 &&
         `You've been studying ${countReviews > 40 ? 'a lot!' : ' – '}`}{' '}
@@ -33,7 +33,7 @@ const CardsSummary = ({ deck }) => {
   const cardsInDeck = cards_active + cards_learned
   const beHappy = cards_learned > 5
   return (
-    <div className="text-base-content bg-base-200 card-body">
+    <div className="card-body bg-base-200 text-base-content">
       <div className="card-title">Manage your deck</div>
       You have:
       <ul className="ml-2 block">
@@ -69,7 +69,7 @@ export default function Client({ lang }) {
           .
         </p>
       ) : (
-        <div className="grid gap-6 max-w-[44rem]">
+        <div className="grid max-w-[44rem] gap-6">
           <div className="card glass">
             <figure>
               <RecentReviewsSummary lang={lang} />

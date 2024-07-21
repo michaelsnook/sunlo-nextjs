@@ -1,7 +1,7 @@
 const SuccessCheckmark = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    className="h-16 w-16 text-accent bg-white rounded-full"
+    className="h-16 w-16 rounded-full bg-white text-accent"
     viewBox="0 0 20 20"
     fill="currentColor"
   >

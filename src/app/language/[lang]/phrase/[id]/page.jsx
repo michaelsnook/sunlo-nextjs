@@ -54,7 +54,7 @@ export default async function Page({ params: { lang, id } }) {
                 )
               })
             ) : (
-              <p className="text-base-content/70 italic">
+              <p className="italic text-base-content/70">
                 No related phrases to see here
               </p>
             )}

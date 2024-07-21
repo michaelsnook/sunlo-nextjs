@@ -56,20 +56,20 @@ export default function CardInner({ card, nextCard, addReview, hidden }) {
 
   return hidden ? null : (
     <div className="card-white">
-      <div className="flex flex-col justify-center text-center gap-8">
+      <div className="flex flex-col justify-center gap-8 text-center">
         <h2 className="h2 text-center">{card?.phrase?.text}</h2>
         {status === 'loading' ? (
-          <div className="absolute bg-base-100/70 top-0 left-0 right-0 bottom-0 content-center">
+          <div className="absolute bottom-0 left-0 right-0 top-0 content-center bg-base-100/70">
             <Loading />
           </div>
         ) : null}
         {status === 'error' ? (
-          <div className="absolute bg-base-100/50 top-0 left-0 right-0 bottom-0">
+          <div className="absolute bottom-0 left-0 right-0 top-0 bg-base-100/50">
             <ErrorList error={error} />
           </div>
         ) : null}
         {!isRevealed ? (
-          <div className="flex gap-4 justify-center">
+          <div className="flex justify-center gap-4">
             <button className="btn btn-success" onClick={reveal}>
               Yes I know it
             </button>
@@ -84,7 +84,7 @@ export default function CardInner({ card, nextCard, addReview, hidden }) {
                 <p key={t.id}>&ldquo;{t.text}&rdquo;</p>
               ))}
             </div>
-            <div className="flex gap-2 flex-row flex-wrap justify-center">
+            <div className="flex flex-row flex-wrap justify-center gap-2">
               <button
                 className={`${btnClasses} btn btn-success ${
                   data ? 'btn-outline' : ''

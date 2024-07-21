@@ -20,7 +20,7 @@ const Navlink = ({ href, children }) => {
     </Link>
   ) : (
     <a
-      className="border-base-content/50 pl-2 border-l-4 text-base-content/70"
+      className="border-l-4 border-base-content/50 pl-2 text-base-content/70"
       disabled
     >
       {children}
@@ -49,7 +49,7 @@ const staticMenu = {
 const GenericMenu = ({ menu }) => {
   return (
     <div>
-      <p className="font-bold my-4">
+      <p className="my-4 font-bold">
         {menu.href ? (
           <Navlink href={menu.href}>{menu.name}</Navlink>
         ) : (
@@ -108,14 +108,14 @@ export default function Sidebar() {
       <div
         className={`z-20 bg-black bg-opacity-50 pt-10 ${
           isOpen ? 'fixed' : 'hidden'
-        } md:hidden top-0 left-0 right-0 bottom-0`}
+        } bottom-0 left-0 right-0 top-0 md:hidden`}
         onClick={toggle}
       />
       <nav
         aria-label="Main navigation"
-        className={`overflow-y-auto overflow-x-hidden z-30 top-0 w-72 p-6 bg-base-300 text-base-content h-screen ${
+        className={`top-0 z-30 h-screen w-72 overflow-y-auto overflow-x-hidden bg-base-300 p-6 text-base-content ${
           isOpen ? 'fixed' : 'hidden'
-        } ${!isOpen ? '' : 'md:sticky md:flex'}  flex-col gap-4`}
+        } ${!isOpen ? '' : 'md:sticky md:flex'} flex-col gap-4`}
       >
         <span className="h4 flex flex-row items-center">
           <Garlic size={50} />
@@ -156,7 +156,7 @@ export default function Sidebar() {
 
 const SidebarOpener = ({ isOpen, toggle }) => (
   <button
-    className={`z-50 fixed bottom-4 left-3 p-2 btn-outline rounded-full bg-white btn-primary border border-primary`}
+    className={`btn-outline btn-primary fixed bottom-4 left-3 z-50 rounded-full border border-primary bg-white p-2`}
     role="button"
     aria-haspopup="true"
     aria-label="Toggle main menu"
@@ -190,7 +190,7 @@ const ProfileIcon = () => {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="w-6 h-6"
+      className="h-6 w-6"
     >
       <path
         strokeLinecap="round"

@@ -29,16 +29,16 @@ export default function SelectMultipleLanguagesInput({
 
   return (
     <>
-      <label htmlFor="languages_spoken" className="font-bold px-3">
+      <label htmlFor="languages_spoken" className="px-3 font-bold">
         {label}
       </label>
-      <div className="py-3 border rounded overflow-auto h-40">
+      <div className="h-40 overflow-auto rounded border py-3">
         {Object.keys(languages).map(k => (
           <p key={`languages-spoken-${k}`} className="flex">
-            <label className="has-[:checked]:bg-primary has-[:checked]:text-white w-full px-3 py-1">
+            <label className="w-full px-3 py-1 has-[:checked]:bg-primary has-[:checked]:text-white">
               <input
                 type="checkbox"
-                className="rounded mr-2"
+                className="mr-2 rounded"
                 value={k}
                 name="languages_spoken"
                 onChange={handleChange}
