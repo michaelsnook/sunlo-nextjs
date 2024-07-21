@@ -1,7 +1,7 @@
 import QueryProvider from 'app/query-provider'
 import { AuthProvider } from 'lib/auth-context'
 import { Toaster } from 'react-hot-toast'
-import Sidebar from 'components/Sidebar'
+import Sidebar from 'components/sidebar'
 import 'styles/globals.css'
 
 export const metadata = {

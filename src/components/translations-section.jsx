@@ -2,11 +2,11 @@
 
 import { useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import TinyPhrase from './TinyPhrase'
+import TinyPhrase from './tiny-phrase'
 import supabase from 'lib/supabase-client'
 import Modal from 'react-modal'
 import { SelectLanguageYouKnow } from 'app/(app)/my-decks/[lang]/new-card/form'
-import Loading from 'app/loading'
+import Loading from 'components/loading'
 import toast from 'react-hot-toast'
 
 export default function SectionTranslations({

@@ -1,7 +1,7 @@
 'use client'
 
 import { useAuth } from 'lib/auth-context'
-import Navbar from 'app/(app)/Navbar'
+import Navbar from 'app/(app)/navbar'
 
 export default function Page() {
   const { userEmail } = useAuth()

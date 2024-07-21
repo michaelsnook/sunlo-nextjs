@@ -1,6 +1,6 @@
 import { generateStaticParams } from 'app/language/[lang]/phrase/[id]/page'
 import Client from './client'
-import Navbar from 'app/(app)/Navbar'
+import Navbar from 'app/(app)/navbar'
 import languages from 'lib/languages'
 
 export { generateStaticParams }

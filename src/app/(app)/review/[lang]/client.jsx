@@ -2,10 +2,10 @@
 
 import { useMemo, useState } from 'react'
 import languages from 'lib/languages'
-import Navbar from 'app/(app)/Navbar'
+import Navbar from 'app/(app)/navbar'
 import { useDeck } from 'app/data/hooks'
-import Loading from 'app/loading'
-import SuccessCheckmark from 'components/SvgComponents'
+import Loading from 'components/loading'
+import SuccessCheckmark from 'components/svg-components'
 import CardInner from './card'
 
 function shuffle(array) {

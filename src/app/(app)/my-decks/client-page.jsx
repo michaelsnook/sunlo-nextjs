@@ -2,9 +2,9 @@
 
 import Link from 'next/link'
 import { useProfile } from 'app/data/hooks'
-import Loading from 'app/loading'
+import Loading from 'components/loading'
 import languages from 'lib/languages'
-import ErrorList from 'components/ErrorList'
+import ErrorList from 'components/error-list'
 
 function OneDeck({ deck }) {
   return (

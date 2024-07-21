@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { GarlicBroccoli } from 'components/Garlic'
+import { GarlicBroccoli } from 'components/garlic'
 
 export default function Page() {
   return (

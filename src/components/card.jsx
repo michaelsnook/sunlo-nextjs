@@ -1,4 +1,4 @@
-import TinyPhrase from './TinyPhrase'
+import TinyPhrase from './tiny-phrase'
 
 function readStatus(status) {
   if (!status) return { emoji: '', classString: '' }

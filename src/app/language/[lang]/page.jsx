@@ -1,9 +1,9 @@
 import Link from 'next/link'
-import PhraseCardSmall from 'components/PhraseCardSmall'
+import PhraseCardSmall from 'components/phrase-card-small'
 import { getLanguageDetails } from 'app/data/fetchers'
 import languages from 'lib/languages'
 import { notFound } from 'next/navigation'
-import Navbar from 'app/(app)/Navbar'
+import Navbar from 'app/(app)/navbar'
 
 export default async function Page({ params: { lang } }) {
   if (!languages[lang]) {

@@ -1,4 +1,4 @@
-import Navbar from 'app/(app)/Navbar'
+import Navbar from 'app/(app)/navbar'
 import SetNewEmailForm from './form'
 
 export default function Page() {

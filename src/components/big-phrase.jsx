@@ -1,14 +1,14 @@
 'use client'
 
-import Loading from 'app/loading'
-import ErrorList from 'components/ErrorList'
+import Loading from 'components/loading'
+import ErrorList from 'components/error-list'
 import { usePhrase } from 'app/data/hooks'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { postNewCard } from 'app/(app)/my-decks/[lang]/new-card/add-card'
 import { toast } from 'react-hot-toast'
 import EditCardStatusButtons from './edit-status-buttons'
 import SectionTranslations from './translations-section'
-import TinyPhrase from './TinyPhrase'
+import TinyPhrase from './tiny-phrase'
 import Link from 'next/link'
 
 export const AddCardButtonsSection = ({ phrase_id, user_deck_id, onClose }) => {

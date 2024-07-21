@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import ClientPage from './ClientPage'
-import Navbar from '../Navbar'
+import ClientPage from './client-page'
+import Navbar from '../navbar'
 
 export default function Page() {
   return (

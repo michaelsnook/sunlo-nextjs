@@ -1,12 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import Loading from 'app/loading'
-import ErrorList from 'components/ErrorList'
+import Loading from 'components/loading'
+import ErrorList from 'components/error-list'
 import { useDeck } from 'app/data/hooks'
-import { Garlic } from 'components/Garlic'
-import Card from 'components/Card'
-import Browse from './Browse'
+import { Garlic } from 'components/garlic'
+import Card from 'components/card'
+import Browse from './browse'
 import Link from 'next/link'
 
 const Empty = () => (

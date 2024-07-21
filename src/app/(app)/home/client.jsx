@@ -4,7 +4,7 @@ import { useMemo } from 'react'
 import Link from 'next/link'
 import { useProfile, useRecentReviewActivity } from 'app/data/hooks'
 import languages from 'lib/languages'
-import Loading from 'app/loading'
+import Loading from 'components/loading'
 
 export default function Client() {
   const { data: profile, isLoading } = useProfile()

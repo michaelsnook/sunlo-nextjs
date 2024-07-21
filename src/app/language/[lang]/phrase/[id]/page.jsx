@@ -1,8 +1,8 @@
 import { getAllPhraseDetails } from 'app/data/fetchers'
-import TinyPhrase from 'components/TinyPhrase'
+import TinyPhrase from 'components/tiny-phrase'
 import languages from 'lib/languages'
 import { notFound } from 'next/navigation'
-import Navbar from 'app/(app)/Navbar'
+import Navbar from 'app/(app)/navbar'
 
 export async function generateStaticParams() {
   let phrases = await getAllPhraseDetails()

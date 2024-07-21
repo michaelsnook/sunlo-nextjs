@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import Navbar from 'app/(app)/Navbar'
+import Navbar from 'app/(app)/navbar'
 import languages from 'lib/languages'
 import Client from './client'
 

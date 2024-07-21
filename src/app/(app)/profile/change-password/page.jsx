@@ -1,4 +1,4 @@
-import Navbar from 'app/(app)/Navbar'
+import Navbar from 'app/(app)/navbar'
 import SetNewPasswordForm from 'app/(auth)/set-new-password/form'
 
 export default function Page() {
