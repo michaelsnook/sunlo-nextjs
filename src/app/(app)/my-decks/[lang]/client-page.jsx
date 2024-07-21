@@ -8,6 +8,7 @@ import { Garlic } from 'components/garlic'
 import Card from 'components/card'
 import Browse from './browse'
 import Link from 'next/link'
+import { cn } from 'lib/utils'
 
 const Empty = () => (
   <p className="my-4 text-base-content/70">🧄 No cards here 🥦 (yet)</p>
@@ -46,25 +47,25 @@ export default function ClientPage({ lang }) {
     <div>
       <div className="tabs tabs-bordered">
         <a
-          className={`tab ${tab === 'active' ? 'tab-active' : ''}`}
+          className={cn('tab', tab === 'active' ? 'tab-active' : '')}
           onClick={() => setTab('active')}
         >
           Active cards
         </a>
         <a
-          className={`tab ${tab === 'learned' ? 'tab-active' : ''}`}
+          className={cn('tab', tab === 'learned' ? 'tab-active' : '')}
           onClick={() => setTab('learned')}
         >
           Learned phrases
         </a>
         <a
-          className={`tab ${tab === 'skipped' ? 'tab-active' : ''}`}
+          className={cn('tab', tab === 'skipped' ? 'tab-active' : '')}
           onClick={() => setTab('skipped')}
         >
           Skipped
         </a>
         <a
-          className={`tab ${tab === 'browse' ? 'tab-active' : ''}`}
+          className={cn('tab', tab === 'browse' ? 'tab-active' : '')}
           onClick={() => setTab('browse')}
         >
           Browse phrases...

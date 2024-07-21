@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import supabase from 'lib/supabase-client'
 import ErrorList from 'components/error-list'
 import { BASE_URL } from 'lib/helpers'
+import { cn } from 'lib/utils'
 
 export default function SignupForm() {
   const router = useRouter()
@@ -39,7 +40,7 @@ export default function SignupForm() {
           <form role="form" onSubmit={submitSignup.mutate} className="form">
             <fieldset
               className="flex flex-col gap-y-4"
-              disabled={submitSignup.isSubmitting}
+              disabled={submitSignup.isLoading}
             >
               <div>
                 <p>
@@ -50,13 +51,12 @@ export default function SignupForm() {
                   name="email"
                   required="required"
                   pattern="[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*"
-                  aria-invalid={
-                    submitSignup.error?.errors?.email ? 'true' : 'false'
-                  }
-                  className={`${
-                    submitSignup.error?.errors?.email ? 'ring-error/60' : ''
-                  } s-input`}
-                  tabIndex="1"
+                  aria-invalid={submitSignup.error ? true : false}
+                  className={cn(
+                    's-input',
+                    submitSignup.error ? 'ring-error/60' : ''
+                  )}
+                  tabIndex={1}
                   type="email"
                   placeholder="email@domain"
                 />
@@ -69,28 +69,27 @@ export default function SignupForm() {
                   id="password"
                   name="password"
                   required="required"
-                  aria-invalid={
-                    submitSignup.error?.errors?.password ? 'true' : 'false'
-                  }
-                  className={`${
-                    submitSignup.error?.errors?.password ? 'ring-error/60' : ''
-                  } s-input`}
-                  tabIndex="2"
+                  aria-invalid={submitSignup.error ? true : false}
+                  className={cn(
+                    's-input',
+                    submitSignup.error ? 'ring-error/60' : ''
+                  )}
+                  tabIndex={2}
                   type="password"
                   placeholder="* * * * * * * *"
                 />
               </div>
               <div className="flex flex-row justify-between">
                 <button
-                  tabIndex="3"
+                  tabIndex={3}
                   className="btn btn-primary"
                   type="submit"
-                  disabled={submitSignup.isSubmitting}
-                  aria-disabled={submitSignup.isSubmitting}
+                  disabled={submitSignup.isLoading}
+                  aria-disabled={submitSignup.isLoading}
                 >
                   Sign up
                 </button>
-                <Link tabIndex="4" href="/login" className="btn btn-ghost">
+                <Link tabIndex={4} href="/login" className="btn btn-ghost">
                   Log in
                 </Link>
               </div>

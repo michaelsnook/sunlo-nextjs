@@ -6,6 +6,7 @@ import supabase from 'lib/supabase-client'
 import ErrorList from 'components/error-list'
 import Loading from 'components/loading'
 import { toast } from 'react-hot-toast'
+import { cn } from 'lib/utils'
 
 const postReview = async ({ card_id, score, prevId }) => {
   if (!card_id || !score) throw Error('Invalid review; cannot log')
@@ -86,36 +87,44 @@ export default function CardInner({ card, nextCard, addReview, hidden }) {
             </div>
             <div className="flex flex-row flex-wrap justify-center gap-2">
               <button
-                className={`${btnClasses} btn btn-success ${
+                className={cn(
+                  btnClasses,
+                  'btn btn-success',
                   data ? 'btn-outline' : ''
-                }`}
+                )}
                 onClick={() => mutate({ score: 2 })}
                 disabled={data?.score === 2}
               >
                 Nailed it!
               </button>
               <button
-                className={`${btnClasses} btn btn-info ${
+                className={cn(
+                  btnClasses,
+                  'btn btn-info',
                   data ? 'btn-outline' : ''
-                }`}
+                )}
                 onClick={() => mutate({ score: 1 })}
                 disabled={data?.score === 1}
               >
                 Got it
               </button>
               <button
-                className={`${btnClasses} btn btn-warning ${
+                className={cn(
+                  btnClasses,
+                  'btn btn-warning',
                   data ? 'btn-outline' : ''
-                }`}
+                )}
                 onClick={() => mutate({ score: -1 })}
                 disabled={data?.score === -1}
               >
                 It was hard
               </button>
               <button
-                className={`${btnClasses} btn btn-error ${
+                className={cn(
+                  btnClasses,
+                  'btn btn-error',
                   data ? 'btn-outline' : ''
-                }`}
+                )}
                 onClick={() => mutate({ score: -2 })}
                 disabled={data?.score === -2}
               >

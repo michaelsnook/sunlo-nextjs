@@ -1,4 +1,5 @@
 import TinyPhrase from './tiny-phrase'
+import { cn } from 'lib/utils'
 
 function readStatus(status) {
   if (!status) return { emoji: '', classString: '' }
@@ -20,7 +21,7 @@ export default function Card({ status, phrase }) {
   // console.log(`card phrase is:`, phrase)
 
   return (
-    <div className={`alert ${classString} my-2 justify-start shadow-lg`}>
+    <div className={cn('alert my-2 justify-start shadow-lg', classString)}>
       <div className="flex-none text-xl">{emoji}</div>
       <div className="block">
         <div lang={phrase?.lang} className="mb-2 text-xl font-bold">

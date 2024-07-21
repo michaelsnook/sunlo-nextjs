@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { cn } from 'lib/utils'
 
 export const Garlic = ({ size = 50, className = '' }) => (
   <Image
@@ -9,7 +10,7 @@ export const Garlic = ({ size = 50, className = '' }) => (
     style={{
       filter: 'drop-shadow(0px 0px 2px #fff)',
     }}
-    className={`place-self-center ${className}`}
+    className={cn('place-self-center', className)}
   />
 )
 
@@ -19,6 +20,6 @@ export const GarlicBroccoli = ({ size = 240, className = '' }) => (
     alt="a smiling garlic"
     width={size}
     height={size / 1.5}
-    className={`place-self-center ${className}`}
+    className={cn('place-self-center', className)}
   />
 )
