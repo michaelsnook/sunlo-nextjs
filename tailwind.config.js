@@ -1,10 +1,6 @@
 module.exports = {
   mode: 'jit',
-  content: [
-    './app/**/*.{js,ts,jsx,tsx}',
-    './pages/**/*.{js,ts,jsx,tsx}',
-    './components/**/*.{js,ts,jsx,tsx}',
-  ],
+  content: ['./src/**/*.{js,ts,jsx,tsx,html}'],
   theme: {
     screens: {
       sm: '640px',
@@ -52,6 +48,5 @@ module.exports = {
     base: true,
     utils: true,
     logs: true,
-    rtl: false,
   },
 }

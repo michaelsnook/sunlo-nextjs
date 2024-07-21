@@ -14,7 +14,7 @@
     "start": "next start",
     "tauri": "tauri",
     "lint": "next lint",
-    "pretty": "prettier --write .",
+    "format": "prettier --write .",
     "prepare": "husky install"
   },
   "dependencies": {
