@@ -10,6 +10,7 @@ import EditCardStatusButtons from './edit-status-buttons'
 import SectionTranslations from './translations-section'
 import TinyPhrase from './tiny-phrase'
 import Link from 'next/link'
+import { cn } from 'lib/utils'
 
 export const AddCardButtonsSection = ({ phrase_id, user_deck_id, onClose }) => {
   const queryClient = useQueryClient()
@@ -52,7 +53,7 @@ export const AddCardButtonsSection = ({ phrase_id, user_deck_id, onClose }) => {
           This phrase is in your deck with status: &ldquo;
           {makeNewCard.data?.status}
           &rdquo;.&nbsp;
-          <a className="text-primary s-link" onClick={onClose}>
+          <a className="s-link text-primary" onClick={onClose}>
             Keep browsing.
           </a>
         </p>
@@ -107,9 +108,10 @@ export default function BigPhrase({
 
   return (
     <div
-      className={`${
-        noBox ? '' : `card p-6 shadow-lg inline-block`
-      } w-full mb-4`}
+      className={cn(
+        noBox ? '' : `card inline-block p-6 shadow-lg`,
+        'mb-4 w-full',
+      )}
     >
       {phrase ? (
         <>
@@ -143,7 +145,7 @@ export default function BigPhrase({
 export function SectionSeeAlsos({ seeAlsos, linkFactory }) {
   return (
     <>
-      <p className="mt-6 font-bold text-base-content/70 text-sm">
+      <p className="mt-6 text-sm font-bold text-base-content/70">
         Related phrases
       </p>
       {seeAlsos.length ? (
@@ -151,7 +153,7 @@ export function SectionSeeAlsos({ seeAlsos, linkFactory }) {
           {seeAlsos.map(phrase => (
             <li key={phrase.id}>
               <Link
-                className="group hover:bg-primary hover:text-white p-2 rounded"
+                className="group rounded p-2 hover:bg-primary hover:text-white"
                 href={linkFactory(phrase.lang, phrase.id)}
               >
                 <TinyPhrase {...phrase} />

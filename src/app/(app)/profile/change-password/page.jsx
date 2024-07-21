@@ -5,7 +5,7 @@ export default function Page() {
   return (
     <>
       <Navbar title="Change password" />
-      <main className="card-white w-4/5 mx-auto">
+      <main className="card-white mx-auto w-4/5">
         <SetNewPasswordForm />
       </main>
     </>

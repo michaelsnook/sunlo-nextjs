@@ -4,38 +4,38 @@ import { GarlicBroccoli } from 'components/garlic'
 export default function Page() {
   return (
     <>
-      <main className="flex flex-row flex-wrap gap-4 mb-8 @xl:my-20">
-        <div className="space-y-4 flex flex-col basis-11/12 @xl:basis-3/5 justify-center mx-auto max-w-[537px]">
-          <h1 className="d2 text-center @xl:text-start mt-12 md:mb-10 @xl:mt-8 @xl:mb-4">
+      <main className="mb-8 flex flex-row flex-wrap gap-4 @xl:my-20">
+        <div className="mx-auto flex max-w-[537px] basis-11/12 flex-col justify-center space-y-4 @xl:basis-3/5">
+          <h1 className="d2 mt-12 text-center @xl:mb-4 @xl:mt-8 @xl:text-start md:mb-10">
             Sunlo: social language&nbsp;learning
           </h1>
-          <p className="text-xl @xl:h-[120px] text-center @xl:text-start">
+          <p className="text-center text-xl @xl:h-[120px] @xl:text-start">
             Create your own flash cards, pick from a crowd-sourced pool, or send
             your friend some key phrases to help them learn.
           </p>
         </div>
-        <div className="space-y-4 @xl:basis-1/3 flex-none text-center mx-auto">
+        <div className="mx-auto flex-none space-y-4 text-center @xl:basis-1/3">
           <GarlicBroccoli className="mx-auto" />
           <Link
             tabIndex={1}
             href="/login"
-            className="btn btn-lg btn-primary btn-outline bg-white focus:shadow focus:shadow-white"
+            className="btn btn-outline btn-primary btn-lg bg-white focus:shadow focus:shadow-white"
           >
             Log in or sign up &rarr;
           </Link>
         </div>
       </main>
 
-      <div className="w-app bg-black/30 border-0 text-warning alert text-center">
+      <div className="w-app alert border-0 bg-black/30 text-center text-warning">
         ⚠️ Sunlo is under development; it is incomplete but most of what&apos;s
         here should work, so if you do spot a problem, please let me know! ⚠️
       </div>
-      <section className="card my-16 pt-4 @lg:pt-10 pb-8 @lg:pb-16 px-1 @lg:px-4 bg-base-100 text-base-content">
-        <h2 className="h2 text-center px-4 @lg:pb-6">
+      <section className="card my-16 bg-base-100 px-1 pb-8 pt-4 text-base-content @lg:px-4 @lg:pb-16 @lg:pt-10">
+        <h2 className="h2 px-4 text-center @lg:pb-6">
           Our Approach to Language&nbsp;Learning
         </h2>
-        <div className="flex flex-col @xl:flex-row justify-center gap-4">
-          <div className="card bg-base-200 basis-80 shadow-xl">
+        <div className="flex flex-col justify-center gap-4 @xl:flex-row">
+          <div className="card basis-80 bg-base-200 shadow-xl">
             <div className="card-body">
               <h3 className="card-title">
                 <PhraseIcon /> Phrase Based
@@ -52,7 +52,7 @@ export default function Page() {
               </p>
             </div>
           </div>
-          <div className="card bg-base-200 basis-80 shadow-xl">
+          <div className="card basis-80 bg-base-200 shadow-xl">
             <div className="card-body">
               <h3 className="card-title">
                 <SocialIcon /> Social Learning
@@ -70,7 +70,7 @@ export default function Page() {
               </p>
             </div>
           </div>
-          <div className="card bg-base-200 basis-80 shadow-xl">
+          <div className="card basis-80 bg-base-200 shadow-xl">
             <div className="card-body">
               <h3 className="card-title">
                 <CuriosityIcon /> Driven by Curiosity
@@ -89,10 +89,10 @@ export default function Page() {
           </div>
         </div>
       </section>
-      <section className="my-16 pt-4 @lg:pt-10 pb-16">
-        <h2 className="h2 text-center px-4 pb-6">Who is Sunlo for?</h2>
-        <div className="flex flex-col @xl:flex-row justify-center gap-4">
-          <div className="card bg-black/20 basis-80 shadow-xl">
+      <section className="my-16 pb-16 pt-4 @lg:pt-10">
+        <h2 className="h2 px-4 pb-6 text-center">Who is Sunlo for?</h2>
+        <div className="flex flex-col justify-center gap-4 @xl:flex-row">
+          <div className="card basis-80 bg-black/20 shadow-xl">
             <div className="card-body">
               <h3 className="card-title">
                 <PlaneIcon />
@@ -109,7 +109,7 @@ export default function Page() {
               </p>
             </div>
           </div>
-          <div className="card bg-black/20 basis-80 shadow-xl">
+          <div className="card basis-80 bg-black/20 shadow-xl">
             <div className="card-body">
               <h3 className="card-title">
                 <FriendIcon /> The Friend / Guide
@@ -126,7 +126,7 @@ export default function Page() {
               </p>
             </div>
           </div>
-          <div className="card bg-black/20 basis-80 shadow-xl">
+          <div className="card basis-80 bg-black/20 shadow-xl">
             <div className="card-body">
               <h3 className="card-title">
                 <HeartIcon /> Extended Family
@@ -146,20 +146,20 @@ export default function Page() {
           </div>
         </div>
       </section>
-      <section className="text-center my-10 pb-16">
+      <section className="my-10 pb-16 text-center">
         <h2 className="h2">Ready to get started?</h2>
         <Link
           tabIndex={1}
           href="/login"
-          className="btn btn-lg w-80 btn-primary btn-outline bg-white focus:shadow focus:shadow-white"
+          className="btn btn-outline btn-primary btn-lg w-80 bg-white focus:shadow focus:shadow-white"
         >
           Sign up and start learning &rarr;
         </Link>
       </section>
 
-      <section className="card my-16 pt-4 @lg:pt-10 pb-16 px-4 @lg:px-8 bg-base-100 text-base-content">
-        <h2 className="h2 text-center px-4 pb-6">The Story Behind Sunlo</h2>
-        <div className="columns-1 @lg:columns-2 space-y-4 text-xl/8">
+      <section className="card my-16 bg-base-100 px-4 pb-16 pt-4 text-base-content @lg:px-8 @lg:pt-10">
+        <h2 className="h2 px-4 pb-6 text-center">The Story Behind Sunlo</h2>
+        <div className="columns-1 space-y-4 text-xl/8 @lg:columns-2">
           <p>
             Sunlo is a labour of love that started in 2015 when I came to India
             and found tools like the owl app lacking. (You know the one...)
@@ -175,24 +175,24 @@ export default function Page() {
             language-learning I started to feel a lack of good tools for helping
             people learn languages that are <em>different in structure</em> from
             the ones they&apos;re raised on. Learning{' '}
-            <span className="underline decoration-accent dark:decoration-warning decoration-[3px]">
+            <span className="underline decoration-accent decoration-[3px] dark:decoration-warning">
               Spanish
             </span>{' '}
             from{' '}
-            <span className="underline decoration-accent dark:decoration-warning decoration-[3px]">
+            <span className="underline decoration-accent decoration-[3px] dark:decoration-warning">
               English
             </span>{' '}
             may be straight-forward with lessons on vocabulary and grammar, but
             the same approach might not work to learn{' '}
-            <span className="underline decoration-accent dark:decoration-warning decoration-[3px]">
+            <span className="underline decoration-accent decoration-[3px] dark:decoration-warning">
               Arabic
             </span>
             ,{' '}
-            <span className="underline decoration-accent dark:decoration-warning decoration-[3px]">
+            <span className="underline decoration-accent decoration-[3px] dark:decoration-warning">
               Xhosa
             </span>{' '}
             or{' '}
-            <span className="underline decoration-accent dark:decoration-warning decoration-[3px]">
+            <span className="underline decoration-accent decoration-[3px] dark:decoration-warning">
               Mandarin
             </span>
             , whose grammars and patterns may be too unfamiliar for me to
@@ -234,14 +234,14 @@ export default function Page() {
             language – Sunlo is for you too. Thank you, and welcome! I hope you
             love it.
           </p>
-          <p className="italic text-center">– M</p>
+          <p className="text-center italic">– M</p>
         </div>
       </section>
-      <section className="my-16 pt-4 @lg:pt-10 pb-16">
-        <h2 className="h2 text-center px-4 pb-6">
+      <section className="my-16 pb-16 pt-4 @lg:pt-10">
+        <h2 className="h2 px-4 pb-6 text-center">
           Sunlo is Free and Open Source
         </h2>
-        <div className="columns-1 @xl:columns-3 @lg:columns-2 space-y-4 text-xl/8">
+        <div className="columns-1 space-y-4 text-xl/8 @lg:columns-2 @xl:columns-3">
           <p>
             For now Sunlo is just me, trying to learn languages to connect with
             the people I love. It is my humble wish that it may help others do
@@ -276,7 +276,7 @@ export default function Page() {
           </p>
         </div>
       </section>
-      <footer className="my-16 pt-4 @lg:pt-10 pb-16 flex flex-row flex-wrap justify-center gap-8">
+      <footer className="my-16 flex flex-row flex-wrap justify-center gap-8 pb-16 pt-4 @lg:pt-10">
         <a
           className="btn btn-ghost"
           href="https://github.com/michaelsnook/sunlo-nextjs"

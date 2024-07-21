@@ -89,11 +89,11 @@ function Form({
   return (
     <form className="space-y-4" onSubmit={handleSubmit}>
       <fieldset
-        className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+        className="grid grid-cols-1 gap-4 sm:grid-cols-2"
         disabled={updateProfile.isLoading}
       >
         <div className="flex flex-col">
-          <label htmlFor="username" className="font-bold px-3">
+          <label htmlFor="username" className="px-3 font-bold">
             Your nickname
           </label>
           <input
@@ -107,7 +107,7 @@ function Form({
           />
         </div>
         <div className="flex flex-col">
-          <label htmlFor="language_primary" className="font-bold px-3">
+          <label htmlFor="language_primary" className="px-3 font-bold">
             Primary language
           </label>
           <select
@@ -132,7 +132,7 @@ function Form({
           />
         </div>
         <div className="flex flex-col">
-          <label className="font-bold px-3">Profile picture</label>
+          <label className="px-3 font-bold">Profile picture</label>
           <AvatarEditor url={formData.avatar_url} onUpload={setNewAvatarUrl} />
         </div>
         <div className="flex flex-col-reverse">

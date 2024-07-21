@@ -11,7 +11,7 @@ export default function Error({
     <div className="alert alert-error">
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className="stroke-current flex-shrink-0 h-6 w-6"
+        className="h-6 w-6 flex-shrink-0 stroke-current"
         fill="none"
         viewBox="0 0 24 24"
       >

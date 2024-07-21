@@ -141,7 +141,7 @@ export default function AddCardPhraseForm({ lang, cancel }) {
         ) : addCardPhrase.isError ? (
           <ErrorList error={addCardPhrase.error} />
         ) : addCardPhrase.isSuccess ? (
-          <div className="bg-success/50 border-success text-black rounded-lg border py-4 px-6 mb-4">
+          <div className="mb-4 rounded-lg border border-success bg-success/50 px-6 py-4 text-black">
             <p className="">
               Success! added this new phrase to your deck.{' '}
               <a className="s-link text-primary" onClick={onCancel}>
@@ -169,7 +169,7 @@ export default function AddCardPhraseForm({ lang, cancel }) {
               Submit
             </button>
             <a
-              className="place-self-center btn btn-ghost"
+              className="btn btn-ghost place-self-center"
               onClick={() => onCancel()}
             >
               Cancel

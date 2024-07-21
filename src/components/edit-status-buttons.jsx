@@ -32,7 +32,7 @@ export default function EditCardStatusButtons({ cardId }) {
   const isSkipped = card?.status === 'skipped'
   return (
     <>
-      <div className="flex flex-col @md:flex-row mx-auto max-w-80 justify-center gap-2 mt-6">
+      <div className="mx-auto mt-6 flex max-w-80 flex-col justify-center gap-2 @md:flex-row">
         <button
           onClick={() => updateStatus.mutate({ cardId, status: 'learned' })}
           className={`btn btn-success ${isLearned && 'btn-outline'}`}
@@ -55,7 +55,7 @@ export default function EditCardStatusButtons({ cardId }) {
           Skip this card
         </button>
       </div>
-      <div className="text-center mx-auto text-sm text-base-content/70 my-2">
+      <div className="mx-auto my-2 text-center text-sm text-base-content/70">
         <p>
           {isLearned && (
             <>

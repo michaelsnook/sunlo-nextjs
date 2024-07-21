@@ -25,7 +25,7 @@ export default async function Page({ params: { lang } }) {
             yet. But you can be the first to add one!
           </p>
         ) : (
-          <ul className="columns-1 @lg:columns-2 @3xl:columns-3 gap-4">
+          <ul className="columns-1 gap-4 @lg:columns-2 @3xl:columns-3">
             {language.phrases.map(phrase => (
               <li key={`phrase-${phrase.id}`}>
                 <Link href={`/language/${lang}/phrase/${phrase.id}`}>

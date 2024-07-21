@@ -87,7 +87,7 @@ export default function SectionTranslations({
               <div className="alert alert-error">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className="stroke-current flex-shrink-0 h-6 w-6"
+                  className="h-6 w-6 flex-shrink-0 stroke-current"
                   fill="none"
                   viewBox="0 0 24 24"
                 >
@@ -106,13 +106,13 @@ export default function SectionTranslations({
           </fieldset>
         </form>
       </Modal>
-      <p className="mt-6 font-bold text-base-content/70 text-sm">
+      <p className="mt-6 text-sm font-bold text-base-content/70">
         Translations{' '}
         <button
           onClick={() => {
             setIsModalOpen(true)
           }}
-          className="align-text-bottom hover:outline rounded-full"
+          className="rounded-full align-text-bottom hover:outline"
         >
           <PlusCircleIcon />
         </button>

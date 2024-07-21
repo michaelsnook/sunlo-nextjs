@@ -6,14 +6,14 @@ import { useAuth } from 'lib/auth-context'
 export default function UserAuthCard() {
   const { userEmail } = useAuth()
   return (
-    <div className="card card-body bg-base-100 text-base-content space-y-4">
+    <div className="card card-body space-y-4 bg-base-100 text-base-content">
       <h2 className="card-title">Login credentials</h2>
-      <div className="flex flex-col w-full">
-        <label className="font-bold px-3">Your email</label>
+      <div className="flex w-full flex-col">
+        <label className="px-3 font-bold">Your email</label>
         <div className="flex flex-row gap-4">
           <input
             type="text"
-            className="border rounded p-3 flex-grow bg-base-300 text-base-content/70"
+            className="flex-grow rounded border bg-base-300 p-3 text-base-content/70"
             value={userEmail ?? 'loading...'}
             disabled
           />
@@ -26,11 +26,11 @@ export default function UserAuthCard() {
         </div>
       </div>
       <div className="flex flex-col">
-        <label className="font-bold px-3">Your password</label>
+        <label className="px-3 font-bold">Your password</label>
         <div className="flex flex-row gap-4">
           <input
             type="text"
-            className="border rounded p-3 flex-grow bg-base-300 text-base-content/70"
+            className="flex-grow rounded border bg-base-300 p-3 text-base-content/70"
             value="***************"
             disabled
           />

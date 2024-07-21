@@ -6,11 +6,11 @@ import { useProfile } from 'app/data/hooks'
 export default function AvatarSection() {
   const { data: profile } = useProfile()
   return (
-    <header className="text-center my-4 max-w-sm mx-auto">
+    <header className="mx-auto my-4 max-w-sm text-center">
       <div className="avatar relative">
         {profile?.avatar_url && (
           <label
-            className="mb-2 w-36 h-36 mask mask-circle shadow-lg bg-base-300"
+            className="mask mask-circle mb-2 h-36 w-36 bg-base-300 shadow-lg"
             htmlFor="single"
           >
             <Image

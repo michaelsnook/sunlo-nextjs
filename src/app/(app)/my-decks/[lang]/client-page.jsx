@@ -10,7 +10,7 @@ import Browse from './browse'
 import Link from 'next/link'
 
 const Empty = () => (
-  <p className="text-base-content/70 my-4">🧄 No cards here 🥦 (yet)</p>
+  <p className="my-4 text-base-content/70">🧄 No cards here 🥦 (yet)</p>
 )
 const BrandNew = ({ lang }) => {
   return (

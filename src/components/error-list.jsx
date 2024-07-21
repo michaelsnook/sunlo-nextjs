@@ -6,14 +6,14 @@ const ErrorList = ({ summary, error, errors }) => {
   const errorString = JSON.stringify(error, null, 2)
 
   return !error && !errors?.length ? null : (
-    <div className="ErrorList border-error-content p-4 rounded-lg mt-6 mb-2 bg-base-content/80 w-full">
+    <div className="ErrorList mb-2 mt-6 w-full rounded-lg border-error-content bg-base-content/80 p-4">
       {displaySummary ? (
-        <p className="font-bold text-error border-b border-error inline">
+        <p className="inline border-b border-error font-bold text-error">
           Error: {displaySummary}
           <br />
         </p>
       ) : null}
-      <ul className="pl-5 text-error list-disc flex flex-col">
+      <ul className="flex list-disc flex-col pl-5 text-error">
         <pre>
           {errorString ? <p>{errorString}</p> : null}
           {errors

@@ -92,8 +92,8 @@ export default function Client() {
   })
 
   return profile === null ? null : mainForm.isSuccess ? (
-    <main className="p2 md:p-6 lg:p-10 w-app text-white min-h-[85vh] flex flex-col gap-12 justify-center">
-      <div className="flex flex-row justify-center gap-4 place-items-center">
+    <main className="p2 w-app flex min-h-[85vh] flex-col justify-center gap-12 text-white md:p-6 lg:p-10">
+      <div className="flex flex-row place-items-center justify-center gap-4">
         <SuccessCheckmark />
         <h1 className="h1">You&apos;re all set!</h1>
       </div>
@@ -101,23 +101,23 @@ export default function Client() {
         {tempDeckToAdd ? (
           <Link
             href={`/my-decks/${tempDeckToAdd}`}
-            className="mx-auto btn btn-secondary"
+            className="btn btn-secondary mx-auto"
           >
             Get started learning {languages[tempDeckToAdd]}
             &nbsp;&rarr;
           </Link>
         ) : null}
-        <Link href="/profile" className="mx-auto btn btn-ghost">
+        <Link href="/profile" className="btn btn-ghost mx-auto">
           Go to your profile&nbsp;&rarr;
         </Link>
       </div>
     </main>
   ) : (
     <>
-      <main className="text-white p2 md:p-6 lg:p-10">
+      <main className="p2 text-white md:p-6 lg:p-10">
         <h1 className="d1 @md:text-center">Welcome to Sunlo</h1>
         <div className="w-app">
-          <p className="text-2xl my-4 mb-10 @md:text-center">
+          <p className="my-4 mb-10 text-2xl @md:text-center">
             Let&apos;s get started
           </p>
           <SetUsernameStep value={tempUsernameToUse} set={setTempUsername} />
@@ -130,7 +130,7 @@ export default function Client() {
           {tempLanguagePrimaryToUse &&
           (tempDeckToAdd || profile.deck_stubs?.length > 0) &&
           tempUsernameToUse ? (
-            <div className="my-6 flex flex-row-reverse justify-around items-center">
+            <div className="my-6 flex flex-row-reverse items-center justify-around">
               <button
                 onClick={mainForm.mutate}
                 className="btn btn-accent md:btn-lg"
@@ -173,7 +173,7 @@ const SetPrimaryLanguageStep = ({ value, set }) => {
     >
       <h2 className="h2">Set primary language</h2>
       <div className="flex flex-col">
-        <label className="font-bold py-2">The language you know best</label>
+        <label className="py-2 font-bold">The language you know best</label>
         <select
           value={value || ''}
           name="language_primary"
@@ -181,7 +181,7 @@ const SetPrimaryLanguageStep = ({ value, set }) => {
             set(e.target.value)
             setClosed(true)
           }}
-          className="border rounded p-3 mb-6 bg-base-100 text-base-content"
+          className="mb-6 rounded border bg-base-100 p-3 text-base-content"
         >
           <option value="">-- select one --</option>
           <option value="eng">English</option>
@@ -253,7 +253,7 @@ const CreateFirstDeckStep = ({ value, set }) => {
         </p>
       ) : null}
       <div className="flex flex-col">
-        <label className="font-bold py-2">The language you want to learn</label>
+        <label className="py-2 font-bold">The language you want to learn</label>
         <select
           value={value || ''}
           name="language_primary"
@@ -262,7 +262,7 @@ const CreateFirstDeckStep = ({ value, set }) => {
             set(e.target.value)
             setClosed(true)
           }}
-          className="border rounded p-3 mb-6 bg-base-100 text-base-content"
+          className="mb-6 rounded border bg-base-100 p-3 text-base-content"
         >
           <option value="">-- select one --</option>
           {Object.keys(languages).map(k => (
@@ -306,7 +306,7 @@ const SetUsernameStep = ({ value, set }) => {
     >
       <h2 className="h2">Pick a username</h2>
       <div className="flex flex-col">
-        <label className="font-bold py-2">
+        <label className="py-2 font-bold">
           Username for your public profile
         </label>
         <input
@@ -330,7 +330,7 @@ const SetUsernameStep = ({ value, set }) => {
 const X = ({ set, plus }) => (
   <button
     onClick={() => set()}
-    className={`btn btn-ghost rounded-full block flex-none ${
+    className={`btn btn-ghost block flex-none rounded-full ${
       plus ? 'rotate-45' : ''
     }`}
   >
@@ -352,14 +352,14 @@ const X = ({ set, plus }) => (
 )
 
 const Completed = ({ children }) => (
-  <div className="py-4 px-6 rounded-xl glass text-white mb-8 flex flex-row gap-x-4 justify-between">
+  <div className="glass mb-8 flex flex-row justify-between gap-x-4 rounded-xl px-6 py-4 text-white">
     <div>{children[0]}</div>
     <div className="place-self-center">{children[1]}</div>
   </div>
 )
 
 const Highlight = ({ children }) => (
-  <span className="px-1 font-bold bg-accent bg-opacity-60 inline">
+  <span className="inline bg-accent bg-opacity-60 px-1 font-bold">
     {children}
   </span>
 )
