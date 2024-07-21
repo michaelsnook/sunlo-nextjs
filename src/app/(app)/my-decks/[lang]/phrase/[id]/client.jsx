@@ -1,6 +1,6 @@
 'use client'
 
-import { AddCardButtonsSection, SectionSeeAlsos } from 'components/BigPhrase'
+import { AddCardButtonsSection, SectionSeeAlsos } from 'components/big-phrase'
 import EditCardStatusButtons from 'components/edit-status-buttons'
 import SectionTranslations from 'components/translations-section'
 import TinyPhrase from 'components/tiny-phrase'

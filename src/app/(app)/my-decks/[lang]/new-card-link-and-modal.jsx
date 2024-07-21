@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import MyModal from 'components/Modal'
+import MyModal from 'components/modal'
 import AddCardPhraseForm from 'app/(app)/my-decks/[lang]/new-card/form'
 
 export default function NewCardLinkAndModal({ lang }) {
