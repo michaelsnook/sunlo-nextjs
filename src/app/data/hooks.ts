@@ -1,7 +1,6 @@
 'use client'
 
 import { useQuery } from '@tanstack/react-query'
-import { useRouter, usePathname } from 'next/navigation'
 import { getLanguageDetails, getPhraseDetails } from './fetchers'
 import supabase from 'lib/supabase-client'
 import type { Scalars, Maybe } from 'types/utils'
@@ -13,21 +12,22 @@ import {
   ReviewsCollated,
   Phrase,
   Language,
+  Auth,
 } from 'types/client-types'
 import { useAuth } from 'lib/auth-context'
+import { QueryError } from '@supabase/supabase-js'
+import groupBy from 'lib/helpers'
 
-export type UseQueryResult = {
+export type UseQueryResult<T> = {
   status: string
-  error: Maybe<any>
-  data: Maybe<any>
+  error?: QueryError
+  data?: T
   isLoading: boolean
   isSuccess: boolean
   isError: boolean
 }
 
-export const useCard = (
-  id: Scalars['UUID']
-): UseQueryResult & { data?: CardStub } =>
+export const useCard = (id: Scalars['UUID']): UseQueryResult<CardStub> =>
   useQuery({
     queryKey: ['card', id],
     queryFn: async ({ queryKey }) => {
@@ -47,9 +47,7 @@ export const useCard = (
     refetchOnWindowFocus: false,
   })
 
-export function useLanguageDetails(
-  lang: string
-): UseQueryResult & { data?: Language } {
+export function useLanguageDetails(lang: string): UseQueryResult<Language> {
   return useQuery({
     queryKey: ['phrases', 'lang', lang],
     queryFn: async () => getLanguageDetails(lang),
@@ -95,7 +93,7 @@ const fetchDeck = async (lang: string): Promise<Deck> => {
   return deck
 }
 
-export function useDeck(deckLang: string): UseQueryResult & { data?: Deck } {
+export function useDeck(deckLang: string): UseQueryResult<Deck> {
   return useQuery({
     queryKey: ['user_deck', deckLang],
     queryFn: ({ queryKey }) => fetchDeck(queryKey[1]),
@@ -108,9 +106,7 @@ export function useDeck(deckLang: string): UseQueryResult & { data?: Deck } {
   })
 }
 
-export function usePhrase(
-  id: Scalars['UUID']
-): UseQueryResult & { data?: Phrase } {
+export function usePhrase(id: Scalars['UUID']): UseQueryResult<Phrase> {
   return useQuery({
     queryKey: ['phrase', id],
     queryFn: async ({ queryKey }) => getPhraseDetails(queryKey[1]),
@@ -120,12 +116,10 @@ export function usePhrase(
   })
 }
 
-export function useProfile(): UseQueryResult & { data?: Profile } {
-  const router = useRouter()
-  const pathname = usePathname()
-  const { userId } = useAuth()
+export function useProfile(): UseQueryResult<Profile> {
+  const { userId } = <Auth>useAuth()
   return useQuery({
-    queryKey: ['user_profile'],
+    queryKey: ['user_profile', userId],
     queryFn: async (): Promise<Profile | null> => {
       const { data, error } = await supabase
         .from('user_profile')
@@ -135,10 +129,6 @@ export function useProfile(): UseQueryResult & { data?: Profile } {
         .eq('uid', userId)
         .maybeSingle()
       if (error) throw error
-      if (!data)
-        if (pathname !== '/getting-started') {
-          router.push('/getting-started')
-        }
 
       const {
         uid,
@@ -163,24 +153,11 @@ export function useProfile(): UseQueryResult & { data?: Profile } {
         deck_stubs,
       }
     },
-    enabled: router && pathname && userId ? true : false,
+    enabled: typeof userId === 'string',
   })
 }
 
-const collateArray = (data: Array<Object>, key: string): Object => {
-  let result = {}
-  for (let i in data) {
-    let item = data[i]
-    let itemKey = item[key]
-    if (Array.isArray(result[itemKey])) result[itemKey].push(item)
-    else result[itemKey] = [item]
-  }
-  return result
-}
-
-export const useRecentReviewActivity = (): UseQueryResult & {
-  data?: ReviewsCollated
-} => {
+export function useRecentReviewActivity(): UseQueryResult<ReviewsCollated> {
   return useQuery({
     queryKey: ['all-reviews'],
     queryFn: async () => {
@@ -190,7 +167,7 @@ export const useRecentReviewActivity = (): UseQueryResult & {
         .order('created_at', { ascending: false })
       if (error) throw error
 
-      const result = collateArray(data, 'lang')
+      const result = groupBy(data, 'lang')
       console.log(`The collated array`, result)
 
       return {
