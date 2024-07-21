@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { useQueryClient } from '@tanstack/react-query'
 import supabase from 'lib/supabase-client'
-import ErrorList from 'components/ErrorList'
+import Error from 'components/Error'
 import SelectMultipleLanguagesInput from 'components/select-multiple-languages'
 import languages from 'lib/languages'
 import Loading from 'app/loading'
@@ -137,10 +137,9 @@ function Form({
             Save changes
           </button>
         </div>
-        <ErrorList
-          summary="Problem updating profile"
-          error={updateProfile?.error?.message}
-        />
+        <Error message={updateProfile?.error?.message}>
+          Problem updating profile:
+        </Error>
       </fieldset>
     </form>
   )
