@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { useMutation } from '@tanstack/react-query'
 import supabase from 'lib/supabase-client'
-import ErrorList from 'components/ErrorList'
+import ErrorList from 'components/error-list'
 import { toast } from 'react-hot-toast'
 
 const avatarFullUrl = fullPath =>

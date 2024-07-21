@@ -1,4 +1,4 @@
-import Navbar from 'app/(app)/Navbar'
+import Navbar from 'app/(app)/navbar'
 import Client from './client'
 
 export default function Page() {

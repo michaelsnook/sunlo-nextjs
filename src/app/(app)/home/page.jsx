@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import Navbar from '../Navbar'
+import Navbar from '../navbar'
 import Client from './client'
 
 export default function Page() {

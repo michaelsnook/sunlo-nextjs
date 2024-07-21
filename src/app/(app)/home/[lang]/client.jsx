@@ -1,10 +1,10 @@
 'use client'
 
-import ErrorList from 'components/ErrorList'
+import ErrorList from 'components/error-list'
 import { notFound } from 'next/navigation'
 import { useProfile } from 'app/data/hooks'
 import { useRecentReviews } from 'app/data/reviews'
-import Loading from 'app/loading'
+import Loading from 'components/loading'
 import languages from 'lib/languages'
 import Link from 'next/link'
 

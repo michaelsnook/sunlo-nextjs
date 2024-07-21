@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import { toast } from 'react-hot-toast'
 import supabase from 'lib/supabase-client'
 import { useAuth } from 'lib/auth-context'
-import ErrorList from 'components/ErrorList'
+import ErrorList from 'components/error-list'
 
 export default function LoginForm({ asModal = false }) {
   const { isAuth } = useAuth()

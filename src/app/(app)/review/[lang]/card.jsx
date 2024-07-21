@@ -3,8 +3,8 @@
 import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import supabase from 'lib/supabase-client'
-import ErrorList from 'components/ErrorList'
-import Loading from 'app/loading'
+import ErrorList from 'components/error-list'
+import Loading from 'components/loading'
 import { toast } from 'react-hot-toast'
 
 const postReview = async ({ card_id, score, prevId }) => {

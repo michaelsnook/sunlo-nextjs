@@ -1,7 +1,7 @@
 import languages from 'lib/languages'
-import NewCardLinkAndModal from './NewCardLinkAndModal'
-import ClientPage from './ClientPage'
-import Navbar from 'app/(app)/Navbar'
+import NewCardLinkAndModal from './new-card-link-and-modal'
+import ClientPage from './client-page'
+import Navbar from 'app/(app)/navbar'
 
 export default function Page({ params: { lang } }) {
   return (

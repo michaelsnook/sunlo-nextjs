@@ -6,7 +6,7 @@ import Select from 'react-select'
 import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import { useProfile } from 'app/data/hooks'
-import ErrorList from 'components/ErrorList'
+import ErrorList from 'components/error-list'
 import languages, { allLanguageOptions } from 'lib/languages'
 import { postNewDeck } from './add-new-deck'
 

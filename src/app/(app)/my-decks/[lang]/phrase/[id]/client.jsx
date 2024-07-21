@@ -3,7 +3,7 @@
 import { AddCardButtonsSection, SectionSeeAlsos } from 'components/BigPhrase'
 import EditCardStatusButtons from 'components/edit-status-buttons'
 import SectionTranslations from 'components/translations-section'
-import TinyPhrase from 'components/TinyPhrase'
+import TinyPhrase from 'components/tiny-phrase'
 import { usePhrase } from 'app/data/hooks'
 
 export default function Client({ pid }) {

@@ -8,8 +8,8 @@ import languages, {
   makeLanguageOptions,
 } from 'lib/languages'
 import { useDeck } from 'app/data/hooks'
-import ErrorList from 'components/ErrorList'
-import Loading from 'app/loading'
+import ErrorList from 'components/error-list'
+import Loading from 'components/loading'
 import { postNewPhraseCardTranslations } from './add-card'
 import { useProfile } from 'app/data/hooks'
 import { useRouter } from 'next/navigation'

@@ -3,7 +3,7 @@
 import { useMutation } from '@tanstack/react-query'
 import supabase from 'lib/supabase-client'
 import { useAuth } from 'lib/auth-context'
-import ErrorList from 'components/ErrorList'
+import ErrorList from 'components/error-list'
 import { BASE_URL } from 'lib/helpers'
 
 export default function SetNewEmailForm() {
