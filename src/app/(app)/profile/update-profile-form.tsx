@@ -1,18 +1,21 @@
 'use client'
 
+import type { ChangeEvent, FormEvent } from 'react'
+import type { QueryError } from '@supabase/supabase-js'
+import type { Scalars } from 'types/utils'
+import type { Profile } from 'types/client-types'
+
 import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { useQueryClient } from '@tanstack/react-query'
+import { toast } from 'react-hot-toast'
 import supabase from 'lib/supabase-client'
+import languages from 'lib/languages'
 import Error from 'components/Error'
 import SelectMultipleLanguagesInput from 'components/select-multiple-languages'
-import languages from 'lib/languages'
 import Loading from 'app/loading'
 import { useProfile } from 'app/data/hooks'
-import { toast } from 'react-hot-toast'
 import AvatarEditor from './avatar-edit'
-import type { ChangeEvent, FormEvent } from 'react'
-import { Scalars } from 'types/utils'
 
 export default function UpdateProfileForm() {
   const { data } = useProfile()
@@ -58,16 +61,20 @@ function Form({
     })
   }
 
-  const updateProfile = useMutation({
-    mutationFn: async () => {
-      const { data, error } = await supabase
-        .from('user_profile')
-        .update(formData)
-        .match({ uid })
-        .select()
+  const updateProfile = useMutation<Profile, QueryError>({
+    mutationFn: async (): Promise<Profile> => {
+      const {
+        data,
+        error,
+      }: { data: Profile[] | undefined; error: QueryError | undefined } =
+        await supabase
+          .from('user_profile')
+          .update(formData)
+          .match({ uid })
+          .select()
 
       if (error) throw error
-      return data
+      return data[0]
     },
     onSuccess: () => {
       toast.success(`Successfully updated your profile`)
@@ -83,7 +90,7 @@ function Form({
     <form className="space-y-4" onSubmit={handleSubmit}>
       <fieldset
         className="grid grid-cols-1 sm:grid-cols-2 gap-4"
-        disabled={updateProfile.isSubmitting}
+        disabled={updateProfile.isLoading}
       >
         <div className="flex flex-col">
           <label htmlFor="username" className="font-bold px-3">
@@ -126,13 +133,12 @@ function Form({
         </div>
         <div className="flex flex-col">
           <label className="font-bold px-3">Profile picture</label>
-
           <AvatarEditor url={formData.avatar_url} onUpload={setNewAvatarUrl} />
         </div>
         <div className="flex flex-col-reverse">
           <button
             className="btn btn-primary"
-            disabled={updateProfile.isSubmitting}
+            disabled={updateProfile.isLoading}
           >
             Save changes
           </button>

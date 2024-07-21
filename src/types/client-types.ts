@@ -56,7 +56,7 @@ export type Profile = {
   avatar_url: string
   languages_spoken: Array<string>
   language_primary: string
-  deck_stubs: Array<DeckStub>
+  deck_stubs?: Array<DeckStub>
 }
 
 // count_all: number
