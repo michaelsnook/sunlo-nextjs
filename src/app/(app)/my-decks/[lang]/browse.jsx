@@ -6,7 +6,7 @@ import Select from 'react-select'
 import Loading from 'components/loading'
 import ErrorList from 'components/error-list'
 import { useLanguageDetails } from 'app/data/hooks'
-import BigPhrase from 'components/BigPhrase'
+import BigPhrase from 'components/big-phrase'
 
 export default function Browse({ lang, disable }) {
   const [activePhraseId, setActivePhraseId] = useState()
