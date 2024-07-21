@@ -15,7 +15,7 @@ export default function PhraseCardSmall({ status, text, lang, translations }) {
     <div
       className={cn(
         classString,
-        'card-black card-white mb-4 inline-block w-full p-4 shadow-lg hover:bg-primary hover:text-white',
+        'card-black card-white mb-4 inline-block w-full p-4 shadow-lg hover:bg-primary hover:text-white'
       )}
     >
       <p lang={lang} className="mb-2 font-bold">

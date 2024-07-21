@@ -110,7 +110,7 @@ export default function BigPhrase({
     <div
       className={cn(
         noBox ? '' : `card inline-block p-6 shadow-lg`,
-        'mb-4 w-full',
+        'mb-4 w-full'
       )}
     >
       {phrase ? (

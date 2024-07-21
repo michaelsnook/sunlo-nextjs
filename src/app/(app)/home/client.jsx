@@ -21,8 +21,8 @@ export default function Client() {
         return left?.updated_at === right?.updated_at
           ? 0
           : left?.updated_at > right?.updated_at
-          ? -1
-          : 1
+            ? -1
+            : 1
       })
       .map(d => d.lang)
   }, [profile, reviews])
