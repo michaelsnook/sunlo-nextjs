@@ -110,7 +110,7 @@ export default function Sidebar() {
         className={cn(
           'z-20 bg-black bg-opacity-50 pt-10',
           isOpen ? 'fixed' : 'hidden',
-          'bottom-0 left-0 right-0 top-0 md:hidden',
+          'bottom-0 left-0 right-0 top-0 md:hidden'
         )}
         onClick={toggle}
       />
@@ -119,7 +119,7 @@ export default function Sidebar() {
         className={cn(
           isOpen ? 'fixed' : 'hidden',
           !isOpen ? '' : 'md:sticky md:flex',
-          'top-0 z-30 h-screen w-72 flex-col gap-4 overflow-y-auto overflow-x-hidden bg-base-300 p-6 text-base-content',
+          'top-0 z-30 h-screen w-72 flex-col gap-4 overflow-y-auto overflow-x-hidden bg-base-300 p-6 text-base-content'
         )}
       >
         <span className="h4 flex flex-row items-center">
