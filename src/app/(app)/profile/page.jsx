@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Navbar from 'app/(app)/Navbar'
-import { ProfileCard, UserAuthCard } from './client'
+import UpdateProfileForm from './update-profile-form'
+import UserAuthCard from './user-auth-card'
 
 export default function Page() {
   return (
@@ -8,7 +9,14 @@ export default function Page() {
       <Navbar>
         <Link href="/getting-started">Profile setup &rarr;</Link>
       </Navbar>
-      <ProfileCard />
+      <div className="card-white">
+        <div className="h3">
+          <h3>Edit Profile</h3>
+          <p>Update your profile information.</p>
+        </div>
+
+        <UpdateProfileForm />
+      </div>
       <UserAuthCard />
     </>
   )

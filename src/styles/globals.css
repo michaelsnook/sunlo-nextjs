@@ -71,8 +71,11 @@
   .h3 {
     @apply md:text-2xl text-xl mt-1 mb-3; /* font-display;*/
   }
+  .h3 > p {
+    @apply text-sm md:text-base opacity-80;
+  }
   .h4 {
-    @apply md:text-xl text-lg my-2; /* font-display;*/
+    @apply text-lg md:text-xl my-2; /* font-display;*/
   }
   .h5 {
     @apply text-lg my-2 font-bold;
