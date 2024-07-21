@@ -5,7 +5,7 @@ export default function Error({
   children,
 }: {
   message: string
-  children: ReactElement
+  children: ReactElement | string
 }) {
   return !message ? null : (
     <div className="alert alert-error">
