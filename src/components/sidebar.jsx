@@ -11,6 +11,7 @@ import ErrorList from './error-list'
 import supabase from 'lib/supabase-client'
 import { toast } from 'react-hot-toast'
 import { useAuth } from 'lib/auth-context'
+import { cn } from 'lib/utils'
 
 const Navlink = ({ href, children }) => {
   const pathname = usePathname()
@@ -106,16 +107,20 @@ export default function Sidebar() {
     <div id="sidebar-all">
       <SidebarOpener isOpen={isOpen} toggle={toggle} />
       <div
-        className={`z-20 bg-black bg-opacity-50 pt-10 ${
-          isOpen ? 'fixed' : 'hidden'
-        } bottom-0 left-0 right-0 top-0 md:hidden`}
+        className={cn(
+          'z-20 bg-black bg-opacity-50 pt-10',
+          isOpen ? 'fixed' : 'hidden',
+          'bottom-0 left-0 right-0 top-0 md:hidden',
+        )}
         onClick={toggle}
       />
       <nav
         aria-label="Main navigation"
-        className={`top-0 z-30 h-screen w-72 overflow-y-auto overflow-x-hidden bg-base-300 p-6 text-base-content ${
-          isOpen ? 'fixed' : 'hidden'
-        } ${!isOpen ? '' : 'md:sticky md:flex'} flex-col gap-4`}
+        className={cn(
+          isOpen ? 'fixed' : 'hidden',
+          !isOpen ? '' : 'md:sticky md:flex',
+          'top-0 z-30 h-screen w-72 flex-col gap-4 overflow-y-auto overflow-x-hidden bg-base-300 p-6 text-base-content',
+        )}
       >
         <span className="h4 flex flex-row items-center">
           <Garlic size={50} />
