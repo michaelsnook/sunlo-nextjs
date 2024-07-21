@@ -7,7 +7,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import supabase from 'lib/supabase-client'
 import { useAuth } from 'lib/auth-context'
 import ErrorList from 'components/ErrorList'
-import { convertNodeListToCheckedValues } from 'lib/helpers'
+import SelectMultipleLanguagesInput from 'components/select-multiple-languages'
 import languages from 'lib/languages'
 import Loading from 'app/loading'
 import { useProfile } from 'app/data/hooks'
@@ -23,6 +23,8 @@ export const ProfileCard = () => {
     error: profileError,
     status: profileStatus,
   } = useProfile()
+  const [selectedLanguages, setSelectedLanguages] = useState()
+  const languagesFinal = selectedLanguages || profile?.languages_spoken
 
   const updateProfile = useMutation({
     mutationFn: async event => {
@@ -30,16 +32,13 @@ export const ProfileCard = () => {
       console.log(event.target)
       const username = event.target.username.value
       const language_primary = event.target.language_primary.value
-      const languages_spoken_array = convertNodeListToCheckedValues(
-        event.target.languages_spoken
-      )
 
       const { data, error } = await supabase
         .from('user_profile')
         .update({
           username,
           language_primary,
-          languages_spoken: [language_primary, ...languages_spoken_array],
+          languages_spoken: languagesFinal,
           avatar_url: newAvatarUrl || profile?.avatar_url,
         })
         .match({ uid: profile.uid })
@@ -101,28 +100,11 @@ export const ProfileCard = () => {
             </select>
           </div>
           <div className="flex flex-col">
-            <label htmlFor="languages_spoken" className="font-bold px-3">
-              Languages you know
-            </label>
-            <div className="py-3 border rounded overflow-auto h-40">
-              {Object.keys(languages).map(k => (
-                <p key={`languages-spoken-${k}`} className="flex">
-                  <label className="has-[:checked]:bg-primary has-[:checked]:text-white w-full px-3 py-1">
-                    <input
-                      type="checkbox"
-                      className="rounded mr-2"
-                      value={k}
-                      name="languages_spoken"
-                      defaultChecked={
-                        profile.languages_spoken.indexOf(k) !== -1 ||
-                        k === profile.language_primary
-                      }
-                    />
-                    {languages[k]}
-                  </label>
-                </p>
-              ))}
-            </div>
+            <SelectMultipleLanguagesInput
+              selectedLanguages={languagesFinal}
+              setSelectedLanguages={setSelectedLanguages}
+              except={profile?.language_primary}
+            />
           </div>
           <div className="flex flex-col">
             <label className="font-bold px-3">Profile picture</label>
