@@ -1,4 +1,5 @@
-import TinyPhrase from './tiny-phrase'
+import TinyPhrase from '../../../components/tiny-phrase'
+import { cn } from 'lib/utils'
 
 function readStatus(status) {
   if (!status) return { emoji: '', classString: '' }
@@ -12,7 +13,10 @@ export default function PhraseCardSmall({ status, text, lang, translations }) {
   const { emoji, classString } = readStatus(status)
   return (
     <div
-      className={`card-white p-4 ${classString} shadow-lg hover:bg-primary hover:text-white mb-4 w-full inline-block`}
+      className={cn(
+        classString,
+        'card-black card-white mb-4 inline-block w-full p-4 shadow-lg hover:bg-primary hover:text-white',
+      )}
     >
       <p lang={lang} className="mb-2 font-bold">
         {emoji}
