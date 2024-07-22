@@ -1,5 +1,11 @@
 import { Scalars } from './utils'
 
+export type Auth = {
+  isAuth: boolean
+  userEmail?: string
+  userId?: Scalars['UUID']
+}
+
 export type Translation = {
   id: Scalars['UUID']
   lang: string
