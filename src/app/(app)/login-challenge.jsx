@@ -5,8 +5,6 @@ import Modal from 'react-modal'
 import { useAuth } from 'lib/auth-context'
 import LoginForm from 'app/(auth)/login/form'
 
-Modal.setAppElement('#modal-root')
-
 export default function LoginChallenge() {
   const { isAuth } = useAuth()
   const [isDismissed, setIsDismissed] = useState()
