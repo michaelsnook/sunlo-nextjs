@@ -146,13 +146,8 @@ export function useProfile(): UseQueryResult & { data?: Profile } {
         avatar_url,
         languages_spoken,
         language_primary,
-        user_deck_plus,
+        user_deck_plus: deck_stubs,
       } = data
-
-      const deck_stubs =
-        user_deck_plus?.sort((left: DeckPlus, right: DeckPlus) => {
-          return left == right ? 0 : left.created_at > right.created_at ? -1 : 1
-        }) || []
 
       return {
         uid,
