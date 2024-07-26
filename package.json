@@ -15,6 +15,7 @@
     "tauri": "tauri",
     "lint": "next lint",
     "format": "prettier --write .",
+    "types": "supabase gen types typescript --project-id hepudeougzlgnuqvybrj > ./src/types/supabase.ts",
     "prepare": "husky install"
   },
   "dependencies": {
