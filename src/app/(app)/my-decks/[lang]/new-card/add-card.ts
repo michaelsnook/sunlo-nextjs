@@ -1,16 +1,9 @@
 import supabase from 'lib/supabase-client'
 import { Scalars } from 'types/utils'
-import { Tables } from 'types/supabase'
+import type { Tables } from 'types/supabase'
+import type { UserCardInsert } from 'types/client-types'
 
-type UserCardInsertInput = {
-  phrase_id: Scalars['UUID']
-  status?: Scalars['String']
-  user_deck_id: Scalars['UUID']
-}
-
-export const postNewCard = async (
-  object: UserCardInsertInput
-): Promise<Tables<'user_card'>> => {
+export const postNewCard = async (object: UserCardInsert) => {
   // console.log(`postNewCard`, object)
   const { data, error } = await supabase
     .from('user_card')
