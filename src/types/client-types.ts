@@ -1,38 +1,41 @@
 import { Scalars } from './utils'
+import { Database } from './supabase'
 
-export type Translation = {
+type UserCardInsert = Database['public']['Tables']['user_card']['Insert']
+
+type Translation = {
   id: Scalars['UUID']
   lang: string
   text: string
   literal: string
 }
 
-export type PhraseStub = {
+type PhraseStub = {
   id: Scalars['UUID']
   text: string
   lang: string
 }
 
-export type Phrase = PhraseStub & {
+type Phrase = PhraseStub & {
   see_also_phrases?: PhraseStub[]
   translations?: Translation[]
   card?: CardStub
 }
 
-export type CardStub = {
+type CardStub = {
   id: Scalars['UUID']
   status: string
   phrase_id: Scalars['UUID']
   deck_id: Scalars['UUID']
 }
 
-export type DeckStub = {
+type DeckStub = {
   id: Scalars['UUID']
   created_at?: string
   lang: string
 }
 
-export type DeckPlus = DeckStub & {
+type DeckPlus = DeckStub & {
   cards_learned: number
   cards_active: number
   cards_skipped: number
@@ -45,12 +48,12 @@ type LanguageStub = {
   name: string
 }
 
-export type Language = LanguageStub & {
+type Language = LanguageStub & {
   phrases: Array<Phrase>
   deck?: DeckStub
 }
 
-export type Profile = {
+type Profile = {
   uid: Scalars['UUID']
   username: string
   avatar_url: string
@@ -64,7 +67,7 @@ export type Profile = {
 // count_learned: number
 // count_skipped: number
 
-export type Deck = DeckStub & {
+type Deck = DeckStub & {
   all_phrase_ids: Array<Scalars['UUID']>
   cards: {
     active: any[]
@@ -73,7 +76,7 @@ export type Deck = DeckStub & {
   }
 }
 
-export type Review = {
+type Review = {
   id: Scalars['UUID']
   created_at: string
   card_id: Scalars['UUID']
@@ -81,8 +84,23 @@ export type Review = {
   lang: string
 }
 
-export type ReviewsCollated = {
+type ReviewsCollated = {
   list: Array<Review>
   collated: Object
   keysInOrder: Array<string>
+}
+
+export type {
+  UserCardInsert,
+  Translation,
+  PhraseStub,
+  Phrase,
+  CardStub,
+  DeckStub,
+  DeckPlus,
+  Language,
+  Profile,
+  Deck,
+  Review,
+  ReviewsCollated,
 }
