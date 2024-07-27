@@ -143,8 +143,8 @@ function Form({
             Save changes
           </button>
         </div>
-        <Error message={updateProfile?.error?.message}>
-          Problem updating profile:
+        <Error show={!!updateProfile.error}>
+          Problem updating profile: {updateProfile.error?.message}
         </Error>
       </fieldset>
     </form>
