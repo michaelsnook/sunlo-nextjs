@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
-import { useAuth } from 'lib/auth-context'
+import { useAuth } from 'components/auth-context'
 import supabase from 'lib/supabase-client'
 import Navbar from 'app/(app)/navbar'
 import ErrorList from 'components/error-list'

@@ -14,7 +14,7 @@ import {
   Phrase,
   Language,
 } from 'types/client-types'
-import { useAuth } from 'lib/auth-context'
+import { useAuth } from 'components/auth-context'
 
 export type UseQueryResult = {
   status: string

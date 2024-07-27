@@ -10,7 +10,7 @@ import Loading from 'components/loading'
 import ErrorList from './error-list'
 import supabase from 'lib/supabase-client'
 import { toast } from 'react-hot-toast'
-import { useAuth } from 'lib/auth-context'
+import { useAuth } from 'components/auth-context'
 import { cn } from 'lib/utils'
 
 const Navlink = ({ href, children }) => {

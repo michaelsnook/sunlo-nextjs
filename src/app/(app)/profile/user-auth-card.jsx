@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useAuth } from 'lib/auth-context'
+import { useAuth } from 'components/auth-context'
 
 export default function UserAuthCard() {
   const { userEmail } = useAuth()
