@@ -1,5 +1,5 @@
 import QueryProvider from 'app/query-provider'
-import { AuthProvider } from 'lib/auth-context'
+import { AuthProvider } from 'components/auth-context'
 import { Toaster } from 'react-hot-toast'
 import Sidebar from 'components/sidebar'
 import 'styles/globals.css'

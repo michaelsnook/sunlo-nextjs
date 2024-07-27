@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query'
 import Link from 'next/link'
 import supabase from 'lib/supabase-client'
 import ErrorList from 'components/error-list'
-import { useAuth } from 'lib/auth-context'
+import { useAuth } from 'components/auth-context'
 import { toast } from 'react-hot-toast'
 
 export default function SetNewPasswordForm() {

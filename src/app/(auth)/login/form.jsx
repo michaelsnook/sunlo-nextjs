@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-hot-toast'
 import supabase from 'lib/supabase-client'
-import { useAuth } from 'lib/auth-context'
+import { useAuth } from 'components/auth-context'
 import ErrorList from 'components/error-list'
 
 export default function LoginForm({ asModal = false }) {
