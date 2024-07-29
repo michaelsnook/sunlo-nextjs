@@ -5,6 +5,7 @@ type LanguageStub = Omit<
   Database['public']['Tables']['language']['Row'],
   'alias_of'
 >
+type LanguagePlus = Database['public']['Views']['language_plus']['Row']
 type PhraseStub = Database['public']['Tables']['phrase']['Row']
 type Translation = Database['public']['Tables']['phrase_translation']['Row']
 type DeckStub = Database['public']['Tables']['user_deck']['Row']
@@ -22,6 +23,29 @@ type Phrase = PhraseStub & {
 type Language = LanguageStub & {
   phrases: Array<Phrase>
   deck?: DeckStub
+}
+
+type PhraseInsertInput = {
+  id?: Scalars['UUID']
+  lang: string
+  text: string
+}
+
+type TranslationInsertInput = {
+  phrase_id: Scalars['UUID']
+  lang: string
+  text: string
+  literal?: string
+}
+
+type PhraseCardTranslationsInsertInput = {
+  phrase: PhraseInsertInput
+  translations: Array<{
+    text: string
+    lang: string
+    literal: string
+  }>
+  user_deck_id: Scalars['UUID']
 }
 
 type Profile = {
@@ -49,16 +73,20 @@ type ReviewsCollated = {
 }
 
 export type {
-  UserCardInsert,
-  Translation,
+  Language,
+  LanguagePlus,
+  PhraseInsertInput,
   PhraseStub,
   Phrase,
+  TranslationInsertInput,
+  PhraseCardTranslationsInsertInput,
+  UserCardInsert,
+  Translation,
   CardStub,
   DeckStub,
-  DeckPlus,
-  Language,
-  Profile,
   Deck,
+  DeckPlus,
+  Profile,
   Review,
   ReviewsCollated,
 }

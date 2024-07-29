@@ -1,7 +1,10 @@
 import supabase from 'lib/supabase-client'
-import { Scalars } from 'types/utils'
 import type { Tables } from 'types/supabase'
-import type { UserCardInsert } from 'types/main'
+import type {
+  UserCardInsert,
+  TranslationInsertInput,
+  PhraseCardTranslationsInsertInput,
+} from 'types/main'
 
 export const postNewCard = async (object: UserCardInsert) => {
   // console.log(`postNewCard`, object)
@@ -13,29 +16,6 @@ export const postNewCard = async (object: UserCardInsert) => {
 
   // console.log(`postNewCard result: `, data)
   return data[0]
-}
-
-type PhraseInsertInput = {
-  id?: Scalars['UUID']
-  lang: string
-  text: string
-}
-
-type TranslationInsertInput = {
-  phrase_id: Scalars['UUID']
-  lang: string
-  text: string
-  literal?: string
-}
-
-type PhraseCardTranslationsInsertInput = {
-  phrase: PhraseInsertInput
-  translations: Array<{
-    text: string
-    lang: string
-    literal: string
-  }>
-  user_deck_id: Scalars['UUID']
 }
 
 export const postNewPhraseCardTranslations = async ({
