@@ -1,5 +1,9 @@
 import { Scalars } from './utils'
 import { Database } from './supabase'
+import { UseQueryResult } from '@tanstack/react-query'
+import { PostgrestError } from '@supabase/supabase-js'
+
+type UseAPIQuery<T> = UseQueryResult<T, PostgrestError>
 
 type LanguageStub = Omit<
   Database['public']['Tables']['language']['Row'],
@@ -7,6 +11,7 @@ type LanguageStub = Omit<
 >
 type LanguagePlus = Database['public']['Views']['language_plus']['Row']
 type PhraseStub = Database['public']['Tables']['phrase']['Row']
+type LanguageData = LanguagePlus & { phrase: Array<PhraseStub> }
 type Translation = Database['public']['Tables']['phrase_translation']['Row']
 type DeckStub = Database['public']['Tables']['user_deck']['Row']
 type DeckPlus = Database['public']['Views']['user_deck_plus']['Row']
@@ -73,8 +78,10 @@ type ReviewsCollated = {
 }
 
 export type {
+  UseAPIQuery,
   Language,
   LanguagePlus,
+  LanguageData,
   PhraseInsertInput,
   PhraseStub,
   Phrase,
