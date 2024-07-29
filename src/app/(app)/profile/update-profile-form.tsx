@@ -36,7 +36,7 @@ function Form({
     language_primary: string
     languages_spoken: Array<string>
     avatar_url: string
-    uid: Scalars['UUID']
+    uid: string
   }
 }) {
   const queryClient = useQueryClient()

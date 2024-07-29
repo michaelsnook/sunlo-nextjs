@@ -16,8 +16,8 @@ export const getLanguageDetails = async (
     .select(
       `
         lang, name,
-        phrases:phrase(${phraseFullSelect}),
-        deck:user_deck(id, lang)
+        phrase(${phraseFullSelect}),
+        user_deck(id, lang, created_at, uid)
       `
     )
     .eq('lang', lang)
@@ -28,10 +28,10 @@ export const getLanguageDetails = async (
   const language: Language = {
     lang: data.lang,
     name: data.name,
-    phrases: Array.isArray(data?.phrases)
-      ? data.phrases?.map(p => phrasePostFetch(p))
+    phrases: Array.isArray(data?.phrase)
+      ? data.phrase?.map(p => phrasePostFetch(p))
       : [],
-    deck: data?.deck[0],
+    deck: data?.user_deck[0],
   }
 
   // console.log(`getLanguageDetails result, `, language)
@@ -62,9 +62,7 @@ const phrasePostFetch = (phrase): Phrase => {
   return phrase
 }
 
-export const getPhraseDetails = async (
-  id: Scalars['UUID']
-): Promise<Phrase> => {
+export const getPhraseDetails = async (id: string): Promise<Phrase> => {
   let { data, error } = await supabase
     .from('phrase')
     .select(phraseFullSelect)
