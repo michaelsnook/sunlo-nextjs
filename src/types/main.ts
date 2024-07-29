@@ -11,7 +11,8 @@ type LanguageStub = Omit<
 >
 type LanguagePlus = Database['public']['Views']['language_plus']['Row']
 type PhraseStub = Database['public']['Tables']['phrase']['Row']
-type LanguageData = LanguagePlus & { phrase: Array<PhraseStub> }
+type LanguageAPIData = LanguagePlus & { phrase: Array<PhraseStub> }
+type DeckAPIData = DeckPlus & { user_card: Array<CardStub> }
 type Translation = Database['public']['Tables']['phrase_translation']['Row']
 type DeckStub = Database['public']['Tables']['user_deck']['Row']
 type DeckPlus = Database['public']['Views']['user_deck_plus']['Row']
@@ -81,7 +82,7 @@ export type {
   UseAPIQuery,
   Language,
   LanguagePlus,
-  LanguageData,
+  LanguageAPIData,
   PhraseInsertInput,
   PhraseStub,
   Phrase,
@@ -92,6 +93,7 @@ export type {
   CardStub,
   DeckStub,
   Deck,
+  DeckAPIData,
   DeckPlus,
   Profile,
   Review,
