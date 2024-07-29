@@ -1,7 +1,7 @@
 import supabase from 'lib/supabase-client'
 import { Scalars } from 'types/utils'
 import type { Tables } from 'types/supabase'
-import type { UserCardInsert } from 'types/client-types'
+import type { UserCardInsert } from 'types/main'
 
 export const postNewCard = async (object: UserCardInsert) => {
   // console.log(`postNewCard`, object)

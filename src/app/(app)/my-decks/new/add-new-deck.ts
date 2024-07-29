@@ -1,7 +1,7 @@
 'use client'
 
 import supabase from 'lib/supabase-client'
-import { DeckStub } from 'types/client-types'
+import { DeckStub } from 'types/main'
 
 export const postNewDeck = async (lang: string): Promise<DeckStub> => {
   // console.log(`postNewDeck ${lang}`)
