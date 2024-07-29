@@ -1,6 +1,5 @@
 import supabase from 'lib/supabase-client'
-import type { Phrase, Language, Profile } from 'types/client-types'
-import type { Scalars } from 'types/utils'
+import type { Phrase, Language } from 'types/main'
 
 export const getAllPhraseDetails = async (): Promise<Array<Phrase>> => {
   const { data, error } = await supabase.from('phrase').select(phraseFullSelect)

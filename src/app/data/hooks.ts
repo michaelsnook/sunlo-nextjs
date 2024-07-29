@@ -7,13 +7,12 @@ import supabase from 'lib/supabase-client'
 import type { Scalars, Maybe } from 'types/utils'
 import {
   Deck,
-  DeckPlus,
   Profile,
   CardStub,
   ReviewsCollated,
   Phrase,
   Language,
-} from 'types/client-types'
+} from 'types/main'
 import { useAuth } from 'components/auth-context'
 
 export type UseQueryResult = {

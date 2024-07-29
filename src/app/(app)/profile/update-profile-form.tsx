@@ -2,8 +2,7 @@
 
 import type { ChangeEvent, FormEvent } from 'react'
 import type { QueryError } from '@supabase/supabase-js'
-import type { Scalars } from 'types/utils'
-import type { Profile } from 'types/client-types'
+import type { Profile } from 'types/main'
 
 import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
