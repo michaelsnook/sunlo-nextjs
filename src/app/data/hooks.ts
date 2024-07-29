@@ -67,9 +67,9 @@ const fetchDeck = async (lang: string): Promise<Deck> => {
     .from('user_deck')
     .select(
       `
-      id, lang, user_card(
-        status, id, phrase_id, phrase(
-          text, lang, id, translations:phrase_translation(*)
+      uid, created_at, id, lang, user_card(
+        *, phrase(
+          *, translations:phrase_translation(*)
         )
       )
     `
@@ -82,8 +82,10 @@ const fetchDeck = async (lang: string): Promise<Deck> => {
   const rawCards = Array.isArray(data?.user_card) ? data.user_card : []
 
   const deck: Deck = {
-    id: data?.id,
-    lang: data?.lang,
+    created_at: data.created_at,
+    uid: data.uid,
+    id: data.id,
+    lang: data.lang,
     all_phrase_ids: rawCards.map(card => card.phrase_id),
     cards: {
       active: rawCards.filter(({ status }) => status === 'active'),
@@ -130,7 +132,7 @@ export function useProfile(): UseQueryResult & { data?: Profile } {
       const { data, error } = await supabase
         .from('user_profile')
         .select(
-          `*, user_deck_plus(id, lang, created_at, cards_active, cards_learned, cards_skipped, lang_total_phrases, most_recent_review_at)`
+          `*, user_deck_plus(uid, id, lang, created_at, cards_active, cards_learned, cards_skipped, lang_total_phrases, most_recent_review_at)`
         )
         .eq('uid', userId)
         .maybeSingle()

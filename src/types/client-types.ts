@@ -1,51 +1,22 @@
 import { Scalars } from './utils'
 import { Database } from './supabase'
 
+type LanguageStub = Omit<
+  Database['public']['Tables']['language']['Row'],
+  'alias_of'
+>
+type PhraseStub = Database['public']['Tables']['phrase']['Row']
+type Translation = Database['public']['Tables']['phrase_translation']['Row']
+type DeckStub = Database['public']['Tables']['user_deck']['Row']
+type DeckPlus = Database['public']['Views']['user_deck_plus']['Row']
+type CardStub = Database['public']['Tables']['user_card']['Row']
 type UserCardInsert = Database['public']['Tables']['user_card']['Insert']
-
-type Translation = {
-  id: Scalars['UUID']
-  lang: string
-  text: string
-  literal: string
-}
-
-type PhraseStub = {
-  id: Scalars['UUID']
-  text: string
-  lang: string
-}
+type Review = Database['public']['Tables']['user_card_review']
 
 type Phrase = PhraseStub & {
   see_also_phrases?: PhraseStub[]
   translations?: Translation[]
   card?: CardStub
-}
-
-type CardStub = {
-  id: Scalars['UUID']
-  status: string
-  phrase_id: Scalars['UUID']
-  deck_id: Scalars['UUID']
-}
-
-type DeckStub = {
-  id: Scalars['UUID']
-  created_at?: string
-  lang: string
-}
-
-type DeckPlus = DeckStub & {
-  cards_learned: number
-  cards_active: number
-  cards_skipped: number
-  lang_total_phrases: number | null
-  most_recent_review: string | null
-}
-
-type LanguageStub = {
-  lang: string
-  name: string
 }
 
 type Language = LanguageStub & {
@@ -62,11 +33,6 @@ type Profile = {
   deck_stubs?: Array<DeckStub>
 }
 
-// count_all: number
-// count_active: number
-// count_learned: number
-// count_skipped: number
-
 type Deck = DeckStub & {
   all_phrase_ids: Array<Scalars['UUID']>
   cards: {
@@ -74,14 +40,6 @@ type Deck = DeckStub & {
     learned: any[]
     skipped: any[]
   }
-}
-
-type Review = {
-  id: Scalars['UUID']
-  created_at: string
-  card_id: Scalars['UUID']
-  score: number
-  lang: string
 }
 
 type ReviewsCollated = {
