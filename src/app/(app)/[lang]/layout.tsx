@@ -1,5 +1,5 @@
-import { LangContextProvider } from './lang-data-provider'
+import { AppDataProvider } from './app-data-provider'
 
 export default function Layout({ params: { lang }, children }) {
-  return <LangContextProvider lang={lang}>{children}</LangContextProvider>
+  return <AppDataProvider lang={lang}>{children}</AppDataProvider>
 }

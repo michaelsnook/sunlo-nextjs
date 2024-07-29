@@ -1,8 +1,14 @@
 'use client'
 
-import { useLangContext } from './lang-data-provider'
+import { useDeckContext, useLangContext } from './app-data-provider'
 
 export default function ClientPage() {
   const language = useLangContext()
-  return <>{JSON.stringify(language)}</>
+  const deck = useDeckContext()
+  return (
+    <div className="grid grid-cols-2">
+      <div>deck is: {JSON.stringify(deck, null, 2)}</div>
+      <div>language is: {JSON.stringify(language, null, 2)}</div>
+    </div>
+  )
 }
