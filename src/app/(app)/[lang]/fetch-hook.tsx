@@ -11,7 +11,7 @@ export async function fetchPublicLanguageData(
 ): Promise<PostgrestSingleResponse<LanguageAPIData>> {
   return supabase
     .from('language_plus')
-    .select('*, phrase(*)')
+    .select('*, phrase(*, phrase_translation(*))')
     .eq('lang', lang)
     .maybeSingle()
 }
@@ -35,7 +35,7 @@ export function useDeckDataQuery(lang: string): UseAPIQuery<DeckAPIData> {
     queryFn: async ({ queryKey }) => {
       const { data, error } = await supabase
         .from('user_deck_plus')
-        .select('*, user_card(*)')
+        .select('*, user_card(*, user_card_review(*))')
         .eq('lang', lang)
         .maybeSingle()
       if (error) throw error
