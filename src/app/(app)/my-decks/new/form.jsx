@@ -34,7 +34,7 @@ export default function Form() {
     },
   })
 
-  const { data, error, status } = useProfile()
+  const { data, error, isLoading } = useProfile()
   const decks = data?.deck_stubs
 
   return (
@@ -42,7 +42,7 @@ export default function Form() {
       {createNewDeck?.error ? (
         <ErrorList summary={`${createNewDeck.error}`} />
       ) : (
-        status === 'error' && <ErrorList summary={`${error.message}`} />
+        error && <ErrorList summary={`${error.message}`} />
       )}
       <form name="new-deck" onSubmit={createNewDeck.mutate}>
         <h2 className="h3">What language would you like to learn?</h2>
@@ -50,7 +50,7 @@ export default function Form() {
           options={allLanguageOptions}
           isOptionDisabled={option =>
             decks?.some(deck => {
-              return status === 'loading'
+              return isLoading
                 ? // while loading the list of decks, all options enabled
                   false
                 : // otherwise, disable languages we're already learning
