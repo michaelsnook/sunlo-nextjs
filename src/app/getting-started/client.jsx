@@ -19,7 +19,6 @@ export const dynamic = 'force-dynamic'
 export default function Client() {
   const { userId } = useAuth()
   const { data: profile, isLoading } = useProfile()
-  console.log(`Current profile data is`, profile)
   const queryClient = useQueryClient()
 
   const [tempLanguagePrimary, setTempLanguagePrimary] = useState()

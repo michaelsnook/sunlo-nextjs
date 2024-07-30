@@ -12,6 +12,7 @@ import {
   ReviewsCollated,
   Phrase,
   Language,
+  UseAPIQuery,
 } from 'types/main'
 import { useAuth } from 'components/auth-context'
 
@@ -121,7 +122,7 @@ export function usePhrase(
   })
 }
 
-export function useProfile(): UseQueryResult & { data?: Profile } {
+export function useProfile(): UseAPIQuery<Profile> {
   const router = useRouter()
   const pathname = usePathname()
   const { userId } = useAuth()
@@ -130,7 +131,7 @@ export function useProfile(): UseQueryResult & { data?: Profile } {
     queryFn: async (): Promise<Profile | null> => {
       const { data, error } = await supabase
         .from('user_profile')
-        .select(`*, user_deck_plus(*)`)
+        .select(`*, deck_stubs:user_deck_plus(*)`)
         .eq('uid', userId)
         .maybeSingle()
       if (error) throw error
@@ -141,12 +142,9 @@ export function useProfile(): UseQueryResult & { data?: Profile } {
         }
 
       return {
-        uid: data.uid,
-        username: data.username,
-        avatar_url: data.avatar_url,
-        languages_spoken: data.languages_spoken ?? [],
-        language_primary: data.language_primary,
-        deck_stubs: data.user_deck_plus ?? [],
+        languages_spoken: [],
+        deck_stubs: [],
+        ...data,
       }
     },
     enabled: router && pathname && userId ? true : false,
@@ -157,6 +155,8 @@ export function useProfile(): UseQueryResult & { data?: Profile } {
       languages_spoken: [],
       language_primary: 'eng',
       deck_stubs: [],
+      created_at: null,
+      updated_at: null,
     },
   })
 }
