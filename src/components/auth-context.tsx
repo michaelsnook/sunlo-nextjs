@@ -49,7 +49,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (event === 'SIGNED_OUT' || typeof session?.user !== 'object') {
           setAuth({ ...blank, isLoading: false })
           queryClient.removeQueries({ queryKey: ['user_profile'] })
+          // the old one
           queryClient.removeQueries({ queryKey: ['user_deck'] })
+          // the new one
+          queryClient.removeQueries({ queryKey: ['deck'] })
         } else {
           setAuth({
             isAuth: session?.user.role === 'authenticated',
@@ -60,7 +63,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           // if for some reason the new user is a different user, refetch user data
           if (session?.user.id !== auth.userId) {
             queryClient.invalidateQueries({ queryKey: ['user_profile'] })
+            // the old one
             queryClient.invalidateQueries({ queryKey: ['user_deck'] })
+            // the new one
+            queryClient.invalidateQueries({ queryKey: ['deck'] })
           }
         }
       }
