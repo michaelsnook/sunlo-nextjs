@@ -130,33 +130,23 @@ export function useProfile(): UseQueryResult & { data?: Profile } {
     queryFn: async (): Promise<Profile | null> => {
       const { data, error } = await supabase
         .from('user_profile')
-        .select(
-          `*, user_deck_plus(uid, id, lang, created_at, cards_active, cards_learned, cards_skipped, lang_total_phrases, most_recent_review_at)`
-        )
+        .select(`*, user_deck_plus(*)`)
         .eq('uid', userId)
         .maybeSingle()
       if (error) throw error
       if (!data)
         if (pathname !== '/getting-started') {
           router.push('/getting-started')
+          return null
         }
 
-      const {
-        uid,
-        username,
-        avatar_url,
-        languages_spoken,
-        language_primary,
-        user_deck_plus: deck_stubs,
-      } = data
-
       return {
-        uid,
-        username,
-        avatar_url,
-        languages_spoken,
-        language_primary,
-        deck_stubs,
+        uid: data.uid,
+        username: data.username,
+        avatar_url: data.avatar_url,
+        languages_spoken: data.languages_spoken ?? [],
+        language_primary: data.language_primary,
+        deck_stubs: data.user_deck_plus ?? [],
       }
     },
     enabled: router && pathname && userId ? true : false,
