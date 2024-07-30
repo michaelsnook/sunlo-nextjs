@@ -9,6 +9,8 @@ type LanguageStub = Omit<
   Database['public']['Tables']['language']['Row'],
   'alias_of'
 >
+type ProfileRow = Database['public']['Tables']['user_profile']['Row']
+type Profile = ProfileRow & { deck_stubs: Array<DeckPlus> }
 type LanguagePlus = Database['public']['Views']['language_plus']['Row']
 type PhraseStub = Database['public']['Tables']['phrase']['Row']
 type LanguageAPIData = LanguagePlus & { phrase: Array<PhraseStub> }
@@ -52,15 +54,6 @@ type PhraseCardTranslationsInsertInput = {
     literal: string
   }>
   user_deck_id: Scalars['UUID']
-}
-
-type Profile = {
-  uid: Scalars['UUID']
-  username: string
-  avatar_url: string
-  languages_spoken: Array<string>
-  language_primary: string
-  deck_stubs: Array<DeckPlus>
 }
 
 type Deck = DeckStub & {
