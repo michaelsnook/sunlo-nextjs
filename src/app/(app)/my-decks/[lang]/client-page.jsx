@@ -32,10 +32,10 @@ const BrandNew = ({ lang }) => {
 }
 export default function ClientPage({ lang }) {
   const [tab, setTab] = useState('active')
-  const { status, data: deckData, error } = useDeck(lang)
+  const { isLoading, data: deckData, error } = useDeck(lang)
 
-  if (status === 'loading') return <Loading />
-  if (status === 'error') return <ErrorList error={error} />
+  if (isLoading) return <Loading />
+  if (error) return <ErrorList error={error} />
 
   if (!deckData?.cards) return <BrandNew lang={lang} />
 
