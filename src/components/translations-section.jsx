@@ -60,7 +60,7 @@ export default function SectionTranslations({
             addTranslation.mutate(e.target.translation_text.value)
           }}
         >
-          <fieldset className="space-y-4" disabled={addTranslation.isLoading}>
+          <fieldset className="space-y-4" disabled={addTranslation.isPending}>
             <div className="form-control">
               <label>Into which language?</label>
               <SelectLanguageYouKnow
@@ -79,9 +79,9 @@ export default function SectionTranslations({
             <button
               type="submit"
               className="btn btn-primary"
-              disabled={addTranslation.isLoading}
+              disabled={addTranslation.isPending}
             >
-              {addTranslation.isLoading ? <Loading /> : `Submit translation`}
+              {addTranslation.isPending ? <Loading /> : `Submit translation`}
             </button>
             {addTranslation.error && (
               <div className="alert alert-error">

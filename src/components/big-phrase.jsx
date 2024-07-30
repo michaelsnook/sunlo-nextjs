@@ -26,7 +26,7 @@ export const AddCardButtonsSection = ({ phrase_id, user_deck_id, onClose }) => {
         onClose()
       }, 5000)
       toast.success(`Card successfully added with status: "${data.status}"`)
-      queryClient.setQueryData(['card', data?.id], data)
+      queryClient.setQueryData({ queryKey: ['card', data?.id] }, data)
       queryClient.invalidateQueries({
         queryKey: ['user_deck'],
         exact: false,
@@ -34,10 +34,13 @@ export const AddCardButtonsSection = ({ phrase_id, user_deck_id, onClose }) => {
       })
       const phrase = queryClient.getQueryData(['phrase', phrase_id])
       if (phrase) {
-        queryClient.setQueryData(['phrase', phrase_id], {
-          ...phrase,
-          card: data,
-        })
+        queryClient.setQueryData(
+          { queryKey: ['phrase', phrase_id] },
+          {
+            ...phrase,
+            card: data,
+          }
+        )
       }
       // console.log(`Return data from adding card:`, data)
     },
@@ -61,7 +64,7 @@ export const AddCardButtonsSection = ({ phrase_id, user_deck_id, onClose }) => {
         <>
           <button
             className={`btn btn-success btn-lg ${
-              makeNewCard.isLoading ? 'loading' : ''
+              makeNewCard.isPending ? 'loading' : ''
             }`}
             role="button"
             onClick={() => makeNewCard.mutate('active')}
@@ -70,7 +73,7 @@ export const AddCardButtonsSection = ({ phrase_id, user_deck_id, onClose }) => {
           </button>
           <button
             className={`btn btn-error btn-lg ${
-              makeNewCard.isLoading ? 'loading' : ''
+              makeNewCard.isPending ? 'loading' : ''
             }`}
             role="button"
             onClick={() => makeNewCard.mutate('skipped')}

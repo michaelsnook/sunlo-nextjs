@@ -136,7 +136,7 @@ export default function AddCardPhraseForm({ lang, cancel }) {
         </div>
       </div>
       <div className="flex justify-between">
-        {addCardPhrase.isLoading ? (
+        {addCardPhrase.isPending ? (
           <Loading />
         ) : addCardPhrase.isError ? (
           <ErrorList error={addCardPhrase.error} />
