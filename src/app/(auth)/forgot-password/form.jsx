@@ -75,7 +75,7 @@ export default function ForgotPasswordForm() {
               </div>
             </fieldset>
           </form>
-          {useRequestPasswordForm.status === 'error' ? (
+          {useRequestPasswordForm.error ? (
             <ErrorList
               summary="Error sending password reset"
               error={`${useRequestPasswordForm.error?.message}`}

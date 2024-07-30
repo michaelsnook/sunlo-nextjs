@@ -93,21 +93,17 @@ export default function BigPhrase({
   onNavigate,
   noBox,
 }) {
-  const {
-    data: phrase,
-    status: phraseStatus,
-    error: phraseError,
-  } = usePhrase(phrase_id) // || initialData.id
+  const { data: phrase, isLoading, error: phraseError } = usePhrase(phrase_id) // || initialData.id
 
-  if (!phrase_id) return <p>no phrase info provided</p>
-  if (phraseStatus === 'loading') return <Loading />
+  if (!phrase_id) throw 'no phrase info provided'
+  if (isLoading) return <Loading />
 
   const translations = phrase?.translations
   const card = phrase?.card
   // console.log(`bigPhrase look for userCard or phrase.card`, phrase)
   const seeAlsos = phrase?.see_also_phrases
 
-  if (phraseStatus === 'error') return <ErrorList error={phraseError} />
+  if (error) return <ErrorList error={phraseError} />
 
   return (
     <div

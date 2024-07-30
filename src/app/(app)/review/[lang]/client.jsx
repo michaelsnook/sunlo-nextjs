@@ -27,12 +27,12 @@ const Empty = () => (
 )
 
 export default function ClientPage({ lang }) {
-  const { data, status } = useDeck(lang)
+  const { data, isLoading } = useDeck(lang)
   const reviewCards = useMemo(() => shuffle(data?.cards?.active), [data])
   const [cardIndex, setCardIndex] = useState(0)
   const [reviews, setReviews] = useState([])
 
-  if (status === 'loading') return <Loading />
+  if (isLoading) return <Loading />
   if (!data?.cards?.active?.length > 0) return <Empty />
 
   const canBackup = cardIndex > 0

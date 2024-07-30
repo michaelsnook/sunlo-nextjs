@@ -15,8 +15,8 @@ import { useProfile } from 'app/data/hooks'
 import { useRouter } from 'next/navigation'
 
 export const SelectLanguageYouKnow = ({ onChange, disabledLang }) => {
-  const { data, status } = useProfile()
-  if (status === 'loading') return <Loading />
+  const { data, isLoading } = useProfile()
+  if (isLoading) return <Loading />
   const { languagesSpoken } = data
   const selectOptions = !languagesSpoken?.length
     ? allLanguageOptions
@@ -58,7 +58,7 @@ export const SelectLanguageYouKnow = ({ onChange, disabledLang }) => {
 }
 
 export default function AddCardPhraseForm({ lang, cancel }) {
-  const { status, data: deck } = useDeck(lang)
+  const { isLoading, data: deck } = useDeck(lang)
   const [selectLang, setSelectLang] = useState()
   const queryClient = useQueryClient()
   const router = useRouter()
@@ -163,7 +163,7 @@ export default function AddCardPhraseForm({ lang, cancel }) {
             <button
               type="submit"
               className="btn btn-primary"
-              disabled={!status === 'success'}
+              disabled={isLoading}
             >
               Submit
             </button>

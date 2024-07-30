@@ -11,12 +11,11 @@ import BigPhrase from 'components/big-phrase'
 export default function Browse({ lang, disable }) {
   const [activePhraseId, setActivePhraseId] = useState()
 
-  const { data, error, status } = useLanguageDetails(lang)
+  const { data, error, isLoading } = useLanguageDetails(lang)
+  if (isLoading) return <Loading />
+  if (error) return <ErrorList error={error} />
 
-  if (status === 'loading') return <Loading />
-  if (status === 'error') return <ErrorList error={error} />
-  // console.log(`Browse useLanguageDetails, `, data, error)
-  if (!data?.phrases?.length) {
+  if (!data.phrases?.length) {
     return (
       <p className="rounded-lg bg-primary/10 p-6">
         There are no phrases for this language 💩{' '}
