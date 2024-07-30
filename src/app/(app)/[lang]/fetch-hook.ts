@@ -24,7 +24,6 @@ export function useLangDataQuery(lang: string): UseAPIQuery<LanguageAPIData> {
     queryFn: async ({ queryKey }) => {
       const { data, error } = await fetchPublicLanguageData(queryKey[1])
       if (error) throw error
-      // console.log(`In the fetcher function, returnin' your data`, data, error)
       buildLanguageCache(queryClient, data)
       return data
     },
