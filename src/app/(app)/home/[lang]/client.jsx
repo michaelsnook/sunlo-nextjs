@@ -5,13 +5,14 @@ import { notFound } from 'next/navigation'
 import { useProfile } from 'app/data/hooks'
 import { useRecentReviews } from 'app/data/reviews'
 import Loading from 'components/loading'
+import Error from 'components/error'
 import languages from 'lib/languages'
 import Link from 'next/link'
 
 const RecentReviewsSummary = ({ lang }) => {
   const { data, error, isLoading } = useRecentReviews(lang)
   if (isLoading) return <Loading />
-  if (error) return <ErrorList error={error} />
+  if (error) return <Error>{error.message}</Error>
 
   const countReviews = data?.length
   const countPositive = data?.filter(r => r.score > 0).length
@@ -29,10 +30,6 @@ const RecentReviewsSummary = ({ lang }) => {
 }
 
 const CardsSummary = ({ deck }) => {
-  if (!deck) {
-    console.log(`CardSummary attempting render empty deck!`, deck)
-    return null
-  }
   const { cards_active, cards_learned } = deck
   const cardsInDeck = cards_active + cards_learned
   const beHappy = cards_learned > 5
@@ -53,18 +50,24 @@ const CardsSummary = ({ deck }) => {
 }
 
 export default function Client({ lang }) {
-  const { data, error, isLoading } = useProfile()
-  const deck = data?.deck_stubs?.find(d => d.lang === lang) || null
-  if (isLoading) return <Loading />
-  if (error) return <ErrorList error={error} />
-
-  // the long name
+  const { data, error, isSuccess, isLoading } = useProfile()
   const language = languages[lang]
   if (typeof language !== 'string') notFound()
 
+  if (isLoading) return <Loading />
+  if (error) return <Error>{error.message}</Error>
+
+  const deckLoadedArray = isSuccess && data.deck_stubs?.length >= 0
+
+  const deck = deckLoadedArray
+    ? data.deck_stubs.find(d => d.lang === lang)
+    : null
+  if (isLoading) return <Loading />
+  if (error) return <ErrorList error={error} />
+
   return (
     <>
-      {!deck ? (
+      {deck === null ? (
         <p>
           Are you sure you&apos;re learning this language? To create a deck and{' '}
           <Link className="s-link" href="/my-decks/new">
