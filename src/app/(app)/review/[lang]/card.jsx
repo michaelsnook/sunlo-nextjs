@@ -35,7 +35,7 @@ export default function CardInner({ card, nextCard, addReview, hidden }) {
     setIsRevealed(true)
   }
 
-  const { data, error, mutate, status } = useMutation({
+  const { data, error, mutate, isPending } = useMutation({
     mutationFn: submission =>
       postReview({ ...submission, card_id: card.id, prevId: data?.id }),
     onSuccess: result => {
@@ -59,7 +59,7 @@ export default function CardInner({ card, nextCard, addReview, hidden }) {
     <div className="card-white">
       <div className="flex flex-col justify-center gap-8 text-center">
         <h2 className="h2 text-center">{card?.phrase?.text}</h2>
-        {isLoading ? (
+        {isPending ? (
           <div className="absolute bottom-0 left-0 right-0 top-0 content-center bg-base-100/70">
             <Loading />
           </div>
