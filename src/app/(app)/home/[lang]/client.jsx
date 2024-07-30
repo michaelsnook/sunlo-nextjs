@@ -9,8 +9,8 @@ import languages from 'lib/languages'
 import Link from 'next/link'
 
 const RecentReviewsSummary = ({ lang }) => {
-  const { data, error, status } = useRecentReviews(lang)
-  if (status === 'loading') return <Loading />
+  const { data, error, isLoading } = useRecentReviews(lang)
+  if (isLoading) return <Loading />
   if (error) return <ErrorList error={error} />
 
   const countReviews = data?.length
@@ -29,6 +29,10 @@ const RecentReviewsSummary = ({ lang }) => {
 }
 
 const CardsSummary = ({ deck }) => {
+  if (!deck) {
+    console.log(`CardSummary attempting render empty deck!`, deck)
+    return null
+  }
   const { cards_active, cards_learned } = deck
   const cardsInDeck = cards_active + cards_learned
   const beHappy = cards_learned > 5
