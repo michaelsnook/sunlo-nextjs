@@ -30,6 +30,7 @@ const RecentReviewsSummary = ({ lang }) => {
 }
 
 const CardsSummary = ({ deck }) => {
+  if (!deck) return <Loading />
   const { cards_active, cards_learned } = deck
   const cardsInDeck = cards_active + cards_learned
   const beHappy = cards_learned > 5
