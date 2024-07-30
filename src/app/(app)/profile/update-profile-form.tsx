@@ -2,7 +2,7 @@
 
 import type { ChangeEvent, FormEvent } from 'react'
 import type { QueryError } from '@supabase/supabase-js'
-import type { Profile } from 'types/main'
+import type { Profile, uuid } from 'types/main'
 
 import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
@@ -35,7 +35,7 @@ function Form({
     language_primary: string
     languages_spoken: Array<string>
     avatar_url: string
-    uid: string
+    uid: uuid
   }
 }) {
   const queryClient = useQueryClient()

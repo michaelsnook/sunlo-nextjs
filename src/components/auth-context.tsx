@@ -3,10 +3,11 @@
 import { createContext, useState, useEffect, useContext } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import supabase from 'lib/supabase-client'
+import { uuid } from 'types/main'
 
 type AuthState = {
   isAuth: boolean
-  userId: string | null
+  userId: uuid | null
   userEmail: string | null
   isLoading: boolean
 }
