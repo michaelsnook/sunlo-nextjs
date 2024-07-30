@@ -26,7 +26,7 @@ export const AddCardButtonsSection = ({ phrase_id, user_deck_id, onClose }) => {
         onClose()
       }, 5000)
       toast.success(`Card successfully added with status: "${data.status}"`)
-      queryClient.setQueryData({ queryKey: ['card', data?.id] }, data)
+      queryClient.setQueryData(['card', data?.id], data)
       queryClient.invalidateQueries({
         queryKey: ['user_deck'],
         exact: false,
@@ -34,13 +34,10 @@ export const AddCardButtonsSection = ({ phrase_id, user_deck_id, onClose }) => {
       })
       const phrase = queryClient.getQueryData(['phrase', phrase_id])
       if (phrase) {
-        queryClient.setQueryData(
-          { queryKey: ['phrase', phrase_id] },
-          {
-            ...phrase,
-            card: data,
-          }
-        )
+        queryClient.setQueryData(['phrase', phrase_id], {
+          ...phrase,
+          card: data,
+        })
       }
       // console.log(`Return data from adding card:`, data)
     },
