@@ -26,8 +26,7 @@ export default function ClientPage() {
   if (status === 'loading') return <Loading />
   if (status === 'error') return <ErrorList error={error} />
 
-  const decks = data?.deck_stubs
-
+  const decks = data.deck_stubs
   return (
     <>
       {decks.length ? (
