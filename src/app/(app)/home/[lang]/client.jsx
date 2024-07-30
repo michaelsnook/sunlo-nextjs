@@ -49,9 +49,9 @@ const CardsSummary = ({ deck }) => {
 }
 
 export default function Client({ lang }) {
-  const { data, error, status } = useProfile()
+  const { data, error, isLoading } = useProfile()
   const deck = data?.deck_stubs?.find(d => d.lang === lang) || null
-  if (status === 'loading') return <Loading />
+  if (isLoading) return <Loading />
   if (error) return <ErrorList error={error} />
 
   // the long name
@@ -60,7 +60,7 @@ export default function Client({ lang }) {
 
   return (
     <>
-      {data === null ? (
+      {!deck ? (
         <p>
           Are you sure you&apos;re learning this language? To create a deck and{' '}
           <Link className="s-link" href="/my-decks/new">
