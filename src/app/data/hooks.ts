@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useRouter, usePathname } from 'next/navigation'
 import { getLanguageDetails, getPhraseDetails } from './fetchers'
 import supabase from 'lib/supabase-client'
-import type { Scalars, Maybe } from 'types/utils'
+import type { Maybe } from 'types/utils'
 import {
   Deck,
   Profile,
@@ -13,6 +13,7 @@ import {
   Phrase,
   Language,
   UseAPIQuery,
+  uuid,
 } from 'types/main'
 import { useAuth } from 'components/auth-context'
 
@@ -25,9 +26,7 @@ export type UseQueryResult = {
   isError: boolean
 }
 
-export const useCard = (
-  id: Scalars['UUID']
-): UseQueryResult & { data?: CardStub } =>
+export const useCard = (id: uuid): UseQueryResult & { data?: CardStub } =>
   useQuery({
     queryKey: ['card', id],
     queryFn: async ({ queryKey }) => {
@@ -110,9 +109,7 @@ export function useDeck(deckLang: string): UseQueryResult & { data?: Deck } {
   })
 }
 
-export function usePhrase(
-  id: Scalars['UUID']
-): UseQueryResult & { data?: Phrase } {
+export function usePhrase(id: uuid): UseQueryResult & { data?: Phrase } {
   return useQuery({
     queryKey: ['phrase', id],
     queryFn: async ({ queryKey }) => getPhraseDetails(queryKey[1]),

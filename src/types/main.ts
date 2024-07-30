@@ -1,9 +1,10 @@
-import { Scalars } from './utils'
 import { Database } from './supabase'
 import { UseQueryResult } from '@tanstack/react-query'
 import { PostgrestError } from '@supabase/supabase-js'
 
 type UseAPIQuery<T> = UseQueryResult<T, PostgrestError>
+
+type uuid = string
 
 type LanguageStub = Omit<
   Database['public']['Tables']['language']['Row'],
@@ -34,13 +35,13 @@ type Language = LanguageStub & {
 }
 
 type PhraseInsertInput = {
-  id?: Scalars['UUID']
+  id?: uuid
   lang: string
   text: string
 }
 
 type TranslationInsertInput = {
-  phrase_id: Scalars['UUID']
+  phrase_id: uuid
   lang: string
   text: string
   literal?: string
@@ -53,11 +54,11 @@ type PhraseCardTranslationsInsertInput = {
     lang: string
     literal: string
   }>
-  user_deck_id: Scalars['UUID']
+  user_deck_id: uuid
 }
 
 type Deck = DeckStub & {
-  all_phrase_ids: Array<Scalars['UUID']>
+  all_phrase_ids: Array<uuid>
   cards: {
     active: any[]
     learned: any[]
@@ -91,4 +92,5 @@ export type {
   Profile,
   Review,
   ReviewsCollated,
+  uuid,
 }

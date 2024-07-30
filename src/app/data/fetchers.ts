@@ -1,5 +1,5 @@
 import supabase from 'lib/supabase-client'
-import type { Phrase, Language } from 'types/main'
+import type { Phrase, Language, uuid } from 'types/main'
 
 export const getAllPhraseDetails = async (): Promise<Array<Phrase>> => {
   const { data, error } = await supabase.from('phrase').select(phraseFullSelect)
@@ -61,7 +61,7 @@ const phrasePostFetch = (phrase): Phrase => {
   return phrase
 }
 
-export const getPhraseDetails = async (id: string): Promise<Phrase> => {
+export const getPhraseDetails = async (id: uuid): Promise<Phrase> => {
   let { data, error } = await supabase
     .from('phrase')
     .select(phraseFullSelect)
