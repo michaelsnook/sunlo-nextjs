@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { useAuth } from 'components/auth-context'
 import supabase from 'lib/supabase-client'
-import Navbar from 'app/(app)/navbar'
 import ErrorList from 'components/error-list'
 import Link from 'next/link'
 import { useProfile } from 'app/data/hooks'
@@ -12,12 +11,15 @@ import { prependAndDedupe } from 'lib/helpers'
 import { useQueryClient } from '@tanstack/react-query'
 import languages from 'lib/languages'
 import SuccessCheckmark from 'components/svg-components'
+import toast from 'react-hot-toast'
+import Loading from 'components/loading'
 
 export const dynamic = 'force-dynamic'
 
 export default function Client() {
   const { userId } = useAuth()
-  const { data: profile } = useProfile()
+  const { data: profile, isLoading } = useProfile()
+  console.log(`Current profile data is`, profile)
   const queryClient = useQueryClient()
 
   const [tempLanguagePrimary, setTempLanguagePrimary] = useState()
@@ -28,13 +30,13 @@ export default function Client() {
   const tempUsernameToUse = tempUsername ?? profile?.username
   const newLanguagesSpoken = prependAndDedupe(
     tempLanguagePrimary,
-    profile?.languages_spoken
+    profile.languages_spoken
   )
 
   const reset = () => {
-    setTempLanguagePrimary(profile?.language_primary)
+    setTempLanguagePrimary(profile.language_primary)
     setTempDeckToAdd()
-    setTempUsername(profile?.username)
+    setTempUsername(profile.username)
   }
 
   const mainForm = useMutation({
@@ -87,11 +89,14 @@ export default function Client() {
     },
     onSuccess: data => {
       console.log(`Success! deck, profile`, data)
+      toast.success('Success!')
       queryClient.invalidateQueries({ queryKey: ['user_profile'] })
     },
   })
 
-  return profile === null ? null : mainForm.isSuccess ? (
+  return isLoading ? (
+    <Loading />
+  ) : mainForm.isSuccess ? (
     <main className="p2 w-app flex min-h-[85vh] flex-col justify-center gap-12 text-white md:p-6 lg:p-10">
       <div className="flex flex-row place-items-center justify-center gap-4">
         <SuccessCheckmark />
@@ -146,7 +151,7 @@ export default function Client() {
         </div>
         <ErrorList
           summary="Problem inserting profile or making deck"
-          error={mainForm.error}
+          error={mainForm.error?.message}
         />
       </main>
     </>

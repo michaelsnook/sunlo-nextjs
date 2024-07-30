@@ -17,7 +17,6 @@ import { useRouter } from 'next/navigation'
 export const SelectLanguageYouKnow = ({ onChange, disabledLang }) => {
   const { data, status } = useProfile()
   if (status === 'loading') return <Loading />
-
   const { languagesSpoken } = data
   const selectOptions = !languagesSpoken?.length
     ? allLanguageOptions
