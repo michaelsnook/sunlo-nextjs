@@ -150,6 +150,14 @@ export function useProfile(): UseQueryResult & { data?: Profile } {
       }
     },
     enabled: router && pathname && userId ? true : false,
+    placeholderData: {
+      uid: null,
+      username: null,
+      avatar_url: null,
+      languages_spoken: [],
+      language_primary: 'eng',
+      deck_stubs: [],
+    },
   })
 }
 
