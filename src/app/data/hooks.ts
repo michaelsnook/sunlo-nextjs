@@ -41,7 +41,7 @@ export const useCard = (
     enabled: typeof id === 'string' && id.length > 0,
     // retry: false,
     staleTime: Infinity,
-    cacheTime: Infinity,
+    gcTime: Infinity,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   })
@@ -55,7 +55,7 @@ export function useLanguageDetails(
     enabled: !!lang,
     // retry: 3,
     staleTime: Infinity,
-    cacheTime: Infinity,
+    gcTime: Infinity,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   })
@@ -103,7 +103,7 @@ export function useDeck(deckLang: string): UseQueryResult & { data?: Deck } {
     enabled: !!deckLang,
     retry: false,
     staleTime: Infinity,
-    cacheTime: Infinity,
+    gcTime: Infinity,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   })
@@ -117,7 +117,7 @@ export function usePhrase(
     queryFn: async ({ queryKey }) => getPhraseDetails(queryKey[1]),
     enabled: !!id,
     staleTime: Infinity,
-    cacheTime: Infinity,
+    gcTime: Infinity,
   })
 }
 

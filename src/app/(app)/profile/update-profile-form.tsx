@@ -89,7 +89,7 @@ function Form({
     <form className="space-y-4" onSubmit={handleSubmit}>
       <fieldset
         className="grid grid-cols-1 gap-4 sm:grid-cols-2"
-        disabled={updateProfile.isLoading}
+        disabled={updateProfile.isPending}
       >
         <div className="flex flex-col">
           <label htmlFor="username" className="px-3 font-bold">
@@ -137,7 +137,7 @@ function Form({
         <div className="flex flex-col-reverse">
           <button
             className="btn btn-primary"
-            disabled={updateProfile.isLoading}
+            disabled={updateProfile.isPending}
           >
             Save changes
           </button>

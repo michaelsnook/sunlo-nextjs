@@ -40,7 +40,7 @@ export default function SignupForm() {
           <form role="form" onSubmit={submitSignup.mutate} className="form">
             <fieldset
               className="flex flex-col gap-y-4"
-              disabled={submitSignup.isLoading}
+              disabled={submitSignup.isPending}
             >
               <div>
                 <p>
@@ -84,8 +84,8 @@ export default function SignupForm() {
                   tabIndex={3}
                   className="btn btn-primary"
                   type="submit"
-                  disabled={submitSignup.isLoading}
-                  aria-disabled={submitSignup.isLoading}
+                  disabled={submitSignup.isPending}
+                  aria-disabled={submitSignup.isPending}
                 >
                   Sign up
                 </button>

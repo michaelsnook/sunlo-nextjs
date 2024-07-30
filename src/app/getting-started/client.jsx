@@ -87,7 +87,7 @@ export default function Client() {
     },
     onSuccess: data => {
       console.log(`Success! deck, profile`, data)
-      queryClient.invalidateQueries(['user_profile'])
+      queryClient.invalidateQueries({ queryKey: ['user_profile'] })
     },
   })
 
