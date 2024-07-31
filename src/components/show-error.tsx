@@ -4,18 +4,22 @@ import type { PropsWithChildren } from 'react'
   If the error message passed as `children` is nullable, we can simply use:
 
     <ShowError>{some nullable message}</ShowError>
-    
+
   But when we want to put some text directly in the template, like `Error: ${message}` it will mean
   that `children` is never null, so we add the `show` prop:
 
-    <ShowError show={error !== null}>Error submitting form: {error.message}</ShowError>
+    <ShowError show={!!error}>Error submitting form: {error.message}</ShowError>
 */
 
 export default function ShowError({
   show = null,
   children = null,
 }: PropsWithChildren<{ show?: boolean | null }>) {
-  return show === false || (show === null && children === null) ? null : (
+  // if show is "false", don't show. if show is true, show it.
+  // if show us not set, then show if there's content to show.
+  if (show === false) return null
+  if (show === null && !children) return null
+  return (
     <div className="alert alert-error">
       <svg
         xmlns="http://www.w3.org/2000/svg"
