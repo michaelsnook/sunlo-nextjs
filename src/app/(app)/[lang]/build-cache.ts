@@ -1,9 +1,9 @@
 'use client'
 
-import type { DeckAPIData, LanguageAPIData } from 'types/main'
+import type { DeckFull, LanguageFull } from 'types/main'
 import type { QueryClient } from '@tanstack/react-query'
 
-export function buildDeckCache(client: QueryClient, data: DeckAPIData) {
+export function buildDeckCache(client: QueryClient, data: DeckFull) {
   const lang = data.lang
 
   const pids = data.user_card?.map(card => card.phrase_id) ?? []
@@ -18,7 +18,7 @@ export function buildDeckCache(client: QueryClient, data: DeckAPIData) {
   client.setQueryData(['deck', lang, 'meta'], meta)
 }
 
-export function buildLanguageCache(client: QueryClient, data: LanguageAPIData) {
+export function buildLanguageCache(client: QueryClient, data: LanguageFull) {
   const lang = data.lang
   const pids = data.phrase?.map(phrase => phrase.id) ?? []
   client.setQueryData(['language', lang, 'all_pids'], pids)

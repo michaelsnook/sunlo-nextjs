@@ -3,8 +3,8 @@
 import ShowError from 'components/show-error'
 import Loading from 'components/loading'
 import { createContext, useContext, type ReactNode } from 'react'
-import type { DeckAPIData, LanguageAPIData } from 'types/main'
-import { useLangDataQuery, useDeckDataQuery } from './fetch-hook'
+import type { DeckFull, LanguageFull } from 'types/main'
+import { useLangDataQuery, useDeckDataQuery } from './load-bulk'
 
 /*
 	The context and provider contain these 4 moving parts:
@@ -14,8 +14,8 @@ import { useLangDataQuery, useDeckDataQuery } from './fetch-hook'
 	4. the provider that wraps this layout segment (just 1)
 */
 
-const LangContext = createContext<LanguageAPIData | null>(null)
-const DeckContext = createContext<DeckAPIData | null>(null)
+const LangContext = createContext<LanguageFull | null>(null)
+const DeckContext = createContext<DeckFull | null>(null)
 
 export function useLangContext() {
   const langData = useContext(LangContext)
