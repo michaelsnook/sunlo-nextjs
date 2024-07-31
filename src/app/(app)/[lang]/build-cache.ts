@@ -1,34 +1,39 @@
 'use client'
 
-import type { DeckFull, LanguageFull } from 'types/main'
+import type { DeckFull, LanguageFull, LanguageMeta } from 'types/main'
 import type { QueryClient } from '@tanstack/react-query'
 
-export function buildDeckCache(client: QueryClient, data: DeckFull) {
+export function buildDeckCache(client: QueryClient, data: DeckFull): void {
   const lang = data.lang
 
-  const pids = data.user_card?.map(card => card.phrase_id) ?? []
-  client.setQueryData(['deck', lang, 'all_card_pids'], pids)
+  const all_pids = data.cards?.map(card => card.phrase_id) ?? []
+  client.setQueryData(['deck', lang, 'all_pids'], all_pids)
 
-  data.user_card.forEach(card => {
+  data.cards.forEach(card => {
     client.setQueryData(['deck', lang, 'card', card.phrase_id], card)
   })
-  let meta = { ...data }
-  delete meta.user_card
 
+  let meta = { ...data }
+  delete meta.cards
   client.setQueryData(['deck', lang, 'meta'], meta)
+  meta = null
 }
 
-export function buildLanguageCache(client: QueryClient, data: LanguageFull) {
+export function buildLanguageCache(
+  client: QueryClient,
+  data: LanguageFull
+): void {
   const lang = data.lang
-  const pids = data.phrase?.map(phrase => phrase.id) ?? []
-  client.setQueryData(['language', lang, 'all_pids'], pids)
 
-  data.phrase.forEach(phrase => {
+  const all_pids = data.phrases?.map(phrase => phrase.id) ?? []
+  client.setQueryData(['language', lang, 'all_pids'], all_pids)
+
+  data.phrases.forEach(phrase => {
     client.setQueryData(['language', lang, 'phrase', phrase.id], phrase)
   })
 
   let meta = { ...data }
-  delete meta.phrase
-
+  delete meta.phrases
   client.setQueryData(['language', lang, 'meta'], meta)
+  meta = null
 }
