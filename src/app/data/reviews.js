@@ -22,7 +22,7 @@ export function useRecentReviews(lang) {
         .select(`id, created_at, card_id, score`)
         .eq('lang', lang)
         .gt('created_at', priorTime)
-      if (error) throw Error(error.message)
+      if (error) throw error
       return data
     },
     enabled: !!priorTime,

@@ -3,15 +3,15 @@ import type { PropsWithChildren } from 'react'
 /*
   If the error message passed as `children` is nullable, we can simply use:
 
-    <Error>{some nullable message}</Error>
+    <ShowError>{some nullable message}</ShowError>
     
   But when we want to put some text directly in the template, like `Error: ${message}` it will mean
   that `children` is never null, so we add the `show` prop:
 
-    <Error show={error !== null}>Error submitting form: {error.message}</Error>
+    <ShowError show={error !== null}>Error submitting form: {error.message}</ShowError>
 */
 
-export default function Error({
+export default function ShowError({
   show = null,
   children = null,
 }: PropsWithChildren<{ show?: boolean | null }>) {

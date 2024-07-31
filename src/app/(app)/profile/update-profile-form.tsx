@@ -10,7 +10,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
 import supabase from 'lib/supabase-client'
 import languages from 'lib/languages'
-import Error from 'components/error'
+import ShowError from 'components/show-error'
 import SelectMultipleLanguagesInput from 'components/select-multiple-languages'
 import Loading from 'components/loading'
 import { useProfile } from 'app/data/hooks'
@@ -142,9 +142,9 @@ function Form({
             Save changes
           </button>
         </div>
-        <Error show={!!updateProfile.error}>
+        <ShowError show={!!updateProfile.error}>
           Problem updating profile: {updateProfile.error?.message}
-        </Error>
+        </ShowError>
       </fieldset>
     </form>
   )

@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { useMutation } from '@tanstack/react-query'
 import supabase from 'lib/supabase-client'
-import ErrorList from 'components/error-list'
+import ShowError from 'components/show-error'
 import { toast } from 'react-hot-toast'
 
 const avatarFullUrl = fullPath =>
@@ -30,7 +30,7 @@ export default function AvatarEditor({ url, onUpload }) {
       event.preventDefault()
       console.log(`sendImage.mutate`, event)
       if (!event.target.files || event.target.files.length === 0)
-        throw "There's no file to submit"
+        throw new Error(`There's no file to submit`)
       const file = event.target.files[0]
       const filename = filenameFromFile(file)
       const { data, error } = await supabase.storage
@@ -82,12 +82,9 @@ export default function AvatarEditor({ url, onUpload }) {
           </a>
         </div>
       </label>
-      {sendImage?.error && (
-        <ErrorList
-          summary="Error uploading image"
-          error={sendImage?.error.message}
-        />
-      )}
+      <ShowError show={!!sendImage.error}>
+        Error uploading image: {sendImage.error?.message}
+      </ShowError>
     </div>
   )
 }

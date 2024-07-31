@@ -1,6 +1,6 @@
 'use client'
 
-import Error from 'components/error'
+import ShowError from 'components/show-error'
 import Loading from 'components/loading'
 import { createContext, useContext, type ReactNode } from 'react'
 import type { DeckAPIData, LanguageAPIData } from 'types/main'
@@ -19,17 +19,21 @@ const DeckContext = createContext<DeckAPIData | null>(null)
 
 export function useLangContext() {
   const langData = useContext(LangContext)
-  if (!langData) {
-    throw 'LangContext: No value provided (did you wrap the provider?)'
-  }
+  if (!langData)
+    throw new Error(
+      `LangContext: No value provided (did you wrap the provider?`
+    )
+
   return langData
 }
 
 export function useDeckContext() {
   const deckData = useContext(DeckContext)
-  if (!deckData) {
-    throw 'DeckContext: No value provided (did you wrap the provider?)'
-  }
+  // @TODO: this should probably 404?
+  if (!deckData)
+    throw new Error(
+      'DeckContext: No value provided (did you wrap the provider?)'
+    )
   return deckData
 }
 
@@ -41,7 +45,7 @@ export function AppDataProvider({
   children: ReactNode
 }) {
   if (typeof lang !== 'string' || lang.length !== 3)
-    throw 'Error fetching the language data'
+    throw new Error(`This is not a valid deck name or key: "${lang}"`)
 
   const {
     data: langData,
@@ -55,7 +59,13 @@ export function AppDataProvider({
   } = useDeckDataQuery(lang)
 
   // this will mean the database/server is unreachable
-  if (langError) return <Error>{langError?.message}</Error>
+  if (langError || deckError)
+    return (
+      <>
+        <ShowError>{langError?.message}</ShowError>
+        <ShowError>{deckError?.message}</ShowError>
+      </>
+    )
 
   return (
     <LangContext.Provider value={langData}>

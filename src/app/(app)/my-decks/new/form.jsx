@@ -6,15 +6,9 @@ import Select from 'react-select'
 import { toast } from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
 import { useProfile } from 'app/data/hooks'
-import ErrorList from 'components/error-list'
+import ShowError from 'components/show-error'
 import languages, { allLanguageOptions } from 'lib/languages'
 import { postNewDeck } from './add-new-deck'
-
-function TinyError({ text }) {
-  return (
-    <p className="my-4 rounded-sm bg-error/20 p-2 text-error-content">{text}</p>
-  )
-}
 
 export default function Form() {
   const [lang, setLang] = useState()
@@ -39,11 +33,8 @@ export default function Form() {
 
   return (
     <div>
-      {createNewDeck?.error ? (
-        <ErrorList summary={`${createNewDeck.error}`} />
-      ) : (
-        error && <ErrorList summary={`${error.message}`} />
-      )}
+      <ShowError>{createNewDeck.error?.message}</ShowError>
+      <ShowError>{error?.message}</ShowError>
       <form name="new-deck" onSubmit={createNewDeck.mutate}>
         <h2 className="h3">What language would you like to learn?</h2>
         <Select
@@ -78,9 +69,7 @@ export default function Form() {
           Start learning
         </button>
       </form>
-      {createNewDeck.error && (
-        <TinyError text={`${createNewDeck.error.message}`} />
-      )}
+      <ShowError>{createNewDeck.error?.message}</ShowError>
     </div>
   )
 }

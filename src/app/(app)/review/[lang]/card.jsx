@@ -3,13 +3,13 @@
 import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import supabase from 'lib/supabase-client'
-import ErrorList from 'components/error-list'
+import ShowError from 'components/show-error'
 import Loading from 'components/loading'
 import { toast } from 'react-hot-toast'
 import { cn } from 'lib/utils'
 
 const postReview = async ({ card_id, score, prevId }) => {
-  if (!card_id || !score) throw Error('Invalid review; cannot log')
+  if (!card_id || !score) throw new Error('Invalid review; cannot log')
   const id = prevId ? { id: prevId } : {}
   const submitData = {
     score,
@@ -24,7 +24,7 @@ const postReview = async ({ card_id, score, prevId }) => {
     .upsert(submitData)
     .select()
 
-  if (error) throw Error(error)
+  if (error) throw error
   // console.log(`We posted the review,`, data, error)
   return data[0]
 }
@@ -66,7 +66,7 @@ export default function CardInner({ card, nextCard, addReview, hidden }) {
         ) : null}
         {error ? (
           <div className="absolute bottom-0 left-0 right-0 top-0 bg-base-100/50">
-            <ErrorList error={error} />
+            <ShowError>{error.message}</ShowError>
           </div>
         ) : null}
         {!isRevealed ? (

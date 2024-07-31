@@ -3,7 +3,7 @@
 import { useMutation } from '@tanstack/react-query'
 import Link from 'next/link'
 import supabase from 'lib/supabase-client'
-import ErrorList from 'components/error-list'
+import ShowError from 'components/show-error'
 import { useAuth } from 'components/auth-context'
 import { toast } from 'react-hot-toast'
 
@@ -71,10 +71,9 @@ export default function SetNewPasswordForm() {
           </div>
         </fieldset>
       </form>
-      <ErrorList
-        summary="Error setting new password"
-        error={submitNewPassword.error?.message}
-      />
+      <ShowError show={!!submitNewPassword.error}>
+        Error setting new password: {submitNewPassword.error?.message}
+      </ShowError>
     </>
   )
 }
