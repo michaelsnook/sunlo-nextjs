@@ -13,13 +13,17 @@ export type UseSBMutation<T> = UseMutationResult<T, PostgrestError>
 export type SBQuery<T> = Promise<PostgrestResponse<T>>
 export type SBQuerySingle<T> = Promise<PostgrestMaybeSingleResponse<T>>
 export type SBMutation<T> = Promise<PostgrestResponse<T>>
+// type Tables = Database['public']['Tables']
+// type Views = Database['public']['Views']
 
 export type LanguageRow = Omit<
   Database['public']['Tables']['language']['Row'],
   'alias_of'
 >
 export type LanguageMeta = Database['public']['Views']['language_plus']['Row']
-export type LanguageFull = LanguageMeta & { phrase: Array<PhraseFull> }
+export type LanguageFull = LanguageMeta & {
+  phrases: Array<PhraseFull>
+}
 
 export type PhraseRow = Database['public']['Tables']['phrase']['Row']
 export type TranslationRow =
@@ -36,15 +40,15 @@ export type DeckFull = DeckMeta & {
   cards: Array<CardFull>
 }
 
-export type CardRow = Database['public']['Tables']['user_deck']['Row']
-export type ReviewRow = Database['public']['Views']['user_card_review_plus']
+export type CardRow = Database['public']['Tables']['user_card']['Row']
+export type ReviewMeta = Database['public']['Views']['user_card_review_plus']
 export type CardFull = CardRow & {
-  reviews: Array<ReviewRow>
+  reviews: Array<ReviewMeta>
 }
 
 // export type ProfilePublic = Database['public']['Views']['public_profile']['Row']
 export type ProfileRow = Database['public']['Tables']['user_profile']['Row']
-export type ProfileMeta = ProfileRow // Database['public']['Views']['profile_mine']['Row']
+export type ProfileMeta = ProfileRow // Database['public']['Views']['profile_meta']['Row']
 export type ProfileFull = ProfileMeta & {
   decks: Array<DeckMeta>
 }

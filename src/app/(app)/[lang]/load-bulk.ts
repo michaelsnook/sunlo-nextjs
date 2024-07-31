@@ -9,7 +9,9 @@ import { buildLanguageCache, buildDeckCache } from './build-cache'
 export async function fetchPublicLanguageData(lang: string) {
   return supabase
     .from('language_plus')
-    .select('*, phrase(*, phrase_translation(*))')
+    .select(
+      '*, phrases:phrase(*, translations:phrase_translation(*))' // relations:phrase_relation(*)
+    )
     .eq('lang', lang)
     .maybeSingle()
 }
@@ -31,16 +33,17 @@ export function useLangDataQuery(lang: string): UseSBQuery<LanguageFull> {
 export function useDeckDataQuery(lang: string): UseSBQuery<DeckFull> {
   const queryClient = useQueryClient()
   return useQuery({
-    queryKey: ['user_deck', lang, 'full'],
-    queryFn: async ({ queryKey }) => {
+    queryKey: ['deck', lang, 'full'],
+    queryFn: async ({ queryKey }): Promise<DeckFull> => {
       const { data, error } = await supabase
         .from('user_deck_plus')
-        .select('*, user_card(*, user_card_review(*))')
+        .select('*, cards:user_card(*, reviews:user_card_review_plus(*))')
         .eq('lang', queryKey[1])
         .maybeSingle()
       if (error) throw error
       buildDeckCache(queryClient, data)
       return data
     },
+    enabled: typeof lang === 'string' && lang.length === 3,
   })
 }

@@ -12,7 +12,7 @@
    - `'language', lang, 'phrase', pid` (individual records for each phrase, including its translations and see-alsos) (
      - @@TODO: does this include the flag as to whether it's in the deck or not? only when hydratic from the client? does it get build from the deck's fetch so these queries are always consistent and 100% cache-able?)
    - `'deck', lang, 'meta'`
-   - `'deck', lang, 'all_card_pids'`
+   - `'deck', lang, 'all_pids'`
    - `'deck', lang, 'card', pid` (with all the reviews attached)
    - `'deck', lang, 'all_reviews'` (not needed anymore since metadata contains totals?)
 1. Then use uptimistic updates, and optionally refetch with more specific fetchers only when we hit problems.

@@ -1,18 +1,34 @@
-import { useMutation } from '@tanstack/react-query'
+import { QueryClient, useMutation } from '@tanstack/react-query'
+import { PhraseFull, uuid } from 'types/main'
 
 // new language: nope
 // update language: nope
 
 // postNewPhraseCardTranslations, but restructure
-async function postNewPhrase() {}
-function cacheNewPhrase(): void {}
-// addCardPhrase, but restructure
-function useNewPhrase() {
+async function postPhraseInsert(args) {}
+
+function cachePhraseFull(phrase: PhraseFull, client: QueryClient): void {
+  if (!phrase && phrase.relations && phrase.translations) return
+  // upsert the individual cache entry
+  client.setQueryData(['lang', phrase.lang, 'pid', phrase.id], phrase)
+  // append the pid to the array (if needed)
+  client.setQueryData(
+    ['lang', phrase.lang, 'all_pids'],
+    (allPids: Array<uuid>) => {
+      if (phrase.id in allPids) return undefined
+      return [phrase.id, ...allPids]
+    }
+  )
+  // invalidate the metadata in case the phrase change alters it
+  // TODO: this won't work yet bc the query needs to be "registered" somehow
+  client.invalidateQueries({ queryKey: ['lang', phrase.lang, 'meta'] })
+}
+
+// current is addCardPhrase
+function usePhraseInsert() {
   return useMutation({
-    /*
-    queryKey: [],
-    queryFn: async () => {},
-  */
+    mutationKey: [],
+    mutationFn: async args => await postPhraseInsert(args),
   })
 }
 
@@ -77,9 +93,9 @@ function useUpsertReview() {
 }
 
 export {
-  postNewPhrase,
-  cacheNewPhrase,
-  useNewPhrase,
+  postPhraseInsert,
+  cachePhraseFull,
+  usePhraseInsert,
   postNewTranslation,
   cacheNewTranslation,
   useNewTranslation,
