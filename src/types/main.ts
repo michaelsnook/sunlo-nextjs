@@ -1,53 +1,90 @@
 import { Database } from './supabase'
-import { UseQueryResult } from '@tanstack/react-query'
-import { PostgrestError } from '@supabase/supabase-js'
+import { UseMutationResult, UseQueryResult } from '@tanstack/react-query'
+import {
+  PostgrestError,
+  PostgrestMaybeSingleResponse,
+  PostgrestResponse,
+} from '@supabase/supabase-js'
 
-type UseAPIQuery<T> = UseQueryResult<T, PostgrestError>
+export type uuid = string
 
-type uuid = string
+export type UseSBQuery<T> = UseQueryResult<T, PostgrestError>
+export type UseSBMutation<T> = UseMutationResult<T, PostgrestError>
+export type SBQuery<T> = Promise<PostgrestResponse<T>>
+export type SBQuerySingle<T> = Promise<PostgrestMaybeSingleResponse<T>>
+export type SBMutation<T> = Promise<PostgrestResponse<T>>
 
-type LanguageStub = Omit<
+export type LanguageRow = Omit<
   Database['public']['Tables']['language']['Row'],
   'alias_of'
 >
-type ProfileRow = Database['public']['Tables']['user_profile']['Row']
-type Profile = ProfileRow & { deck_stubs: Array<DeckPlus> }
-type LanguagePlus = Database['public']['Views']['language_plus']['Row']
-type PhraseStub = Database['public']['Tables']['phrase']['Row']
-type LanguageAPIData = LanguagePlus & { phrase: Array<PhraseStub> }
-type DeckAPIData = DeckPlus & { user_card: Array<CardStub> }
-type Translation = Database['public']['Tables']['phrase_translation']['Row']
-type DeckStub = Database['public']['Tables']['user_deck']['Row']
-type DeckPlus = Database['public']['Views']['user_deck_plus']['Row']
-type CardStub = Database['public']['Tables']['user_card']['Row']
-type UserCardInsert = Database['public']['Tables']['user_card']['Insert']
-type Review = Database['public']['Tables']['user_card_review']
+export type LanguageMeta = Database['public']['Views']['language_plus']['Row']
+export type LanguageFull = LanguageMeta & { phrase: Array<PhraseFull> }
 
-type Phrase = PhraseStub & {
+export type PhraseRow = Database['public']['Tables']['phrase']['Row']
+export type TranslationRow =
+  Database['public']['Tables']['phrase_translation']['Row']
+export type RelationRow = Database['public']['Views']['phrase_relation']['Row']
+export type PhraseFull = PhraseRow & {
+  translations: Array<TranslationRow>
+  relations: Array<RelationRow>
+}
+
+export type DeckRow = Database['public']['Tables']['user_deck']['Row']
+export type DeckMeta = Database['public']['Views']['user_deck_plus']['Row']
+export type DeckFull = DeckMeta & {
+  cards: Array<CardFull>
+}
+
+export type CardRow = Database['public']['Tables']['user_deck']['Row']
+export type ReviewRow = Database['public']['Views']['user_card_review_plus']
+export type CardFull = CardRow & {
+  reviews: Array<ReviewRow>
+}
+
+// export type ProfilePublic = Database['public']['Views']['public_profile']['Row']
+export type ProfileRow = Database['public']['Tables']['user_profile']['Row']
+export type ProfileMeta = ProfileRow // Database['public']['Views']['profile_mine']['Row']
+export type ProfileFull = ProfileMeta & {
+  decks: Array<DeckMeta>
+}
+
+export type Profile = ProfileRow & { deck_stubs: Array<DeckMeta> }
+export type PhraseStub = Database['public']['Tables']['phrase']['Row']
+export type Translation =
+  Database['public']['Tables']['phrase_translation']['Row']
+export type DeckStub = Database['public']['Tables']['user_deck']['Row']
+export type CardStub = Database['public']['Tables']['user_card']['Row']
+export type UserCardInsert = Database['public']['Tables']['user_card']['Insert']
+export type Review = Database['public']['Tables']['user_card_review']
+
+// for legacy hooks and such
+
+export type Phrase = PhraseStub & {
   see_also_phrases?: PhraseStub[]
   translations?: Translation[]
   card?: CardStub
 }
 
-type Language = LanguageStub & {
+export type Language = LanguageRow & {
   phrases: Array<Phrase>
   deck?: DeckStub
 }
 
-type PhraseInsertInput = {
+export type PhraseInsertInput = {
   id?: uuid
   lang: string
   text: string
 }
 
-type TranslationInsertInput = {
+export type TranslationInsertInput = {
   phrase_id: uuid
   lang: string
   text: string
   literal?: string
 }
 
-type PhraseCardTranslationsInsertInput = {
+export type PhraseCardTranslationsInsertInput = {
   phrase: PhraseInsertInput
   translations: Array<{
     text: string
@@ -57,7 +94,7 @@ type PhraseCardTranslationsInsertInput = {
   user_deck_id: uuid
 }
 
-type Deck = DeckStub & {
+export type Deck = DeckStub & {
   all_phrase_ids: Array<uuid>
   cards: {
     active: any[]
@@ -66,31 +103,8 @@ type Deck = DeckStub & {
   }
 }
 
-type ReviewsCollated = {
+export type ReviewsCollated = {
   list: Array<Review>
   collated: Object
   keysInOrder: Array<string>
-}
-
-export type {
-  UseAPIQuery,
-  Language,
-  LanguagePlus,
-  LanguageAPIData,
-  PhraseInsertInput,
-  PhraseStub,
-  Phrase,
-  TranslationInsertInput,
-  PhraseCardTranslationsInsertInput,
-  UserCardInsert,
-  Translation,
-  CardStub,
-  DeckStub,
-  Deck,
-  DeckAPIData,
-  DeckPlus,
-  Profile,
-  Review,
-  ReviewsCollated,
-  uuid,
 }

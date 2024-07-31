@@ -4,7 +4,6 @@ import { useQuery } from '@tanstack/react-query'
 import { useRouter, usePathname } from 'next/navigation'
 import { getLanguageDetails, getPhraseDetails } from './fetchers'
 import supabase from 'lib/supabase-client'
-import type { Maybe } from 'types/utils'
 import {
   Deck,
   Profile,
@@ -12,21 +11,12 @@ import {
   ReviewsCollated,
   Phrase,
   Language,
-  UseAPIQuery,
+  UseSBQuery,
   uuid,
 } from 'types/main'
 import { useAuth } from 'components/auth-context'
 
-export type UseQueryResult = {
-  status: string
-  error: Maybe<any>
-  data: Maybe<any>
-  isLoading: boolean
-  isSuccess: boolean
-  isError: boolean
-}
-
-export const useCard = (id: uuid): UseQueryResult & { data?: CardStub } =>
+export const useCard = (id: uuid): UseSBQuery<CardStub> =>
   useQuery({
     queryKey: ['card', id],
     queryFn: async ({ queryKey }) => {
@@ -46,9 +36,7 @@ export const useCard = (id: uuid): UseQueryResult & { data?: CardStub } =>
     refetchOnWindowFocus: false,
   })
 
-export function useLanguageDetails(
-  lang: string
-): UseQueryResult & { data?: Language } {
+export function useLanguageDetails(lang: string): UseSBQuery<Language> {
   return useQuery({
     queryKey: ['phrases', 'lang', lang],
     queryFn: async () => getLanguageDetails(lang),
@@ -76,7 +64,6 @@ const fetchDeck = async (lang: string): Promise<Deck> => {
     .eq('lang', lang)
     .maybeSingle()
   if (error) throw error
-  if (!data) return null
 
   const rawCards = Array.isArray(data?.user_card) ? data.user_card : []
 
@@ -96,7 +83,7 @@ const fetchDeck = async (lang: string): Promise<Deck> => {
   return deck
 }
 
-export function useDeck(deckLang: string): UseQueryResult & { data?: Deck } {
+export function useDeck(deckLang: string): UseSBQuery<Deck> {
   return useQuery({
     queryKey: ['user_deck', deckLang],
     queryFn: ({ queryKey }) => fetchDeck(queryKey[1]),
@@ -109,7 +96,7 @@ export function useDeck(deckLang: string): UseQueryResult & { data?: Deck } {
   })
 }
 
-export function usePhrase(id: uuid): UseQueryResult & { data?: Phrase } {
+export function usePhrase(id: uuid): UseSBQuery<Phrase> {
   return useQuery({
     queryKey: ['phrase', id],
     queryFn: async ({ queryKey }) => getPhraseDetails(queryKey[1]),
@@ -119,7 +106,7 @@ export function usePhrase(id: uuid): UseQueryResult & { data?: Phrase } {
   })
 }
 
-export function useProfile(): UseAPIQuery<Profile> {
+export function useProfile(): UseSBQuery<Profile> {
   const router = useRouter()
   const pathname = usePathname()
   const { userId } = useAuth()
@@ -169,9 +156,7 @@ const collateArray = (data: Array<Object>, key: string): Object => {
   return result
 }
 
-export const useRecentReviewActivity = (): UseQueryResult & {
-  data?: ReviewsCollated
-} => {
+export const useRecentReviewActivity = (): UseSBQuery<ReviewsCollated> => {
   return useQuery({
     queryKey: ['all-reviews'],
     queryFn: async () => {
