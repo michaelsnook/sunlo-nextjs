@@ -8,7 +8,7 @@ import languages, {
   makeLanguageOptions,
 } from 'lib/languages'
 import { useDeck } from 'app/data/hooks'
-import ErrorList from 'components/error-list'
+import ShowError from 'components/show-error'
 import Loading from 'components/loading'
 import { postNewPhraseCardTranslations } from './add-card'
 import { useProfile } from 'app/data/hooks'
@@ -87,12 +87,11 @@ export default function AddCardPhraseForm({ lang, cancel }) {
     event.preventDefault()
     // console.log(event.target)
 
-    if (!deck?.id) {
-      throw 'wait error'
-    }
-    if (!selectLang?.length === 3) throw 'bad translation_lang'
-    if (!event.target.text.value) throw 'no phrase text'
-    if (!event.target.translation_text.value) throw 'no translation text'
+    if (!deck?.id) throw new Error('wait error')
+    if (!selectLang?.length === 3) throw new Error('bad translation_lang')
+    if (!event.target.text.value) throw new Error('no phrase text')
+    if (!event.target.translation_text.value)
+      throw new Error('no translation text')
 
     addCardPhrase.mutate({
       phrase: {
@@ -137,8 +136,10 @@ export default function AddCardPhraseForm({ lang, cancel }) {
       <div className="flex justify-between">
         {addCardPhrase.isPending ? (
           <Loading />
-        ) : addCardPhrase.isError ? (
-          <ErrorList error={addCardPhrase.error} />
+        ) : addCardPhrase.error ? (
+          <ShowError show={!!addCardPhrase.error}>
+            {addCardPhrase.error?.message}
+          </ShowError>
         ) : addCardPhrase.isSuccess ? (
           <div className="mb-4 rounded-lg border border-success bg-success/50 px-6 py-4 text-black">
             <p className="">

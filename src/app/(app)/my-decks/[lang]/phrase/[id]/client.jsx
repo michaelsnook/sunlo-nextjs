@@ -6,7 +6,7 @@ import SectionTranslations from 'components/translations-section'
 import TinyPhrase from 'components/tiny-phrase'
 import { usePhrase } from 'app/data/hooks'
 import Loading from 'components/loading'
-import Error from 'components/error'
+import ShowError from 'components/show-error'
 
 export default function Client({ pid }) {
   const { data: phrase, error, isLoading } = usePhrase(pid)
@@ -15,9 +15,8 @@ export default function Client({ pid }) {
     <Loading />
   ) : (
     <main className="card-white">
-      {error ? (
-        <Error>{error.message}</Error>
-      ) : (
+      <ShowError>{error?.message}</ShowError>
+      {!phrase ? null : (
         <>
           <h2 lang={phrase.lang} className="h3 font-bold">
             <TinyPhrase lang={phrase.lang} text={phrase.text} />

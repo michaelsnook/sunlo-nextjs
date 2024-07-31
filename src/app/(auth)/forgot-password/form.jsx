@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import supabase from 'lib/supabase-client'
-import ErrorList from 'components/error-list'
+import ShowError from 'components/show-error'
 import { useMutation } from '@tanstack/react-query'
 import { BASE_URL } from 'lib/helpers'
 
@@ -16,7 +16,7 @@ export default function ForgotPasswordForm() {
     const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${BASE_URL}/profile/change-password`,
     })
-    if (error) throw Error(error)
+    if (error) throw error
     return data
   }
 
@@ -75,12 +75,10 @@ export default function ForgotPasswordForm() {
               </div>
             </fieldset>
           </form>
-          {useRequestPasswordForm.error ? (
-            <ErrorList
-              summary="Error sending password reset"
-              error={`${useRequestPasswordForm.error?.message}`}
-            />
-          ) : null}
+          <ShowError show={!!useRequestPasswordForm.error}>
+            Error sending password reset:{' '}
+            {useRequestPasswordForm.error?.message}
+          </ShowError>
         </>
       )}
     </>

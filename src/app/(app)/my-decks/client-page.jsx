@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useProfile } from 'app/data/hooks'
 import Loading from 'components/loading'
 import languages from 'lib/languages'
-import ErrorList from 'components/error-list'
+import ShowError from 'components/show-error'
 
 function OneDeck({ deck }) {
   return (
@@ -24,7 +24,7 @@ function OneDeck({ deck }) {
 export default function ClientPage() {
   const { isLoading, data, error } = useProfile()
   if (isLoading) return <Loading />
-  if (error) return <ErrorList error={error} />
+  if (error) return <ShowError>{error.message}</ShowError>
 
   const decks = data.deck_stubs
   return (

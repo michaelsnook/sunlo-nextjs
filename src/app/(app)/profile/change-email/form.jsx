@@ -3,7 +3,7 @@
 import { useMutation } from '@tanstack/react-query'
 import supabase from 'lib/supabase-client'
 import { useAuth } from 'components/auth-context'
-import ErrorList from 'components/error-list'
+import ShowError from 'components/show-error'
 import { BASE_URL } from 'lib/helpers'
 
 export default function SetNewEmailForm() {
@@ -70,10 +70,9 @@ export default function SetNewEmailForm() {
               </div>
             </fieldset>
           </form>
-          <ErrorList
-            summary="Error requesting new email"
-            error={changeEmail.error}
-          />
+          <ShowError show={!!changeEmail.error}>
+            Error requesting new email: {changeEmail.error?.message}
+          </ShowError>
         </>
       )}
     </>

@@ -1,7 +1,7 @@
 'use client'
 
 import Loading from 'components/loading'
-import ErrorList from 'components/error-list'
+import ShowError from 'components/show-error'
 import { usePhrase } from 'app/data/hooks'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { postNewCard } from 'app/(app)/my-decks/[lang]/new-card/add-card'
@@ -46,8 +46,8 @@ export const AddCardButtonsSection = ({ phrase_id, user_deck_id, onClose }) => {
     <div className="my-6 flex gap-8 text-2xl">
       {makeNewCard.isSubmitting ? (
         <Loading />
-      ) : makeNewCard.isError ? (
-        <ErrorList error={makeNewCard.error} />
+      ) : makeNewCard.error ? (
+        <ShowError>{makeNewCard.error.message}</ShowError>
       ) : makeNewCard.isSuccess ? (
         <p className="text-lg">
           This phrase is in your deck with status: &ldquo;
@@ -92,7 +92,7 @@ export default function BigPhrase({
 }) {
   const { data: phrase, isLoading, error: phraseError } = usePhrase(phrase_id) // || initialData.id
 
-  if (!phrase_id) throw 'no phrase info provided'
+  if (!phrase_id) throw new Error('no phrase info provided')
   if (isLoading) return <Loading />
 
   const translations = phrase?.translations
@@ -100,7 +100,7 @@ export default function BigPhrase({
   // console.log(`bigPhrase look for userCard or phrase.card`, phrase)
   const seeAlsos = phrase?.see_also_phrases
 
-  if (error) return <ErrorList error={phraseError} />
+  if (error) return <ShowError>{phraseError.message}</ShowError>
 
   return (
     <div

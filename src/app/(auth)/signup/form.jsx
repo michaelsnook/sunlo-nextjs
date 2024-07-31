@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import supabase from 'lib/supabase-client'
-import ErrorList from 'components/error-list'
+import ShowError from 'components/show-error'
 import { BASE_URL } from 'lib/helpers'
 import { cn } from 'lib/utils'
 
@@ -93,10 +93,9 @@ export default function SignupForm() {
                   Log in
                 </Link>
               </div>
-              <ErrorList
-                summary="Problem logging in"
-                error={submitSignup.error}
-              />
+              <ShowError show={!!submitSignup.error}>
+                Problem signing up: {submitSignup.error?.message}
+              </ShowError>
               <p>
                 <Link href="/forgot-password" className="s-link text-sm">
                   Forgot password?

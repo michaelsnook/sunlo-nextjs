@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 import Select from 'react-select'
 import Loading from 'components/loading'
-import ErrorList from 'components/error-list'
+import ShowError from 'components/show-error'
 import { useLanguageDetails } from 'app/data/hooks'
 import BigPhrase from 'components/big-phrase'
 
@@ -13,7 +13,7 @@ export default function Browse({ lang, disable }) {
 
   const { data, error, isLoading } = useLanguageDetails(lang)
   if (isLoading) return <Loading />
-  if (error) return <ErrorList error={error} />
+  if (error) return <ShowError>{error.message}</ShowError>
 
   if (!data.phrases?.length) {
     return (

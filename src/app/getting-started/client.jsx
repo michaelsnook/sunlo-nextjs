@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { useAuth } from 'components/auth-context'
 import supabase from 'lib/supabase-client'
-import ErrorList from 'components/error-list'
+import ShowError from 'components/show-error'
 import Link from 'next/link'
 import { useProfile } from 'app/data/hooks'
 import { prependAndDedupe } from 'lib/helpers'
@@ -41,13 +41,13 @@ export default function Client() {
   const mainForm = useMutation({
     mutationFn: async event => {
       event.preventDefault()
-      if (typeof userId !== 'string') throw 'No logged in user'
+      if (typeof userId !== 'string') throw new Error('No logged in user')
       if (
         !tempUsername &&
         !tempLanguagePrimary &&
         typeof tempDeckToAdd !== 'string'
       )
-        throw 'Nothing to update'
+        throw new Error('Nothing to update')
 
       const profileUpsert =
         !tempUsername && !tempLanguagePrimary
@@ -62,7 +62,7 @@ export default function Client() {
               .match({ uid: userId })
               .select()
 
-      if (profileUpsert?.error) {
+      if (profileUpsert.error) {
         console.log('Profile upsert error', profileUpsert.error)
         throw profileUpsert.error
       }
@@ -76,14 +76,14 @@ export default function Client() {
               .match({ lang: tempDeckToAdd, uid: userId })
               .select()
 
-      if (deckInsert?.error) {
+      if (deckInsert.error) {
         console.log(`Deck insert error`, deckInsert?.error)
-        throw deckInsert?.error
+        throw deckInsert.error
       }
 
       return {
-        deck: deckInsert?.data[0],
-        profile: profileUpsert?.data[0],
+        deck: deckInsert.data[0] ?? null,
+        profile: profileUpsert.data[0] ?? null,
       }
     },
     onSuccess: data => {
@@ -148,10 +148,10 @@ export default function Client() {
             </div>
           ) : null}
         </div>
-        <ErrorList
-          summary="Problem inserting profile or making deck"
-          error={mainForm.error?.message}
-        />
+        <ShowError show={!!mainForm.error}>
+          Problem inserting profile or making deck:
+          {mainForm.error?.message || 'unknown error, sorry. call m.'}
+        </ShowError>
       </main>
     </>
   )

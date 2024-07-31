@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import { toast } from 'react-hot-toast'
 import supabase from 'lib/supabase-client'
 import { useAuth } from 'components/auth-context'
-import ErrorList from 'components/error-list'
+import ShowError from 'components/show-error'
 
 export default function LoginForm({ asModal = false }) {
   const { isAuth } = useAuth()
@@ -94,7 +94,9 @@ export default function LoginForm({ asModal = false }) {
               Create account
             </Link>
           </div>
-          <ErrorList summary="Problem logging in" error={login.error} />
+          <ShowError show={!!login.error}>
+            Problem logging in: {login.error?.message}
+          </ShowError>
           <p>
             <Link href="/forgot-password" className="s-link text-sm">
               Forgot password?

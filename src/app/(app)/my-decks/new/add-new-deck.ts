@@ -6,7 +6,7 @@ import { DeckStub } from 'types/main'
 export const postNewDeck = async (lang: string): Promise<DeckStub> => {
   // console.log(`postNewDeck ${lang}`)
   if (typeof lang !== 'string' || lang.length !== 3)
-    throw 'Form not right. Maybe refresh. Or tell the devs.'
+    throw new Error('Form not right. Maybe refresh. Or tell the devs.')
   const { data, error } = await supabase
     .from('user_deck')
     .insert({ lang })

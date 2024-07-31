@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Loading from 'components/loading'
-import ErrorList from 'components/error-list'
+import ShowError from 'components/show-error'
 import { useDeck } from 'app/data/hooks'
 import { Garlic } from 'components/garlic'
 import Card from 'components/card'
@@ -35,7 +35,7 @@ export default function ClientPage({ lang }) {
   const { isLoading, data: deckData, error } = useDeck(lang)
 
   if (isLoading) return <Loading />
-  if (error) return <ErrorList error={error} />
+  if (error) return <ShowError>{error.message}</ShowError>
 
   if (!deckData?.cards) return <BrandNew lang={lang} />
 

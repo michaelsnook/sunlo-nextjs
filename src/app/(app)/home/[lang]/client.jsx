@@ -1,18 +1,17 @@
 'use client'
 
-import ErrorList from 'components/error-list'
+import ShowError from 'components/show-error'
 import { notFound } from 'next/navigation'
 import { useProfile } from 'app/data/hooks'
 import { useRecentReviews } from 'app/data/reviews'
 import Loading from 'components/loading'
-import Error from 'components/error'
 import languages from 'lib/languages'
 import Link from 'next/link'
 
 const RecentReviewsSummary = ({ lang }) => {
   const { data, error, isLoading } = useRecentReviews(lang)
   if (isLoading) return <Loading />
-  if (error) return <Error>{error.message}</Error>
+  if (error) return <ShowError>{error.message}</ShowError>
 
   const countReviews = data?.length
   const countPositive = data?.filter(r => r.score > 0).length
@@ -56,7 +55,7 @@ export default function Client({ lang }) {
   if (typeof language !== 'string') notFound()
 
   if (isLoading) return <Loading />
-  if (error) return <Error>{error.message}</Error>
+  if (error) return <ShowError>{error.message}</ShowError>
 
   const deckLoadedArray = isSuccess && data.deck_stubs?.length >= 0
 
@@ -64,8 +63,7 @@ export default function Client({ lang }) {
     ? data.deck_stubs.find(d => d.lang === lang)
     : null
   if (isLoading) return <Loading />
-  if (error) return <ErrorList error={error} />
-
+  if (error) return <ShowError>{error.message}</ShowError>
   return (
     <>
       {deck === null ? (

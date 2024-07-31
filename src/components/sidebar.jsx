@@ -7,7 +7,7 @@ import languages from 'lib/languages'
 import { usePathname, useRouter } from 'next/navigation'
 import { useProfile } from 'app/data/hooks'
 import Loading from 'components/loading'
-import ErrorList from './error-list'
+import ShowError from './show-error'
 import supabase from 'lib/supabase-client'
 import { toast } from 'react-hot-toast'
 import { useAuth } from 'components/auth-context'
@@ -73,7 +73,7 @@ const StaticMenu = () => <GenericMenu menu={staticMenu} />
 const DeckMenu = () => {
   const { data, isLoading, error } = useProfile()
   if (isLoading) return null
-  if (error) return <ErrorList error={error.message} />
+  if (error) return <ShowError>{error.message}</ShowError>
 
   const decks = data?.deck_stubs
   const menuData = {
