@@ -40,10 +40,10 @@ export const getLanguageDetails = async (
 const phraseFullSelect = `
     id, text, lang,
     translations:phrase_translation(id, text, lang),
-    phrase_from:phrase_see_also!phrase_see_also_to_phrase_id_fkey(
+    phrase_from:phrase_relation!phrase_see_also_to_phrase_id_fkey(
       id, from_phrase_id, phrase:phrase!phrase_see_also_from_phrase_id_fkey(id, text, lang)
     ),
-    phrase_to:phrase_see_also!phrase_see_also_from_phrase_id_fkey(
+    phrase_to:phrase_relation!phrase_see_also_from_phrase_id_fkey(
       id, to_phrase_id, phrase:phrase!phrase_see_also_to_phrase_id_fkey(id, text, lang)
     ),
     card:user_card(id, user_deck_id, status)

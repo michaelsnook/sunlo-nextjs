@@ -25,7 +25,7 @@ export async function postInsertPhraseFull(
     .insert(values.translations)
 
   const relationsInsertPromise = supabase
-    .from('phrase_see_also')
+    .from('phrase_relation')
     .insert(values.relations)
   // const cardInsertPromise = supabase.from('user_card').insert(values.card)
 
