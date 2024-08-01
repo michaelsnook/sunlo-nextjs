@@ -4,8 +4,8 @@ import ShowError from 'components/show-error'
 import Loading from 'components/loading'
 import { createContext, useContext, type ReactNode } from 'react'
 import type { DeckFull, LanguageFull } from 'types/main'
-import { useDeckPreload } from './api/deck-preload'
-import { useLangPreload } from './api/language-preload'
+import { useDeckPreload } from './api/preload-deck'
+import { useLangPreload } from './api/preload-language'
 
 /*
 	The context and provider contain these 4 moving parts:
