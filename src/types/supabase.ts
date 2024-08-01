@@ -54,6 +54,13 @@ export type Database = {
             foreignKeyName: "phrase_added_by_fkey"
             columns: ["added_by"]
             isOneToOne: false
+            referencedRelation: "public_profile"
+            referencedColumns: ["uid"]
+          },
+          {
+            foreignKeyName: "phrase_added_by_fkey"
+            columns: ["added_by"]
+            isOneToOne: false
             referencedRelation: "user_profile"
             referencedColumns: ["uid"]
           },
@@ -93,6 +100,13 @@ export type Database = {
           to_phrase_id?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "phrase_see_also_added_by_fkey"
+            columns: ["added_by"]
+            isOneToOne: false
+            referencedRelation: "public_profile"
+            referencedColumns: ["uid"]
+          },
           {
             foreignKeyName: "phrase_see_also_added_by_fkey"
             columns: ["added_by"]
@@ -142,6 +156,13 @@ export type Database = {
           text?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "phrase_translation_added_by_fkey"
+            columns: ["added_by"]
+            isOneToOne: false
+            referencedRelation: "public_profile"
+            referencedColumns: ["uid"]
+          },
           {
             foreignKeyName: "phrase_translation_added_by_fkey"
             columns: ["added_by"]
@@ -212,6 +233,13 @@ export type Database = {
             foreignKeyName: "user_card_uid_fkey"
             columns: ["uid"]
             isOneToOne: false
+            referencedRelation: "public_profile"
+            referencedColumns: ["uid"]
+          },
+          {
+            foreignKeyName: "user_card_uid_fkey"
+            columns: ["uid"]
+            isOneToOne: false
             referencedRelation: "user_profile"
             referencedColumns: ["uid"]
           },
@@ -220,13 +248,6 @@ export type Database = {
             columns: ["user_deck_id"]
             isOneToOne: false
             referencedRelation: "user_deck"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "user_card_user_deck_id_fkey"
-            columns: ["user_deck_id"]
-            isOneToOne: false
-            referencedRelation: "user_deck_mine"
             referencedColumns: ["id"]
           },
           {
@@ -275,6 +296,13 @@ export type Database = {
             foreignKeyName: "user_card_review_uid_fkey"
             columns: ["uid"]
             isOneToOne: false
+            referencedRelation: "public_profile"
+            referencedColumns: ["uid"]
+          },
+          {
+            foreignKeyName: "user_card_review_uid_fkey"
+            columns: ["uid"]
+            isOneToOne: false
             referencedRelation: "user_profile"
             referencedColumns: ["uid"]
           },
@@ -313,6 +341,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "language_plus"
             referencedColumns: ["lang"]
+          },
+          {
+            foreignKeyName: "user_deck_uid_fkey"
+            columns: ["uid"]
+            isOneToOne: false
+            referencedRelation: "public_profile"
+            referencedColumns: ["uid"]
           },
           {
             foreignKeyName: "user_deck_uid_fkey"
@@ -376,7 +411,25 @@ export type Database = {
         }
         Relationships: []
       }
-      user_card_review_plus: {
+      public_profile: {
+        Row: {
+          avatar_url: string | null
+          uid: string | null
+          username: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          uid?: string | null
+          username?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          uid?: string | null
+          username?: string | null
+        }
+        Relationships: []
+      }
+      user_card_plus: {
         Row: {
           card_id: string | null
           created_at: string | null
@@ -435,13 +488,6 @@ export type Database = {
             referencedRelation: "language_plus"
             referencedColumns: ["lang"]
           },
-          {
-            foreignKeyName: "user_deck_uid_fkey"
-            columns: ["uid"]
-            isOneToOne: false
-            referencedRelation: "user_profile"
-            referencedColumns: ["uid"]
-          },
         ]
       }
       user_deck_plus: {
@@ -476,6 +522,13 @@ export type Database = {
             columns: ["uid"]
             isOneToOne: false
             referencedRelation: "user_profile"
+            referencedColumns: ["uid"]
+          },
+          {
+            foreignKeyName: "user_deck_uid_fkey"
+            columns: ["uid"]
+            isOneToOne: false
+            referencedRelation: "public_profile"
             referencedColumns: ["uid"]
           },
         ]
