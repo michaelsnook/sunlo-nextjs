@@ -26,24 +26,42 @@ export type LanguageFull = LanguageMeta & {
 }
 
 export type PhraseRow = Database['public']['Tables']['phrase']['Row']
+export type PhraseInsert = Database['public']['Tables']['phrase']['Insert']
+
 export type TranslationRow =
   Database['public']['Tables']['phrase_translation']['Row']
+export type TranslationInsert =
+  Database['public']['Tables']['phrase_translation']['Insert']
+
 export type RelationRow = Database['public']['Views']['phrase_relation']['Row']
+export type RelationInsert =
+  Database['public']['Tables']['phrase_see_also']['Insert']
+
 export type PhraseFull = PhraseRow & {
   translations: Array<TranslationRow>
   relations: Array<RelationRow>
 }
+export type PhraseFullInsert = PhraseInsert & {
+  translations: Array<TranslationInsert>
+  relations?: Array<RelationInsert>
+  // card?: CardInsert
+}
 
 export type DeckRow = Database['public']['Tables']['user_deck']['Row']
+export type DeckInsert = Database['public']['Tables']['user_deck']['Insert']
 export type DeckMeta = Database['public']['Views']['user_deck_plus']['Row']
 export type DeckFull = DeckMeta & {
-  cards: Array<CardFull>
+  cards?: Array<CardFull>
 }
 
 export type CardRow = Database['public']['Tables']['user_card']['Row']
+export type CardInsert = Database['public']['Tables']['user_card']['Insert']
 export type ReviewMeta = Database['public']['Views']['user_card_review_plus']
+export type ReviewRow = Database['public']['Tables']['user_card_review']['Row']
+export type ReviewInsert =
+  Database['public']['Tables']['user_card_review']['Insert']
 export type CardFull = CardRow & {
-  reviews: Array<ReviewMeta>
+  reviews?: Array<ReviewMeta>
 }
 
 // export type ProfilePublic = Database['public']['Views']['public_profile']['Row']
