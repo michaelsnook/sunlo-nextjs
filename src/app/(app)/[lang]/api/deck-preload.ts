@@ -18,19 +18,37 @@ export function useDeck(lang: string): UseSBQuery<DeckMeta> {
   })
 }
 
-export function useDeckPreload(lang: string): UseSBQuery<DeckFull> {
+export function useDeckPreload(lang: string): UseSBQuery<any> {
   const client = useQueryClient()
   return useQuery({
     queryKey: ['deck', lang, 'full'],
-    queryFn: async ({ queryKey }): Promise<DeckFull> => {
+    queryFn: async ({ queryKey }): Promise<DeckFull | null | any> => {
       const { data, error } = await supabase
         .from('user_deck_plus')
         .select(selects.deck_full())
         .eq('lang', queryKey[1])
         .maybeSingle()
       if (error) throw error
+      const data2 = data as any
+      console.log(`Data structure data2 is`, data2)
       buildDeckCache(client, data)
       return data
+      /*
+      const data2 = {
+        ...data,
+        cards: !data.cards
+          ? []
+          : data.cards.map(c => {
+              return {
+                ...c,
+                relations: c.relations ?? [],
+                reviews: c.reviews ?? [],
+              }
+            }),
+      }
+      console.log(`this is the data structure of data2`, data, data2)
+      return data2
+      */
     },
     enabled: typeof lang === 'string' && lang.length === 3,
   })
