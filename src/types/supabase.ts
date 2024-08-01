@@ -80,7 +80,7 @@ export type Database = {
           },
         ]
       }
-      phrase_see_also: {
+      phrase_relation: {
         Row: {
           added_by: string | null
           from_phrase_id: string | null
@@ -293,6 +293,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "user_card_review_card_id_fkey"
+            columns: ["card_id"]
+            isOneToOne: false
+            referencedRelation: "user_card_plus"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "user_card_review_uid_fkey"
             columns: ["uid"]
             isOneToOne: false
@@ -402,15 +409,6 @@ export type Database = {
         }
         Relationships: []
       }
-      phrase_relation: {
-        Row: {
-          added_by: string | null
-          id: string | null
-          that_phrase: string | null
-          this_phrase: string | null
-        }
-        Relationships: []
-      }
       public_profile: {
         Row: {
           avatar_url: string | null
@@ -431,18 +429,50 @@ export type Database = {
       }
       user_card_plus: {
         Row: {
-          card_id: string | null
           created_at: string | null
           id: string | null
           lang: string | null
-          score: number | null
+          phrase_id: string | null
+          relations: string[] | null
+          status: string | null
+          uid: string | null
+          updated_at: string | null
+          user_deck_id: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "user_card_review_card_id_fkey"
-            columns: ["card_id"]
+            foreignKeyName: "user_card_phrase_id_fkey"
+            columns: ["phrase_id"]
             isOneToOne: false
-            referencedRelation: "user_card"
+            referencedRelation: "phrase"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_card_uid_fkey"
+            columns: ["uid"]
+            isOneToOne: false
+            referencedRelation: "user_profile"
+            referencedColumns: ["uid"]
+          },
+          {
+            foreignKeyName: "user_card_uid_fkey"
+            columns: ["uid"]
+            isOneToOne: false
+            referencedRelation: "public_profile"
+            referencedColumns: ["uid"]
+          },
+          {
+            foreignKeyName: "user_card_user_deck_id_fkey"
+            columns: ["user_deck_id"]
+            isOneToOne: false
+            referencedRelation: "user_deck"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_card_user_deck_id_fkey"
+            columns: ["user_deck_id"]
+            isOneToOne: false
+            referencedRelation: "user_deck_plus"
             referencedColumns: ["id"]
           },
           {
@@ -461,19 +491,29 @@ export type Database = {
           },
         ]
       }
-      user_deck_mine: {
+      user_card_review_plus: {
         Row: {
-          cards_active: number | null
-          cards_learned: number | null
-          cards_skipped: number | null
+          card_id: string | null
           created_at: string | null
           id: string | null
           lang: string | null
-          lang_total_phrases: number | null
-          most_recent_review_at: string | null
-          uid: string | null
+          score: number | null
         }
         Relationships: [
+          {
+            foreignKeyName: "user_card_review_card_id_fkey"
+            columns: ["card_id"]
+            isOneToOne: false
+            referencedRelation: "user_card"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_card_review_card_id_fkey"
+            columns: ["card_id"]
+            isOneToOne: false
+            referencedRelation: "user_card_plus"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "user_deck_lang_fkey"
             columns: ["lang"]

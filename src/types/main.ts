@@ -33,9 +33,9 @@ export type TranslationRow =
 export type TranslationInsert =
   Database['public']['Tables']['phrase_translation']['Insert']
 
-export type RelationRow = Database['public']['Views']['phrase_relation']['Row']
+export type RelationRow = Database['public']['Tables']['phrase_relation']['Row']
 export type RelationInsert =
-  Database['public']['Tables']['phrase_see_also']['Insert']
+  Database['public']['Tables']['phrase_relation']['Insert']
 
 export type PhraseFull = PhraseRow & {
   translations: Array<TranslationRow>
@@ -55,12 +55,13 @@ export type DeckFull = DeckMeta & {
 }
 
 export type CardRow = Database['public']['Tables']['user_card']['Row']
+export type CardMeta = Database['public']['Views']['user_card_plus']['Row']
 export type CardInsert = Database['public']['Tables']['user_card']['Insert']
 export type ReviewMeta = Database['public']['Views']['user_card_review_plus']
 export type ReviewRow = Database['public']['Tables']['user_card_review']['Row']
 export type ReviewInsert =
   Database['public']['Tables']['user_card_review']['Insert']
-export type CardFull = CardRow & {
+export type CardFull = CardMeta & {
   reviews?: Array<ReviewMeta>
 }
 
