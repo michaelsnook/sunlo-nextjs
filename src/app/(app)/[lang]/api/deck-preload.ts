@@ -1,5 +1,6 @@
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useQuery, useQueryClient, QueryClient } from '@tanstack/react-query'
 import type { DeckMeta, DeckFull, UseSBQuery } from 'types/main'
+import { selects } from 'types/main'
 import supabase from 'lib/supabase-client'
 
 export function useDeck(lang: string): UseSBQuery<DeckMeta> {
@@ -18,16 +19,17 @@ export function useDeck(lang: string): UseSBQuery<DeckMeta> {
 }
 
 export function useDeckPreload(lang: string): UseSBQuery<DeckFull> {
-  const queryClient = useQueryClient()
+  const client = useQueryClient()
   return useQuery({
     queryKey: ['deck', lang, 'full'],
     queryFn: async ({ queryKey }): Promise<DeckFull> => {
       const { data, error } = await supabase
         .from('user_deck_plus')
-        .select('*, cards:user_card(*, reviews:user_card_review_plus(*))')
+        .select(selects.deck_full())
         .eq('lang', queryKey[1])
         .maybeSingle()
       if (error) throw error
+      buildDeckCache(client, data)
       return data
     },
     enabled: typeof lang === 'string' && lang.length === 3,
@@ -44,7 +46,7 @@ export function buildDeckCache(client: QueryClient, data: DeckFull): void {
     client.setQueryData(['deck', lang, 'card', card.phrase_id], card)
   })
 
-  let meta = { ...data }
+  let meta = { ...data, cards: null }
   delete meta.cards
   client.setQueryData(['deck', lang, 'meta'], meta)
   meta = null

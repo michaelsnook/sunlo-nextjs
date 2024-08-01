@@ -20,13 +20,13 @@ export function useLangPreload(lang: string): UseSBQuery<LanguageFull> {
   return useQuery({
     queryKey: ['language', lang, 'full'],
     queryFn: async ({ queryKey }) => {
-      const { data, error } = await fetchPublicLanguageData(queryKey[1])
+      const { data, error } = await fetchLangPreload(queryKey[1])
       if (error) throw error
 
       const all_pids = data.phrases?.map(phrase => phrase.id) ?? []
       queryClient.setQueryData(['language', lang, 'all_pids'], all_pids)
 
-      data.phrases.forEach(phrase => {
+      data.phrases?.forEach(phrase => {
         queryClient.setQueryData(
           ['language', lang, 'phrase', phrase.id],
           phrase

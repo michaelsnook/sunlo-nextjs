@@ -42,7 +42,7 @@ export type PhraseFull = PhraseRow & {
   relations: Array<RelationRow>
 }
 export type PhraseFullInsert = PhraseInsert & {
-  translations: Array<TranslationInsert>
+  translations?: Array<TranslationInsert>
   relations?: Array<RelationInsert>
   // card?: CardInsert
 }
@@ -57,10 +57,12 @@ export type DeckFull = DeckMeta & {
 export type CardRow = Database['public']['Tables']['user_card']['Row']
 export type CardMeta = Database['public']['Views']['user_card_plus']['Row']
 export type CardInsert = Database['public']['Tables']['user_card']['Insert']
+
 export type ReviewMeta = Database['public']['Views']['user_card_review_plus']
 export type ReviewRow = Database['public']['Tables']['user_card_review']['Row']
 export type ReviewInsert =
   Database['public']['Tables']['user_card_review']['Insert']
+
 export type CardFull = CardMeta & {
   reviews?: Array<ReviewMeta>
 }
@@ -80,6 +82,11 @@ export type DeckStub = Database['public']['Tables']['user_deck']['Row']
 export type CardStub = Database['public']['Tables']['user_card']['Row']
 export type UserCardInsert = Database['public']['Tables']['user_card']['Insert']
 export type Review = Database['public']['Tables']['user_card_review']
+
+export const selects = {
+  card_full: () => `*, reviews:user_card_review_plus(*)` as const,
+  deck_full: () => `*, cards:user_card_plus(${selects.card_full()})` as const,
+}
 
 // for legacy hooks and such
 
