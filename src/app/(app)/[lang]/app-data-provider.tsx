@@ -4,7 +4,8 @@ import ShowError from 'components/show-error'
 import Loading from 'components/loading'
 import { createContext, useContext, type ReactNode } from 'react'
 import type { DeckFull, LanguageFull } from 'types/main'
-import { useLangDataQuery, useDeckDataQuery } from './load-bulk'
+import { useDeckPreload } from './api/deck-preload'
+import { useLangPreload } from './api/language-preload'
 
 /*
 	The context and provider contain these 4 moving parts:
@@ -51,12 +52,12 @@ export function AppDataProvider({
     data: langData,
     error: langError,
     isLoading: isLangLoading,
-  } = useLangDataQuery(lang)
+  } = useLangPreload(lang)
   const {
     data: deckData,
     error: deckError,
     isLoading: isDeckLoading,
-  } = useDeckDataQuery(lang)
+  } = useDeckPreload(lang)
 
   // this will mean the database/server is unreachable
   if (langError || deckError)
