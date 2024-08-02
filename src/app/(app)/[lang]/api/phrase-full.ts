@@ -50,10 +50,8 @@ export function usePhraseFull(lang: string, pid: uuid): UseSBQuery<PhraseFull> {
       const cache = client.getQueryData(queryKey)
       if (cache) return cache
       let { data, error } = await supabase
-        .from('phrase')
-        .select(
-          `*, translations:phrase_translation(*)` // relations:phrase_relation(*)
-        )
+        .from('phrase_plus')
+        .select(selects.phrase_full())
         .eq('id', pid)
         .maybeSingle()
       if (error) throw error

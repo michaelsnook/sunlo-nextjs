@@ -23,6 +23,14 @@ export const collateArray = (arr: Array<any>, key: string): any => {
   return result
 }
 
+export const selects = {
+  user_card_plus: () => `*, reviews:user_card_review_plus(*)` as const,
+  user_deck_plus: () =>
+    `*, cards:user_card_plus(${selects.user_card_plus()})` as const,
+  phrase_full: () => `*, translations:phrase_translation(*)` as const,
+  language_full: () =>
+    `*, phrases:phrase_full(${selects.user_card_plus()})` as const,
+}
 
 export const BASE_URL =
   process.env.NEXT_PUBLIC_VERCEL_ENV === 'development'
