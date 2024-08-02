@@ -4,7 +4,7 @@ import { useState } from 'react'
 import supabase from 'lib/supabase-client'
 import ShowError from 'components/show-error'
 import { useMutation } from '@tanstack/react-query'
-import { BASE_URL } from 'lib/helpers'
+import { BASE_URL } from 'lib/utils'
 
 export default function ForgotPasswordForm() {
   const [yourEmail, setYourEmail] = useState()

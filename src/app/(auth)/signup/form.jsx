@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import supabase from 'lib/supabase-client'
 import ShowError from 'components/show-error'
-import { BASE_URL } from 'lib/helpers'
+import { BASE_URL } from 'lib/utils'
 import { cn } from 'lib/utils'
 
 export default function SignupForm() {
