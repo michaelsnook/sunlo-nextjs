@@ -1,6 +1,6 @@
 import { useQuery, useQueryClient, QueryClient } from '@tanstack/react-query'
 import type { DeckMeta, DeckFull, UseSBQuery } from 'types/main'
-import { selects } from 'types/main'
+import { selects } from 'lib/utils'
 import supabase from 'lib/supabase-client'
 
 export function useDeck(lang: string): UseSBQuery<DeckMeta> {
@@ -41,7 +41,6 @@ export function useDeckPreload(lang: string): UseSBQuery<any> {
           : data.cards.map(c => {
               return {
                 ...c,
-                relations: c.relations ?? [],
                 reviews: c.reviews ?? [],
               }
             }),
