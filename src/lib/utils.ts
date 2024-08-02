@@ -4,6 +4,16 @@ import { twMerge } from 'tailwind-merge'
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
+
+export const prependAndDedupe = (
+  item: Object,
+  items: Array<Object>
+): Array<Object> => {
+  let index = items.indexOf(item)
+  if (index > -1) items.splice(index, 1)
+  return [item, ...items]
+}
+
 export const collateArray = (arr: Array<any>, key: string): any => {
   let result = {}
   arr.forEach(item => {

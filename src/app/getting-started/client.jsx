@@ -7,7 +7,7 @@ import supabase from 'lib/supabase-client'
 import ShowError from 'components/show-error'
 import Link from 'next/link'
 import { useProfile } from 'app/data/hooks'
-import { prependAndDedupe } from 'lib/helpers'
+import { prependAndDedupe } from 'lib/utils'
 import { useQueryClient } from '@tanstack/react-query'
 import languages from 'lib/languages'
 import SuccessCheckmark from 'components/svg-components'
@@ -39,6 +39,7 @@ export default function Client() {
   }
 
   const mainForm = useMutation({
+    mutationKey: ['user_profile'],
     mutationFn: async event => {
       event.preventDefault()
       if (typeof userId !== 'string') throw new Error('No logged in user')
@@ -46,9 +47,9 @@ export default function Client() {
         !tempUsername &&
         !tempLanguagePrimary &&
         typeof tempDeckToAdd !== 'string'
-      )
-        throw new Error('Nothing to update')
-
+      ) {
+        throw new Error('Nothing to update; try again')
+      }
       const profileUpsert =
         !tempUsername && !tempLanguagePrimary
           ? null
@@ -92,6 +93,9 @@ export default function Client() {
       queryClient.invalidateQueries({ queryKey: ['user_profile'] })
     },
   })
+
+  // @TODO why is there an error here, but not a supabase error
+  if (mainForm.error) console.log(`Error logging:`, mainForm)
 
   return isLoading ? (
     <Loading />
@@ -148,9 +152,9 @@ export default function Client() {
             </div>
           ) : null}
         </div>
-        <ShowError show={!!mainForm.error}>
-          Problem inserting profile or making deck:
-          {mainForm.error?.message || 'unknown error, sorry. call m.'}
+        <ShowError show={!!mainForm?.error?.message}>
+          Problem inserting profile or making deck:{' '}
+          {mainForm?.error?.message || 'unknown error, sorry. call m.'}
         </ShowError>
       </main>
     </>
