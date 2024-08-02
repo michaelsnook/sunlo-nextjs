@@ -18,7 +18,7 @@ export function useDeck(lang: string): UseSBQuery<DeckMeta> {
   })
 }
 
-export function useDeckPreload(lang: string): UseSBQuery<any> {
+export function useDeckPreload(lang: string) {
   const client = useQueryClient()
   return useQuery({
     queryKey: ['deck', lang, 'full'],
@@ -29,31 +29,16 @@ export function useDeckPreload(lang: string): UseSBQuery<any> {
         .eq('lang', queryKey[1])
         .maybeSingle()
       if (error) throw error
-      const data2 = data as any
+      const data2 = data
       console.log(`Data structure data2 is`, data2)
       buildDeckCache(client, data)
       return data
-      /*
-      const data2 = {
-        ...data,
-        cards: !data.cards
-          ? []
-          : data.cards.map(c => {
-              return {
-                ...c,
-                reviews: c.reviews ?? [],
-              }
-            }),
-      }
-      console.log(`this is the data structure of data2`, data, data2)
-      return data2
-      */
     },
     enabled: typeof lang === 'string' && lang.length === 3,
   })
 }
 
-export function buildDeckCache(client: QueryClient, data: DeckFull): void {
+export function buildDeckCache(client: QueryClient, data: DeckFull) {
   const lang = data.lang
 
   const all_pids = data.cards?.map(card => card.phrase_id) ?? []
