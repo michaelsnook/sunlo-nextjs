@@ -24,12 +24,11 @@ export const collateArray = (arr: Array<any>, key: string): any => {
 }
 
 export const selects = {
-  user_card_plus: () => `*, reviews:user_card_review_plus(*)` as const,
-  user_deck_plus: () =>
-    `*, cards:user_card_plus(${selects.user_card_plus()})` as const,
+  card_full: () => `*, reviews:user_card_review_plus(*)` as const,
+  deck_full: () => `*, cards:user_card_plus(${selects.card_full()})` as const,
   phrase_full: () => `*, translations:phrase_translation(*)` as const,
   language_full: () =>
-    `*, phrases:phrase_full(${selects.user_card_plus()})` as const,
+    `*, phrases:phrase_full(${selects.phrase_full()})` as const,
 }
 
 export const BASE_URL =

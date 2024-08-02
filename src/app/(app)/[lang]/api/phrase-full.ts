@@ -13,10 +13,49 @@ import {
 import supabase from 'lib/supabase-client'
 import { collateArray, selects } from 'lib/utils'
 
-// postNewPhraseCardTranslations, but restructure
-// throw error
+async function refetchABatchOfPhrases(
+  client: QueryClient,
+  pids: Array<uuid>
+): Promise<Array<NewPhraseFull>> {
+  const { data } = await supabase
+    .from('phrase_plus')
+    .select(selects.phrase_full())
+    .in('id', pids)
+    .throwOnError()
 
-export async function postInsertPhraseFull(
+  // 1. update cache for each new phrase
+  data.forEach(phraseFull => {
+    client.setQueryData(
+      ['lang', phraseFull.lang, 'phrase', phraseFull.id],
+      phraseFull
+    )
+  })
+
+  // 2. now go language by language for all_pids and meta
+  const phrasesByLang = collateArray(data, 'lang')
+  phrasesByLang.keys().forEach((lang: string) => {
+    // 1. invalidate this language's meta record
+    client.invalidateQueries({ queryKey: ['lang', lang, 'meta'] })
+
+    // 2. do optimistic update on all_pids array
+    const langPhrases = phrasesByLang[lang]
+    const langPids: Array<uuid> = langPhrases.map(phrase => {
+      return [phrase.id, ...phrase.relations]
+    })
+    client.setQueryData(
+      ['lang', lang, 'all_pids'],
+      (prev: Array<string> = []) => {
+        if (!(langPids.length > 0)) return undefined
+        const result = new Set([...langPids, ...prev])
+        return [...result]
+      }
+    )
+  })
+
+  return data
+}
+
+export async function postInsertPhrasesFull(
   values: Array<PhraseFullInsert>
 ): Promise<Array<uuid>> | null {
   const valuesFull = values.map(v => ({ ...v, id: self.crypto.randomUUID() }))
@@ -104,31 +143,18 @@ export function usePhraseFull(
   })
 }
 
-function cachePhraseFull(phrase: PhraseFull, client: QueryClient): void {
-  if (!phrase && phrase.relations && phrase.translations) return
-
-  client.setQueryData(['lang', phrase.lang, 'pid', phrase.id], phrase)
-
-  client.setQueryData(
-    ['lang', phrase.lang, 'all_pids'],
-    (allPids: Array<uuid>) => {
-      if (phrase.id in allPids) return undefined
-      return [phrase.id, ...allPids]
-    }
-  )
-
-  // invalidate the metadata in case the phrase change alters it
-  client.invalidateQueries({ queryKey: ['lang', phrase.lang, 'meta'] })
-}
-
 // current is addCardPhrase
 export function useInsertPhraseFull() {
   const client = useQueryClient()
   return useMutation({
     mutationKey: [],
-    mutationFn: async values => await postPhraseInsert(values),
+    mutationFn: async (values: Array<PhraseFullInsert>) =>
+      postInsertPhrasesFull(values),
     onSuccess: data => {
-      cachePhraseFull(data)
+      refetchABatchOfPhrases(client, data)
     },
+    // TODO: we will have some weirdnesses if the post happens and the phrases get inserted but
+    // one of the subsequent tables fails.
+    onError: () => {},
   })
 }
