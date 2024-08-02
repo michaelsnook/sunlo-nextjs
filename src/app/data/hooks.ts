@@ -15,6 +15,7 @@ import {
   uuid,
 } from 'types/main'
 import { useAuth } from 'components/auth-context'
+import { collateArray } from 'lib/utils'
 
 export const useCard = (id: uuid): UseSBQuery<CardStub> =>
   useQuery({
@@ -143,17 +144,6 @@ export function useProfile(): UseSBQuery<Profile> {
       updated_at: null,
     },
   })
-}
-
-const collateArray = (data: Array<Object>, key: string): Object => {
-  let result = {}
-  for (let i in data) {
-    let item = data[i]
-    let itemKey = item[key]
-    if (Array.isArray(result[itemKey])) result[itemKey].push(item)
-    else result[itemKey] = [item]
-  }
-  return result
 }
 
 export const useRecentReviewActivity = (): UseSBQuery<ReviewsCollated> => {
