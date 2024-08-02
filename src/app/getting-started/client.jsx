@@ -50,41 +50,44 @@ export default function Client() {
       ) {
         throw new Error('Nothing to update; try again')
       }
-      const profileUpsert =
-        !tempUsername && !tempLanguagePrimary
-          ? null
-          : await supabase
-              .from('user_profile')
-              .upsert({
-                username: tempUsernameToUse,
-                language_primary: tempLanguagePrimaryToUse,
-                languages_spoken: newLanguagesSpoken,
-              })
-              .match({ uid: userId })
-              .select()
+
+      const profileUpsert = await supabase
+        .from('user_profile')
+        .upsert({
+          username: tempUsernameToUse,
+          language_primary: tempLanguagePrimaryToUse,
+          languages_spoken: newLanguagesSpoken,
+        })
+        .match({ uid: userId })
+        .select()
 
       if (profileUpsert.error) {
         console.log('Profile upsert error', profileUpsert.error)
         throw profileUpsert.error
       }
 
-      const deckInsert =
-        typeof tempDeckToAdd !== 'string'
-          ? null
-          : await supabase
-              .from('user_deck')
-              .upsert({ lang: tempDeckToAdd, uid: userId })
-              .match({ lang: tempDeckToAdd, uid: userId })
-              .select()
+      // console.log(`the first response`, profileUpsert[0])
+
+      if (typeof tempDeckToAdd !== 'string')
+        return { deck: null, profile: profileUpsert.data }
+
+      const deckInsert = await supabase
+        .from('user_deck')
+        .upsert({ lang: tempDeckToAdd, uid: userId })
+        .match({ lang: tempDeckToAdd, uid: userId })
+        .select()
 
       if (deckInsert.error) {
         console.log(`Deck insert error`, deckInsert?.error)
+        toast('Profile saved! But there was an error creating your deck.')
+        toast.error(deckInsert.error?.message)
         throw deckInsert.error
       }
 
+      console.log(`the two responses`, deckInsert, profileUpsert)
       return {
-        deck: deckInsert.data[0] ?? null,
-        profile: profileUpsert.data[0] ?? null,
+        deck: deckInsert.data[0],
+        profile: profileUpsert.data[0],
       }
     },
     onSuccess: data => {
@@ -94,8 +97,7 @@ export default function Client() {
     },
   })
 
-  // @TODO why is there an error here, but not a supabase error
-  if (mainForm.error) console.log(`Error logging:`, mainForm)
+  // if (mainForm.error) console.log(`Error logging:`, mainForm)
 
   return isLoading ? (
     <Loading />
