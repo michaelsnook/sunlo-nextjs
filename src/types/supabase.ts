@@ -517,7 +517,6 @@ export type Database = {
           id: string | null
           lang: string | null
           phrase_id: string | null
-          relations: string[] | null
           status: string | null
           uid: string | null
           updated_at: string | null
