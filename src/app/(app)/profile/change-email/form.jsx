@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query'
 import supabase from 'lib/supabase-client'
 import { useAuth } from 'components/auth-context'
 import ShowError from 'components/show-error'
-import { BASE_URL } from 'lib/helpers'
+import { BASE_URL } from 'lib/utils'
 
 export default function SetNewEmailForm() {
   const { userEmail } = useAuth()
