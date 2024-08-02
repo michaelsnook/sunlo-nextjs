@@ -87,11 +87,6 @@ export type CardStub = Database['public']['Tables']['user_card']['Row']
 export type UserCardInsert = Database['public']['Tables']['user_card']['Insert']
 export type Review = Database['public']['Tables']['user_card_review']
 
-export const selects = {
-  card_full: () => `*, reviews:user_card_review_plus(*)` as const,
-  deck_full: () => `*, cards:user_card_plus(${selects.card_full()})` as const,
-}
-
 // for legacy hooks and such
 
 export type Phrase = PhraseStub & {
