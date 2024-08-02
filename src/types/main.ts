@@ -37,6 +37,10 @@ export type RelationRow = Database['public']['Tables']['phrase_relation']['Row']
 export type RelationInsert =
   Database['public']['Tables']['phrase_relation']['Insert']
 
+export type PhraseMeta = Views['phrase_plus']
+export type NewPhraseFull = PhraseMeta & {
+  translations: Array<TranslationRow>
+}
 export type PhraseFull = PhraseRow & {
   translations: Array<TranslationRow>
   relations: Array<RelationRow>

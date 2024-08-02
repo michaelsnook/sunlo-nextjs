@@ -122,10 +122,24 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "phrase_see_also_from_phrase_id_fkey"
+            columns: ["from_phrase_id"]
+            isOneToOne: false
+            referencedRelation: "phrase_plus"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "phrase_see_also_to_phrase_id_fkey"
             columns: ["to_phrase_id"]
             isOneToOne: false
             referencedRelation: "phrase"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "phrase_see_also_to_phrase_id_fkey"
+            columns: ["to_phrase_id"]
+            isOneToOne: false
+            referencedRelation: "phrase_plus"
             referencedColumns: ["id"]
           },
         ]
@@ -191,6 +205,13 @@ export type Database = {
             referencedRelation: "phrase"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "phrase_translation_phrase_id_fkey"
+            columns: ["phrase_id"]
+            isOneToOne: false
+            referencedRelation: "phrase_plus"
+            referencedColumns: ["id"]
+          },
         ]
       }
       user_card: {
@@ -227,6 +248,13 @@ export type Database = {
             columns: ["phrase_id"]
             isOneToOne: false
             referencedRelation: "phrase"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_card_phrase_id_fkey"
+            columns: ["phrase_id"]
+            isOneToOne: false
+            referencedRelation: "phrase_plus"
             referencedColumns: ["id"]
           },
           {
@@ -409,6 +437,62 @@ export type Database = {
         }
         Relationships: []
       }
+      phrase_plus: {
+        Row: {
+          added_by: string | null
+          created_at: string | null
+          id: string | null
+          lang: string | null
+          relation_pids: string[] | null
+          text: string | null
+        }
+        Insert: {
+          added_by?: string | null
+          created_at?: string | null
+          id?: string | null
+          lang?: string | null
+          relation_pids?: never
+          text?: string | null
+        }
+        Update: {
+          added_by?: string | null
+          created_at?: string | null
+          id?: string | null
+          lang?: string | null
+          relation_pids?: never
+          text?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "phrase_added_by_fkey"
+            columns: ["added_by"]
+            isOneToOne: false
+            referencedRelation: "user_profile"
+            referencedColumns: ["uid"]
+          },
+          {
+            foreignKeyName: "phrase_added_by_fkey"
+            columns: ["added_by"]
+            isOneToOne: false
+            referencedRelation: "public_profile"
+            referencedColumns: ["uid"]
+          },
+          {
+            foreignKeyName: "phrase_lang_fkey"
+            columns: ["lang"]
+            isOneToOne: false
+            referencedRelation: "language"
+            referencedColumns: ["lang"]
+          },
+          {
+            foreignKeyName: "phrase_lang_fkey"
+            columns: ["lang"]
+            isOneToOne: false
+            referencedRelation: "language_plus"
+            referencedColumns: ["lang"]
+          },
+        ]
+      }
       public_profile: {
         Row: {
           avatar_url: string | null
@@ -445,6 +529,13 @@ export type Database = {
             columns: ["phrase_id"]
             isOneToOne: false
             referencedRelation: "phrase"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "user_card_phrase_id_fkey"
+            columns: ["phrase_id"]
+            isOneToOne: false
+            referencedRelation: "phrase_plus"
             referencedColumns: ["id"]
           },
           {
