@@ -1,4 +1,9 @@
-import type { uuid, PhraseFull, PhraseFullInsert, UseSBQuery } from 'types/main'
+import type {
+  uuid,
+  PhraseFullInsert,
+  UseSBQuery,
+  NewPhraseFull,
+} from 'types/main'
 import {
   type QueryClient,
   useQueryClient,
@@ -6,43 +11,81 @@ import {
   useMutation,
 } from '@tanstack/react-query'
 import supabase from 'lib/supabase-client'
+import { collateArray, selects } from 'lib/utils'
 
 // postNewPhraseCardTranslations, but restructure
 // throw error
+
 export async function postInsertPhraseFull(
-  values: PhraseFullInsert
-): Promise<PhraseFull> | null {
-  const pid = self.crypto.randomUUID()
+  values: Array<PhraseFullInsert>
+): Promise<Array<uuid>> | null {
+  const valuesFull = values.map(v => ({ ...v, id: self.crypto.randomUUID() }))
 
-  const { data: phrase, error } = await supabase
+  const phraseInserts = valuesFull.map(p => {
+    return { id: p.id, text: p.text, lang: p.lang }
+  })
+
+  const { data: phraseInserted } = await supabase
     .from('phrase')
-    .insert({ id: pid, text: values.text, lang: values.lang })
+    .insert(phraseInserts)
     .select()
-  if (error) throw error
+    .throwOnError()
 
-  const translationsInsertPromise = supabase
+  console.log(`Inserted phrases`, phraseInserted)
+
+  // an array of phrases has an array of arrays of translations
+  // loop over phrases, find translations array, and loop over them, adding pid
+  // add them all to one insert array
+  const translationInserts = valuesFull
+    .map(phrase => {
+      return phrase.translations.map(translation => ({
+        ...translation,
+        phrase_id: phrase.id,
+      }))
+    })
+    .flat()
+  const relationInserts = valuesFull
+    .map(phrase => {
+      return phrase.relations.map(relation => ({
+        ...relation,
+        phrase_id: phrase.id,
+      }))
+    })
+    .flat()
+
+  // now trigger both inserts in parallel
+  const translationPromise = supabase
     .from('phrase_translation')
-    .insert(values.translations)
-
-  const relationsInsertPromise = supabase
+    .insert(translationInserts)
+  const relationPromise = supabase
     .from('phrase_relation')
-    .insert(values.relations)
-  // const cardInsertPromise = supabase.from('user_card').insert(values.card)
+    .insert(relationInserts)
 
-  const datas = await Promise.all([])
+  // wait for them both to resolve
+  const [{ data: tData, error: tError }, { data: rData, error: rError }] =
+    await Promise.all([translationPromise, relationPromise])
 
-  const [
-    { data: translations, error: translationsInsertError },
-    { data: relations, error: relationsInsertError },
-  ] = await Promise.all([translationsInsertPromise, relationsInsertPromise])
-
-  if (translationsInsertError) throw translationsInsertError
-  if (relationsInsertError) throw relationsInsertError
-
-  return { ...phrase, translations, relations }
+  // It's possible here to have errors AND data... which is weird...
+  if (tError && rError)
+    throw new Error(
+      `Inserted phrases but encountered other errors: 1) "${tError.message}", 2) "${rError.message}"`
+    )
+  if (tError)
+    throw new Error(
+      `Inserted phrases and relationships but got an error inserting translations: "${tError.message}"`
+    )
+  if (rError)
+    throw new Error(
+      `Inserted phrases and translations but got an error inserting relationships: "${tError.message}"`
+    )
+  // we're just going to return the pids of what has changed so they can be batch-refetched
+  return phraseInserted.map(p => p.id)
 }
 
-export function usePhraseFull(lang: string, pid: uuid): UseSBQuery<PhraseFull> {
+export function usePhraseFull(
+  lang: string,
+  pid: uuid
+): UseSBQuery<NewPhraseFull> {
   const client = useQueryClient()
   return useQuery({
     queryKey: ['lang', lang, 'phrase', pid],
