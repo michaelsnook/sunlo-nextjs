@@ -18,8 +18,15 @@ export type SBMutation<T> = Promise<PostgrestResponse<T>>
 
 export type LanguageRow = Omit<Tables<'language'>, 'alias_of'>
 export type LanguageMeta = Tables<'language_plus'>
-export type LanguageFull = LanguageMeta & {
+export type LanguagePrefetch = LanguageMeta & {
   phrases: Array<PhraseFull>
+}
+export type LanguageLoaded = {
+  meta: LanguageMeta
+  all_pids: Array<uuid>
+  phrase: {
+    [key: string]: PhraseFull
+  }
 }
 
 export type PhraseRow = Tables<'phrase'>

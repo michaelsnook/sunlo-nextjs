@@ -1,11 +1,9 @@
-import { useQuery, useQueryClient, QueryClient } from '@tanstack/react-query'
-import type {
-  DeckPrefetch,
-  DeckLoaded,
-  CardFull,
-  UseSBQuery,
-  uuid,
-} from 'types/main'
+import {
+  useQuery,
+  useQueryClient,
+  type QueryClient,
+} from '@tanstack/react-query'
+import type { uuid, UseSBQuery, DeckPrefetch, DeckLoaded } from 'types/main'
 import { mapArray, selects } from 'lib/utils'
 import supabase from 'lib/supabase-client'
 
@@ -19,9 +17,11 @@ async function prefetchDeck(lang: string): Promise<DeckPrefetch> {
   return data
 }
 
-function transformDeckPrefetchToLoaded(data: DeckPrefetch): DeckLoaded {
-  const { cards, ...meta } = data
-  const all_pids: Array<uuid> = (data.cards || [])?.map(c => c.phrase_id)
+function transformDeckPrefetchToLoaded({
+  cards = [],
+  ...meta
+}: DeckPrefetch): DeckLoaded {
+  const all_pids: Array<uuid> = cards?.map(c => c.phrase_id)
   const card = mapArray(cards, 'phrase_id')
   return {
     meta,
