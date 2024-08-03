@@ -6,7 +6,7 @@ import type {
   UseSBQuery,
   uuid,
 } from 'types/main'
-import { selects } from 'lib/utils'
+import { mapArray, selects } from 'lib/utils'
 import supabase from 'lib/supabase-client'
 
 async function prefetchDeck(lang: string): Promise<DeckPrefetch> {
@@ -20,13 +20,13 @@ async function prefetchDeck(lang: string): Promise<DeckPrefetch> {
 }
 
 function transformDeckPrefetchToLoaded(data: DeckPrefetch): DeckLoaded {
-  const { cards: _, ...meta } = data
+  const { cards, ...meta } = data
   const all_pids: Array<uuid> = (data.cards || [])?.map(c => c.phrase_id)
-  const cards: Array<CardFull> = [...data.cards]
+  const card = mapArray(cards, 'phrase_id')
   return {
     meta,
     all_pids,
-    cards,
+    card,
   }
 }
 
@@ -48,13 +48,16 @@ export function useDeckPreload(lang: string): UseSBQuery<DeckLoaded> {
 }
 
 function populateDeckCache(
-  { meta, all_pids, cards }: DeckLoaded,
+  { meta, all_pids, card }: DeckLoaded,
   client: QueryClient
 ): void {
-  client.setQueryData(['deck', meta.lang, 'all_pids'], all_pids)
-  cards.forEach(card => {
-    client.setQueryData(['deck', meta.lang, 'card', card.phrase_id], card)
-  })
   client.setQueryData(['deck', meta.lang, 'meta'], meta)
+  client.setQueryData(['deck', meta.lang, 'all_pids'], all_pids)
+  // for now let's just stash both and see which one is more useful!
+  client.setQueryData(['deck', meta.lang, 'cards'], card)
+  all_pids.forEach(pid => {
+    client.setQueryData(['deck', meta.lang, 'card', pid], card[pid])
+  })
+
   return
 }
