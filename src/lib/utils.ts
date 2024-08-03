@@ -28,7 +28,7 @@ export const selects = {
   deck_full: () => `*, cards:user_card_plus(${selects.card_full()})` as const,
   phrase_full: () => `*, translations:phrase_translation(*)` as const,
   language_full: () =>
-    `*, phrases:phrase_full(${selects.phrase_full()})` as const,
+    `*, phrases:phrase_plus(${selects.phrase_full()})` as const,
 }
 
 export const BASE_URL =

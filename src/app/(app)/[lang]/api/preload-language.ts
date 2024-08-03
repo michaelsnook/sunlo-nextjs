@@ -3,14 +3,13 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import supabase from 'lib/supabase-client'
 import type { UseSBQuery, LanguageFull } from 'types/main'
+import { selects } from 'lib/utils'
 
 // this function can safely be called on the server
 export async function fetchLangPreload(lang: string) {
   return supabase
     .from('language_plus')
-    .select(
-      `*, phrases:phrase(*, translations:phrase_translation(*))` // relations:phrase_relation(*)
-    )
+    .select(selects.language_full())
     .eq('lang', lang)
     .maybeSingle()
 }
