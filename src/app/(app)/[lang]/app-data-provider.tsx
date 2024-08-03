@@ -3,9 +3,9 @@
 import ShowError from 'components/show-error'
 import Loading from 'components/loading'
 import { createContext, useContext, type ReactNode } from 'react'
-import type { DeckLoaded, LanguageFull } from 'types/main'
+import type { DeckLoaded, LanguageLoaded } from 'types/main'
 import { useDeckPreload } from './api/preload-deck'
-import { useLangPreload } from './api/preload-language'
+import { useLanguagePreload } from './api/preload-language'
 
 /*
 	The context and provider contain these 4 moving parts:
@@ -15,7 +15,7 @@ import { useLangPreload } from './api/preload-language'
 	4. the provider that wraps this layout segment (just 1)
 */
 
-const LangContext = createContext<LanguageFull | null>(null)
+const LangContext = createContext<LanguageLoaded | null>(null)
 const DeckContext = createContext<DeckLoaded | null>(null)
 
 export function useLangContext() {
@@ -52,7 +52,7 @@ export function AppDataProvider({
     data: langData,
     error: langError,
     isLoading: isLangLoading,
-  } = useLangPreload(lang)
+  } = useLanguagePreload(lang)
   const {
     data: deckData,
     error: deckError,

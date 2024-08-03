@@ -1,43 +1,73 @@
 'use client'
 
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+  useQuery,
+  useQueryClient,
+  type QueryClient,
+} from '@tanstack/react-query'
+import type {
+  uuid,
+  UseSBQuery,
+  LanguagePrefetch,
+  LanguageLoaded,
+} from 'types/main'
+import { mapArray, selects } from 'lib/utils'
 import supabase from 'lib/supabase-client'
-import type { UseSBQuery, LanguageFull } from 'types/main'
-import { selects } from 'lib/utils'
 
 // this function can safely be called on the server
-export async function fetchLangPreload(lang: string) {
-  return supabase
+export async function prefetchLanguage(
+  lang: string
+): Promise<LanguagePrefetch> {
+  const { data } = await supabase
     .from('language_plus')
     .select(selects.language_full())
     .eq('lang', lang)
     .maybeSingle()
+    .throwOnError()
+  return data
 }
 
-export function useLangPreload(lang: string): UseSBQuery<LanguageFull> {
-  const queryClient = useQueryClient()
+function transformLanguagePrefetchToLoaded({
+  phrases = [],
+  ...meta
+}: LanguagePrefetch): LanguageLoaded {
+  const all_pids: Array<uuid> = phrases?.map(p => p.id)
+  const phrase = mapArray(phrases, 'id')
+  return {
+    meta,
+    all_pids,
+    phrase,
+  }
+}
+
+export function useLanguagePreload(lang: string): UseSBQuery<LanguageLoaded> {
+  const client = useQueryClient()
   return useQuery({
     queryKey: ['language', lang, 'full'],
     queryFn: async ({ queryKey }) => {
-      const { data, error } = await fetchLangPreload(queryKey[1])
-      if (error) throw error
+      const data: LanguagePrefetch = await prefetchLanguage(queryKey[1])
+      const result: LanguageLoaded = transformLanguagePrefetchToLoaded(data)
+      populateLanguageCache(result, client)
 
-      const all_pids = data.phrases?.map(phrase => phrase.id) ?? []
-      queryClient.setQueryData(['language', lang, 'all_pids'], all_pids)
-
-      data.phrases?.forEach(phrase => {
-        queryClient.setQueryData(
-          ['language', lang, 'phrase', phrase.id],
-          phrase
-        )
-      })
-
-      let meta = { ...data }
-      delete meta.phrases
-      queryClient.setQueryData(['language', lang, 'meta'], meta)
-      meta = null
-      return data
+      return result
     },
     enabled: typeof lang === 'string' && lang.length === 3,
+    staleTime: Infinity,
+    gcTime: Infinity,
   })
+}
+
+function populateLanguageCache(
+  { meta, all_pids, phrase }: LanguageLoaded,
+  client: QueryClient
+): void {
+  client.setQueryData(['language', meta.lang, 'meta'], meta)
+  client.setQueryData(['language', meta.lang, 'all_pids'], all_pids)
+  // for now let's just stash both and see which one is more useful!
+  client.setQueryData(['language', meta.lang, 'phrases'], phrase)
+  all_pids.forEach(pid => {
+    client.setQueryData(['language', meta.lang, 'phrase', pid], phrase[pid])
+  })
+
+  return
 }
