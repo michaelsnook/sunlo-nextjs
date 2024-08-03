@@ -14,6 +14,12 @@ export const prependAndDedupe = (
   return [item, ...items]
 }
 
+export const mapArray = (arr: Array<any>, key: string): any => {
+  let result = {}
+  arr.forEach(item => (result[item[key]] = item))
+  return result
+}
+
 export const collateArray = (arr: Array<any>, key: string): any => {
   let result = {}
   arr.forEach(item => {

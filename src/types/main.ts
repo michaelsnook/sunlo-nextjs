@@ -51,7 +51,9 @@ export type DeckPrefetch = DeckMeta & {
 export type DeckLoaded = {
   meta: DeckMeta
   all_pids: Array<uuid>
-  cards: Array<CardFull>
+  card: {
+    [key: string]: CardFull
+  }
 }
 
 export type CardRow = Tables<'user_card'>
