@@ -3,7 +3,7 @@
 import ShowError from 'components/show-error'
 import Loading from 'components/loading'
 import { createContext, useContext, type ReactNode } from 'react'
-import type { DeckFull, LanguageFull } from 'types/main'
+import type { DeckLoaded, LanguageFull } from 'types/main'
 import { useDeckPreload } from './api/preload-deck'
 import { useLangPreload } from './api/preload-language'
 
@@ -16,7 +16,7 @@ import { useLangPreload } from './api/preload-language'
 */
 
 const LangContext = createContext<LanguageFull | null>(null)
-const DeckContext = createContext<DeckFull | null>(null)
+const DeckContext = createContext<DeckLoaded | null>(null)
 
 export function useLangContext() {
   const langData = useContext(LangContext)

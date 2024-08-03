@@ -45,7 +45,12 @@ export type PhraseFullInsert = PhraseInsert & {
 export type DeckRow = Tables<'user_deck'>
 export type DeckInsert = Database['public']['Tables']['user_deck']['Insert']
 export type DeckMeta = Tables<'user_deck_plus'>
-export type DeckFull = DeckMeta & {
+export type DeckPrefetch = DeckMeta & {
+  cards: Array<CardFull>
+}
+export type DeckLoaded = {
+  meta: DeckMeta
+  all_pids: Array<uuid>
   cards: Array<CardFull>
 }
 

@@ -1,55 +1,60 @@
 import { useQuery, useQueryClient, QueryClient } from '@tanstack/react-query'
-import type { DeckMeta, DeckFull, UseSBQuery } from 'types/main'
+import type {
+  DeckPrefetch,
+  DeckLoaded,
+  CardFull,
+  UseSBQuery,
+  uuid,
+} from 'types/main'
 import { selects } from 'lib/utils'
 import supabase from 'lib/supabase-client'
 
-export function useDeck(lang: string): UseSBQuery<DeckMeta> {
-  return useQuery({
-    queryKey: ['deck', lang, 'meta'],
-    queryFn: async ({ queryKey }) => {
-      const { data, error } = await supabase
-        .from('user_deck_plus')
-        .select('*')
-        .eq('lang', queryKey[1])
-      if (error) throw error
-      // do we want to make sure it exists in the profile decks array
-      return data
-    },
-  })
+async function prefetchDeck(lang: string): Promise<DeckPrefetch> {
+  const { data } = await supabase
+    .from('user_deck_plus')
+    .select(selects.deck_full())
+    .eq('lang', lang)
+    .maybeSingle()
+    .throwOnError()
+  return data
 }
 
-export function useDeckPreload(lang: string) {
+function transformDeckPrefetchToLoaded(data: DeckPrefetch): DeckLoaded {
+  const { cards: _, ...meta } = data
+  const all_pids: Array<uuid> = (data.cards || [])?.map(c => c.phrase_id)
+  const cards: Array<CardFull> = [...data.cards]
+  return {
+    meta,
+    all_pids,
+    cards,
+  }
+}
+
+export function useDeckPreload(lang: string): UseSBQuery<DeckLoaded> {
   const client = useQueryClient()
   return useQuery({
     queryKey: ['deck', lang, 'full'],
-    queryFn: async ({ queryKey }): Promise<DeckFull | null | any> => {
-      const { data, error } = await supabase
-        .from('user_deck_plus')
-        .select(selects.deck_full())
-        .eq('lang', queryKey[1])
-        .maybeSingle()
-      if (error) throw error
-      const data2 = data
-      console.log(`Data structure data2 is`, data2)
-      buildDeckCache(client, data)
-      return data
+    queryFn: async ({ queryKey }): Promise<DeckPrefetch | null | any> => {
+      const data: DeckPrefetch = await prefetchDeck(queryKey[1])
+      const result: DeckLoaded = transformDeckPrefetchToLoaded(data)
+      populateDeckCache(result, client)
+
+      return result
     },
     enabled: typeof lang === 'string' && lang.length === 3,
+    staleTime: Infinity,
+    gcTime: Infinity,
   })
 }
 
-export function buildDeckCache(client: QueryClient, data: DeckFull) {
-  const lang = data.lang
-
-  const all_pids = data.cards?.map(card => card.phrase_id) ?? []
-  client.setQueryData(['deck', lang, 'all_pids'], all_pids)
-
-  data.cards.forEach(card => {
-    client.setQueryData(['deck', lang, 'card', card.phrase_id], card)
+function populateDeckCache(
+  { meta, all_pids, cards }: DeckLoaded,
+  client: QueryClient
+): void {
+  client.setQueryData(['deck', meta.lang, 'all_pids'], all_pids)
+  cards.forEach(card => {
+    client.setQueryData(['deck', meta.lang, 'card', card.phrase_id], card)
   })
-
-  let meta = { ...data, cards: null }
-  delete meta.cards
-  client.setQueryData(['deck', lang, 'meta'], meta)
-  meta = null
+  client.setQueryData(['deck', meta.lang, 'meta'], meta)
+  return
 }
