@@ -629,6 +629,7 @@ export type Database = {
           id: string | null
           lang: string | null
           lang_total_phrases: number | null
+          language: string | null
           most_recent_review_at: string | null
           uid: string | null
         }

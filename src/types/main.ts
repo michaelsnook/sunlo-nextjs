@@ -34,17 +34,12 @@ export type RelationInsert =
   Database['public']['Tables']['phrase_relation']['Insert']
 
 export type PhraseMeta = Tables<'phrase_plus'>
-export type NewPhraseFull = PhraseMeta & {
+export type PhraseFull = PhraseMeta & {
   translations: Array<TranslationRow>
-}
-export type PhraseFull = PhraseRow & {
-  translations: Array<TranslationRow>
-  relations: Array<RelationRow>
 }
 export type PhraseFullInsert = PhraseInsert & {
-  translations?: Array<TranslationInsert>
-  relations?: Array<RelationInsert>
-  // card?: CardInsert
+  translations: Array<TranslationInsert>
+  relation_pids?: Array<uuid>
 }
 
 export type DeckRow = Tables<'user_deck'>
@@ -53,19 +48,6 @@ export type DeckMeta = Tables<'user_deck_plus'>
 export type DeckFull = DeckMeta & {
   cards: Array<CardFull>
 }
-
-type C = {
-  cards_active: number
-  cards_learned: number
-  cards_skipped: number
-  created_at: string
-  id: string
-  lang: string
-  lang_total_phrases: number
-  most_recent_review_at: string
-  uid: string
-  cards: CardFull[]
-} // ' is not assignable to parameter of type 'DeckFull'
 
 export type CardRow = Tables<'user_card'>
 export type CardMeta = Tables<'user_card_plus'>
