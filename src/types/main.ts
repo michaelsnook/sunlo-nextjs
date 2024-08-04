@@ -7,6 +7,7 @@ import {
 } from '@supabase/supabase-js'
 
 export type uuid = string
+export type pids = Array<uuid>
 
 export type UseSBQuery<T> = UseQueryResult<T, PostgrestError>
 export type UseSBMutation<T> = UseMutationResult<T, PostgrestError>
@@ -23,7 +24,7 @@ export type LanguagePrefetch = LanguageMeta & {
 }
 export type LanguageLoaded = {
   meta: LanguageMeta
-  all_pids: Array<uuid>
+  pids: pids
   phrase: {
     [key: string]: PhraseFull
   }
@@ -46,13 +47,13 @@ export type PhraseFull = PhraseMeta & {
 }
 export type PhraseFullInsert = PhraseInsert & {
   translations: Array<TranslationInsert>
-  relation_pids?: Array<uuid>
+  relation_pids?: pids
 }
 
 export type DeckRow = Tables<'user_deck'>
 export type DeckInsert = Database['public']['Tables']['user_deck']['Insert']
 export type DeckMeta = Tables<'user_deck_plus'>
-export type DeckPrefetch = DeckMeta & {
+export type DeckFetched = DeckMeta & {
   cards: Array<CardFull>
 }
 // we are not literally using a map, but maybe we should!
@@ -61,7 +62,7 @@ export type CardsMap = {
 }
 export type DeckLoaded = {
   meta: DeckMeta
-  all_pids: Array<uuid>
+  pids: pids
   cards: CardsMap
 }
 
@@ -130,7 +131,7 @@ export type PhraseCardTranslationsInsertInput = {
 }
 
 export type Deck = DeckStub & {
-  all_phrase_ids: Array<uuid>
+  all_phrase_ids: pids
   cards: {
     active: any[]
     learned: any[]

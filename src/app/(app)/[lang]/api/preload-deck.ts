@@ -1,5 +1,5 @@
 import { QueryKey, UseQueryResult, useQuery } from '@tanstack/react-query'
-import type { uuid, DeckFetched, DeckLoaded } from 'types/main'
+import type { DeckFetched, DeckLoaded, pids } from 'types/main'
 import { mapArray, selects } from 'lib/utils'
 import supabase from 'lib/supabase-client'
 
@@ -17,7 +17,7 @@ function transformDeckFetchedToLoaded({
   cards: cardsArray = [],
   ...meta
 }: DeckFetched): DeckLoaded {
-  const pids: Array<uuid> = cardsArray?.map(c => c.phrase_id)
+  const pids: pids = cardsArray?.map(c => c.phrase_id)
   const cards = mapArray(cardsArray, 'phrase_id')
   return {
     meta,
@@ -42,6 +42,7 @@ export function useDeckQuery(
       const result: DeckLoaded = transformDeckFetchedToLoaded(data)
       return result
     },
+    select,
     enabled: typeof lang === 'string' && lang.length === 3,
     gcTime: Infinity,
     staleTime: Infinity,

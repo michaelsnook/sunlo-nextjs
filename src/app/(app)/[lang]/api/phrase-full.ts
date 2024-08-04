@@ -1,4 +1,10 @@
-import type { uuid, PhraseFullInsert, UseSBQuery, PhraseFull } from 'types/main'
+import type {
+  uuid,
+  PhraseFullInsert,
+  UseSBQuery,
+  PhraseFull,
+  pids,
+} from 'types/main'
 import {
   type QueryClient,
   useQueryClient,
@@ -10,7 +16,7 @@ import { collateArray, selects } from 'lib/utils'
 
 async function refetchABatchOfPhrases(
   client: QueryClient,
-  pids: Array<uuid>
+  pids: pids
 ): Promise<Array<PhraseFull>> {
   const { data } = await supabase
     .from('phrase_plus')
@@ -34,17 +40,14 @@ async function refetchABatchOfPhrases(
 
     // 2. do optimistic update on pids array
     const langPhrases = phrasesByLang[lang]
-    const langPids: Array<uuid> = langPhrases.map(phrase => {
+    const langPids: pids = langPhrases.map(phrase => {
       return [phrase.id, ...phrase.relation_pids]
     })
-    client.setQueryData(
-      ['lang', lang, 'pids'],
-      (prev: Array<string> = []) => {
-        if (!(langPids.length > 0)) return undefined
-        const result = new Set([...langPids, ...prev])
-        return [...result]
-      }
-    )
+    client.setQueryData(['lang', lang, 'pids'], (prev: pids = []) => {
+      if (!(langPids.length > 0)) return undefined
+      const result = new Set([...langPids, ...prev])
+      return [...result]
+    })
   })
 
   return data
@@ -52,7 +55,7 @@ async function refetchABatchOfPhrases(
 
 export async function postInsertPhrasesFull(
   values: Array<PhraseFullInsert>
-): Promise<Array<uuid>> | null {
+): Promise<pids> | null {
   const valuesFull = values.map(v => ({ ...v, id: self.crypto.randomUUID() }))
 
   const phraseInserts = valuesFull.map(p => {
