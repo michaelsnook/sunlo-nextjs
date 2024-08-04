@@ -5,7 +5,7 @@ import Loading from 'components/loading'
 import { createContext, useContext, type ReactNode } from 'react'
 import type { DeckLoaded, LanguageLoaded } from 'types/main'
 import { useDeckQuery } from './api/preload-deck'
-import { useLanguagePreload } from './api/preload-language'
+import { useLanguageQuery } from './api/preload-language'
 
 /*
 	The context and provider contain these 4 moving parts:
@@ -52,7 +52,7 @@ export function AppDataProvider({
     data: langData,
     error: langError,
     isLoading: isLangLoading,
-  } = useLanguagePreload(lang)
+  } = useLanguageQuery(lang, (data: LanguageLoaded) => data)
   const {
     data: deckData,
     error: deckError,
