@@ -1,12 +1,12 @@
 const TinyPhrase = ({ lang, text }) => (
-  <span lang={lang} className="space-x-2">
+  <>
     {lang && (
-      <div className="badge badge-neutral font-mono font-normal transition-none group-hover:badge-outline">
+      <span className="badge badge-neutral font-mono font-normal transition-none group-hover:badge-outline">
         {lang}
-      </div>
+      </span>
     )}{' '}
-    <span>&ldquo;{text}&rdquo;</span>
-  </span>
+    <span lang={lang}>&ldquo;{text}&rdquo;</span>
+  </>
 )
 
 export default TinyPhrase
