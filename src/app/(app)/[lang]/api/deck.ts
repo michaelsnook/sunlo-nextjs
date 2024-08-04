@@ -1,23 +1,42 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import supabase from 'lib/supabase-client'
-import { DeckInsert, DeckMeta } from 'types/main'
+import { DeckInsert, DeckRow } from 'types/main'
+
+type DeckInserts = Array<DeckInsert>
+type DeckRows = Array<DeckRow>
+
+// we can just get this from Profile
+/*const fetchDeckMeta = async (lang: string) => {
+  const { data } = await supabase
+    .from('user_deck_plus')
+    .select('*')
+    .eq('lang', lang)
+    .throwOnError()
+  return data
+}*/
+
 // postNewDeck
-async function postInsertDeck(values: DeckInsert) {
-  const { data, error } = await supabase.from('user_deck').insert(values)
-  if (error) throw error
+async function postInsertDecks(values: DeckInserts): Promise<DeckRows> {
+  const { data } = await supabase
+    .from('user_deck')
+    .insert(values)
+    .select()
+    .throwOnError()
   return data
 }
 
 // createNewDeck
-function useInsertDeck() {
+function useInsertDecks() {
   const client = useQueryClient()
   return useMutation({
     // mutationKey: [],
-    mutationFn: async (values: DeckInsert) => postInsertDeck(values),
-    onSuccess: (data, _error, values: DeckInsert) => {
+    mutationFn: async (values: DeckInserts) => postInsertDecks(values),
+    onSuccess: (data: DeckRows, _error, values: DeckInserts) => {
       // do not optimistically update because we need the user_deck_plus view
       client.invalidateQueries({ queryKey: ['user_profile'] })
-      client.invalidateQueries({ queryKey: ['deck', values.lang, 'meta'] })
+      values.forEach((deck: DeckInsert) =>
+        client.invalidateQueries({ queryKey: ['deck', deck.lang, 'full'] })
+      )
     },
   })
 }
