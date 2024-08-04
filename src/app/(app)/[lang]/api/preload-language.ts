@@ -37,7 +37,7 @@ export function useLanguageQuery(
   select = null
 ): UseQueryResult<LanguageLoaded> {
   return useQuery<LanguageLoaded>({
-    queryKey: ['language', lang, 'preload'],
+    queryKey: ['language', lang, 'loaded'],
     queryFn: async ({
       queryKey,
     }: {
@@ -48,6 +48,7 @@ export function useLanguageQuery(
       const result: LanguageLoaded = transformLanguageFetchedToLoaded(data)
       return result
     },
+    select,
     enabled: typeof lang === 'string' && lang.length === 3,
     gcTime: Infinity,
     staleTime: Infinity,

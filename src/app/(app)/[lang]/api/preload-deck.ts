@@ -31,7 +31,7 @@ export function useDeckQuery(
   select = null
 ): UseQueryResult<DeckLoaded> {
   return useQuery<DeckLoaded>({
-    queryKey: ['deck', lang, 'preload'],
+    queryKey: ['deck', lang, 'loaded'],
     queryFn: async ({
       queryKey,
     }: {
