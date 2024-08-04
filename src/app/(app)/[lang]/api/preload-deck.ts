@@ -50,15 +50,15 @@ export function useDeckPreload(lang: string): UseSBQuery<DeckLoaded> {
 }
 
 function populateDeckCache(
-  { meta, all_pids, card }: DeckLoaded,
+  { meta, all_pids, cards }: DeckLoaded,
   client: QueryClient
 ): void {
   client.setQueryData(['deck', meta.lang, 'meta'], meta)
   client.setQueryData(['deck', meta.lang, 'all_pids'], all_pids)
   // for now let's just stash both and see which one is more useful!
-  client.setQueryData(['deck', meta.lang, 'cards'], card)
+  client.setQueryData(['deck', meta.lang, 'cards'], cards)
   all_pids.forEach(pid => {
-    client.setQueryData(['deck', meta.lang, 'card', pid], card[pid])
+    client.setQueryData(['deck', meta.lang, 'card', pid], cards[pid])
   })
 
   return
