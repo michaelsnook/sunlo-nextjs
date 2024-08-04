@@ -6,7 +6,7 @@ import {
   type QueryClient,
 } from '@tanstack/react-query'
 import type {
-  uuid,
+  pids,
   UseSBQuery,
   LanguagePrefetch,
   LanguageLoaded,
@@ -31,11 +31,11 @@ function transformLanguagePrefetchToLoaded({
   phrases = [],
   ...meta
 }: LanguagePrefetch): LanguageLoaded {
-  const all_pids: Array<uuid> = phrases?.map(p => p.id)
+  const pids: pids = phrases?.map(p => p.id)
   const phrase = mapArray(phrases, 'id')
   return {
     meta,
-    all_pids,
+    pids,
     phrase,
   }
 }
@@ -58,14 +58,14 @@ export function useLanguagePreload(lang: string): UseSBQuery<LanguageLoaded> {
 }
 
 function populateLanguageCache(
-  { meta, all_pids, phrase }: LanguageLoaded,
+  { meta, pids, phrase }: LanguageLoaded,
   client: QueryClient
 ): void {
   client.setQueryData(['language', meta.lang, 'meta'], meta)
-  client.setQueryData(['language', meta.lang, 'all_pids'], all_pids)
+  client.setQueryData(['language', meta.lang, 'pids'], pids)
   // for now let's just stash both and see which one is more useful!
   client.setQueryData(['language', meta.lang, 'phrases'], phrase)
-  all_pids.forEach(pid => {
+  pids.forEach(pid => {
     client.setQueryData(['language', meta.lang, 'phrase', pid], phrase[pid])
   })
 
