@@ -11,6 +11,12 @@ export const prependAndDedupe = (item: any, items: Array<any>): Array<any> => {
   if (index >= 0) items.splice(index, 1)
   return [item, ...items]
 }
+export const prependItem = (item: any, items: Array<any>): Array<any> => {
+  let index = items.indexOf(item)
+  if (index >= 0) items.splice(index, 1)
+  items.unshift(item)
+  return items
+}
 
 export const mapArray = (arr: Array<any>, key: string): any => {
   let result = {}
