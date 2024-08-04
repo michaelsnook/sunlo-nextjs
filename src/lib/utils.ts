@@ -6,12 +6,9 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export const prependAndDedupe = (
-  item: Object,
-  items: Array<Object>
-): Array<Object> => {
+export const prependAndDedupe = (item: any, items: Array<any>): Array<any> => {
   let index = items.indexOf(item)
-  if (index > -1) items.splice(index, 1)
+  if (index >= 0) items.splice(index, 1)
   return [item, ...items]
 }
 
@@ -37,6 +34,7 @@ export const selects = {
   language_full: () =>
     `*, phrases:phrase_plus(${selects.phrase_full()})` as const,
 }
+
 export const links = {
   deckPhrase: (lang: string, pid: uuid): string =>
     `/my-decks/${lang}/phrase/${pid}`,
