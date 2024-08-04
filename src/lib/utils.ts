@@ -1,5 +1,6 @@
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
+import { uuid } from 'types/main'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -35,6 +36,10 @@ export const selects = {
   phrase_full: () => `*, translations:phrase_translation(*)` as const,
   language_full: () =>
     `*, phrases:phrase_plus(${selects.phrase_full()})` as const,
+}
+export const links = {
+  deckPhrase: (lang: string, pid: uuid): string =>
+    `/my-decks/${lang}/phrase/${pid}`,
 }
 
 export const BASE_URL =

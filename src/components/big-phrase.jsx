@@ -10,7 +10,7 @@ import EditCardStatusButtons from './edit-status-buttons'
 import SectionTranslations from './translations-section'
 import TinyPhrase from './tiny-phrase'
 import Link from 'next/link'
-import { cn } from 'lib/utils'
+import { cn, links } from 'lib/utils'
 
 export const AddCardButtonsSection = ({ phrase_id, user_deck_id, onClose }) => {
   const queryClient = useQueryClient()
@@ -100,7 +100,7 @@ export default function BigPhrase({
   // console.log(`bigPhrase look for userCard or phrase.card`, phrase)
   const seeAlsos = phrase?.see_also_phrases
 
-  if (error) return <ShowError>{phraseError.message}</ShowError>
+  if (phraseError) return <ShowError>{phraseError.message}</ShowError>
 
   return (
     <div
@@ -114,12 +114,7 @@ export default function BigPhrase({
           <h2 lang={phrase.lang} className="h3 font-bold">
             <TinyPhrase text={phrase.text} />
           </h2>
-          <SectionTranslations
-            translations={translations}
-            lang={phrase.lang}
-            phraseId={phrase.id}
-            phraseText={phrase.text}
-          />
+          <SectionTranslations phrase={phrase} />
           <SectionSeeAlsos seeAlsos={seeAlsos} onNavigate={onNavigate} />
           {card ? (
             <EditCardStatusButtons cardId={card?.id} />
@@ -138,7 +133,7 @@ export default function BigPhrase({
   )
 }
 
-export function SectionSeeAlsos({ seeAlsos, linkFactory }) {
+export function SectionSeeAlsos({ seeAlsos }) {
   return (
     <>
       <p className="mt-6 text-sm font-bold text-base-content/70">
@@ -150,7 +145,7 @@ export function SectionSeeAlsos({ seeAlsos, linkFactory }) {
             <li key={phrase.id}>
               <Link
                 className="group rounded p-2 hover:bg-primary hover:text-white"
-                href={linkFactory(phrase.lang, phrase.id)}
+                href={links.deckPhrase(phrase.lang, phrase.id)}
               >
                 <TinyPhrase {...phrase} />
               </Link>
