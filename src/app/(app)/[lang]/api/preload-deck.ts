@@ -1,13 +1,9 @@
-import {
-  useQuery,
-  useQueryClient,
-  type QueryClient,
-} from '@tanstack/react-query'
-import type { uuid, UseSBQuery, DeckPrefetch, DeckLoaded } from 'types/main'
+import { QueryKey, UseQueryResult, useQuery } from '@tanstack/react-query'
+import type { uuid, DeckFetched, DeckLoaded } from 'types/main'
 import { mapArray, selects } from 'lib/utils'
 import supabase from 'lib/supabase-client'
 
-async function prefetchDeck(lang: string): Promise<DeckPrefetch> {
+async function fetchDeck(lang: string): Promise<DeckFetched> {
   const { data } = await supabase
     .from('user_deck_plus')
     .select(selects.deck_full())
@@ -17,28 +13,33 @@ async function prefetchDeck(lang: string): Promise<DeckPrefetch> {
   return data
 }
 
-function transformDeckPrefetchToLoaded({
-  cards = [],
+function transformDeckFetchedToLoaded({
+  cards: cardsArray = [],
   ...meta
-}: DeckPrefetch): DeckLoaded {
-  const all_pids: Array<uuid> = cards?.map(c => c.phrase_id)
-  const card = mapArray(cards, 'phrase_id')
+}: DeckFetched): DeckLoaded {
+  const pids: Array<uuid> = cardsArray?.map(c => c.phrase_id)
+  const cards = mapArray(cardsArray, 'phrase_id')
   return {
     meta,
-    all_pids,
-    card,
+    pids,
+    cards,
   }
 }
 
-export function useDeckPreload(lang: string): UseSBQuery<DeckLoaded> {
-  const client = useQueryClient()
-  return useQuery({
+export function useDeckQuery(
+  lang: string,
+  select = null
+): UseQueryResult<DeckLoaded> {
+  return useQuery<DeckLoaded>({
     queryKey: ['deck', lang, 'preload'],
-    queryFn: async ({ queryKey }): Promise<DeckPrefetch | null | any> => {
-      const data: DeckPrefetch = await prefetchDeck(queryKey[1])
-      const result: DeckLoaded = transformDeckPrefetchToLoaded(data)
-      populateDeckCache(result, client)
-
+    queryFn: async ({
+      queryKey,
+    }: {
+      queryKey: QueryKey
+    }): Promise<DeckFetched | null | any> => {
+      const lang = queryKey[1] as string
+      const data: DeckFetched = await fetchDeck(lang)
+      const result: DeckLoaded = transformDeckFetchedToLoaded(data)
       return result
     },
     enabled: typeof lang === 'string' && lang.length === 3,
@@ -47,19 +48,4 @@ export function useDeckPreload(lang: string): UseSBQuery<DeckLoaded> {
     refetchOnMount: false,
     refetchOnWindowFocus: false,
   })
-}
-
-function populateDeckCache(
-  { meta, all_pids, cards }: DeckLoaded,
-  client: QueryClient
-): void {
-  client.setQueryData(['deck', meta.lang, 'meta'], meta)
-  client.setQueryData(['deck', meta.lang, 'all_pids'], all_pids)
-  // for now let's just stash both and see which one is more useful!
-  client.setQueryData(['deck', meta.lang, 'cards'], cards)
-  all_pids.forEach(pid => {
-    client.setQueryData(['deck', meta.lang, 'card', pid], cards[pid])
-  })
-
-  return
 }
