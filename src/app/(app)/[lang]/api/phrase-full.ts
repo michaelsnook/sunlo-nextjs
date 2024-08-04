@@ -1,4 +1,10 @@
-import type { uuid, PhraseFullInsert, UseSBQuery, PhraseFull } from 'types/main'
+import type {
+  uuid,
+  PhraseFullInsert,
+  UseSBQuery,
+  PhraseFull,
+  PhraseInsert,
+} from 'types/main'
 import {
   type QueryClient,
   useQueryClient,
@@ -40,6 +46,7 @@ async function refetchABatchOfPhrases(
     client.setQueryData(
       ['lang', lang, 'all_pids'],
       (prev: Array<string> = []) => {
+        // 'undefined' means don't update anything
         if (!(langPids.length > 0)) return undefined
         const result = new Set([...langPids, ...prev])
         return [...result]
@@ -53,23 +60,21 @@ async function refetchABatchOfPhrases(
 export async function postInsertPhrasesFull(
   values: Array<PhraseFullInsert>
 ): Promise<Array<uuid>> | null {
+  // add an ID to all of them so we don't have to wait for the DB to create them
   const valuesFull = values.map(v => ({ ...v, id: self.crypto.randomUUID() }))
-
-  const phraseInserts = valuesFull.map(p => {
+  // we'll insert the simple phrase objects first (no translations or relations)
+  const phraseInserts: Array<PhraseInsert> = valuesFull.map(p => {
     return { id: p.id, text: p.text, lang: p.lang }
   })
-
-  const { data: phraseInserted } = await supabase
+  const { data: phrasesInserted } = await supabase
     .from('phrase')
     .insert(phraseInserts)
     .select()
     .throwOnError()
+  // they all have to be inserted; a single error will rollback the whole thing
+  console.log(`Inserted phrases`, phrasesInserted)
 
-  console.log(`Inserted phrases`, phraseInserted)
-
-  // an array of phrases has an array of arrays of translations
-  // loop over phrases, find translations array, and loop over them, adding pid
-  // add them all to one insert array
+  // generate the arrays to bulk insert both translations and relations in parallel
   const translationInserts = valuesFull
     .map(phrase => {
       return phrase.translations.map(translation => ({
@@ -87,7 +92,7 @@ export async function postInsertPhrasesFull(
     })
     .flat()
 
-  // now trigger both inserts in parallel
+  // now trigger both inserts
   const translationPromise = supabase
     .from('phrase_translation')
     .insert(translationInserts)
@@ -113,7 +118,10 @@ export async function postInsertPhrasesFull(
       `Inserted phrases and translations but got an error inserting relationships: "${tError.message}"`
     )
   // we're just going to return the pids of what has changed so they can be batch-refetched
-  return phraseInserted.map(p => p.id)
+  return [
+    ...phrasesInserted.map(p => p.id),
+    ...relationInserts.map(r => r.to_phrase_id),
+  ]
 }
 
 export function usePhraseFull(lang: string, pid: uuid): UseSBQuery<PhraseFull> {
