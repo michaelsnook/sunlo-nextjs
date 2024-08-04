@@ -62,7 +62,7 @@ export type CardsMap = {
 export type DeckLoaded = {
   meta: DeckMeta
   all_pids: Array<uuid>
-  card: CardsMap
+  cards: CardsMap
 }
 
 export type CardRow = Tables<'user_card'>
