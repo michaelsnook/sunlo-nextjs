@@ -33,7 +33,7 @@ function transformDeckPrefetchToLoaded({
 export function useDeckPreload(lang: string): UseSBQuery<DeckLoaded> {
   const client = useQueryClient()
   return useQuery({
-    queryKey: ['deck', lang, 'full'],
+    queryKey: ['deck', lang, 'preload'],
     queryFn: async ({ queryKey }): Promise<DeckPrefetch | null | any> => {
       const data: DeckPrefetch = await prefetchDeck(queryKey[1])
       const result: DeckLoaded = transformDeckPrefetchToLoaded(data)
@@ -42,8 +42,10 @@ export function useDeckPreload(lang: string): UseSBQuery<DeckLoaded> {
       return result
     },
     enabled: typeof lang === 'string' && lang.length === 3,
-    staleTime: Infinity,
     gcTime: Infinity,
+    staleTime: Infinity,
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
   })
 }
 
