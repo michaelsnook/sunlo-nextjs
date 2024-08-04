@@ -1,14 +1,14 @@
 'use client'
 
 import { useState } from 'react'
-import { useDeckContext, useLangContext } from './app-data-provider'
+import { useDeckContext, useLanguageContext } from './app-data-provider'
 import MyModal from 'components/modal'
 import TinyPhrase from 'components/tiny-phrase'
 import SectionTranslations from 'components/translations-section'
 // import { SectionSeeAlsos } from 'components/big-phrase'
 
 export default function ClientPage() {
-  const { meta: langMeta, phrase: langItems, pids: langPids } = useLangContext()
+  const { meta: langMeta, phrases: langItems } = useLanguageContext()
   const { meta: deckMeta, cards: deckItems, pids: deckPids } = useDeckContext()
 
   // const { lang, name } = langMeta

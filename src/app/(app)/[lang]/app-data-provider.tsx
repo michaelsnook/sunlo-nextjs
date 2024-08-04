@@ -18,7 +18,7 @@ import { useLanguageQuery } from './api/preload-language'
 const LangContext = createContext<LanguageLoaded | null>(null)
 const DeckContext = createContext<DeckLoaded | null>(null)
 
-export function useLangContext() {
+export function useLanguageContext() {
   const langData = useContext(LangContext)
   if (!langData)
     throw new Error(
