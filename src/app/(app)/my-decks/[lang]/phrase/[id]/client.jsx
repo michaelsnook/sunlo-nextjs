@@ -21,16 +21,8 @@ export default function Client({ pid }) {
           <h2 lang={phrase.lang} className="h3 font-bold">
             <TinyPhrase lang={phrase.lang} text={phrase.text} />
           </h2>
-          <SectionTranslations
-            translations={phrase?.translations}
-            lang={phrase.lang}
-            phraseId={pid}
-            phraseText={phrase.text}
-          />
-          <SectionSeeAlsos
-            seeAlsos={phrase?.see_also_phrases}
-            linkFactory={(lang, pid) => `/my-decks/${lang}/phrase/${pid}`}
-          />
+          <SectionTranslations phrase={phrase} />
+          <SectionSeeAlsos seeAlsos={phrase?.see_also_phrases} />
           {phrase?.card ? (
             <EditCardStatusButtons cardId={phrase?.card?.id} />
           ) : (
