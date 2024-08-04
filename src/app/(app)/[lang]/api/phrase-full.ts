@@ -26,19 +26,19 @@ async function refetchABatchOfPhrases(
     )
   })
 
-  // 2. now go language by language for all_pids and meta
+  // 2. now go language by language for pids and meta
   const phrasesByLang = collateArray(data, 'lang')
   phrasesByLang.keys().forEach((lang: string) => {
     // 1. invalidate this language's meta record
     client.invalidateQueries({ queryKey: ['lang', lang, 'meta'] })
 
-    // 2. do optimistic update on all_pids array
+    // 2. do optimistic update on pids array
     const langPhrases = phrasesByLang[lang]
     const langPids: Array<uuid> = langPhrases.map(phrase => {
       return [phrase.id, ...phrase.relation_pids]
     })
     client.setQueryData(
-      ['lang', lang, 'all_pids'],
+      ['lang', lang, 'pids'],
       (prev: Array<string> = []) => {
         if (!(langPids.length > 0)) return undefined
         const result = new Set([...langPids, ...prev])

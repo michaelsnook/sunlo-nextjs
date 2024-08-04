@@ -8,16 +8,8 @@ import SectionTranslations from 'components/translations-section'
 // import { SectionSeeAlsos } from 'components/big-phrase'
 
 export default function ClientPage() {
-  const {
-    meta: langMeta,
-    phrase: langItems,
-    all_pids: langPids,
-  } = useLangContext()
-  const {
-    meta: deckMeta,
-    card: deckItems,
-    all_pids: deckPids,
-  } = useDeckContext()
+  const { meta: langMeta, phrase: langItems, pids: langPids } = useLangContext()
+  const { meta: deckMeta, cards: deckItems, pids: deckPids } = useDeckContext()
 
   // const { lang, name } = langMeta
 

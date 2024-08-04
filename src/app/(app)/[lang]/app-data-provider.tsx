@@ -4,7 +4,7 @@ import ShowError from 'components/show-error'
 import Loading from 'components/loading'
 import { createContext, useContext, type ReactNode } from 'react'
 import type { DeckLoaded, LanguageLoaded } from 'types/main'
-import { useDeckPreload } from './api/preload-deck'
+import { useDeckQuery } from './api/preload-deck'
 import { useLanguagePreload } from './api/preload-language'
 
 /*
@@ -57,7 +57,7 @@ export function AppDataProvider({
     data: deckData,
     error: deckError,
     isLoading: isDeckLoading,
-  } = useDeckPreload(lang)
+  } = useDeckQuery(lang, (data: DeckLoaded) => data)
 
   // this will mean the database/server is unreachable
   if (langError || deckError)
