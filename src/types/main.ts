@@ -55,12 +55,14 @@ export type DeckMeta = Tables<'user_deck_plus'>
 export type DeckPrefetch = DeckMeta & {
   cards: Array<CardFull>
 }
+// we are not literally using a map, but maybe we should!
+export type CardsMap = {
+  [key: uuid]: CardFull
+}
 export type DeckLoaded = {
   meta: DeckMeta
   all_pids: Array<uuid>
-  card: {
-    [key: string]: CardFull
-  }
+  card: CardsMap
 }
 
 export type CardRow = Tables<'user_card'>

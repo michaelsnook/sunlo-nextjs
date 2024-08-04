@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { useDeckContext, useLangContext } from './app-data-provider'
 import MyModal from 'components/modal'
 import TinyPhrase from 'components/tiny-phrase'
+import SectionTranslations from 'components/translations-section'
+// import { SectionSeeAlsos } from 'components/big-phrase'
 
 export default function ClientPage() {
   const {
@@ -37,9 +39,28 @@ export default function ClientPage() {
       <div className="flex-basis-[20rem] flex flex-shrink flex-row flex-wrap gap-4">
         {deckPids.map(pid => {
           return (
-            <div key={pid} className="basis-lg alert">
-              <p>{deckItems[pid].status.substring(0, 2)}</p>
-              <TinyPhrase {...langItems[pid]} />
+            <div
+              key={pid}
+              tabIndex={0}
+              className="collapse collapse-arrow border border-base-300 bg-base-200"
+            >
+              <div className="collapse-title text-xl font-medium">
+                <div className="inline flex-grow">
+                  {deckItems[pid].status.substring(0, 2)}
+                  {'  '}
+                  <TinyPhrase {...langItems[pid]} />
+                </div>
+              </div>
+              <div className="collapse-content">
+                <SectionTranslations phrase={langItems[pid]} />
+                {/*
+                  <SectionSeeAlsos seeAlsos={langItems[pid].relation_pids} />
+
+                  This won't work (yet) bc the structure of this data has changed.
+                  We will copy this component, modify it for the new structure, and
+                  delete the old one when the pages using it are migrated or retired.
+                */}
+              </div>
             </div>
           )
         })}
@@ -64,4 +85,3 @@ function PlusDetailModal({ children }) {
     </>
   )
 }
-
