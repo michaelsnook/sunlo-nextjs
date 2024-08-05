@@ -27,8 +27,13 @@ export async function fetchLanguage(lang: string): Promise<LanguageLoaded> {
 }
 
 export function useLanguageQuery(
-  select: undefined | any,
-  { lang: altLang }: { lang?: string }
+  {
+    select = undefined,
+    lang: altLang,
+  }: {
+    select?: any
+    lang?: string | null
+  } = { select: undefined, lang: null }
 ) {
   const paramLang = useLang()
   const lang = altLang || paramLang
