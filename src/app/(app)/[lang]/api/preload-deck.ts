@@ -1,24 +1,19 @@
-import { QueryKey, UseQueryResult, useQuery } from '@tanstack/react-query'
-import type { DeckFetched, DeckLoaded, pids } from 'types/main'
+import { useQuery } from '@tanstack/react-query'
+import type { CardsMap, DeckFetched, DeckLoaded, pids } from 'types/main'
 import { mapArray, selects } from 'lib/utils'
 import supabase from 'lib/supabase-client'
+import { useLang } from '../app-data-provider'
 
-async function fetchDeck(lang: string): Promise<DeckFetched> {
+async function fetchDeck(lang: string): Promise<DeckLoaded> {
   const { data } = await supabase
     .from('user_deck_plus')
     .select(selects.deck_full())
     .eq('lang', lang)
     .maybeSingle()
     .throwOnError()
-  return data
-}
-
-function transformDeckFetchedToLoaded({
-  cards: cardsArray = [],
-  ...meta
-}: DeckFetched): DeckLoaded {
+  const { cards: cardsArray, ...meta }: DeckFetched = data
   const pids: pids = cardsArray?.map(c => c.phrase_id)
-  const cards = mapArray(cardsArray, 'phrase_id')
+  const cards: CardsMap = mapArray(cardsArray, 'phrase_id')
   return {
     meta,
     pids,
@@ -27,26 +22,20 @@ function transformDeckFetchedToLoaded({
 }
 
 export function useDeckQuery(
-  lang: string,
-  select = null
-): UseQueryResult<DeckLoaded> {
-  return useQuery<DeckLoaded>({
+  select: undefined | any,
+  { lang: altLang }: { lang?: string }
+) {
+  const paramLang = useLang()
+  const lang = altLang || paramLang
+  return useQuery({
     queryKey: ['deck', lang, 'loaded'],
-    queryFn: async ({
-      queryKey,
-    }: {
-      queryKey: QueryKey
-    }): Promise<DeckFetched | null | any> => {
-      const lang = queryKey[1] as string
-      const data: DeckFetched = await fetchDeck(lang)
-      const result: DeckLoaded = transformDeckFetchedToLoaded(data)
-      return result
+    queryFn: () => {
+      return fetchDeck(lang)
     },
     select,
     enabled: typeof lang === 'string' && lang.length === 3,
-    gcTime: Infinity,
-    staleTime: Infinity,
-    refetchOnMount: false,
+    gcTime: 120_000,
+    staleTime: 120_000,
     refetchOnWindowFocus: false,
   })
 }
