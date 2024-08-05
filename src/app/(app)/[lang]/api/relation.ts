@@ -7,9 +7,10 @@ import {
 import supabase from 'lib/supabase-client'
 import { RelationInsert, RelationRow } from 'types/main'
 
-export function useInsertRelation(
-  lang: string
-): UseMutationResult<Array<RelationRow>, PostgrestError> {
+export function useInsertRelation(): UseMutationResult<
+  Array<RelationRow>,
+  PostgrestError
+> {
   const client = useQueryClient()
   return useMutation({
     mutationFn: async (values: RelationInsert) => {
@@ -21,8 +22,8 @@ export function useInsertRelation(
       if (error) throw error
       return data
     },
-    onSuccess: (rows: Array<RelationRow>) => {
-      client.invalidateQueries()
+    onSuccess: () => {
+      client.invalidateQueries({ queryKey: ['language'] })
     },
   })
 }

@@ -9,10 +9,10 @@ import { useLanguageQuery } from './api/preload-language'
 
 /*
 	The context and provider contain these 4 moving parts:
-  1. the context itself, which keeps track of the value (x2)
+  1. the context itself, which keeps track of the values (x2)
   2. the hook we export to access the context data throughout the app (x2)
   3. the useQuery which provides data to the context (x2)
-	4. the provider that wraps this layout segment (just 1)
+	4. the provider that wraps this layout segment
 */
 
 const LangContext = createContext<LanguageLoaded | null>(null)
@@ -20,24 +20,16 @@ const DeckContext = createContext<DeckLoaded | null>(null)
 
 export function useLanguageContext() {
   const langData = useContext(LangContext)
-  if (!langData)
-    throw new Error(
-      `LangContext: No value provided (did you wrap the provider?`
-    )
-
+  if (!langData) throw new Error(`No LangContext: did you wrap the provider?`)
   return langData
 }
 
 export function useDeckContext() {
   const deckData = useContext(DeckContext)
   // @TODO: this should probably 404?
-  if (!deckData)
-    throw new Error(
-      'DeckContext: No value provided (did you wrap the provider?)'
-    )
+  if (!deckData) throw new Error('No DeckContext: did you wrap the provider?')
   return deckData
 }
-
 export function AppDataProvider({
   lang,
   children,

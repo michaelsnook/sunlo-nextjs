@@ -4,7 +4,7 @@ import supabase from 'lib/supabase-client'
 
 export async function postInsertPhrasesFull(
   values: Array<PhraseFullInsert>
-): Promise<void> | null {
+): Promise<void> {
   const valuesFull = values.map(v => ({ ...v, id: self.crypto.randomUUID() }))
 
   const phraseInserts = valuesFull.map(p => {
@@ -64,9 +64,7 @@ export async function postInsertPhrasesFull(
     throw new Error(
       `Inserted phrases and translations but got an error inserting relationships: "${tError.message}"`
     )
-  // we're just going to return the pids of what has changed so they can be batch-refetched
-  // return phraseInserted.map(p => p.id)
-  // CORRECTION we're just going to refetch all the languages
+
   return
 }
 
@@ -78,31 +76,9 @@ export function useInsertPhrasesFull() {
       postInsertPhrasesFull(values),
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ['language'] })
-      // refetchABatchOfPhrases(client, data)
     },
     // TODO: we will have some weirdnesses if the post happens and the phrases get inserted but
     // one of the subsequent tables fails.
     onError: () => {},
   })
 }
-
-/*
-We're not doing these smart updates anymore,
-... We're just refetching everything.
-
-async function refetchABatchOfPhrases(
-  client: QueryClient,
-  pids: pids
-): Promise<void> {
-  const { data: phrasesArray } = await supabase
-    .from('phrase_plus')
-    .select(selects.phrase_full())
-    .in('id', pids)
-    .throwOnError()
-
-  // TODO stop assuming they'll be the same; get lang from context?
-  const lang = phrasesArray[0].lang
-  client.invalidateQueries({ queryKey: ['lang', lang, 'loaded'] })
-  return
-}
-*/
