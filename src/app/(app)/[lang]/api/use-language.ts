@@ -9,26 +9,22 @@ import {
 import { useLanguageQuery } from './preload-language'
 import { UseQueryResult } from '@tanstack/react-query'
 
-export const useLanguageMeta = (lang: string) =>
-  useLanguageQuery(
+export const useLanguageMeta = (lang?: string) =>
+  useLanguageQuery((data: LanguageLoaded) => data.meta, {
     lang,
-    (data: LanguageLoaded) => data.meta
-  ) as UseQueryResult<LanguageMeta>
+  }) as UseQueryResult<LanguageMeta>
 
-export const useLanguagePids = (lang: string) =>
-  useLanguageQuery(
+export const useLanguagePids = (lang?: string) =>
+  useLanguageQuery((data: LanguageLoaded) => data.pids, {
     lang,
-    (data: LanguageLoaded) => data.pids
-  ) as UseQueryResult<pids>
+  }) as UseQueryResult<pids>
 
-export const useLanguagePhrases = (lang: string) =>
-  useLanguageQuery(
+export const useLanguagePhrases = (lang?: string) =>
+  useLanguageQuery((data: LanguageLoaded) => data.phrases, {
     lang,
-    (data: LanguageLoaded) => data.phrases
-  ) as UseQueryResult<PhrasesMap>
+  }) as UseQueryResult<PhrasesMap>
 
-export const usePhrase = (lang: string, pid: uuid) =>
-  useLanguageQuery(
+export const usePhrase = (pid: uuid, lang?: string) =>
+  useLanguageQuery((data: LanguageLoaded) => data.phrases[pid], {
     lang,
-    (data: LanguageLoaded) => data.phrases[pid]
-  ) as UseQueryResult<PhraseFull>
+  }) as UseQueryResult<PhraseFull>

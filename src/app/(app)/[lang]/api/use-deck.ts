@@ -9,23 +9,22 @@ import {
 import { useDeckQuery } from './preload-deck'
 import { UseQueryResult } from '@tanstack/react-query'
 
-export const useDeckMeta = (lang: string) =>
-  useDeckQuery(
+export const useDeckMeta = (lang?: string) =>
+  useDeckQuery((data: DeckLoaded) => data.meta, {
     lang,
-    (data: DeckLoaded) => data.meta
-  ) as UseQueryResult<DeckMeta>
+  }) as UseQueryResult<DeckMeta>
 
-export const useDeckPids = (lang: string) =>
-  useDeckQuery(lang, (data: DeckLoaded) => data.pids) as UseQueryResult<pids>
-
-export const useDeckCards = (lang: string) =>
-  useDeckQuery(
+export const useDeckPids = (lang?: string) =>
+  useDeckQuery((data: DeckLoaded) => data.pids, {
     lang,
-    (data: DeckLoaded) => data.cards
-  ) as UseQueryResult<CardsMap>
+  }) as UseQueryResult<pids>
 
-export const useCard = (lang: string, pid: uuid) =>
-  useDeckQuery(
+export const useDeckCards = (lang?: string) =>
+  useDeckQuery((data: DeckLoaded) => data.cards, {
     lang,
-    (data: DeckLoaded) => data.cards[pid]
-  ) as UseQueryResult<CardFull>
+  }) as UseQueryResult<CardsMap>
+
+export const useCard = (pid: uuid, lang?: string) =>
+  useDeckQuery((data: DeckLoaded) => data.cards[pid], {
+    lang,
+  }) as UseQueryResult<CardFull>
