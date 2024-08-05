@@ -3,10 +3,11 @@
 import ShowError from 'components/show-error'
 import Loading from 'components/loading'
 import { createContext, useContext, type ReactNode } from 'react'
-import type { DeckLoaded, LanguageLoaded } from 'types/main'
+import type { DeckLoaded, LanguageLoaded, uuid } from 'types/main'
 import { useDeckQuery } from './api/preload-deck'
 import { useLanguageQuery } from './api/preload-language'
 import { useParams } from 'next/navigation'
+import { UseQueryResult } from '@tanstack/react-query'
 
 /*
 	The context and provider contain these 4 moving parts:
@@ -26,11 +27,37 @@ export function useLanguageContext() {
   return langData
 }
 
+export function useLanguageMeta() {
+  return useLanguageContext()?.meta
+}
+export function useLanguagePids() {
+  return useLanguageContext()?.pids
+}
+export function useLanguagePhrases() {
+  return useLanguageContext()?.phrases
+}
+export function useLanguagePhrase(pid: uuid) {
+  return useLanguageContext()?.phrases[pid]
+}
+
 export function useDeckContext() {
   const deckData = useContext(DeckContext)
   // @TODO: this should probably 404?
   if (!deckData) throw new Error('No DeckContext: did you wrap the provider?')
   return deckData
+}
+
+export function useDeckMeta() {
+  return useDeckContext()?.meta
+}
+export function useDeckPids() {
+  return useDeckContext()?.pids
+}
+export function useDeckCards() {
+  return useDeckContext()?.cards
+}
+export function useDeckCard(pid: uuid) {
+  return useDeckContext()?.cards[pid]
 }
 
 export function useLang() {
@@ -51,12 +78,12 @@ export function AppDataProvider({
     data: langData,
     error: langError,
     isLoading: isLangLoading,
-  } = useLanguageQuery(lang, (data: LanguageLoaded) => data)
+  } = useLanguageQuery() as UseQueryResult<LanguageLoaded>
   const {
     data: deckData,
     error: deckError,
     isLoading: isDeckLoading,
-  } = useDeckQuery(lang, (data: DeckLoaded) => data)
+  } = useDeckQuery() as UseQueryResult<DeckLoaded>
 
   // this will mean the database/server is unreachable
   if (langError || deckError)
