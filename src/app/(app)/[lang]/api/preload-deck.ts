@@ -22,8 +22,13 @@ async function fetchDeck(lang: string): Promise<DeckLoaded> {
 }
 
 export function useDeckQuery(
-  select: undefined | any,
-  { lang: altLang }: { lang?: string }
+  {
+    select = undefined,
+    lang: altLang,
+  }: {
+    select?: any
+    lang?: string | null
+  } = { select: undefined, lang: null }
 ) {
   const paramLang = useLang()
   const lang = altLang || paramLang
