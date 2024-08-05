@@ -6,6 +6,7 @@ import { createContext, useContext, type ReactNode } from 'react'
 import type { DeckLoaded, LanguageLoaded } from 'types/main'
 import { useDeckQuery } from './api/preload-deck'
 import { useLanguageQuery } from './api/preload-language'
+import { useParams } from 'next/navigation'
 
 /*
 	The context and provider contain these 4 moving parts:
@@ -15,12 +16,13 @@ import { useLanguageQuery } from './api/preload-language'
 	4. the provider that wraps this layout segment
 */
 
-const LangContext = createContext<LanguageLoaded | null>(null)
+const LanguageContext = createContext<LanguageLoaded | null>(null)
 const DeckContext = createContext<DeckLoaded | null>(null)
 
 export function useLanguageContext() {
-  const langData = useContext(LangContext)
-  if (!langData) throw new Error(`No LangContext: did you wrap the provider?`)
+  const langData = useContext(LanguageContext)
+  if (!langData)
+    throw new Error(`No LanguageContext: did you wrap the provider?`)
   return langData
 }
 
@@ -30,6 +32,11 @@ export function useDeckContext() {
   if (!deckData) throw new Error('No DeckContext: did you wrap the provider?')
   return deckData
 }
+
+export function useLang() {
+  return useParams<{ lang: string }>()?.lang
+}
+
 export function AppDataProvider({
   lang,
   children,
@@ -61,10 +68,10 @@ export function AppDataProvider({
     )
 
   return (
-    <LangContext.Provider value={langData}>
+    <LanguageContext.Provider value={langData}>
       <DeckContext.Provider value={deckData}>
         {isLangLoading || isDeckLoading ? <Loading /> : children}
       </DeckContext.Provider>
-    </LangContext.Provider>
+    </LanguageContext.Provider>
   )
 }
