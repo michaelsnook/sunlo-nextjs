@@ -52,11 +52,16 @@ const fetchDeck = async (lang: string): Promise<Deck> => {
     uid: data.uid,
     id: data.id,
     lang: data.lang,
-    all_phrase_ids: rawCards.map(card => card.phrase_id),
-    cards: {
-      active: rawCards.filter(({ status }) => status === 'active'),
-      learned: rawCards.filter(({ status }) => status === 'learned'),
-      skipped: rawCards.filter(({ status }) => status === 'skipped'),
+    pids: {
+      active: rawCards
+        .filter(({ status }) => status === 'active')
+        .map(c => c.phrase_id),
+      learned: rawCards
+        .filter(({ status }) => status === 'learned')
+        .map(c => c.phrase_id),
+      skipped: rawCards
+        .filter(({ status }) => status === 'skipped')
+        .map(c => c.phrase_id),
     },
   }
 
