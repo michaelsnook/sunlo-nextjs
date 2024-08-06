@@ -1,20 +1,16 @@
 'use client'
 
 import { useState } from 'react'
-import { useDeckContext, useLanguageContext } from './app-data-provider'
 import MyModal from 'components/modal'
 import TinyPhrase from 'components/tiny-phrase'
 import SectionTranslations from 'components/translations-section'
+import { useDeckData } from './api/preload-deck'
+import { useLanguageData } from './api/preload-language'
 // import { SectionSeeAlsos } from 'components/big-phrase'
 
 export default function ClientPage() {
-  const { meta: langMeta, phrases: langItems } = useLanguageContext()
-  const { meta: deckMeta, cards: deckItems, pids: deckPids } = useDeckContext()
-
-  // const { lang, name } = langMeta
-
-  if (deckMeta.lang !== langMeta.lang)
-    throw new Error("Somehow the Deck and Language language don't match")
+  const { meta: langMeta, phrases: langItems } = useLanguageData()
+  const { meta: deckMeta, cards: deckItems, pids: deckPids } = useDeckData()
 
   return (
     <div className="space-y-4">
