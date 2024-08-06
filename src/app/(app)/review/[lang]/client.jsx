@@ -7,7 +7,7 @@ import { useDeck } from 'app/data/hooks'
 import Loading from 'components/loading'
 import SuccessCheckmark from 'components/svg-components'
 import CardInner from './card'
-import { useDeckData } from 'app/(app)/[lang]/api/preload-deck'
+import { useDeckData } from 'lib/hooks'
 
 function shuffle(array) {
   if (!array?.length > 0) return []

@@ -4,8 +4,8 @@ import { useState } from 'react'
 import MyModal from 'components/modal'
 import TinyPhrase from 'components/tiny-phrase'
 import SectionTranslations from 'components/translations-section'
-import { useDeckData } from './api/preload-deck'
-import { useLanguageData } from './api/preload-language'
+import { useDeckData } from 'lib/hooks'
+import { useLanguageData } from 'lib/hooks'
 // import { SectionSeeAlsos } from 'components/big-phrase'
 
 export default function ClientPage() {

@@ -49,10 +49,3 @@ export function useLanguageQuery(
     refetchOnWindowFocus: false,
   })
 }
-
-// access specific data paths directly:
-// const languageMeta = useLanguageData()?.meta
-// const phrase = useLanguageData()?.phrases[pid]
-export function useLanguageData(lang = '') {
-  return useLanguageQuery({ lang })?.data
-}

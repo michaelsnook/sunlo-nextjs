@@ -44,10 +44,3 @@ export function useDeckQuery(
     refetchOnWindowFocus: false,
   })
 }
-
-// access specific data paths directly:
-// const deckMeta = useDeckData()?.meta
-// const card = useDeckData()?.cards[pid]
-export function useDeckData(lang = '') {
-  return useDeckQuery({ lang })?.data
-}
