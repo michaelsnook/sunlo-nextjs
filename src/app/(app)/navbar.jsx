@@ -6,7 +6,7 @@ import {
 } from 'next/navigation'
 import { useState } from 'react'
 
-export default function Navbar({ title, children }) {
+export default function Navbar({ title, children = null }) {
   // const segments = useSelectedLayoutSegments()
   const router = useRouter()
   const [isContextMenuOpen, setIsContextMenuOpen] = useState()

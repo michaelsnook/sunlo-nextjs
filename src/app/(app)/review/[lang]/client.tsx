@@ -8,9 +8,10 @@ import Loading from 'components/loading'
 import SuccessCheckmark from 'components/svg-components'
 import CardInner from './card'
 import { useDeckData } from 'lib/hooks'
+import { pids } from 'types/main'
 
-function shuffle(array) {
-  if (!array?.length > 0) return []
+function shuffle(array: Array<any>): Array<any> {
+  if (!(array?.length > 0)) return []
   for (let currentIndex = array.length - 1; currentIndex > 0; currentIndex--) {
     const randomIndex = Math.floor(Math.random() * (currentIndex + 1))
     let temp = array[currentIndex]
@@ -30,19 +31,20 @@ const Empty = () => (
 export default function ClientPage({ lang }) {
   const { data, isLoading } = useDeck(lang)
   // all the phrase_ids (pids) in the deck
-  const pids = useDeckData()?.pids
+  const pids = useDeckData(lang)?.pids
+
   // @@TODO turn these into pids with filters, e.g.
   // queryKey: ['deck', lang, 'pids', { filter }]
   // or just memoize it here...
-  const reviewCards = useMemo(() => shuffle(data?.cards?.active), [data])
+  const reviewables: pids = useMemo(() => shuffle(data?.pids?.active), [data])
   const [cardIndex, setCardIndex] = useState(0)
   const [reviews, setReviews] = useState([])
 
   if (isLoading) return <Loading />
-  if (!pids.length) return <Empty />
+  if (!pids?.length) return <Empty />
 
-  const canBackup = cardIndex > 0
-  const canAdvance = cardIndex < reviewCards.length - 1
+  const canBackup: boolean = cardIndex > 0
+  const canAdvance: boolean = cardIndex < reviewables.length - 1
   const gobackaCard = () => setCardIndex(i => i - 1)
   const advanceCard = () => setCardIndex(i => i + 1)
   // This is different from advanceCard because it only wants to move forward
@@ -61,7 +63,7 @@ export default function ClientPage({ lang }) {
     <div className="grid h-full gap-8 pt-10 @lg:pt-0">
       <Navbar
         title={`Reviewing ${languages[lang]} (${cardIndex + 1} out of ${
-          reviewCards.length
+          reviewables.length
         })`}
       />
       <div className="absolute bottom-10 left-0 right-0 flex justify-center gap-4 @lg:static">
@@ -80,19 +82,19 @@ export default function ClientPage({ lang }) {
           Next card
         </button>
       </div>
-      {cardIndex < reviewCards.length ? null : (
+      {cardIndex < reviewables.length ? null : (
         <div className="mx-auto my-10 flex flex-row place-items-center gap-6">
           <SuccessCheckmark />
           <p>All done for the day, nice work!</p>
         </div>
       )}
-      {reviewCards.map(c => (
+      {reviewables.map(pid => (
         <CardInner
-          key={c.id}
-          card={c}
+          key={pid}
+          pid={pid}
           nextCard={nextCard}
           addReview={addReview}
-          hidden={c.id !== reviewCards[cardIndex]?.id}
+          hidden={pid !== reviewables[cardIndex]}
         />
       ))}
     </div>

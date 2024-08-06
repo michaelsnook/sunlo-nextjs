@@ -1,7 +1,9 @@
+import { useLanguageData } from 'lib/hooks'
 import TinyPhrase from './tiny-phrase'
 import { cn } from 'lib/utils'
+import { PhraseFull } from 'types/main'
 
-function readStatus(status) {
+function readStatus(status: string) {
   if (!status) return { emoji: '', classString: '' }
   if (status === 'learned')
     return {
@@ -16,7 +18,13 @@ function readStatus(status) {
   return { emoji: `❌ `, classString: 'hover:bg-base-300' }
 }
 
-export default function Card({ status, phrase }) {
+export default function Card({
+  status,
+  phrase,
+}: {
+  status: string
+  phrase: PhraseFull
+}) {
   const { emoji, classString } = readStatus(status)
   // console.log(`card phrase is:`, phrase)
 

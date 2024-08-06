@@ -7,38 +7,49 @@ import ShowError from 'components/show-error'
 import Loading from 'components/loading'
 import { toast } from 'react-hot-toast'
 import { cn } from 'lib/utils'
+import { useDeckData, useLanguageData } from 'lib/hooks'
+import { Tables, TablesInsert } from 'types/supabase'
+import { uuid } from 'types/main'
 
-const postReview = async ({ card_id, score, prevId }) => {
+const postReview = async ({
+  card_id,
+  score,
+  prevId,
+}): Promise<Tables<'user_card_review'>> => {
   if (!card_id || !score) throw new Error('Invalid review; cannot log')
-  const id = prevId ? { id: prevId } : {}
-  const submitData = {
+
+  let submitData: TablesInsert<'user_card_review'> = {
     score,
     card_id,
-    ...id,
   }
+  if (prevId) submitData['id'] = prevId
 
   // console.log(`About to post the review,`, submitData, prevId)
 
-  const { data, error } = await supabase
+  const { data } = await supabase
     .from('user_card_review')
     .upsert(submitData)
     .select()
+    .throwOnError()
 
-  if (error) throw error
   // console.log(`We posted the review,`, data, error)
   return data[0]
 }
 
-export default function CardInner({ card, nextCard, addReview, hidden }) {
+export default function CardInner({ pid, nextCard, addReview, hidden }) {
   const [isRevealed, setIsRevealed] = useState(false)
   const reveal = () => {
     setIsRevealed(true)
   }
+  const lps = useLanguageData()?.phrases
+  const phrase = useLanguageData()?.phrases?.[pid]
+  const card_id = useDeckData()?.cards?.[pid]?.id
+  console.log(`Trying this agaib`, pid, card_id, phrase, lps)
 
   const { data, error, mutate, isPending } = useMutation({
-    mutationFn: submission =>
-      postReview({ ...submission, card_id: card.id, prevId: data?.id }),
-    onSuccess: result => {
+    mutationFn: ({ score, prevId }: { score: number; prevId?: string }) =>
+      postReview({ score, card_id, prevId: data?.id }),
+    onSuccess: (result: Tables<'user_card_review'>) => {
       // console.log(`onSuccess firing with`, result)
       addReview(result)
       if (result.score === -2)
@@ -53,12 +64,13 @@ export default function CardInner({ card, nextCard, addReview, hidden }) {
     },
   })
 
+  const prevId: uuid = data?.id || ''
   const btnClasses = `grow basis-44`
 
   return hidden ? null : (
     <div className="card-white">
       <div className="flex flex-col justify-center gap-8 text-center">
-        <h2 className="h2 text-center">{card?.phrase?.text}</h2>
+        <h2 className="h2 text-center">{phrase?.text}</h2>
         {isPending ? (
           <div className="absolute bottom-0 left-0 right-0 top-0 content-center bg-base-100/70">
             <Loading />
@@ -72,16 +84,13 @@ export default function CardInner({ card, nextCard, addReview, hidden }) {
         {!isRevealed ? (
           <div className="flex justify-center gap-4">
             <button className="btn btn-success" onClick={reveal}>
-              Yes I know it
-            </button>
-            <button className="btn btn-warning" onClick={reveal}>
-              I don&apos;t know it
+              Show answer
             </button>
           </div>
         ) : (
           <>
             <div>
-              {card.phrase.translations.map(t => (
+              {phrase?.translations.map(t => (
                 <p key={t.id}>&ldquo;{t.text}&rdquo;</p>
               ))}
             </div>
@@ -92,7 +101,7 @@ export default function CardInner({ card, nextCard, addReview, hidden }) {
                   'btn btn-success',
                   data ? 'btn-outline' : ''
                 )}
-                onClick={() => mutate({ score: 2 })}
+                onClick={() => mutate({ score: 2, prevId })}
                 disabled={data?.score === 2}
               >
                 Nailed it!
@@ -103,7 +112,7 @@ export default function CardInner({ card, nextCard, addReview, hidden }) {
                   'btn btn-info',
                   data ? 'btn-outline' : ''
                 )}
-                onClick={() => mutate({ score: 1 })}
+                onClick={() => mutate({ score: 1, prevId })}
                 disabled={data?.score === 1}
               >
                 Got it
@@ -114,7 +123,7 @@ export default function CardInner({ card, nextCard, addReview, hidden }) {
                   'btn btn-warning',
                   data ? 'btn-outline' : ''
                 )}
-                onClick={() => mutate({ score: -1 })}
+                onClick={() => mutate({ score: -1, prevId })}
                 disabled={data?.score === -1}
               >
                 It was hard
@@ -125,7 +134,7 @@ export default function CardInner({ card, nextCard, addReview, hidden }) {
                   'btn btn-error',
                   data ? 'btn-outline' : ''
                 )}
-                onClick={() => mutate({ score: -2 })}
+                onClick={() => mutate({ score: -2, prevId })}
                 disabled={data?.score === -2}
               >
                 Didn&apos;t get it

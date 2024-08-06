@@ -133,11 +133,10 @@ export type PhraseCardTranslationsInsertInput = {
 }
 
 export type Deck = DeckStub & {
-  all_phrase_ids: pids
-  cards: {
-    active: any[]
-    learned: any[]
-    skipped: any[]
+  pids: {
+    active: pids
+    learned: pids
+    skipped: pids
   }
 }
 

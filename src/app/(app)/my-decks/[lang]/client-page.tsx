@@ -9,6 +9,8 @@ import Card from 'components/card'
 import Browse from './browse'
 import Link from 'next/link'
 import { cn } from 'lib/utils'
+import { useDeckData, useLanguageData } from 'lib/hooks'
+import { uuid } from 'types/main'
 
 const Empty = () => (
   <p className="my-4 text-base-content/70">🧄 No cards here 🥦 (yet)</p>
@@ -32,12 +34,15 @@ const BrandNew = () => {
 }
 export default function ClientPage({ lang }) {
   const [tab, setTab] = useState('active')
-  const { isLoading, data: deckData, error } = useDeck(lang)
+  const { data: deckData, error } = useDeck(lang)
+  const pids = useDeckData()?.pids || null
+  const phrases = useLanguageData()?.phrases
+  const cards = useDeckData()?.cards
 
-  if (isLoading) return <Loading />
+  if (pids === null) return <Loading />
   if (error) return <ShowError>{error.message}</ShowError>
 
-  if (!deckData?.cards) return <BrandNew />
+  if (!pids.length) return <BrandNew />
 
   // console.log(`deck data client page`, deckData)
   // at this point data is loaded, the deck is present, there are
@@ -73,17 +78,17 @@ export default function ClientPage({ lang }) {
       </div>
       <div>
         {tab === 'browse' ? (
-          <Browse disable={deckData.all_phrase_ids} />
-        ) : !deckData?.cards[tab]?.length ? (
+          <Browse disable={pids} />
+        ) : !deckData?.pids && !deckData?.pids[tab]?.length ? (
           <Empty />
         ) : (
-          deckData.cards[tab].map(c => (
+          deckData.pids[tab].map((pid: uuid) => (
             <Link
-              href={`/my-decks/${lang}/phrase/${c.phrase_id}`}
-              key={c.id}
+              href={`/my-decks/${lang}/phrase/${pid}`}
+              key={pid}
               className="my-2"
             >
-              <Card {...c} />
+              <Card status={cards[pid].status} phrase={phrases[pid]} />
             </Link>
           ))
         )}
