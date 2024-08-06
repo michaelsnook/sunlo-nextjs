@@ -81,16 +81,6 @@ export function useDeck(deckLang: string): UseSBQuery<Deck> {
   })
 }
 
-export function usePhrase(id: uuid): UseSBQuery<Phrase> {
-  return useQuery({
-    queryKey: ['phrase', id],
-    queryFn: async ({ queryKey }) => getPhraseDetails(queryKey[1]),
-    enabled: !!id,
-    staleTime: Infinity,
-    gcTime: Infinity,
-  })
-}
-
 export function useProfile(): UseSBQuery<Profile> {
   const router = useRouter()
   const pathname = usePathname()

@@ -4,31 +4,30 @@ import { AddCardButtonsSection, SectionSeeAlsos } from 'components/big-phrase'
 import EditCardStatusButtons from 'components/edit-status-buttons'
 import SectionTranslations from 'components/translations-section'
 import TinyPhrase from 'components/tiny-phrase'
-import { usePhrase } from 'app/data/hooks'
 import Loading from 'components/loading'
-import ShowError from 'components/show-error'
+import { useDeckData, useLanguageData } from 'lib/hooks'
 
 export default function Client({ pid }) {
-  const { data: phrase, error, isLoading } = usePhrase(pid)
+  const phrase = useLanguageData()?.phrases[pid] || null
+  const card = useDeckData()?.cards[pid] || null
 
-  return isLoading ? (
+  return !phrase ? (
     <Loading />
   ) : (
     <main className="card-white">
-      <ShowError>{error?.message}</ShowError>
       {!phrase ? null : (
         <>
           <h2 lang={phrase.lang} className="h3 font-bold">
             <TinyPhrase lang={phrase.lang} text={phrase.text} />
           </h2>
           <SectionTranslations phrase={phrase} />
-          <SectionSeeAlsos seeAlsos={phrase?.see_also_phrases} />
-          {phrase?.card ? (
+          <SectionSeeAlsos seeAlsos={phrase?.relation_pids} />
+          {card ? (
             <EditCardStatusButtons pid={phrase?.id} />
           ) : (
             <AddCardButtonsSection
               phrase_id={pid}
-              user_deck_id={phrase?.card?.user_deck_id}
+              lang={phrase.lang}
               onClose={() => {}}
             />
           )}

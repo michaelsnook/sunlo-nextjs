@@ -9,8 +9,9 @@ import Card from 'components/card'
 import Browse from './browse'
 import Link from 'next/link'
 import { cn } from 'lib/utils'
-import { useDeckData, useLanguageData } from 'lib/hooks'
+import { useLanguageData } from 'lib/hooks'
 import { uuid } from 'types/main'
+import { useDeckQuery } from 'app/(app)/[lang]/api/preload-deck'
 
 const Empty = () => (
   <p className="my-4 text-base-content/70">🧄 No cards here 🥦 (yet)</p>
@@ -35,14 +36,14 @@ const BrandNew = () => {
 export default function ClientPage({ lang }) {
   const [tab, setTab] = useState('active')
   const { data: deckData, error } = useDeck(lang)
-  const pids = useDeckData()?.pids || null
   const phrases = useLanguageData()?.phrases
-  const cards = useDeckData()?.cards
+  const deckQuery = useDeckQuery(lang)
 
-  if (pids === null) return <Loading />
   if (error) return <ShowError>{error.message}</ShowError>
-
-  if (!pids.length) return <BrandNew />
+  if (deckQuery.isLoading) return <Loading />
+  if (!deckQuery?.data?.pids?.length) return <BrandNew />
+  const pids = deckQuery?.data?.pids
+  const cards = deckQuery?.data?.cards
 
   // console.log(`deck data client page`, deckData)
   // at this point data is loaded, the deck is present, there are
@@ -88,7 +89,7 @@ export default function ClientPage({ lang }) {
               key={pid}
               className="my-2"
             >
-              <Card status={cards[pid].status} phrase={phrases[pid]} />
+              <Card status={cards[pid].status} phrase={phrases?.[pid]} />
             </Link>
           ))
         )}
