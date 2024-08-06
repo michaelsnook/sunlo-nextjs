@@ -7,7 +7,7 @@ import type {
 } from 'types/main'
 import { mapArray, selects } from 'lib/utils'
 import supabase from 'lib/supabase-client'
-import { useLang } from '../app-data-provider'
+import { useLang } from 'lib/hooks'
 
 export async function fetchLanguage(lang: string): Promise<LanguageLoaded> {
   const { data } = await supabase

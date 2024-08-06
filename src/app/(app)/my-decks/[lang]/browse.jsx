@@ -7,10 +7,11 @@ import Loading from 'components/loading'
 import ShowError from 'components/show-error'
 import { useLanguageDetails } from 'app/data/hooks'
 import BigPhrase from 'components/big-phrase'
+import { useLang } from 'lib/hooks'
 
-export default function Browse({ lang, disable }) {
+export default function Browse({ disable }) {
   const [activePhraseId, setActivePhraseId] = useState()
-
+  const lang = useLang()
   const { data, error, isLoading } = useLanguageDetails(lang)
   if (isLoading) return <Loading />
   if (error) return <ShowError>{error.message}</ShowError>

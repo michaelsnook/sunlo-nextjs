@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import type { CardsMap, DeckFetched, DeckLoaded, pids } from 'types/main'
 import { mapArray, selects } from 'lib/utils'
 import supabase from 'lib/supabase-client'
-import { useLang } from '../app-data-provider'
+import { useLang } from 'lib/hooks'
 
 async function fetchDeck(lang: string): Promise<DeckLoaded> {
   const { data } = await supabase
