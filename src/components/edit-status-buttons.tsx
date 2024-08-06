@@ -1,6 +1,6 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import supabase from 'lib/supabase-client'
-import { useDeckData } from 'app/(app)/[lang]/api/preload-deck'
+import { useDeckData } from 'lib/hooks'
 import { toast } from 'react-hot-toast'
 import { cn } from 'lib/utils'
 
