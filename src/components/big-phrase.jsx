@@ -2,7 +2,6 @@
 
 import Loading from 'components/loading'
 import ShowError from 'components/show-error'
-import { usePhrase } from 'app/data/hooks'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { postNewCard } from 'app/(app)/my-decks/[lang]/new-card/add-card'
 import { toast } from 'react-hot-toast'
@@ -11,21 +10,24 @@ import SectionTranslations from './translations-section'
 import TinyPhrase from './tiny-phrase'
 import Link from 'next/link'
 import { cn, links } from 'lib/utils'
+import { useDeckData, useLanguageData } from 'lib/hooks'
 
-export const AddCardButtonsSection = ({ phrase_id, user_deck_id, onClose }) => {
+export const AddCardButtonsSection = ({ phrase_id, lang, onClose }) => {
   const queryClient = useQueryClient()
+  const meta = useDeckData(lang)?.meta
   const makeNewCard = useMutation({
     mutationFn: status =>
       postNewCard({
         status,
         phrase_id,
-        user_deck_id,
+        user_deck_id: meta?.id,
       }),
     onSuccess: data => {
       setTimeout(async () => {
         onClose()
       }, 5000)
       toast.success(`Card successfully added with status: "${data.status}"`)
+      queryClient.invalidateQueries({ queryKey: ['deck', lang, 'loaded'] })
       queryClient.setQueryData(['card', data?.id], data)
       queryClient.invalidateQueries({
         queryKey: ['user_deck'],
@@ -90,10 +92,11 @@ export default function BigPhrase({
   onNavigate,
   noBox,
 }) {
-  const { data: phrase, isLoading, error: phraseError } = usePhrase(phrase_id) // || initialData.id
+  const phrase = useLanguageData()?.phrases?.[phrase_id]
 
   if (!phrase_id) throw new Error('no phrase info provided')
-  if (isLoading) return <Loading />
+  if (phrase === null) throw new Error('no phrase info provided')
+  if (phrase === null) return <Loading />
 
   const seeAlsos = phrase?.see_also_phrases
 
@@ -131,6 +134,7 @@ export default function BigPhrase({
 }
 
 export function SectionSeeAlsos({ seeAlsos }) {
+  const phrases = useLanguageData()?.phrases || []
   return (
     <>
       <p className="mt-6 text-sm font-bold text-base-content/70">
@@ -138,13 +142,13 @@ export function SectionSeeAlsos({ seeAlsos }) {
       </p>
       {seeAlsos.length ? (
         <ul className="text-xl/9">
-          {seeAlsos.map(phrase => (
-            <li key={phrase.id}>
+          {seeAlsos.map(pid => (
+            <li key={pid}>
               <Link
                 className="group rounded p-2 hover:bg-primary hover:text-white"
-                href={links.deckPhrase(phrase.lang, phrase.id)}
+                href={links.deckPhrase(phrases[pid].lang, pid)}
               >
-                <TinyPhrase {...phrase} />
+                <TinyPhrase {...phrases[pid]} />
               </Link>
             </li>
           ))}
