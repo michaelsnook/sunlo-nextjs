@@ -27,7 +27,7 @@ export function useDeckQuery(
     lang: altLang,
   }: {
     select?: any
-    lang?: string | null
+    lang?: string
   } = { select: undefined, lang: null }
 ) {
   const paramLang = useLang()
@@ -43,4 +43,11 @@ export function useDeckQuery(
     staleTime: 120_000,
     refetchOnWindowFocus: false,
   })
+}
+
+// access specific data paths directly:
+// const deckMeta = useDeckData()?.meta
+// const card = useDeckData()?.cards[pid]
+export function useDeckData(lang = '') {
+  return useDeckQuery({ lang })?.data
 }
