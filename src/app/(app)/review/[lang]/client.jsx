@@ -7,6 +7,7 @@ import { useDeck } from 'app/data/hooks'
 import Loading from 'components/loading'
 import SuccessCheckmark from 'components/svg-components'
 import CardInner from './card'
+import { useDeckData } from 'app/(app)/[lang]/api/preload-deck'
 
 function shuffle(array) {
   if (!array?.length > 0) return []
@@ -28,12 +29,17 @@ const Empty = () => (
 
 export default function ClientPage({ lang }) {
   const { data, isLoading } = useDeck(lang)
+  // all the phrase_ids (pids) in the deck
+  const pids = useDeckData()?.pids
+  // @@TODO turn these into pids with filters, e.g.
+  // queryKey: ['deck', lang, 'pids', { filter }]
+  // or just memoize it here...
   const reviewCards = useMemo(() => shuffle(data?.cards?.active), [data])
   const [cardIndex, setCardIndex] = useState(0)
   const [reviews, setReviews] = useState([])
 
   if (isLoading) return <Loading />
-  if (!data?.cards?.active?.length > 0) return <Empty />
+  if (!pids.length) return <Empty />
 
   const canBackup = cardIndex > 0
   const canAdvance = cardIndex < reviewCards.length - 1
