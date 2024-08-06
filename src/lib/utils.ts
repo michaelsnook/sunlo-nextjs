@@ -6,26 +6,31 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export const prependAndDedupe = (item: any, items: Array<any>): Array<any> => {
+export function prependAndDedupe<T>(item: T, items: Array<T>): Array<T> {
   let index = items.indexOf(item)
   if (index >= 0) items.splice(index, 1)
   return [item, ...items]
 }
 
-export const prependItem = (item: any, items: Array<any>): Array<any> => {
+export function prependItem<T>(item: T, items: Array<T>): Array<T> {
   let index = items.indexOf(item)
   if (index >= 0) items.splice(index, 1)
   items.unshift(item)
   return items
 }
 
-export const mapArray = (arr: Array<any>, key: string): any => {
+export function mapArray<T>(arr: Array<T>, key: string): { [key: string]: T } {
   let result = {}
   arr.forEach(item => (result[item[key]] = item))
   return result
 }
 
-export const collateArray = (arr: Array<any>, key: string): any => {
+export function collateArray<T>(
+  arr: Array<T>,
+  key: string
+): {
+  [key: string]: T
+} {
   let result = {}
   arr.forEach(item => {
     result[item[key]] ??= []
