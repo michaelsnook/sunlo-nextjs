@@ -95,9 +95,6 @@ export default function BigPhrase({
   if (!phrase_id) throw new Error('no phrase info provided')
   if (isLoading) return <Loading />
 
-  const translations = phrase?.translations
-  const card = phrase?.card
-  // console.log(`bigPhrase look for userCard or phrase.card`, phrase)
   const seeAlsos = phrase?.see_also_phrases
 
   if (phraseError) return <ShowError>{phraseError.message}</ShowError>
@@ -116,8 +113,8 @@ export default function BigPhrase({
           </h2>
           <SectionTranslations phrase={phrase} />
           <SectionSeeAlsos seeAlsos={seeAlsos} onNavigate={onNavigate} />
-          {card ? (
-            <EditCardStatusButtons cardId={card?.id} />
+          {!!phrase?.card ? (
+            <EditCardStatusButtons pid={phrase_id} />
           ) : (
             <AddCardButtonsSection
               user_deck_id={user_deck_id}

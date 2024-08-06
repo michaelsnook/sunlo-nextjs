@@ -24,7 +24,7 @@ export default function Client({ pid }) {
           <SectionTranslations phrase={phrase} />
           <SectionSeeAlsos seeAlsos={phrase?.see_also_phrases} />
           {phrase?.card ? (
-            <EditCardStatusButtons cardId={phrase?.card?.id} />
+            <EditCardStatusButtons pid={phrase?.id} />
           ) : (
             <AddCardButtonsSection
               phrase_id={pid}

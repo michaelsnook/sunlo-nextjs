@@ -7,7 +7,6 @@ import supabase from 'lib/supabase-client'
 import {
   Deck,
   Profile,
-  CardStub,
   ReviewsCollated,
   Phrase,
   Language,
@@ -16,26 +15,6 @@ import {
 } from 'types/main'
 import { useAuth } from 'components/auth-context'
 import { collateArray } from 'lib/utils'
-
-export const useCard = (id: uuid): UseSBQuery<CardStub> =>
-  useQuery({
-    queryKey: ['card', id],
-    queryFn: async ({ queryKey }) => {
-      const { data, error } = await supabase
-        .from('user_card')
-        .select('*')
-        .eq('id', queryKey[1])
-        .maybeSingle()
-      if (error) throw error
-      else return data
-    },
-    enabled: typeof id === 'string' && id.length > 0,
-    // retry: false,
-    staleTime: Infinity,
-    gcTime: Infinity,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  })
 
 export function useLanguageDetails(lang: string): UseSBQuery<Language> {
   return useQuery({

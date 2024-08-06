@@ -93,7 +93,6 @@ export type Profile = ProfileRow & { deck_stubs: Array<DeckMeta> }
 export type PhraseStub = Tables<'phrase'>
 export type Translation = Tables<'phrase_translation'>
 export type DeckStub = Tables<'user_deck'>
-export type CardStub = Tables<'user_card'>
 export type UserCardInsert = Database['public']['Tables']['user_card']['Insert']
 export type Review = Tables<'user_card_review'>
 
@@ -102,7 +101,7 @@ export type Review = Tables<'user_card_review'>
 export type Phrase = PhraseStub & {
   see_also_phrases?: PhraseStub[]
   translations?: Translation[]
-  card?: CardStub
+  card?: Tables<'user_card'>
 }
 
 export type Language = LanguageRow & {
