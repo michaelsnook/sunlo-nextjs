@@ -16,7 +16,7 @@ export function useRecentReviews(lang) {
 
   return useQuery({
     queryKey: ['reviews', lang, priorTime],
-    queryFn: async qkey => {
+    queryFn: async () => {
       const { data, error } = await supabase
         .from('user_card_review_plus')
         .select(`id, created_at, card_id, score`)
@@ -25,6 +25,6 @@ export function useRecentReviews(lang) {
       if (error) throw error
       return data
     },
-    enabled: !!priorTime,
+    enabled: !!priorTime && typeof lang === 'string' && lang.length === 3,
   })
 }

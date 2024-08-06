@@ -3,10 +3,9 @@
 import ShowError from 'components/show-error'
 import Loading from 'components/loading'
 import { createContext, useContext, type ReactNode } from 'react'
-import type { DeckLoaded, LanguageLoaded, uuid } from 'types/main'
+import type { DeckLoaded, LanguageLoaded } from 'types/main'
 import { useDeckQuery } from './api/preload-deck'
 import { useLanguageQuery } from './api/preload-language'
-import { useParams } from 'next/navigation'
 import { UseQueryResult } from '@tanstack/react-query'
 
 /*
@@ -32,10 +31,6 @@ export function useDeckContext() {
   // @TODO: this should probably 404?
   if (!deckData) throw new Error('No DeckContext: did you wrap the provider?')
   return deckData
-}
-
-export function useLang() {
-  return useParams<{ lang: string }>()?.lang
 }
 
 export function AppDataProvider({

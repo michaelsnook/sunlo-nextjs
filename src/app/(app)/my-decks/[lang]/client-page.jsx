@@ -13,7 +13,7 @@ import { cn } from 'lib/utils'
 const Empty = () => (
   <p className="my-4 text-base-content/70">🧄 No cards here 🥦 (yet)</p>
 )
-const BrandNew = ({ lang }) => {
+const BrandNew = () => {
   return (
     <div>
       <div className="flex flex-row">
@@ -26,7 +26,7 @@ const BrandNew = ({ lang }) => {
         library...
       </p>
 
-      <Browse lang={lang} />
+      <Browse />
     </div>
   )
 }
@@ -37,7 +37,7 @@ export default function ClientPage({ lang }) {
   if (isLoading) return <Loading />
   if (error) return <ShowError>{error.message}</ShowError>
 
-  if (!deckData?.cards) return <BrandNew lang={lang} />
+  if (!deckData?.cards) return <BrandNew />
 
   // console.log(`deck data client page`, deckData)
   // at this point data is loaded, the deck is present, there are
@@ -73,7 +73,7 @@ export default function ClientPage({ lang }) {
       </div>
       <div>
         {tab === 'browse' ? (
-          <Browse lang={lang} disable={deckData.all_phrase_ids} />
+          <Browse disable={deckData.all_phrase_ids} />
         ) : !deckData?.cards[tab]?.length ? (
           <Empty />
         ) : (
