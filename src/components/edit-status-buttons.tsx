@@ -1,31 +1,32 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import supabase from 'lib/supabase-client'
-import { useCard } from 'app/data/hooks'
+import { useDeckData } from 'app/(app)/[lang]/api/preload-deck'
 import { toast } from 'react-hot-toast'
 import { cn } from 'lib/utils'
 
-const updateCardStatus = async ({ cardId, status }) => {
-  console.log(`update card status,`, cardId, status)
+const updateCardStatus = async ({ pid, status }) => {
+  console.log(`update card status (pid),`, pid, status)
   const { data, error } = await supabase
     .from('user_card')
     .update({
       status,
     })
-    .eq('id', cardId)
+    .eq('phrase_id', pid)
     .select()
   if (error) throw error
   return data[0]
 }
 
-export default function EditCardStatusButtons({ cardId }) {
+export default function EditCardStatusButtons({ pid }) {
   const queryClient = useQueryClient()
-  const { data: card } = useCard(cardId)
+  const card = useDeckData()?.cards[pid]
   const updateStatus = useMutation({
     // mutationFn: status => editExistingCard(status, card.id)
     mutationFn: updateCardStatus,
     onSuccess: data => {
       toast.success(`Card successfully updated with status: "${data.status}"`)
-      queryClient.setQueryData(['card', cardId], data)
+      // invalidate everything 🤷
+      queryClient.invalidateQueries({ queryKey: ['deck', card.lang, 'loaded'] })
     },
   })
   const isLearned = card?.status === 'learned'
@@ -36,23 +37,23 @@ export default function EditCardStatusButtons({ cardId }) {
     <>
       <div className="mx-auto mt-6 flex max-w-80 flex-col justify-center gap-2 @md:flex-row">
         <button
-          onClick={() => updateStatus.mutate({ cardId, status: 'learned' })}
+          onClick={() => updateStatus.mutate({ pid, status: 'learned' })}
           className={cn('btn btn-success', isLearned ? 'btn-outline' : '')}
-          disabled={updateStatus.isSubmitting || isLearned}
+          disabled={updateStatus.isPending || isLearned}
         >
           {isLearned ? 'Finished learning' : 'Mark complete'}
         </button>
         <button
-          onClick={() => updateStatus.mutate({ cardId, status: 'active' })}
+          onClick={() => updateStatus.mutate({ pid, status: 'active' })}
           className={cn('btn btn-info', isActive ? 'btn-outline' : '')}
-          disabled={updateStatus.isSubmitting || isActive}
+          disabled={updateStatus.isPending || isActive}
         >
           {isActive ? 'Actively learning' : 'Add to my deck'}
         </button>
         <button
-          onClick={() => updateStatus.mutate({ cardId, status: 'skipped' })}
+          onClick={() => updateStatus.mutate({ pid, status: 'skipped' })}
           className={cn('btn btn-warning', isSkipped ? 'btn-outline' : '')}
-          disabled={updateStatus.isSubmitting || isSkipped}
+          disabled={updateStatus.isPending || isSkipped}
         >
           Skip this card
         </button>
