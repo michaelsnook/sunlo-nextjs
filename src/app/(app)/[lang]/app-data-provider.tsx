@@ -27,37 +27,11 @@ export function useLanguageContext() {
   return langData
 }
 
-export function useLanguageMeta() {
-  return useLanguageContext()?.meta
-}
-export function useLanguagePids() {
-  return useLanguageContext()?.pids
-}
-export function useLanguagePhrases() {
-  return useLanguageContext()?.phrases
-}
-export function useLanguagePhrase(pid: uuid) {
-  return useLanguageContext()?.phrases[pid]
-}
-
 export function useDeckContext() {
   const deckData = useContext(DeckContext)
   // @TODO: this should probably 404?
   if (!deckData) throw new Error('No DeckContext: did you wrap the provider?')
   return deckData
-}
-
-export function useDeckMeta() {
-  return useDeckContext()?.meta
-}
-export function useDeckPids() {
-  return useDeckContext()?.pids
-}
-export function useDeckCards() {
-  return useDeckContext()?.cards
-}
-export function useDeckCard(pid: uuid) {
-  return useDeckContext()?.cards[pid]
 }
 
 export function useLang() {
