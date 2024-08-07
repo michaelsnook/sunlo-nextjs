@@ -42,7 +42,7 @@ export default function ForgotPasswordForm() {
           >
             <fieldset
               className="flex flex-col gap-y-4"
-              disabled={useRequestPasswordForm.isSubmitting}
+              disabled={useRequestPasswordForm.isPending}
             >
               <div>
                 <p>
@@ -51,24 +51,24 @@ export default function ForgotPasswordForm() {
                 <input
                   id="email"
                   name="email"
-                  required="required"
+                  required={true}
                   pattern="[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*"
                   aria-invalid={useRequestPasswordForm.error ? 'true' : 'false'}
                   className={`${
                     useRequestPasswordForm.error ? 'ring-error/60' : ''
                   } s-input`}
-                  tabIndex="1"
+                  tabIndex={1}
                   type="email"
                   placeholder="email@domain"
                 />
               </div>
               <div className="flex flex-row justify-between">
                 <button
-                  tabIndex="3"
+                  tabIndex={3}
                   className="btn btn-primary"
                   type="submit"
-                  disabled={useRequestPasswordForm.isSubmitting}
-                  aria-disabled={useRequestPasswordForm.isSubmitting}
+                  disabled={useRequestPasswordForm.isPending}
+                  aria-disabled={useRequestPasswordForm.isPending}
                 >
                   Send password reset email
                 </button>

@@ -144,7 +144,7 @@ export default function Client() {
               <button
                 onClick={mainForm.mutate}
                 className="btn btn-accent md:btn-lg"
-                disabled={mainForm.isSubmitting}
+                disabled={mainForm.isPending}
               >
                 Confirm and get started!
               </button>

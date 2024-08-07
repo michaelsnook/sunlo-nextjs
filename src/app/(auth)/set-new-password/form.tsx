@@ -6,6 +6,7 @@ import supabase from 'lib/supabase-client'
 import ShowError from 'components/show-error'
 import { useAuth } from 'components/auth-context'
 import { toast } from 'react-hot-toast'
+import { cn } from 'lib/utils'
 
 export default function SetNewPasswordForm() {
   const { isAuth } = useAuth()
@@ -35,7 +36,7 @@ export default function SetNewPasswordForm() {
       <form role="form" onSubmit={submitNewPassword.mutate} className="form">
         <fieldset
           className="flex flex-col gap-y-4"
-          disabled={submitNewPassword.isSubmitting}
+          disabled={submitNewPassword.isPending}
         >
           <div>
             <p>
@@ -44,27 +45,28 @@ export default function SetNewPasswordForm() {
             <input
               id="password"
               name="password"
-              required="required"
-              aria-invalid={
-                submitNewPassword.error?.errors?.password ? 'true' : 'false'
-              }
-              className={`${
+              required={true}
+              //aria-invalid={
+              //  submitNewPassword.error?.errors?.password ? true : false
+              //}
+              className={cn(
                 submitNewPassword.error?.errors?.password
                   ? 'border-error/60'
-                  : ''
-              } s-input`}
-              tabIndex="1"
+                  : '',
+                's-input'
+              )}
+              tabIndex={1}
               type="password"
               placeholder="new password"
             />
           </div>
           <div className="flex flex-row justify-between">
             <button
-              tabIndex="3"
+              tabIndex={3}
               className="btn btn-primary"
               type="submit"
-              disabled={submitNewPassword.isSubmitting}
-              aria-disabled={submitNewPassword.isSubmitting}
+              disabled={submitNewPassword.isPending}
+              aria-disabled={submitNewPassword.isPending}
             >
               Set new password
             </button>

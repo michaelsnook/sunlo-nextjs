@@ -73,12 +73,12 @@ export default function AvatarEditor({ url, onUpload }) {
           name="files[]"
           accept="image/*"
           onChange={sendImage.mutate}
-          disabled={sendImage.isSubmitting}
+          disabled={sendImage.isPending}
         />
         <div className="fit-content absolute bottom-0 left-0 right-0 top-0 flex h-full flex-col justify-center bg-base-100/50 opacity-0 backdrop-blur hover:opacity-100">
           <h3 className="text-base-content">drag &amp; drop image or</h3>
           <a className="btn btn-primary mx-auto">
-            {sendImage.isSubmitting ? 'Uploading ...' : 'Browse Files'}
+            {sendImage.isPending ? 'Uploading ...' : 'Browse Files'}
           </a>
         </div>
       </label>
