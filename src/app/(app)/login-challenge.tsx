@@ -9,7 +9,7 @@ Modal.setAppElement('#modal-root')
 
 export default function LoginChallenge() {
   const { isAuth, isLoading } = useAuth()
-  const [isDismissed, setIsDismissed] = useState()
+  const [isDismissed, setIsDismissed] = useState(false)
   // console.log(`auth login challenge`, isAuth)
   return (
     <Modal

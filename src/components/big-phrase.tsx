@@ -27,7 +27,7 @@ export const AddCardButtonsSection = ({ phrase_id, lang, onClose }) => {
         onClose()
       }, 5000)
       toast.success(`Card successfully added with status: "${data.status}"`)
-      queryClient.invalidateQueries({ queryKey: ['deck', lang, 'loaded'] })
+      queryClient.invalidateQueries()
       queryClient.setQueryData(['card', data?.id], data)
       queryClient.invalidateQueries({
         queryKey: ['user_deck'],
@@ -100,7 +100,7 @@ export default function BigPhrase({
 
   const seeAlsos = phrase?.see_also_phrases
 
-  if (phraseError) return <ShowError>{phraseError.message}</ShowError>
+  // if (phraseError) return <ShowError>{phraseError.message}</ShowError>
 
   return (
     <div
@@ -115,7 +115,7 @@ export default function BigPhrase({
             <TinyPhrase text={phrase.text} />
           </h2>
           <SectionTranslations phrase={phrase} />
-          <SectionSeeAlsos seeAlsos={seeAlsos} onNavigate={onNavigate} />
+          <SectionSeeAlsos seeAlsos={seeAlsos} />
           {!!phrase?.card ? (
             <EditCardStatusButtons pid={phrase_id} />
           ) : (
@@ -134,24 +134,31 @@ export default function BigPhrase({
 }
 
 export function SectionSeeAlsos({ seeAlsos }) {
-  const phrases = useLanguageData()?.phrases || []
-  return (
+  const phrases = useLanguageData()?.phrases || null
+  return phrases === null ? (
+    <Loading />
+  ) : (
     <>
       <p className="mt-6 text-sm font-bold text-base-content/70">
         Related phrases
       </p>
       {seeAlsos.length ? (
         <ul className="text-xl/9">
-          {seeAlsos.map(pid => (
-            <li key={pid}>
-              <Link
-                className="group rounded p-2 hover:bg-primary hover:text-white"
-                href={links.deckPhrase(phrases[pid].lang, pid)}
-              >
-                <TinyPhrase {...phrases[pid]} />
-              </Link>
-            </li>
-          ))}
+          {seeAlsos.map(pid => {
+            const p = phrases[pid] ?? null
+            return (
+              p && (
+                <li key={pid}>
+                  <Link
+                    className="group rounded p-2 hover:bg-primary hover:text-white"
+                    href={links.deckPhrase(phrases[pid].lang, pid)}
+                  >
+                    <TinyPhrase {...phrases[pid]} />
+                  </Link>
+                </li>
+              )
+            )
+          })}
         </ul>
       ) : (
         <p className="mt-6">none. Add one?</p>

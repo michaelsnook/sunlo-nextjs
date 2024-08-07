@@ -35,9 +35,7 @@ export default function ClientPage() {
             You have {decks.length} active decks. Which one would you like to
             work on today?
           </p>
-          {decks?.map(deck => (
-            <OneDeck key={deck.lang} deck={deck} />
-          ))}
+          {decks?.map(deck => <OneDeck key={deck.lang} deck={deck} />)}
         </>
       ) : (
         <p className="my-6">

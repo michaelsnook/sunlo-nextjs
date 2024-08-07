@@ -5,8 +5,8 @@ import { useQuery } from '@tanstack/react-query'
 import supabase from 'lib/supabase-client'
 import { useEffect } from 'react'
 
-export function useRecentReviews(lang) {
-  const [priorTime, setPriorTime] = useState()
+export function useRecentReviews(lang: string) {
+  const [priorTime, setPriorTime] = useState('')
   useEffect(() => {
     let dt = new Date()
     dt.setHours(0, 0, 0, 0)

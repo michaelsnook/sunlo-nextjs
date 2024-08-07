@@ -4,13 +4,12 @@ import {
   useRouter,
   //  useSelectedLayoutSegments
 } from 'next/navigation'
-import { useState } from 'react'
+// import { useState } from 'react'
 
 export default function Navbar({ title, children = null }) {
-  // const segments = useSelectedLayoutSegments()
   const router = useRouter()
-  const [isContextMenuOpen, setIsContextMenuOpen] = useState()
-  const openContextMenu = () => setIsContextMenuOpen(true)
+  // const [isContextMenuOpen, setIsContextMenuOpen] = useState(false)
+  // const openContextMenu = () => setIsContextMenuOpen(true)
   return (
     <div className="fixed left-0 right-0 top-0 w-full border-b border-base-100/30">
       <nav className="w-app border-bottom flex flex-row items-center justify-between p-2 text-xl">
@@ -20,7 +19,7 @@ export default function Navbar({ title, children = null }) {
         >
           <LeftArrow /> <span className="sr-only">Go back</span>
         </a>
-        <h1 className="my-0 grow px-4 text-center text-2xl">{title}</h1>
+        <h1 className="my-0 grow px-4 text-2xl">{title}</h1>
         {children}
       </nav>
     </div>
