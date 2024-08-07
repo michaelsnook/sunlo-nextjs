@@ -16,7 +16,10 @@ export default function NewCardLinkAndModal({ lang }) {
       </a>
       <MyModal isOpen={showModal} onRequestClose={() => setShowModal(false)}>
         <h1 className="h1">Add a new card</h1>
-        <AddCardPhraseForm lang={lang} cancel={() => setShowModal(false)} />
+        <AddCardPhraseForm
+          defaultLang={lang}
+          cancel={() => setShowModal(false)}
+        />
       </MyModal>
     </>
   )

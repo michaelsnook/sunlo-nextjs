@@ -2,12 +2,13 @@ import supabase from 'lib/supabase-client'
 import type { Tables } from 'types/supabase'
 import type {
   UserCardInsert,
-  PhraseCardTranslationsInsertInput,
+  PhraseCardInsert,
+  PhraseCardRow,
+  CardRow,
 } from 'types/main'
 
-export const postNewCard = async (
-  object: UserCardInsert & { status: string; phrase_id: string }
-) => {
+// status will default to 'active' at the DB
+export const postNewCard = async (object: UserCardInsert): Promise<CardRow> => {
   // console.log(`postNewCard`, object)
   const { data, error } = await supabase
     .from('user_card')
@@ -23,42 +24,43 @@ export const postNewPhraseCardTranslations = async ({
   phrase,
   translations,
   user_deck_id,
-}: PhraseCardTranslationsInsertInput): Promise<
-  Tables<'phrase'> & {
-    translations: Tables<'phrase_translation'>[]
-    card: Tables<'user_card'>
-  }
-> => {
+}: PhraseCardInsert): Promise<PhraseCardRow> => {
   console.log(
     `postNewPhraseCardTranslations`,
     phrase,
     translations,
     user_deck_id
   )
+  // i guess as long as they're logged in 🤷
+  // if (!user_deck_id) throw new Error('deck ID not present')
+  // @@TODO okay now is probably when i need proper validation
+  if (!phrase.lang || !phrase.text)
+    throw new Error('missing phrase lang or text')
+  if (!(translations.length > 0)) throw new Error('no translations')
+  // there must be a better way to validate this or type-check it
+  translations.forEach((t, i) => {
+    if (!t.text || !t.lang || !t.phrase_id)
+      throw new Error('Something is broken with the translations')
+  })
 
-  const { data, error } = await supabase.from('phrase').upsert(phrase).select()
-  if (error) throw error
+  const { data } = await supabase
+    .from('phrase')
+    .upsert(phrase)
+    .select()
+    .throwOnError()
 
   console.log(`this is the result of the new phrase thing`, data)
   const phraseData = data[0]
+  // on the off chance that it's different from phrase.id...
   const { id: phrase_id } = phraseData
 
-  // we have a phrase! let's use its ID to construct
-  // the translations and the card
-  const translationsInput: Array<TranslationInsertInput> = translations.map(
-    (t): TranslationInsertInput => {
-      return {
-        ...t,
-        phrase_id,
-      }
-    }
-  )
-
+  // only works with a 1-item array, fine for now
   const translationsInsertPromise = supabase
     .from('phrase_translation')
-    .upsert(translationsInput)
+    .upsert(translations)
     .select()
 
+  // what if deck is not there and we know this will fail?
   const cardInsertPromise = supabase
     .from('user_card')
     .upsert({ user_deck_id, phrase_id })
@@ -70,7 +72,7 @@ export const postNewPhraseCardTranslations = async ({
     { data: cardInserted, error: cardInsertError },
   ] = await Promise.all([translationsInsertPromise, cardInsertPromise])
 
-  const result = {
+  const result: PhraseCardRow = {
     ...phraseData,
     translations: translationsInserted,
     card: cardInserted[0],
