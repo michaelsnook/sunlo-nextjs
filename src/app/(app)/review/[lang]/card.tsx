@@ -44,7 +44,7 @@ export default function CardInner({ pid, nextCard, addReview, hidden }) {
   const lps = useLanguageData()?.phrases
   const phrase = useLanguageData()?.phrases?.[pid]
   const card_id = useDeckData()?.cards?.[pid]?.id
-  console.log(`Trying this agaib`, pid, card_id, phrase, lps)
+  // console.log(`Trying this agaib`, pid, card_id, phrase, lps)
 
   const { data, error, mutate, isPending } = useMutation({
     mutationFn: ({ score, prevId }: { score: number; prevId?: string }) =>

@@ -6,7 +6,9 @@ import type {
   PhraseCardTranslationsInsertInput,
 } from 'types/main'
 
-export const postNewCard = async (object: UserCardInsert) => {
+export const postNewCard = async (
+  object: UserCardInsert & { status: string; phrase_id: string }
+) => {
   // console.log(`postNewCard`, object)
   const { data, error } = await supabase
     .from('user_card')

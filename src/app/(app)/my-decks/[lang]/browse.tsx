@@ -8,6 +8,7 @@ import ShowError from 'components/show-error'
 import { useLanguageDetails } from 'app/data/hooks'
 import BigPhrase from 'components/big-phrase'
 import { useLang } from 'lib/hooks'
+import { uuid } from 'types/main'
 
 export default function Browse({ disable = [] }) {
   const [activePhraseId, setActivePhraseId] = useState()
@@ -65,13 +66,15 @@ export default function Browse({ disable = [] }) {
       />
       {!activePhraseId ? null : (
         <>
-          <a className="s-link text-primary" onClick={() => handleChange('')}>
+          <a className="s-link text-primary" onClick={() => handleChange(null)}>
             &times; Clear selection
           </a>
           <BigPhrase
             phrase_id={activePhraseId}
             user_deck_id={data?.deck.id}
-            linkFactory={(lang, pid) => `/my-decks/${lang}/phrase/${pid}`}
+            linkFactory={(lang: string, pid: uuid) =>
+              `/my-decks/${lang}/phrase/${pid}`
+            }
             onClose={() => handleChange('')}
             onNavigate={handleChange}
           />
