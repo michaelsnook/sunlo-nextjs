@@ -39,7 +39,7 @@ export default function Form() {
         <h2 className="h3">What language would you like to learn?</h2>
         <Select
           options={allLanguageOptions}
-          isOptionDisabled={option =>
+          isOptionDisabled={(option: { value: string; label: string }) =>
             decks?.some(deck => {
               return isLoading
                 ? // while loading the list of decks, all options enabled
@@ -63,7 +63,7 @@ export default function Form() {
           placeholder="Select a language..."
           backspaceRemovesValue
           aria-label="Select a language to start a new deck"
-          onChange={event => setLang(event.value)}
+          onChange={option => setLang(option.value)}
         />
         <button type="submit" className="btn btn-primary my-6 rounded">
           Start learning

@@ -4,7 +4,7 @@ import { useMutation } from '@tanstack/react-query'
 import supabase from 'lib/supabase-client'
 import { useAuth } from 'components/auth-context'
 import ShowError from 'components/show-error'
-import { BASE_URL } from 'lib/utils'
+import { BASE_URL, cn } from 'lib/utils'
 
 export default function SetNewEmailForm() {
   const { userEmail } = useAuth()
@@ -34,7 +34,7 @@ export default function SetNewEmailForm() {
           <form role="form" onSubmit={changeEmail.mutate} className="form">
             <fieldset
               className="flex flex-col gap-y-4"
-              disabled={!userEmail || changeEmail.isSubmitting}
+              disabled={!userEmail || changeEmail.isPending}
             >
               <div>
                 <p>
@@ -43,15 +43,16 @@ export default function SetNewEmailForm() {
                 <input
                   id="email"
                   name="email"
-                  required="required"
+                  required={true}
                   pattern="[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*"
-                  aria-invalid={
-                    changeEmail.error?.errors?.email ? 'true' : 'false'
-                  }
-                  className={`${
-                    changeEmail.error?.errors?.email ? 'border-error/60' : ''
-                  } s-input`}
-                  tabIndex="1"
+                  //aria-invalid={
+                  //  changeEmail.error?.errors?.email ? 'true' : 'false'
+                  //}
+                  className={cn(
+                    // changeEmail.error?.errors?.email ? 'border-error/60' : '',
+                    's-input'
+                  )}
+                  tabIndex={1}
                   type="email"
                   placeholder="email@domain"
                   defaultValue={userEmail}
@@ -59,11 +60,11 @@ export default function SetNewEmailForm() {
               </div>
               <div className="flex flex-row justify-between">
                 <button
-                  tabIndex="3"
+                  tabIndex={3}
                   className="btn btn-primary"
                   type="submit"
-                  disabled={!userEmail || changeEmail.isSubmitting}
-                  aria-disabled={changeEmail.isSubmitting}
+                  disabled={!userEmail || changeEmail.isPending}
+                  aria-disabled={changeEmail.isPending}
                 >
                   Set new Email
                 </button>

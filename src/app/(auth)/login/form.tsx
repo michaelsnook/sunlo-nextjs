@@ -8,6 +8,7 @@ import { toast } from 'react-hot-toast'
 import supabase from 'lib/supabase-client'
 import { useAuth } from 'components/auth-context'
 import ShowError from 'components/show-error'
+import { cn } from 'lib/utils'
 
 export default function LoginForm({ asModal = false }) {
   const { isAuth } = useAuth()
@@ -43,22 +44,20 @@ export default function LoginForm({ asModal = false }) {
     <>
       <h1 className="h3 text-base-content/90">Please log in</h1>
       <form role="form" onSubmit={login.mutate} className="form">
-        <fieldset
-          className="flex flex-col gap-y-4"
-          disabled={login.isSubmitting}
-        >
+        <fieldset className="flex flex-col gap-y-4" disabled={login.isPending}>
           <div>
             <label htmlFor="email">Email</label>
             <input
               id="email"
               name="email"
-              required="required"
+              required={true}
               pattern="[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*"
-              aria-invalid={login.error?.email ? 'true' : 'false'}
-              className={`${
-                login.error?.email ? 'border-error/60' : ''
-              } s-input`}
-              tabIndex="1"
+              // aria-invalid={login.error?.email ? true : false}
+              className={cn(
+                login.error?.email ? 'border-error/60' : '',
+                's-input'
+              )}
+              tabIndex={1}
               type="email"
               placeholder="email@domain"
             />
@@ -70,27 +69,28 @@ export default function LoginForm({ asModal = false }) {
             <input
               id="password"
               name="password"
-              required="required"
-              aria-invalid={login.error?.password ? 'true' : 'false'}
-              className={`${
-                login.error?.password ? 'border-error/60' : ''
-              } s-input`}
-              tabIndex="2"
+              required={true}
+              // aria-invalid={login.error?.password ? 'true' : 'false'}
+              className={cn(
+                's-input'
+                // login.error?.password ? 'border-error/60' : ''
+              )}
+              tabIndex={2}
               type="password"
               placeholder="* * * * * * * *"
             />
           </div>
           <div className="flex flex-row justify-between">
             <button
-              tabIndex="3"
+              tabIndex={3}
               className="btn btn-primary"
               type="submit"
-              disabled={login.isSubmitting}
-              aria-disabled={login.isSubmitting}
+              disabled={login.isPending}
+              aria-disabled={login.isPending}
             >
               Log in
             </button>
-            <Link tabIndex="4" href="/signup" className="btn btn-ghost">
+            <Link tabIndex={4} href="/signup" className="btn btn-ghost">
               Create account
             </Link>
           </div>

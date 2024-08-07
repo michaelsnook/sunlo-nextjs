@@ -49,7 +49,7 @@ export default function SignupForm() {
                 <input
                   id="email"
                   name="email"
-                  required="required"
+                  required={true}
                   pattern="[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*"
                   aria-invalid={submitSignup.error ? true : false}
                   className={cn(
@@ -68,7 +68,7 @@ export default function SignupForm() {
                 <input
                   id="password"
                   name="password"
-                  required="required"
+                  required={true}
                   aria-invalid={submitSignup.error ? true : false}
                   className={cn(
                     's-input',

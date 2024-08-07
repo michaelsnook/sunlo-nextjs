@@ -20,10 +20,7 @@ const Navlink = ({ href, children }) => {
       {children}
     </Link>
   ) : (
-    <a
-      className="border-l-4 border-base-content/50 pl-2 text-base-content/70"
-      disabled
-    >
+    <a className="disabled border-l-4 border-base-content/50 pl-2 text-base-content/70">
       {children}
     </a>
   )
@@ -163,12 +160,12 @@ const SidebarOpener = ({ isOpen, toggle }) => (
   <button
     className={`btn-outline btn-primary fixed bottom-4 left-3 z-50 rounded-full border border-primary bg-white p-2`}
     role="button"
-    aria-haspopup="true"
+    aria-haspopup={true}
     aria-label="Toggle main menu"
-    aria-expanded={isOpen ? 'true' : 'false'}
+    aria-expanded={isOpen ? true : false}
     aria-controls="main-menu"
     onClick={toggle}
-    tabIndex="0"
+    tabIndex={0}
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
