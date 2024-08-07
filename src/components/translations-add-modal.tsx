@@ -1,13 +1,19 @@
 'use client'
 
-import { useState } from 'react'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { type FormEvent, useState } from 'react'
+import {
+  UseMutationResult,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query'
 import supabase from 'lib/supabase-client'
 import Modal from 'react-modal'
 import { SelectLanguageYouKnow } from 'app/(app)/my-decks/[lang]/new-card/form'
 import Loading from 'components/loading'
 import toast from 'react-hot-toast'
 import ShowError from './show-error'
+import { TranslationRow } from 'types/main'
+import { PostgrestError } from '@supabase/supabase-js'
 
 export default function AddTranslationsModal({
   phrase,
@@ -18,9 +24,11 @@ export default function AddTranslationsModal({
   children = null,
 }) {
   const queryClient = useQueryClient()
-  const [translationLang, setTranslationLang] = useState()
+  const [translationLang, setTranslationLang] = useState('')
   const addTranslation = useMutation({
-    mutationFn: async text => {
+    mutationFn: async (text: string) => {
+      if (typeof text !== 'string' || !(text.length > 0))
+        throw Error('there is no translation text')
       console.log(`Running mutation with`, text, translationLang, phrase.id)
       const { data, error } = await supabase
         .from('phrase_translation')
@@ -40,7 +48,7 @@ export default function AddTranslationsModal({
       queryClient.invalidateQueries({ queryKey: ['phrase', phrase.id] })
       close()
     },
-  })
+  }) as UseMutationResult<TranslationRow, PostgrestError>
 
   return (
     <>
@@ -57,10 +65,11 @@ export default function AddTranslationsModal({
           Add a translation for &ldquo;{phrase.text}&rdquo;
         </h1>
         <form
-          onSubmit={e => {
+          onSubmit={(e: FormEvent<HTMLFormElement>) => {
             e.preventDefault()
             console.log(`Submitting form with`, e)
-            addTranslation.mutate(e.target.translation_text.value)
+            const val = e.target?.['translation_text']?.value ?? ''
+            addTranslation.mutate(val)
           }}
         >
           <fieldset className="space-y-4" disabled={addTranslation.isPending}>
@@ -68,7 +77,9 @@ export default function AddTranslationsModal({
               <label>Into which language?</label>
               <SelectLanguageYouKnow
                 disabledLang={phrase.lang}
-                onChange={val => setTranslationLang(val.value)}
+                onChange={(val: { value: string; label: string }) =>
+                  setTranslationLang(val.value)
+                }
               />
             </div>
             <div className="form-control">
@@ -87,7 +98,7 @@ export default function AddTranslationsModal({
               {addTranslation.isPending ? <Loading /> : `Submit translation`}
             </button>
             <ShowError show={!!addTranslation.error}>
-              {addTranslation.error?.code === '23505'
+              {addTranslation.error?.['code'] === '23505'
                 ? `This translation already exists for this phrase`
                 : addTranslation.error?.message}
             </ShowError>

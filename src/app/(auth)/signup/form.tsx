@@ -1,28 +1,26 @@
 'use client'
 
-import { useMutation } from '@tanstack/react-query'
+import { type FormEvent } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useMutation } from '@tanstack/react-query'
 import supabase from 'lib/supabase-client'
+import { BASE_URL, cn } from 'lib/utils'
 import ShowError from 'components/show-error'
-import { BASE_URL } from 'lib/utils'
-import { cn } from 'lib/utils'
 
 export default function SignupForm() {
   const router = useRouter()
 
   const submitSignup = useMutation({
-    mutationFn: async event => {
+    mutationFn: async (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault()
-      const email = event.target.email.value
-      const password = event.target.password.value
+      const email = event.target['email'].value
+      const password = event.target['password'].value
 
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
-        options: {
-          redirectTo: `${BASE_URL}/getting-started`,
-        },
+        options: { emailRedirectTo: `${BASE_URL}/getting-started` },
       })
 
       if (error) throw error

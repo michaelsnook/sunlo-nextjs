@@ -1,24 +1,23 @@
 'use client'
 
+import type { FormEvent } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import supabase from 'lib/supabase-client'
+import { BASE_URL, cn } from 'lib/utils'
 import { useAuth } from 'components/auth-context'
 import ShowError from 'components/show-error'
-import { BASE_URL, cn } from 'lib/utils'
 
 export default function SetNewEmailForm() {
   const { userEmail } = useAuth()
 
   const changeEmail = useMutation({
-    mutationFn: async event => {
+    mutationFn: async (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault()
-      const email = event.target.email.value
-      const { data, error } = await supabase.auth.updateUser({
-        email,
-        options: {
-          emailRedirectTo: `${BASE_URL}/change-email-success`,
-        },
-      })
+      const email = event.target['email'].value
+      const { data, error } = await supabase.auth.updateUser(
+        { email },
+        { emailRedirectTo: `${BASE_URL}/change-email-success` }
+      )
       if (error) throw error
       return data
     },

@@ -1,20 +1,21 @@
 'use client'
 
-import { useMutation } from '@tanstack/react-query'
+import type { FormEvent } from 'react'
 import Link from 'next/link'
-import supabase from 'lib/supabase-client'
-import ShowError from 'components/show-error'
-import { useAuth } from 'components/auth-context'
+import { useMutation } from '@tanstack/react-query'
 import { toast } from 'react-hot-toast'
+import supabase from 'lib/supabase-client'
 import { cn } from 'lib/utils'
+import { useAuth } from 'components/auth-context'
+import ShowError from 'components/show-error'
 
 export default function SetNewPasswordForm() {
   const { isAuth } = useAuth()
 
   const submitNewPassword = useMutation({
-    mutationFn: async event => {
+    mutationFn: async (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault()
-      const password = event.target.password.value
+      const password = event.target['password'].value
 
       const { data, error } = await supabase.auth.updateUser({ password })
       if (error) throw error
@@ -50,9 +51,9 @@ export default function SetNewPasswordForm() {
               //  submitNewPassword.error?.errors?.password ? true : false
               //}
               className={cn(
-                submitNewPassword.error?.errors?.password
-                  ? 'border-error/60'
-                  : '',
+                //submitNewPassword.error?.errors?.password
+                //  ? 'border-error/60'
+                //  : '',
                 's-input'
               )}
               tabIndex={1}

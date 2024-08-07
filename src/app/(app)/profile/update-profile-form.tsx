@@ -80,6 +80,7 @@ function Form({
       queryClient.invalidateQueries({ queryKey: ['user_profile'] })
     },
   })
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     updateProfile.mutate()

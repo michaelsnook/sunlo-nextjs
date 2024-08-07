@@ -1,17 +1,17 @@
 'use client'
 
+import type { ChangeEvent, FormEvent, SyntheticEvent } from 'react'
 import { useState } from 'react'
-import { useMutation } from '@tanstack/react-query'
-import { useAuth } from 'components/auth-context'
-import supabase from 'lib/supabase-client'
-import ShowError from 'components/show-error'
 import Link from 'next/link'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import toast from 'react-hot-toast'
+import supabase from 'lib/supabase-client'
+import { useAuth } from 'components/auth-context'
+import ShowError from 'components/show-error'
 import { useProfile } from 'app/data/hooks'
-import { prependAndDedupe } from 'lib/utils'
-import { useQueryClient } from '@tanstack/react-query'
+import { cn, prependAndDedupe } from 'lib/utils'
 import languages from 'lib/languages'
 import SuccessCheckmark from 'components/svg-components'
-import toast from 'react-hot-toast'
 import Loading from 'components/loading'
 
 export const dynamic = 'force-dynamic'
@@ -40,8 +40,7 @@ export default function Client() {
 
   const mainForm = useMutation({
     mutationKey: ['user_profile'],
-    mutationFn: async event => {
-      event.preventDefault()
+    mutationFn: async () => {
       if (typeof userId !== 'string') throw new Error('No logged in user')
       if (
         !tempUsername &&
@@ -142,7 +141,9 @@ export default function Client() {
           tempUsernameToUse ? (
             <div className="my-6 flex flex-row-reverse items-center justify-around">
               <button
-                onClick={mainForm.mutate}
+                onClick={(event: SyntheticEvent<HTMLButtonElement>) =>
+                  mainForm.mutate()
+                }
                 className="btn btn-accent md:btn-lg"
                 disabled={mainForm.isPending}
               >
@@ -175,10 +176,10 @@ const SetPrimaryLanguageStep = ({ value, set }) => {
   ) : (
     <form
       className="card-white mb-16"
-      onSubmit={e => {
+      onSubmit={(e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setClosed(true)
-        set(e.target.language_primary.value)
+        set(e.target['language_primary'].value)
       }}
     >
       <h2 className="h2">Set primary language</h2>
@@ -206,8 +207,7 @@ const SetPrimaryLanguageStep = ({ value, set }) => {
         {value ? (
           <a
             className="s-link"
-            onClick={e => {
-              e.preventDefault()
+            onClick={() => {
               setClosed(true)
             }}
           >
@@ -233,7 +233,7 @@ const CreateFirstDeckStep = ({ value, set }) => {
               {decks?.map(v => languages[v.lang]).join(', ')}
             </Highlight>
           </>
-        ) : !value && !decks?.length > 0 ? (
+        ) : !value && !(decks?.length > 0) ? (
           <>Wait you have to learn something or what&apos;s the point</>
         ) : (
           <>
@@ -267,8 +267,7 @@ const CreateFirstDeckStep = ({ value, set }) => {
         <select
           value={value || ''}
           name="language_primary"
-          onChange={e => {
-            e.preventDefault()
+          onChange={(e: ChangeEvent<HTMLSelectElement>) => {
             set(e.target.value)
             setClosed(true)
           }}
@@ -282,13 +281,7 @@ const CreateFirstDeckStep = ({ value, set }) => {
           ))}
         </select>
         {decks?.length > 0 && !value ? (
-          <a
-            onClick={e => {
-              e.preventDefault()
-              setClosed(true)
-            }}
-            className="s-link"
-          >
+          <a onClick={() => setClosed(true)} className="s-link">
             Skip this step
           </a>
         ) : null}
@@ -309,9 +302,9 @@ const SetUsernameStep = ({ value, set }) => {
   ) : (
     <form
       className="card-white mb-16"
-      onSubmit={e => {
+      onSubmit={(e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        if (e.target.username.value) setClosed(true)
+        if (e.target['username'].value) setClosed(true)
       }}
     >
       <h2 className="h2">Pick a username</h2>
@@ -337,12 +330,13 @@ const SetUsernameStep = ({ value, set }) => {
   )
 }
 
-const X = ({ set, plus }) => (
+const X = ({ set, plus = false }) => (
   <button
     onClick={() => set()}
-    className={`btn btn-ghost block flex-none rounded-full ${
+    className={cn(
+      'btn btn-ghost block flex-none rounded-full',
       plus ? 'rotate-45' : ''
-    }`}
+    )}
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"

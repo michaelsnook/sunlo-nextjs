@@ -1,17 +1,17 @@
 'use client'
 
-import { useState } from 'react'
-import supabase from 'lib/supabase-client'
-import ShowError from 'components/show-error'
+import { type FormEvent, useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
+import supabase from 'lib/supabase-client'
 import { BASE_URL } from 'lib/utils'
+import ShowError from 'components/show-error'
 
 export default function ForgotPasswordForm() {
   const [yourEmail, setYourEmail] = useState()
 
-  const onSubmit = async event => {
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const email = event.target.email.value
+    const email = event.target['email'].value
     setYourEmail(email)
     const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${BASE_URL}/profile/change-password`,

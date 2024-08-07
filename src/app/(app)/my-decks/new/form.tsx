@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { type FormEvent, useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import Select from 'react-select'
 import { toast } from 'react-hot-toast'
@@ -11,12 +11,12 @@ import languages, { allLanguageOptions } from 'lib/languages'
 import { postNewDeck } from './add-new-deck'
 
 export default function Form() {
-  const [lang, setLang] = useState()
+  const [lang, setLang] = useState('')
   const router = useRouter()
   const queryClient = useQueryClient()
 
   const createNewDeck = useMutation({
-    mutationFn: async event => {
+    mutationFn: async (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault()
       return await postNewDeck(lang)
     },
