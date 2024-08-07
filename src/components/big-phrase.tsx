@@ -10,16 +10,18 @@ import SectionTranslations from './translations-section'
 import TinyPhrase from './tiny-phrase'
 import Link from 'next/link'
 import { cn, links } from 'lib/utils'
-import { useDeckData, useLanguageData } from 'lib/hooks'
+import { useDeckData, useLang, useLanguageData } from 'lib/hooks'
+import { pids } from 'types/main'
 
-export const AddCardButtonsSection = ({ phrase_id, lang, onClose }) => {
+export const AddCardButtonsSection = ({ pid, onClose }) => {
   const queryClient = useQueryClient()
+  const lang = useLang()
   const meta = useDeckData(lang)?.meta
   const makeNewCard = useMutation({
-    mutationFn: status =>
+    mutationFn: (status: string) =>
       postNewCard({
         status,
-        phrase_id,
+        phrase_id: pid,
         user_deck_id: meta?.id,
       }),
     onSuccess: data => {
@@ -28,25 +30,11 @@ export const AddCardButtonsSection = ({ phrase_id, lang, onClose }) => {
       }, 5000)
       toast.success(`Card successfully added with status: "${data.status}"`)
       queryClient.invalidateQueries()
-      queryClient.setQueryData(['card', data?.id], data)
-      queryClient.invalidateQueries({
-        queryKey: ['user_deck'],
-        exact: false,
-        refetchType: 'active',
-      })
-      const phrase = queryClient.getQueryData(['phrase', phrase_id])
-      if (phrase) {
-        queryClient.setQueryData(['phrase', phrase_id], {
-          ...phrase,
-          card: data,
-        })
-      }
-      // console.log(`Return data from adding card:`, data)
     },
   })
   return (
     <div className="my-6 flex gap-8 text-2xl">
-      {makeNewCard.isSubmitting ? (
+      {makeNewCard.isPending ? (
         <Loading />
       ) : makeNewCard.error ? (
         <ShowError>{makeNewCard.error.message}</ShowError>
@@ -103,7 +91,7 @@ export default function BigPhrase({ phrase_id: pid, onClose, noBox = false }) {
   if (phrase === null) throw new Error('no phrase info provided')
   if (phrase === null) return <Loading />
 
-  const seeAlsos = phrase?.see_also_phrases
+  const relations: pids = phrase?.relation_pids
 
   // if (phraseError) return <ShowError>{phraseError.message}</ShowError>
 
@@ -114,21 +102,17 @@ export default function BigPhrase({ phrase_id: pid, onClose, noBox = false }) {
         'mb-4 w-full'
       )}
     >
-      {phrase ? (
+      {phrase && hasCard !== null ? (
         <>
           <h2 lang={phrase.lang} className="h3 font-bold">
             <TinyPhrase text={phrase.text} />
           </h2>
           <SectionTranslations phrase={phrase} />
-          <SectionSeeAlsos seeAlsos={seeAlsos} />
-          {!!phrase?.card ? (
-            <EditCardStatusButtons pid={phrase_id} />
+          <SectionSeeAlsos relations={relations} />
+          {hasCard ? (
+            <EditCardStatusButtons pid={pid} />
           ) : (
-            <AddCardButtonsSection
-              user_deck_id={user_deck_id}
-              phrase_id={phrase_id}
-              onClose={onClose}
-            />
+            <AddCardButtonsSection pid={pid} onClose={onClose} />
           )}
         </>
       ) : (
@@ -138,7 +122,7 @@ export default function BigPhrase({ phrase_id: pid, onClose, noBox = false }) {
   )
 }
 
-export function SectionSeeAlsos({ seeAlsos }) {
+export function SectionSeeAlsos({ relations }) {
   const phrases = useLanguageData()?.phrases || null
   return phrases === null ? (
     <Loading />
@@ -147,9 +131,10 @@ export function SectionSeeAlsos({ seeAlsos }) {
       <p className="mt-6 text-sm font-bold text-base-content/70">
         Related phrases
       </p>
-      {seeAlsos.length ? (
+      {relations.length ? (
         <ul className="text-xl/9">
-          {seeAlsos.map(pid => {
+          {relations.map(pid => {
+            // more extraneous null-guarding
             const p = phrases[pid] ?? null
             return (
               p && (

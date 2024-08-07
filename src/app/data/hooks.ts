@@ -30,7 +30,7 @@ export function useLanguageDetails(lang: string): UseSBQuery<Language> {
 }
 
 const fetchDeck = async (lang: string): Promise<Deck> => {
-  let { data, error } = await supabase
+  let { data } = await supabase
     .from('user_deck')
     .select(
       `
@@ -43,7 +43,9 @@ const fetchDeck = async (lang: string): Promise<Deck> => {
     )
     .eq('lang', lang)
     .maybeSingle()
-  if (error) throw error
+    .throwOnError()
+
+  if (!data) throw new Error('404')
 
   const rawCards = Array.isArray(data?.user_card) ? data.user_card : []
 

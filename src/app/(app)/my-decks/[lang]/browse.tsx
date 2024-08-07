@@ -8,10 +8,9 @@ import ShowError from 'components/show-error'
 import { useLanguageDetails } from 'app/data/hooks'
 import BigPhrase from 'components/big-phrase'
 import { useLang } from 'lib/hooks'
-import { uuid } from 'types/main'
 
 export default function Browse({ disable = [] }) {
-  const [activePhraseId, setActivePhraseId] = useState()
+  const [activePhraseId, setActivePhraseId] = useState('')
   const lang = useLang()
   const { data, error, isLoading } = useLanguageDetails(lang)
   if (isLoading) return <Loading />
@@ -37,7 +36,7 @@ export default function Browse({ disable = [] }) {
       label: phrase.text,
     }
   })
-  const handleChange = ({ value }) => setActivePhraseId(value)
+  const handleChange = ({ value = null }) => setActivePhraseId(value)
 
   return (
     <div>
@@ -56,7 +55,7 @@ export default function Browse({ disable = [] }) {
         }}
         unstyled
         styles={{
-          option: (styles, { isDisabled }) => {
+          option: (_styles, { isDisabled }) => {
             return isDisabled ? { opacity: 0.5 } : null
           },
         }}
@@ -71,12 +70,7 @@ export default function Browse({ disable = [] }) {
           </a>
           <BigPhrase
             phrase_id={activePhraseId}
-            user_deck_id={data?.deck.id}
-            linkFactory={(lang: string, pid: uuid) =>
-              `/my-decks/${lang}/phrase/${pid}`
-            }
-            onClose={() => handleChange('')}
-            onNavigate={handleChange}
+            onClose={() => handleChange(null)}
           />
         </>
       )}
