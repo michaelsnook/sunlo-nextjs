@@ -9,7 +9,12 @@ function readStatus(status) {
   return { emoji: `❌ `, classString: '' }
 }
 
-export default function PhraseCardSmall({ status, text, lang, translations }) {
+export default function PhraseCardSmall({
+  status = null,
+  text,
+  lang,
+  translations,
+}) {
   const { emoji, classString } = readStatus(status)
   return (
     <div

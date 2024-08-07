@@ -5,7 +5,7 @@ import TinyPhrase from './tiny-phrase'
 import AddTranslationsModal from './translations-add-modal'
 
 export default function SectionTranslations({ phrase }) {
-  const [isModalOpen, setIsModalOpen] = useState()
+  const [isModalOpen, setIsModalOpen] = useState<boolean>()
   const open = () => setIsModalOpen(true)
   const close = () => setIsModalOpen(false)
 
