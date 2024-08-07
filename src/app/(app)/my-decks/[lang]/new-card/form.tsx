@@ -45,7 +45,7 @@ export const SelectLanguageYouKnow = ({ onChange, disabledLang }) => {
       }}
       unstyled
       styles={{
-        option: (styles, { isDisabled }) => {
+        option: (_styles, { isDisabled }) => {
           return isDisabled ? { opacity: 0.5 } : null
         },
       }}
@@ -78,15 +78,7 @@ export default function AddCardPhraseForm({ lang, cancel }) {
     },
   })
 
-  const handleChangeSelect = ({ value }) => {
-    setSelectLang(value)
-    // console.log(`handleChange value`, value)
-  }
-
-  const handleSubmit = event => {
-    event.preventDefault()
-    // console.log(event.target)
-
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     if (!deck?.id) throw new Error('wait error')
     if (!selectLang?.length === 3) throw new Error('bad translation_lang')
     if (!event.target.text.value) throw new Error('no phrase text')

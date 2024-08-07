@@ -21,9 +21,9 @@ export default function Client() {
   const { data: profile, isLoading } = useProfile()
   const queryClient = useQueryClient()
 
-  const [tempLanguagePrimary, setTempLanguagePrimary] = useState()
-  const [tempDeckToAdd, setTempDeckToAdd] = useState()
-  const [tempUsername, setTempUsername] = useState()
+  const [tempLanguagePrimary, setTempLanguagePrimary] = useState<string>()
+  const [tempDeckToAdd, setTempDeckToAdd] = useState<string>(null)
+  const [tempUsername, setTempUsername] = useState<string>()
   const tempLanguagePrimaryToUse =
     tempLanguagePrimary ?? profile?.language_primary
   const tempUsernameToUse = tempUsername ?? profile?.username
@@ -34,7 +34,7 @@ export default function Client() {
 
   const reset = () => {
     setTempLanguagePrimary(profile.language_primary)
-    setTempDeckToAdd()
+    setTempDeckToAdd(null)
     setTempUsername(profile.username)
   }
 

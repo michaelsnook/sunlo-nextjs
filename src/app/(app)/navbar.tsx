@@ -6,7 +6,7 @@ import {
 } from 'next/navigation'
 // import { useState } from 'react'
 
-export default function Navbar({ title, children = null }) {
+export default function Navbar({ title = '', children = null }) {
   const router = useRouter()
   // const [isContextMenuOpen, setIsContextMenuOpen] = useState(false)
   // const openContextMenu = () => setIsContextMenuOpen(true)
@@ -34,7 +34,6 @@ export default function Navbar({ title, children = null }) {
     <span className="sr-only">More options</span>
     <ContextMenuIcon />
   </span>
-*/
 
 const ContextMenuIcon = () => (
   <svg
@@ -52,6 +51,7 @@ const ContextMenuIcon = () => (
     />
   </svg>
 )
+*/
 
 const LeftArrow = () => (
   <svg
