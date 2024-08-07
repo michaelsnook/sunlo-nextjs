@@ -1,6 +1,6 @@
 'use client'
 
-import { useLayoutEffect } from 'react'
+import { type FormEvent, useLayoutEffect } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -20,11 +20,11 @@ export default function LoginForm({ asModal = false }) {
   }, [router, isAuth, asModal])
 
   const login = useMutation({
-    mutationFn: async event => {
+    mutationFn: async (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault()
 
-      const email = event.target.email.value
-      const password = event.target.password.value
+      const email = event.target['email'].value
+      const password = event.target['password'].value
 
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
@@ -54,7 +54,7 @@ export default function LoginForm({ asModal = false }) {
               pattern="[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*"
               // aria-invalid={login.error?.email ? true : false}
               className={cn(
-                login.error?.email ? 'border-error/60' : '',
+                // login.error?.email ? 'border-error/60' : '',
                 's-input'
               )}
               tabIndex={1}

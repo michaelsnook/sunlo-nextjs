@@ -1,13 +1,14 @@
+import type { ChangeEvent } from 'react'
 import Image from 'next/image'
 import { useMutation } from '@tanstack/react-query'
+import { toast } from 'react-hot-toast'
 import supabase from 'lib/supabase-client'
 import ShowError from 'components/show-error'
-import { toast } from 'react-hot-toast'
 
-const avatarFullUrl = fullPath =>
+const avatarFullUrl = (fullPath: string): string =>
   `https://hepudeougzlgnuqvybrj.supabase.co/storage/v1/object/public/${fullPath}`
 
-const filenameFromFile = file => {
+const filenameFromFile = (file: File) => {
   // returns a string like pic-of-my-cat-1a4d06.jpg
 
   // separate the file extension so we can re-append it at the end 'jpg'
@@ -26,12 +27,12 @@ const filenameFromFile = file => {
 
 export default function AvatarEditor({ url, onUpload }) {
   const sendImage = useMutation({
-    mutationFn: async event => {
+    mutationFn: async (event: ChangeEvent<HTMLInputElement>) => {
       event.preventDefault()
       console.log(`sendImage.mutate`, event)
       if (!event.target.files || event.target.files.length === 0)
         throw new Error(`There's no file to submit`)
-      const file = event.target.files[0]
+      const file: File = event.target.files[0]
       const filename = filenameFromFile(file)
       const { data, error } = await supabase.storage
         .from('avatars')
@@ -41,7 +42,10 @@ export default function AvatarEditor({ url, onUpload }) {
         })
 
       if (error) throw error
-      onUpload(avatarFullUrl(data?.fullPath))
+      // is the fullPath not working? why the ts error?
+      // @@TODO fix extraneous guard
+      const path = data['fullPath'] || data.path
+      onUpload(avatarFullUrl(path))
       return data
     },
     onSuccess: data => {
