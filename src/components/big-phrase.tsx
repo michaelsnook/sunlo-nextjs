@@ -85,16 +85,21 @@ export const AddCardButtonsSection = ({ phrase_id, lang, onClose }) => {
   )
 }
 
-export default function BigPhrase({
-  user_deck_id,
-  phrase_id,
-  onClose,
-  onNavigate,
-  noBox,
-}) {
-  const phrase = useLanguageData()?.phrases?.[phrase_id]
+export default function BigPhrase({ phrase_id: pid, onClose, noBox = false }) {
+  if (!pid) throw new Error('no phrase info provided')
 
-  if (!phrase_id) throw new Error('no phrase info provided')
+  // all this work to fetch a phrase and whether it's in my deck.
+  // and still in a child component we have to fetch the deck-id.
+  // this complexity is due to a few things:
+  // 1. no separate hooks to fetch just a card or phrase
+  // 1b. could use a single hook to fetch both together somehow
+  // 2. should remove card_id in favor of (user_id, phrase_id)
+  // 3. should remove deck_id in favor of (user_id, lang)
+  const phrase = useLanguageData()?.phrases?.[pid]
+  // true, false, or null for not-loaded. assumes deck.cards = [] when empty
+  const cards = !useDeckData()?.cards
+  const hasCard = cards ? null : !!typeof cards[pid]
+
   if (phrase === null) throw new Error('no phrase info provided')
   if (phrase === null) return <Loading />
 
