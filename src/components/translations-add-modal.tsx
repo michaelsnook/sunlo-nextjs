@@ -12,7 +12,7 @@ import { SelectLanguageYouKnow } from 'app/(app)/my-decks/[lang]/new-card/form'
 import Loading from 'components/loading'
 import toast from 'react-hot-toast'
 import ShowError from './show-error'
-import { TranslationRow } from 'types/main'
+import { TranslationRow, option } from 'types/main'
 import { PostgrestError } from '@supabase/supabase-js'
 
 export default function AddTranslationsModal({
@@ -77,9 +77,7 @@ export default function AddTranslationsModal({
               <label>Into which language?</label>
               <SelectLanguageYouKnow
                 disabledLang={phrase.lang}
-                onChange={(val: { value: string; label: string }) =>
-                  setTranslationLang(val.value)
-                }
+                onChange={(val: option) => setTranslationLang(val.value)}
               />
             </div>
             <div className="form-control">

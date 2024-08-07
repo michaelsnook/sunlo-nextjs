@@ -7,7 +7,7 @@ export default function Page({ params: { lang } }) {
     <>
       <Navbar title={`Add a new ${languages[lang]} phrase`}></Navbar>
       <main className="card-white">
-        <AddCardPhraseForm lang={lang} />
+        <AddCardPhraseForm defaultLang={lang} />
       </main>
     </>
   )
