@@ -1,25 +1,27 @@
+import type { ChangeEvent } from 'react'
 import languages from 'lib/languages'
 
 export default function SelectMultipleLanguagesInput({
-  label = 'What other languages do you know?',
+  label = 'Do you know other languages?',
   selectedLanguages,
   setSelectedLanguages,
   except,
 }) {
-  const handleSelectedLanguage = lang => {
+  const handleSelectedLanguage = (lang: string) => {
     setSelectedLanguages([
       lang,
-      ...selectedLanguages.filter(l => typeof l === 'string' && l !== lang),
+      ...selectedLanguages.filter((lan: string) => lan !== lang),
     ])
   }
-  const handleRemoveLanguage = lang => {
+  const handleRemoveLanguage = (lang: string) => {
     setSelectedLanguages([
-      ...selectedLanguages.filter(l => typeof l === 'string' && l !== lang),
+      ...selectedLanguages.filter((lan: string) => lan !== lang),
     ])
   }
 
-  const handleChange = event => {
-    const lang = event.target.value
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    console.log(`handle change`, event.target.value, event.target.checked)
+    const lang: string = event.target.value
     if (event.target.checked) {
       handleSelectedLanguage(lang)
     } else {
@@ -42,8 +44,9 @@ export default function SelectMultipleLanguagesInput({
                 value={k}
                 name="languages_spoken"
                 onChange={handleChange}
-                defaultChecked={
-                  selectedLanguages.indexOf(k) !== -1 || k === except
+                checked={
+                  (selectedLanguages && selectedLanguages.indexOf(k) !== -1) ||
+                  k === except
                 }
               />
               {languages[k]}

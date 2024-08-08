@@ -2,7 +2,7 @@
 
 import type { ChangeEvent, FormEvent } from 'react'
 import type { QueryError } from '@supabase/supabase-js'
-import type { Profile, uuid } from 'types/main'
+import type { ProfileInsert, ProfileRow, uuid } from 'types/main'
 
 import { useState } from 'react'
 import { useMutation } from '@tanstack/react-query'
@@ -15,37 +15,48 @@ import SelectMultipleLanguagesInput from 'components/select-multiple-languages'
 import Loading from 'components/loading'
 import { useProfile } from 'app/data/hooks'
 import AvatarEditor from './avatar-edit'
+import { pluck } from 'lib/utils'
 
 export default function UpdateProfileForm() {
-  const { data } = useProfile()
-  return !data ? <Loading className="mt-0" /> : <Form initialData={data} />
+  const { data, isPending, error } = useProfile()
+  if (error) return <ShowError>{error.message}</ShowError>
+  if (isPending) return <Loading className="mt-0" />
+
+  const initialData = pluck(data, [
+    'username',
+    'avatar_url',
+    'language_primary',
+    'languages_spoken',
+  ])
+
+  return <Form initialData={initialData} uid={data?.uid} />
 }
 
-function Form({
-  initialData: {
-    username,
-    language_primary,
-    languages_spoken,
-    avatar_url,
-    uid,
-  },
-}: {
-  initialData: {
-    username: string
-    language_primary: string
-    languages_spoken: Array<string>
-    avatar_url: string
-    uid: uuid
-  }
-}) {
+function Form({ initialData, uid }: { initialData: ProfileInsert; uid: uuid }) {
   const queryClient = useQueryClient()
 
-  const [formData, setFormData] = useState({
-    username,
-    language_primary,
-    languages_spoken,
-    avatar_url,
+  const [formData, setFormData] = useState<ProfileInsert>(initialData)
+
+  const updateProfile = useMutation<ProfileRow, QueryError>({
+    mutationFn: async () => {
+      const { data } = await supabase
+        .from('user_profile')
+        .update(formData)
+        .match({ uid })
+        .select()
+        .throwOnError()
+      return data[0]
+    },
+    onSuccess: () => {
+      toast.success(`Successfully updated your profile`)
+      queryClient.invalidateQueries({ queryKey: ['user_profile'] })
+    },
   })
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    updateProfile.mutate()
+  }
 
   const setNewAvatarUrl = (val: string) =>
     setFormData({ ...formData, avatar_url: val })
@@ -60,32 +71,6 @@ function Form({
     })
   }
 
-  const updateProfile = useMutation<Profile, QueryError>({
-    mutationFn: async (): Promise<Profile> => {
-      const {
-        data,
-        error,
-      }: { data: Profile[] | undefined; error: QueryError | undefined } =
-        await supabase
-          .from('user_profile')
-          .update(formData)
-          .match({ uid })
-          .select()
-
-      if (error) throw error
-      return data[0]
-    },
-    onSuccess: () => {
-      toast.success(`Successfully updated your profile`)
-      queryClient.invalidateQueries({ queryKey: ['user_profile'] })
-    },
-  })
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    updateProfile.mutate()
-  }
-
   return (
     <form className="space-y-4" onSubmit={handleSubmit}>
       <fieldset
@@ -98,9 +83,9 @@ function Form({
           </label>
           <input
             id="username"
+            name="username"
             type="text"
             className="s-input"
-            name="username"
             tabIndex={1}
             defaultValue={formData.username}
             onChange={handleInputChange}
@@ -111,6 +96,7 @@ function Form({
             Primary language
           </label>
           <select
+            id="language_primary"
             name="language_primary"
             onChange={handleInputChange}
             defaultValue={formData.language_primary}
