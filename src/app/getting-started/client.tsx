@@ -9,7 +9,7 @@ import supabase from 'lib/supabase-client'
 import { useAuth } from 'components/auth-context'
 import ShowError from 'components/show-error'
 import { useProfile } from 'app/data/hooks'
-import { cn, prependAndDedupe } from 'lib/utils'
+import { cn, unshiftUnique } from 'lib/utils'
 import languages from 'lib/languages'
 import SuccessCheckmark from 'components/svg-components'
 import Loading from 'components/loading'
@@ -18,7 +18,7 @@ export const dynamic = 'force-dynamic'
 
 export default function Client() {
   const { userId } = useAuth()
-  const { data: profile, isLoading } = useProfile()
+  const { data: profile, isPending } = useProfile()
   const queryClient = useQueryClient()
 
   const [tempLanguagePrimary, setTempLanguagePrimary] = useState<string>()
@@ -27,16 +27,10 @@ export default function Client() {
   const tempLanguagePrimaryToUse =
     tempLanguagePrimary ?? profile?.language_primary
   const tempUsernameToUse = tempUsername ?? profile?.username
-  const newLanguagesSpoken = prependAndDedupe(
+  const newLanguagesSpoken = unshiftUnique(
     tempLanguagePrimary,
-    profile.languages_spoken
+    profile?.languages_spoken ?? []
   )
-
-  const reset = () => {
-    setTempLanguagePrimary(profile.language_primary)
-    setTempDeckToAdd(null)
-    setTempUsername(profile.username)
-  }
 
   const mainForm = useMutation({
     mutationKey: ['user_profile'],
@@ -96,9 +90,15 @@ export default function Client() {
     },
   })
 
+  const reset = () => {
+    setTempLanguagePrimary(profile.language_primary)
+    setTempDeckToAdd(null)
+    setTempUsername(profile.username)
+  }
+
   // if (mainForm.error) console.log(`Error logging:`, mainForm)
 
-  return isLoading ? (
+  return isPending ? (
     <Loading />
   ) : mainForm.isSuccess ? (
     <main className="p2 w-app flex min-h-[85vh] flex-col justify-center gap-12 text-white md:p-6 lg:p-10">
@@ -165,13 +165,13 @@ export default function Client() {
 }
 
 const SetPrimaryLanguageStep = ({ value, set }) => {
-  const [closed, setClosed] = useState(true)
+  const [closed, setClosed] = useState<boolean>(true)
   return closed && value?.length > 0 ? (
     <Completed>
       <p className="h4">
         Your primary language is <Highlight>{languages[value]}</Highlight>
       </p>
-      <X set={() => setClosed()} />
+      <X set={() => setClosed(false)} />
     </Completed>
   ) : (
     <form
@@ -247,7 +247,7 @@ const CreateFirstDeckStep = ({ value, set }) => {
         plus={!value && decks?.length > 0}
         set={() => {
           set()
-          setClosed()
+          setClosed(false)
         }}
       />
     </Completed>

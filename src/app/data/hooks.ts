@@ -1,20 +1,18 @@
 'use client'
 
-import { useQuery } from '@tanstack/react-query'
-import { useRouter, usePathname } from 'next/navigation'
-import { getLanguageDetails, getPhraseDetails } from './fetchers'
+import { UseQueryResult, useQuery } from '@tanstack/react-query'
+import { getLanguageDetails } from './fetchers'
 import supabase from 'lib/supabase-client'
 import {
   Deck,
   Profile,
   ReviewsCollated,
-  Phrase,
   Language,
   UseSBQuery,
-  uuid,
 } from 'types/main'
 import { useAuth } from 'components/auth-context'
 import { collateArray } from 'lib/utils'
+import { PostgrestError } from '@supabase/supabase-js'
 
 export function useLanguageDetails(lang: string): UseSBQuery<Language> {
   return useQuery({
@@ -83,24 +81,17 @@ export function useDeck(deckLang: string): UseSBQuery<Deck> {
   })
 }
 
-export function useProfile(): UseSBQuery<Profile> {
-  const router = useRouter()
-  const pathname = usePathname()
+export function useProfile() {
   const { userId } = useAuth()
   return useQuery({
     queryKey: ['user_profile'],
     queryFn: async (): Promise<Profile | null> => {
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from('user_profile')
         .select(`*, deck_stubs:user_deck_plus(*)`)
         .eq('uid', userId)
         .maybeSingle()
-      if (error) throw error
-      if (!data)
-        if (pathname !== '/getting-started') {
-          router.push('/getting-started')
-          return null
-        }
+        .throwOnError()
 
       return {
         languages_spoken: [],
@@ -108,18 +99,8 @@ export function useProfile(): UseSBQuery<Profile> {
         ...data,
       }
     },
-    enabled: router && pathname && userId ? true : false,
-    placeholderData: {
-      uid: null,
-      username: null,
-      avatar_url: null,
-      languages_spoken: [],
-      language_primary: 'eng',
-      deck_stubs: [],
-      created_at: null,
-      updated_at: null,
-    },
-  })
+    enabled: userId ? true : false,
+  }) as UseQueryResult<Profile, PostgrestError>
 }
 
 export const useRecentReviewActivity = (): UseSBQuery<ReviewsCollated> => {
