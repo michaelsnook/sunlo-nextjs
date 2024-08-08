@@ -40,7 +40,7 @@ export default function ClientPage({ lang }) {
   const deckQuery = useDeckQuery(lang)
 
   if (error) return <ShowError>{error.message}</ShowError>
-  if (deckQuery.isLoading) return <Loading />
+  if (deckQuery.isPending) return <Loading />
   if (!deckQuery?.data?.pids?.length) return <BrandNew />
   const pids = deckQuery?.data?.pids
   const cards = deckQuery?.data?.cards

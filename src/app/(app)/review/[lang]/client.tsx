@@ -29,7 +29,7 @@ const Empty = () => (
 )
 
 export default function ClientPage({ lang }) {
-  const { data, isLoading } = useDeck(lang)
+  const { data, isPending } = useDeck(lang)
   // all the phrase_ids (pids) in the deck
   const pids = useDeckData(lang)?.pids
 
@@ -40,7 +40,7 @@ export default function ClientPage({ lang }) {
   const [cardIndex, setCardIndex] = useState(0)
   const [reviews, setReviews] = useState([])
 
-  if (isLoading) return <Loading />
+  if (isPending) return <Loading />
   if (!pids?.length) return <Empty />
 
   const canBackup: boolean = cardIndex > 0

@@ -13,8 +13,8 @@ import { SelectOption } from 'types/main'
 export default function Browse({ disable = [] }) {
   const [activePhraseId, setActivePhraseId] = useState('')
   const lang = useLang()
-  const { data, error, isLoading } = useLanguageDetails(lang)
-  if (isLoading) return <Loading />
+  const { data, error, isPending } = useLanguageDetails(lang)
+  if (isPending) return <Loading />
   if (error) return <ShowError>{error.message}</ShowError>
 
   if (!data.phrases?.length) {

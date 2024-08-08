@@ -46,12 +46,12 @@ export function AppDataProvider({
   const {
     data: langData,
     error: langError,
-    isLoading: isLangLoading,
+    isPending: isLangPending,
   } = useLanguageQuery() as UseQueryResult<LanguageLoaded>
   const {
     data: deckData,
     error: deckError,
-    isLoading: isDeckLoading,
+    isPending: isDeckPending,
   } = useDeckQuery() as UseQueryResult<DeckLoaded>
 
   // this will mean the database/server is unreachable
@@ -66,7 +66,7 @@ export function AppDataProvider({
   return (
     <LanguageContext.Provider value={langData}>
       <DeckContext.Provider value={deckData}>
-        {isLangLoading || isDeckLoading ? <Loading /> : children}
+        {isLangPending || isDeckPending ? <Loading /> : children}
       </DeckContext.Provider>
     </LanguageContext.Provider>
   )

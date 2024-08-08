@@ -28,7 +28,7 @@ export default function Form() {
     },
   })
 
-  const { data, error, isLoading } = useProfile()
+  const { data, error, isPending } = useProfile()
   const decks = data?.deck_stubs
 
   return (
@@ -41,7 +41,7 @@ export default function Form() {
           options={allLanguageOptions}
           isOptionDisabled={(option: { value: string; label: string }) =>
             decks?.some(deck => {
-              return isLoading
+              return isPending
                 ? // while loading the list of decks, all options enabled
                   false
                 : // otherwise, disable languages we're already learning
