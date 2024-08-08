@@ -9,14 +9,14 @@ type AuthState = {
   isAuth: boolean
   userId: uuid | null
   userEmail: string | null
-  isLoading: boolean
+  isPending: boolean
 }
 
 const blank: AuthState = {
   isAuth: false,
   userId: null,
   userEmail: null,
-  isLoading: true,
+  isPending: true,
 }
 
 const AuthContext = createContext<AuthState | null>(null)
@@ -47,7 +47,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         console.log(`Auth state changed: ${event}`, session)
         // if we've logged out or no user comes back, we should remove user data from cache
         if (event === 'SIGNED_OUT' || typeof session?.user !== 'object') {
-          setAuth({ ...blank, isLoading: false })
+          setAuth({ ...blank, isPending: false })
           queryClient.removeQueries({ queryKey: ['user_profile'] })
           // the old one
           queryClient.removeQueries({ queryKey: ['user_deck'] })
@@ -58,7 +58,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             isAuth: session?.user.role === 'authenticated',
             userId: session?.user.id,
             userEmail: session?.user.email,
-            isLoading: false,
+            isPending: false,
           })
           // if for some reason the new user is a different user, refetch user data
           if (session?.user.id !== auth.userId) {

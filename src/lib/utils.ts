@@ -6,25 +6,47 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export const prependAndDedupe = (item: any, items: Array<any>): Array<any> => {
-  let index = items.indexOf(item)
-  if (index >= 0) items.splice(index, 1)
-  return [item, ...items]
-}
-export const prependItem = (item: any, items: Array<any>): Array<any> => {
-  let index = items.indexOf(item)
-  if (index >= 0) items.splice(index, 1)
-  items.unshift(item)
-  return items
+// these are the only 3 ways we initialize empty state (I think)
+const empty = (item: unknown) =>
+  item === null || item === undefined || item === ''
+
+const notEmpty = (item: unknown) =>
+  !(item === null || item === undefined || item === '')
+
+// add to the beginning of a list; removing up to 1 duplicate and any empty items
+export function unshiftUnique<T>(item: T, items: Array<T>): Array<T> {
+  // parse out certain invalid inputs
+  if (empty(item)) return items
+  if (empty(items)) return [item]
+  // remove empties, duplicate values, and prepend
+  const array = items.filter(notEmpty).filter(i => i !== item)
+  return [item, ...array]
 }
 
-export const mapArray = (arr: Array<any>, key: string): any => {
+// narrows an object to selected keys
+// const newOb = pluck(object, ['username', 'uid', 'pid'])
+export function pluck(fromOb: Object, keys: Array<string>): Object {
+  if (!keys || !keys?.length || !fromOb) return null
+  const oKeys = Object.keys(fromOb)
+  let res = {}
+  keys.forEach(k => {
+    if (fromOb.hasOwnProperty(k)) res[k] = fromOb[k]
+  })
+  return res
+}
+
+export function mapArray<T>(arr: Array<T>, key: string): { [key: string]: T } {
   let result = {}
   arr.forEach(item => (result[item[key]] = item))
   return result
 }
 
-export const collateArray = (arr: Array<any>, key: string): any => {
+export function collateArray<T>(
+  arr: Array<T>,
+  key: string
+): {
+  [key: string]: T
+} {
   let result = {}
   arr.forEach(item => {
     result[item[key]] ??= []

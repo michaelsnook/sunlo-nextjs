@@ -5,7 +5,7 @@ import supabase from 'lib/supabase-client'
 export async function postInsertPhrasesFull(
   values: Array<PhraseFullInsert>
 ): Promise<void> {
-  const valuesFull = values.map(v => ({ ...v, id: self.crypto.randomUUID() }))
+  const valuesFull = values.map(v => ({ ...v, id: crypto.randomUUID() }))
 
   const phraseInserts = valuesFull.map(p => {
     return { id: p.id, text: p.text, lang: p.lang }
