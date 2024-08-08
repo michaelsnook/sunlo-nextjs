@@ -8,6 +8,7 @@ import ShowError from 'components/show-error'
 import { useLanguageDetails } from 'app/data/hooks'
 import BigPhrase from 'components/big-phrase'
 import { useLang } from 'lib/hooks'
+import { SelectOption } from 'types/main'
 
 export default function Browse({ disable = [] }) {
   const [activePhraseId, setActivePhraseId] = useState('')
@@ -30,13 +31,15 @@ export default function Browse({ disable = [] }) {
     )
   }
 
-  const options = data.phrases.map(phrase => {
+  const options: Array<SelectOption> = data.phrases.map(phrase => {
     return {
       value: phrase.id,
       label: phrase.text,
     }
   })
-  const handleChange = ({ value = null }) => setActivePhraseId(value)
+  const handleChange = (option: SelectOption = null) => {
+    setActivePhraseId(option?.value)
+  }
 
   return (
     <div>

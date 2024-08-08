@@ -2,7 +2,7 @@
 
 import { ChangeEvent, FormEvent, useRef, useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import Select, { SelectInstance } from 'react-select'
+import Select from 'react-select'
 import languages, {
   allLanguageOptions,
   makeLanguageOptions,
@@ -12,7 +12,12 @@ import Loading from 'components/loading'
 import { postNewPhraseCardTranslations } from './add-card'
 import { useProfile } from 'app/data/hooks'
 import { useRouter } from 'next/navigation'
-import { PhraseCardInsert, TranslationInsert, option, uuid } from 'types/main'
+import {
+  PhraseCardInsert,
+  TranslationInsert,
+  SelectOption,
+  uuid,
+} from 'types/main'
 import { useDeckQuery } from 'app/(app)/[lang]/api/preload-deck'
 
 export const SelectLanguageYouKnow = ({ onChange, disabledLang }) => {
@@ -49,7 +54,7 @@ export const SelectLanguageYouKnow = ({ onChange, disabledLang }) => {
           return isDisabled ? { opacity: 0.5 } : null
         },
       }}
-      isOptionDisabled={(option: option) => option.value === disabledLang}
+      isOptionDisabled={(option: SelectOption) => option.value === disabledLang}
       placeholder="Select a language..."
       onChange={onChange}
       aria-label="Select a language for your translation"
@@ -109,7 +114,10 @@ export default function AddCardPhraseForm({ defaultLang, cancel = null }) {
     setPhraseText(event.target.value)
   }
   // for now index is always 0. for now.
-  const handleTranslationLanguageChange = (index: number, option: option) => {
+  const handleTranslationLanguageChange = (
+    index: number,
+    option: SelectOption
+  ) => {
     if (!(index > -1) || index >= translations.length) return
     const updatedTranslations = [...translations]
     updatedTranslations[index].lang = option.value
@@ -172,7 +180,7 @@ export default function AddCardPhraseForm({ defaultLang, cancel = null }) {
           <label>Translation language</label>
           <SelectLanguageYouKnow
             disabledLang={lang}
-            onChange={(option: option) => {
+            onChange={(option: SelectOption) => {
               handleTranslationLanguageChange(0, option)
             }}
           />

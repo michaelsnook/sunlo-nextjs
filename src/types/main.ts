@@ -8,7 +8,8 @@ import {
 
 export type uuid = string
 export type pids = Array<uuid>
-export type option = { value: string; label: string }
+
+export type SelectOption = { value: string; label: string }
 
 export type UseSBQuery<T> = UseQueryResult<T, PostgrestError>
 export type UseSBMutation<T> = UseMutationResult<T, PostgrestError>

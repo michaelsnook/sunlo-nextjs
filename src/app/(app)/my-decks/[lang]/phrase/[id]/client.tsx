@@ -21,15 +21,11 @@ export default function Client({ pid }) {
             <TinyPhrase lang={phrase.lang} text={phrase.text} />
           </h2>
           <SectionTranslations phrase={phrase} />
-          <SectionSeeAlsos seeAlsos={phrase?.relation_pids} />
+          <SectionSeeAlsos relations={phrase?.relation_pids} />
           {card ? (
             <EditCardStatusButtons pid={phrase?.id} />
           ) : (
-            <AddCardButtonsSection
-              phrase_id={pid}
-              lang={phrase.lang}
-              onClose={() => {}}
-            />
+            <AddCardButtonsSection pid={pid} onClose={() => {}} />
           )}
         </>
       )}
