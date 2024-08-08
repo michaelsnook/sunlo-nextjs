@@ -6,9 +6,9 @@ import languages from 'lib/languages'
 import Loading from 'components/loading'
 
 export default function Client() {
-  const { data: profile, isLoading } = useProfile()
+  const { data: profile, isPending } = useProfile()
 
-  return isLoading ? (
+  return isPending ? (
     <Loading />
   ) : (
     <ol>

@@ -21,8 +21,8 @@ import {
 import { useDeckQuery } from 'app/(app)/[lang]/api/preload-deck'
 
 export const SelectLanguageYouKnow = ({ onChange, disabledLang }) => {
-  const { data, isLoading } = useProfile()
-  if (isLoading) return <Loading />
+  const { data, isPending } = useProfile()
+  if (isPending) return <Loading />
   const languages_spoken = data?.languages_spoken || []
   const selectOptions = !languages_spoken.length
     ? allLanguageOptions
@@ -64,7 +64,7 @@ export const SelectLanguageYouKnow = ({ onChange, disabledLang }) => {
 
 export default function AddCardPhraseForm({ defaultLang, cancel = null }) {
   const user_deck_id = useDeckQuery(defaultLang)?.data?.meta.id
-  const isLoading = useDeckQuery(defaultLang)?.isLoading
+  const isPending = useDeckQuery(defaultLang)?.isPending
   const queryClient = useQueryClient()
   const languagePrimary: string = useProfile()?.data?.language_primary || ''
 
@@ -217,7 +217,7 @@ export default function AddCardPhraseForm({ defaultLang, cancel = null }) {
             <button
               type="submit"
               className="btn btn-primary"
-              disabled={isLoading}
+              disabled={isPending}
             >
               Submit
             </button>

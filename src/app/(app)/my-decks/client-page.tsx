@@ -22,8 +22,8 @@ function OneDeck({ deck }) {
 }
 
 export default function ClientPage() {
-  const { isLoading, data, error } = useProfile()
-  if (isLoading) return <Loading />
+  const { isPending, data, error } = useProfile()
+  if (isPending) return <Loading />
   if (error) return <ShowError>{error.message}</ShowError>
 
   const decks = data.deck_stubs

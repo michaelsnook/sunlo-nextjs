@@ -1,3 +1,5 @@
+'use client'
+
 import { useParams } from 'next/navigation'
 import { useDeckQuery } from 'app/(app)/[lang]/api/preload-deck'
 import { useLanguageQuery } from 'app/(app)/[lang]/api/preload-language'

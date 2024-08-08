@@ -11,8 +11,8 @@ import { useLang } from 'lib/hooks'
 
 const RecentReviewsSummary = () => {
   const lang = useLang()
-  const { data, error, isLoading } = useRecentReviews(lang)
-  if (isLoading) return <Loading />
+  const { data, error, isPending } = useRecentReviews(lang)
+  if (isPending) return <Loading />
   if (error) return <ShowError>{error.message}</ShowError>
 
   const countReviews = data?.length
@@ -52,20 +52,15 @@ const CardsSummary = ({ deck }) => {
 }
 
 export default function Client({ lang }) {
-  const { data, error, isSuccess, isLoading } = useProfile()
+  const { data, error, isPending } = useProfile()
   const language = languages[lang]
   if (typeof language !== 'string') notFound()
 
-  if (isLoading) return <Loading />
+  if (isPending) return <Loading />
   if (error) return <ShowError>{error.message}</ShowError>
 
-  const deckLoadedArray = isSuccess && data.deck_stubs?.length >= 0
+  const deck = data?.deck_stubs?.find(d => d.lang === lang) || null
 
-  const deck = deckLoadedArray
-    ? data.deck_stubs.find(d => d.lang === lang)
-    : null
-  if (isLoading) return <Loading />
-  if (error) return <ShowError>{error.message}</ShowError>
   return (
     <>
       {deck === null ? (

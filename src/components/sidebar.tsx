@@ -68,8 +68,8 @@ const GenericMenu = ({ menu }) => {
 const StaticMenu = () => <GenericMenu menu={staticMenu} />
 
 const DeckMenu = () => {
-  const { data, isLoading, error } = useProfile()
-  if (isLoading) return null
+  const { data, isPending, error } = useProfile()
+  if (isPending) return null
   if (error) return <ShowError>{error.message}</ShowError>
 
   const decks = data?.deck_stubs
