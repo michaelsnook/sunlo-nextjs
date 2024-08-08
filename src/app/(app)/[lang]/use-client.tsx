@@ -4,13 +4,16 @@ import { useState } from 'react'
 import MyModal from 'components/modal'
 import TinyPhrase from 'components/tiny-phrase'
 import SectionTranslations from 'components/translations-section'
-import { useDeckData } from 'lib/hooks'
-import { useLanguageData } from 'lib/hooks'
+import { useLanguageMeta, useLanguagePhrases } from './api/preload-language'
+import { useDeckCards, useDeckMeta, useDeckPids } from './api/preload-deck'
 // import { SectionSeeAlsos } from 'components/big-phrase'
 
 export default function ClientPage() {
-  const { meta: langMeta, phrases: langItems } = useLanguageData()
-  const { meta: deckMeta, cards: deckItems, pids: deckPids } = useDeckData()
+  const langMeta = useLanguageMeta()
+  const langItems = useLanguagePhrases()
+  const deckMeta = useDeckMeta()
+  const deckItems = useDeckCards()
+  const deckPids = useDeckPids()
 
   return (
     <div className="space-y-4">

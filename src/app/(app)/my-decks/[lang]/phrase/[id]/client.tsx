@@ -5,11 +5,12 @@ import EditCardStatusButtons from 'components/edit-status-buttons'
 import SectionTranslations from 'components/translations-section'
 import TinyPhrase from 'components/tiny-phrase'
 import Loading from 'components/loading'
-import { useDeckData, useLanguageData } from 'lib/hooks'
+import { useCard } from 'app/(app)/[lang]/api/preload-deck'
+import { usePhrase } from 'app/(app)/[lang]/api/preload-language'
 
 export default function Client({ pid }) {
-  const phrase = useLanguageData()?.phrases[pid] || null
-  const card = useDeckData()?.cards[pid] || null
+  const phrase = usePhrase(pid)?.data
+  const card = useCard(pid)?.data
 
   return !phrase ? (
     <Loading />

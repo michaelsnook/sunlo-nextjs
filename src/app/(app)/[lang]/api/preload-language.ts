@@ -1,9 +1,12 @@
-import { useQuery } from '@tanstack/react-query'
+import { type UseQueryResult, useQuery } from '@tanstack/react-query'
 import type {
-  PhrasesMap,
   LanguageFetched,
   LanguageLoaded,
+  LanguageMeta,
+  PhrasesMap,
+  PhraseFull,
   pids,
+  uuid,
 } from 'types/main'
 import { mapArray, selects } from 'lib/utils'
 import supabase from 'lib/supabase-client'
@@ -49,3 +52,27 @@ export function useLanguageQuery(
     refetchOnWindowFocus: false,
   })
 }
+
+export const useLanguageMeta = (lang?: string) =>
+  useLanguageQuery({
+    lang,
+    select: (data: LanguageLoaded) => data.meta,
+  }) as UseQueryResult<LanguageMeta>
+
+export const useLanguagePids = (lang?: string) =>
+  useLanguageQuery({
+    lang,
+    select: (data: LanguageLoaded) => data.pids,
+  }) as UseQueryResult<pids>
+
+export const useLanguagePhrases = (lang?: string) =>
+  useLanguageQuery({
+    lang,
+    select: (data: LanguageLoaded) => data.phrases,
+  }) as UseQueryResult<PhrasesMap>
+
+export const usePhrase = (pid: uuid, lang?: string) =>
+  useLanguageQuery({
+    lang,
+    select: (data: LanguageLoaded) => data.phrases[pid],
+  }) as UseQueryResult<PhraseFull>

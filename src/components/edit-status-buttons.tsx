@@ -1,8 +1,8 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import supabase from 'lib/supabase-client'
-import { useDeckData } from 'lib/hooks'
 import { toast } from 'react-hot-toast'
 import { cn } from 'lib/utils'
+import { useDeckCards } from 'app/(app)/[lang]/api/preload-deck'
 
 const updateCardStatus = async ({ pid, status }) => {
   console.log(`update card status (pid),`, pid, status)
