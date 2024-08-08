@@ -7,9 +7,10 @@ import ShowError from 'components/show-error'
 import Loading from 'components/loading'
 import { toast } from 'react-hot-toast'
 import { cn } from 'lib/utils'
-import { useDeckData, useLanguageData } from 'lib/hooks'
 import { Tables, TablesInsert } from 'types/supabase'
 import { uuid } from 'types/main'
+import { useCard } from 'app/(app)/[lang]/api/preload-deck'
+import { usePhrase } from 'app/(app)/[lang]/api/preload-language'
 
 const postReview = async ({
   card_id,
@@ -41,10 +42,8 @@ export default function CardInner({ pid, nextCard, addReview, hidden }) {
   const reveal = () => {
     setIsRevealed(true)
   }
-  const lps = useLanguageData()?.phrases
-  const phrase = useLanguageData()?.phrases?.[pid]
-  const card_id = useDeckData()?.cards?.[pid]?.id
-  // console.log(`Trying this agaib`, pid, card_id, phrase, lps)
+  const phrase = usePhrase(pid)?.data
+  const card_id = useCard(pid)?.data?.id
 
   const { data, error, mutate, isPending } = useMutation({
     mutationFn: ({ score, prevId }: { score: number; prevId?: string }) =>

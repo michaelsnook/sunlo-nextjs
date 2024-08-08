@@ -7,10 +7,8 @@ import { useRecentReviews } from 'app/data/reviews'
 import Loading from 'components/loading'
 import languages from 'lib/languages'
 import Link from 'next/link'
-import { useLang } from 'lib/hooks'
 
-const RecentReviewsSummary = () => {
-  const lang = useLang()
+const RecentReviewsSummary = ({ lang }) => {
   const { data, error, isPending } = useRecentReviews(lang)
   if (isPending) return <Loading />
   if (error) return <ShowError>{error.message}</ShowError>
@@ -75,7 +73,7 @@ export default function Client({ lang }) {
         <div className="grid max-w-[44rem] gap-6">
           <div className="card glass">
             <figure>
-              <RecentReviewsSummary />
+              <RecentReviewsSummary lang={lang} />
             </figure>
             <div className="card-body">
               <Link href={`/review/${lang}`} className="btn btn-lg">

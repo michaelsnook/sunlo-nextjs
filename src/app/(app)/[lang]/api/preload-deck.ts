@@ -1,5 +1,13 @@
-import { useQuery } from '@tanstack/react-query'
-import type { CardsMap, DeckFetched, DeckLoaded, pids } from 'types/main'
+import { type UseQueryResult, useQuery } from '@tanstack/react-query'
+import type {
+  CardsMap,
+  DeckFetched,
+  DeckMeta,
+  DeckLoaded,
+  CardFull,
+  uuid,
+  pids,
+} from 'types/main'
 import { mapArray, selects } from 'lib/utils'
 import supabase from 'lib/supabase-client'
 import { useLang } from 'lib/hooks'
@@ -44,3 +52,27 @@ export function useDeckQuery(
     refetchOnWindowFocus: false,
   })
 }
+
+export const useDeckMeta = (lang?: string) =>
+  useDeckQuery({
+    lang,
+    select: (data: DeckLoaded) => data.meta,
+  }) as UseQueryResult<DeckMeta>
+
+export const useDeckPids = (lang?: string) =>
+  useDeckQuery({
+    lang,
+    select: (data: DeckLoaded) => data.pids,
+  }) as UseQueryResult<pids>
+
+export const useDeckCards = (lang?: string) =>
+  useDeckQuery({
+    lang,
+    select: (data: DeckLoaded) => data.cards,
+  }) as UseQueryResult<CardsMap>
+
+export const useCard = (pid: uuid, lang?: string) =>
+  useDeckQuery({
+    lang,
+    select: (data: DeckLoaded) => data.cards[pid],
+  }) as UseQueryResult<CardFull>

@@ -7,8 +7,8 @@ import { useDeck } from 'app/data/hooks'
 import Loading from 'components/loading'
 import SuccessCheckmark from 'components/svg-components'
 import CardInner from './card'
-import { useDeckData } from 'lib/hooks'
 import { pids } from 'types/main'
+import { useDeckPids } from 'app/(app)/[lang]/api/preload-deck'
 
 function shuffle(array: Array<any>): Array<any> {
   if (!(array?.length > 0)) return []
@@ -31,7 +31,7 @@ const Empty = () => (
 export default function ClientPage({ lang }) {
   const { data, isPending } = useDeck(lang)
   // all the phrase_ids (pids) in the deck
-  const pids = useDeckData(lang)?.pids
+  const pids: pids = useDeckPids(lang)?.data
 
   // @@TODO turn these into pids with filters, e.g.
   // queryKey: ['deck', lang, 'pids', { filter }]

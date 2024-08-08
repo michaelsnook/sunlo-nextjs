@@ -10,19 +10,21 @@ import SectionTranslations from './translations-section'
 import TinyPhrase from './tiny-phrase'
 import Link from 'next/link'
 import { cn, links } from 'lib/utils'
-import { useDeckData, useLang, useLanguageData } from 'lib/hooks'
+import { useLang } from 'lib/hooks'
 import { pids } from 'types/main'
+import { useDeckCards, useDeckMeta } from 'app/(app)/[lang]/api/preload-deck'
+import { usePhrase } from 'app/(app)/[lang]/api/preload-language'
 
 export const AddCardButtonsSection = ({ pid, onClose }) => {
   const queryClient = useQueryClient()
   const lang = useLang()
-  const meta = useDeckData(lang)?.meta
+  const user_deck_id = useDeckMeta(lang)?.data?.id
   const makeNewCard = useMutation({
     mutationFn: (status: string) =>
       postNewCard({
         status,
         phrase_id: pid,
-        user_deck_id: meta?.id,
+        user_deck_id,
       }),
     onSuccess: data => {
       setTimeout(async () => {
@@ -83,9 +85,9 @@ export default function BigPhrase({ phrase_id: pid, onClose, noBox = false }) {
   // 1b. could use a single hook to fetch both together somehow
   // 2. should remove card_id in favor of (user_id, phrase_id)
   // 3. should remove deck_id in favor of (user_id, lang)
-  const phrase = useLanguageData()?.phrases?.[pid]
+  const phrase = usePhrase(pid)?.data
   // true, false, or null for not-loaded. assumes deck.cards = [] when empty
-  const cards = useDeckData()?.cards
+  const cards = useDeckCards()?.data
   const hasCard: null | true | false = !cards ? null : !!cards[pid]
 
   if (phrase === null) throw new Error('no phrase info provided')
