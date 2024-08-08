@@ -12,7 +12,7 @@ import { SelectLanguageYouKnow } from 'app/(app)/my-decks/[lang]/new-card/form'
 import Loading from 'components/loading'
 import toast from 'react-hot-toast'
 import ShowError from './show-error'
-import { TranslationRow, option } from 'types/main'
+import { TranslationRow, SelectOption } from 'types/main'
 import { PostgrestError } from '@supabase/supabase-js'
 
 export default function AddTranslationsModal({
@@ -45,7 +45,9 @@ export default function AddTranslationsModal({
     onSuccess: data => {
       console.log(`onSuccess with data`, data)
       toast.success('Added a new translation')
-      queryClient.invalidateQueries({ queryKey: ['phrase', phrase.id] })
+      queryClient.invalidateQueries({
+        queryKey: ['language', data.lang, 'loaded'],
+      })
       close()
     },
   }) as UseMutationResult<TranslationRow, PostgrestError>
@@ -77,7 +79,7 @@ export default function AddTranslationsModal({
               <label>Into which language?</label>
               <SelectLanguageYouKnow
                 disabledLang={phrase.lang}
-                onChange={(val: option) => setTranslationLang(val.value)}
+                onChange={(val: SelectOption) => setTranslationLang(val.value)}
               />
             </div>
             <div className="form-control">

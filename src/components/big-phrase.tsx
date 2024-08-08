@@ -85,8 +85,8 @@ export default function BigPhrase({ phrase_id: pid, onClose, noBox = false }) {
   // 3. should remove deck_id in favor of (user_id, lang)
   const phrase = useLanguageData()?.phrases?.[pid]
   // true, false, or null for not-loaded. assumes deck.cards = [] when empty
-  const cards = !useDeckData()?.cards
-  const hasCard = cards ? null : !!typeof cards[pid]
+  const cards = useDeckData()?.cards
+  const hasCard: null | true | false = !cards ? null : !!cards[pid]
 
   if (phrase === null) throw new Error('no phrase info provided')
   if (phrase === null) return <Loading />
