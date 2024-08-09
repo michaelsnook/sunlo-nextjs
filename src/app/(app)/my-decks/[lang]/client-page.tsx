@@ -9,7 +9,7 @@ import Card from 'components/card'
 import Browse from './browse'
 import Link from 'next/link'
 import { cn } from 'lib/utils'
-import { useLanguageData } from 'lib/hooks'
+import { useLanguagePhrases } from 'app/(app)/[lang]/api/preload-language'
 import { uuid } from 'types/main'
 import { useDeckQuery } from 'app/(app)/[lang]/api/preload-deck'
 
@@ -35,15 +35,15 @@ const BrandNew = () => {
 }
 export default function ClientPage({ lang }) {
   const [tab, setTab] = useState('active')
-  const { data: deckData, error } = useDeck(lang)
-  const phrases = useLanguageData()?.phrases
-  const deckQuery = useDeckQuery(lang)
+  const { data: phrases, isPending: isPendingC } = useLanguagePhrases()
+  const { data: deck, isPending: isPendingB } = useDeckQuery(lang)
+  // the only reason we need this old query is for the pids-by-status
+  const { data, error, isPending: isPendingA } = useDeck(lang)
+  const pidsByStatus = data.pids
 
   if (error) return <ShowError>{error.message}</ShowError>
-  if (deckQuery.isPending) return <Loading />
-  if (!deckQuery?.data?.pids?.length) return <BrandNew />
-  const pids = deckQuery?.data?.pids
-  const cards = deckQuery?.data?.cards
+  if (isPendingA || isPendingB || isPendingC) return <Loading />
+  if (deck.pids.length === 0) return <BrandNew />
 
   // console.log(`deck data client page`, deckData)
   // at this point data is loaded, the deck is present, there are
@@ -79,17 +79,17 @@ export default function ClientPage({ lang }) {
       </div>
       <div>
         {tab === 'browse' ? (
-          <Browse disable={pids} />
-        ) : !deckData?.pids && !deckData?.pids[tab]?.length ? (
+          <Browse disable={deck.pids} />
+        ) : !(pidsByStatus[tab]?.length > 0) ? (
           <Empty />
         ) : (
-          deckData.pids[tab].map((pid: uuid) => (
+          pidsByStatus[tab].map((pid: uuid) => (
             <Link
               href={`/my-decks/${lang}/phrase/${pid}`}
               key={pid}
               className="my-2"
             >
-              <Card status={cards[pid].status} phrase={phrases?.[pid]} />
+              <Card status={deck.cards[pid].status} phrase={phrases[pid]} />
             </Link>
           ))
         )}

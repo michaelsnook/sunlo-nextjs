@@ -1,4 +1,3 @@
-import { useLanguageData } from 'lib/hooks'
 import TinyPhrase from './tiny-phrase'
 import { cn } from 'lib/utils'
 import { PhraseFull } from 'types/main'
@@ -26,7 +25,6 @@ export default function Card({
   phrase: PhraseFull
 }) {
   const { emoji, classString } = readStatus(status)
-  // console.log(`card phrase is:`, phrase)
 
   return (
     <div className={cn('alert my-2 justify-start shadow-lg', classString)}>
