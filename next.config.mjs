@@ -19,7 +19,7 @@ const nextConfig = {
   ...assetPrefixSpreadable,
   typescript: {
     // Dangerously ignore typescript errors during production build
-    ignoreBuildErrors: true,
+    // ignoreBuildErrors: true,
   },
 }
 
