@@ -47,7 +47,7 @@ export function useDeckQuery(
     },
     select,
     enabled: typeof lang === 'string' && lang.length === 3,
-    gcTime: 120_000,
+    gcTime: 1_200_000,
     staleTime: 120_000,
     refetchOnWindowFocus: false,
   })

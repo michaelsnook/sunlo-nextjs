@@ -3,14 +3,13 @@
 import { useMemo, useState } from 'react'
 import languages from 'lib/languages'
 import Navbar from 'app/(app)/navbar'
-import { useDeck } from 'app/data/hooks'
+import { usePidsByStatus } from 'app/data/hooks'
 import Loading from 'components/loading'
 import SuccessCheckmark from 'components/svg-components'
 import CardInner from './card'
-import { pids } from 'types/main'
-import { useDeckPids } from 'app/(app)/[lang]/api/preload-deck'
+import { ReviewInsert, pids } from 'types/main'
 
-function shuffle(array: Array<any>): Array<any> {
+function shuffle(array: Array<any> | null | undefined): Array<any> {
   if (!(array?.length > 0)) return []
   for (let currentIndex = array.length - 1; currentIndex > 0; currentIndex--) {
     const randomIndex = Math.floor(Math.random() * (currentIndex + 1))
@@ -29,19 +28,17 @@ const Empty = () => (
 )
 
 export default function ClientPage({ lang }) {
-  const { data, isPending } = useDeck(lang)
-  // all the phrase_ids (pids) in the deck
-  const pids: pids = useDeckPids(lang)?.data
+  const { data, isPending } = usePidsByStatus(lang)
 
   // @@TODO turn these into pids with filters, e.g.
   // queryKey: ['deck', lang, 'pids', { filter }]
   // or just memoize it here...
-  const reviewables: pids = useMemo(() => shuffle(data?.pids?.active), [data])
+  const reviewables: pids = useMemo(() => shuffle(data?.active), [data])
   const [cardIndex, setCardIndex] = useState(0)
   const [reviews, setReviews] = useState([])
 
   if (isPending) return <Loading />
-  if (!pids?.length) return <Empty />
+  if (!reviewables.length) return <Empty />
 
   const canBackup: boolean = cardIndex > 0
   const canAdvance: boolean = cardIndex < reviewables.length - 1
@@ -51,7 +48,7 @@ export default function ClientPage({ lang }) {
   // by 1 after submitting a review, not to stack with button-clicks.
   const nextCard = () => setCardIndex(cardIndex + 1)
 
-  const addReview = review => {
+  const addReview = (review: ReviewInsert) => {
     const index = reviews.findIndex(r => r.id === review.id)
     let newReviews = reviews
     if (index === -1) newReviews.push(review)

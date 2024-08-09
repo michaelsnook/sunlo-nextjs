@@ -2,63 +2,49 @@
 
 import { UseQueryResult, useQuery } from '@tanstack/react-query'
 import supabase from 'lib/supabase-client'
-import { Deck, Profile, ReviewsCollated, UseSBQuery } from 'types/main'
+import { Profile, ReviewsCollated, pids } from 'types/main'
 import { useAuth } from 'components/auth-context'
 import { collateArray } from 'lib/utils'
 import { PostgrestError } from '@supabase/supabase-js'
 
-const fetchDeck = async (lang: string): Promise<Deck> => {
+type DeckPids = {
+  active: pids
+  learned: pids
+  skipped: pids
+}
+const fetchDeckPids = async (lang: string): Promise<DeckPids> => {
   let { data } = await supabase
-    .from('user_deck')
-    .select(
-      `
-      uid, created_at, id, lang, user_card(
-        *, phrase(
-          *, translations:phrase_translation(*)
-        )
-      )
-    `
-    )
+    .from('user_card_plus')
+    .select('phrase_id, status')
     .eq('lang', lang)
-    .maybeSingle()
     .throwOnError()
 
   if (!data) throw new Error('404')
 
-  const rawCards = Array.isArray(data?.user_card) ? data.user_card : []
-
-  const deck: Deck = {
-    created_at: data.created_at,
-    uid: data.uid,
-    id: data.id,
-    lang: data.lang,
-    pids: {
-      active: rawCards
-        .filter(({ status }) => status === 'active')
-        .map(c => c.phrase_id),
-      learned: rawCards
-        .filter(({ status }) => status === 'learned')
-        .map(c => c.phrase_id),
-      skipped: rawCards
-        .filter(({ status }) => status === 'skipped')
-        .map(c => c.phrase_id),
-    },
+  const deckPids = {
+    active: data
+      .filter(({ status }) => status === 'active')
+      .map(c => c.phrase_id),
+    learned: data
+      .filter(({ status }) => status === 'learned')
+      .map(c => c.phrase_id),
+    skipped: data
+      .filter(({ status }) => status === 'skipped')
+      .map(c => c.phrase_id),
   }
 
-  return deck
+  return deckPids
 }
 
-export function useDeck(deckLang: string) {
+export function usePidsByStatus(deckLang: string) {
   return useQuery({
     queryKey: ['user_deck', deckLang],
-    queryFn: ({ queryKey }) => fetchDeck(queryKey[1]),
+    queryFn: ({ queryKey }) => fetchDeckPids(queryKey[1]),
     enabled: !!deckLang,
-    retry: false,
-    staleTime: Infinity,
-    gcTime: Infinity,
-    refetchOnMount: false,
+    staleTime: 120_000,
+    gcTime: 1_200_000,
     refetchOnWindowFocus: false,
-  }) as UseQueryResult<Deck>
+  }) as UseQueryResult<DeckPids>
 }
 
 export function useProfile() {
