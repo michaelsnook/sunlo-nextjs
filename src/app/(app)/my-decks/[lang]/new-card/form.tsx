@@ -19,6 +19,7 @@ import {
   uuid,
 } from 'types/main'
 import { useDeckQuery } from 'app/(app)/[lang]/api/preload-deck'
+import toast from 'react-hot-toast'
 
 export const SelectLanguageYouKnow = ({ onChange, disabledLang }) => {
   const { data, isPending } = useProfile()
@@ -137,9 +138,10 @@ export default function AddCardPhraseForm({ defaultLang, cancel = null }) {
     mutationFn: postNewPhraseCardTranslations,
     onSuccess: () => {
       // console.log(`postNewPhraseCardTranslations success`, data)
-      // toast.success(t => <Success />)
+      toast.success(
+        'Added a new phrase to the public library, and a new card to your deck.'
+      )
       queryClient.invalidateQueries()
-      // deck stubs don't need to be updated here
     },
     onError: error => {
       throw error
@@ -147,6 +149,8 @@ export default function AddCardPhraseForm({ defaultLang, cancel = null }) {
   })
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    console.log(`Insert a new phrase and add card to deck`, phraseCardInsert)
     addCardPhrase.mutate(phraseCardInsert)
   }
   return (
