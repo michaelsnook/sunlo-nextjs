@@ -26,7 +26,7 @@ export default function EditCardStatusButtons({ pid }) {
     onSuccess: data => {
       toast.success(`Card successfully updated with status: "${data.status}"`)
       // invalidate everything 🤷
-      queryClient.invalidateQueries({ queryKey: ['deck', card.lang, 'loaded'] })
+      queryClient.invalidateQueries()
     },
   })
 

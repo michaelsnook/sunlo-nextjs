@@ -45,9 +45,7 @@ export default function AddTranslationsModal({
     onSuccess: data => {
       console.log(`onSuccess with data`, data)
       toast.success('Added a new translation')
-      queryClient.invalidateQueries({
-        queryKey: ['language', data.lang, 'loaded'],
-      })
+      queryClient.invalidateQueries()
       close()
     },
   }) as UseMutationResult<TranslationRow, PostgrestError>

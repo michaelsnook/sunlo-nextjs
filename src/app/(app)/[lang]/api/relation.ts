@@ -23,7 +23,7 @@ export function useInsertRelation(): UseMutationResult<
       return data
     },
     onSuccess: () => {
-      client.invalidateQueries({ queryKey: ['language'] })
+      client.invalidateQueries()
     },
   })
 }

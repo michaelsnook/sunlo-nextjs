@@ -60,13 +60,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             userEmail: session?.user.email,
             isPending: false,
           })
-          // if for some reason the new user is a different user, refetch user data
+          // if for some reason the new user is a different user, remvoe cache
           if (session?.user.id !== auth.userId) {
-            queryClient.invalidateQueries({ queryKey: ['user_profile'] })
-            // the old one
-            queryClient.invalidateQueries({ queryKey: ['user_deck'] })
-            // the new one
-            queryClient.invalidateQueries({ queryKey: ['deck'] })
+            queryClient.invalidateQueries()
           }
         }
       }

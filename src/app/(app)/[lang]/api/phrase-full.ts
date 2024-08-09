@@ -75,7 +75,7 @@ export function useInsertPhrasesFull() {
     mutationFn: async (values: Array<PhraseFullInsert>) =>
       postInsertPhrasesFull(values),
     onSuccess: () => {
-      client.invalidateQueries({ queryKey: ['language'] })
+      client.invalidateQueries()
     },
     // TODO: we will have some weirdnesses if the post happens and the phrases get inserted but
     // one of the subsequent tables fails.
