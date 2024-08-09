@@ -20,15 +20,19 @@ export default function ClientPage() {
       <div>
         <div>
           deck is{' '}
-          <PlusDetailModal>{JSON.stringify(deckMeta, null, 2)}</PlusDetailModal>
+          <PlusDetailModal>
+            {JSON.stringify(deckMeta.data, null, 2)}
+          </PlusDetailModal>
         </div>
         <div>
           language is{' '}
-          <PlusDetailModal>{JSON.stringify(langMeta, null, 2)}</PlusDetailModal>
+          <PlusDetailModal>
+            {JSON.stringify(langMeta.data, null, 2)}
+          </PlusDetailModal>
         </div>
       </div>
       <div className="flex-basis-[20rem] flex flex-shrink flex-row flex-wrap gap-4">
-        {deckPids.map(pid => {
+        {deckPids.data?.map(pid => {
           return (
             <div
               key={pid}
@@ -37,13 +41,13 @@ export default function ClientPage() {
             >
               <div className="collapse-title text-xl font-medium">
                 <div className="inline flex-grow">
-                  {deckItems[pid].status.substring(0, 2)}
+                  {deckItems.data[pid].status.substring(0, 2)}
                   {'  '}
-                  <TinyPhrase {...langItems[pid]} />
+                  <TinyPhrase {...langItems.data[pid]} />
                 </div>
               </div>
               <div className="collapse-content">
-                <SectionTranslations phrase={langItems[pid]} />
+                <SectionTranslations phrase={langItems.data[pid]} />
                 {/*
                   <SectionSeeAlsos seeAlsos={langItems[pid].relation_pids} />
 
