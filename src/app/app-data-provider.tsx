@@ -4,8 +4,8 @@ import ShowError from 'components/show-error'
 import Loading from 'components/loading'
 import { createContext, useContext, type ReactNode } from 'react'
 import type { DeckLoaded, LanguageLoaded } from 'types/main'
-import { useDeckQuery } from './api/preload-deck'
-import { useLanguageQuery } from './api/preload-language'
+import { useDeckQuery } from 'lib/preload-deck'
+import { useLanguageQuery } from 'lib/preload-language'
 import { UseQueryResult } from '@tanstack/react-query'
 
 /*
