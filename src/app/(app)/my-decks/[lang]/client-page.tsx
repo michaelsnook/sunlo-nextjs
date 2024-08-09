@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Loading from 'components/loading'
 import ShowError from 'components/show-error'
-import { useDeck } from 'app/data/hooks'
+import { usePidsByStatus } from 'app/data/hooks'
 import { Garlic } from 'components/garlic'
 import Card from 'components/card'
 import Browse from './browse'
@@ -38,8 +38,11 @@ export default function ClientPage({ lang }) {
   const { data: phrases, isPending: isPendingC } = useLanguagePhrases()
   const { data: deck, isPending: isPendingB } = useDeckQuery(lang)
   // the only reason we need this old query is for the pids-by-status
-  const { data, error, isPending: isPendingA } = useDeck(lang)
-  const pidsByStatus = data.pids
+  const {
+    data: pidsByStatus,
+    error,
+    isPending: isPendingA,
+  } = usePidsByStatus(lang)
 
   if (error) return <ShowError>{error.message}</ShowError>
   if (isPendingA || isPendingB || isPendingC) return <Loading />
