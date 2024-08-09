@@ -64,6 +64,7 @@ export type DeckFetched = DeckMeta & {
 export type CardsMap = {
   [key: uuid]: CardFull
 }
+
 export type DeckLoaded = {
   meta: DeckMeta
   pids: pids

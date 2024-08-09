@@ -13,7 +13,10 @@ import { cn, links } from 'lib/utils'
 import { useLang } from 'lib/hooks'
 import { pids } from 'types/main'
 import { useDeckCards, useDeckMeta } from 'app/(app)/[lang]/api/preload-deck'
-import { usePhrase } from 'app/(app)/[lang]/api/preload-language'
+import {
+  useLanguagePhrases,
+  usePhrase,
+} from 'app/(app)/[lang]/api/preload-language'
 
 export const AddCardButtonsSection = ({ pid, onClose }) => {
   const queryClient = useQueryClient()
@@ -124,16 +127,16 @@ export default function BigPhrase({ phrase_id: pid, onClose, noBox = false }) {
   )
 }
 
-export function SectionSeeAlsos({ relations }) {
-  const phrases = useLanguageData()?.phrases || null
-  return phrases === null ? (
+export function SectionSeeAlsos({ relations }: { relations: pids }) {
+  const phrases = useLanguagePhrases()?.data
+  return phrases === undefined ? (
     <Loading />
   ) : (
     <>
       <p className="mt-6 text-sm font-bold text-base-content/70">
         Related phrases
       </p>
-      {relations.length ? (
+      {relations?.length ? (
         <ul className="text-xl/9">
           {relations.map(pid => {
             // more extraneous null-guarding

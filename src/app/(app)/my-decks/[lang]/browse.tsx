@@ -18,7 +18,7 @@ export default function Browse({ disable = [] }) {
   if (isPending) return <Loading />
   if (error) return <ShowError>{error.message}</ShowError>
 
-  if (!phrases?.length) {
+  if (Object.keys(phrases).length === 0) {
     return (
       <p className="rounded-lg bg-primary/10 p-6">
         There are no phrases for this language 💩{' '}

@@ -1,31 +1,11 @@
 'use client'
 
 import { UseQueryResult, useQuery } from '@tanstack/react-query'
-import { getLanguageDetails } from './fetchers'
 import supabase from 'lib/supabase-client'
-import {
-  Deck,
-  Profile,
-  ReviewsCollated,
-  Language,
-  UseSBQuery,
-} from 'types/main'
+import { Deck, Profile, ReviewsCollated, UseSBQuery } from 'types/main'
 import { useAuth } from 'components/auth-context'
 import { collateArray } from 'lib/utils'
 import { PostgrestError } from '@supabase/supabase-js'
-
-export function useLanguageDetails(lang: string): UseSBQuery<Language> {
-  return useQuery({
-    queryKey: ['phrases', 'lang', lang],
-    queryFn: async () => getLanguageDetails(lang),
-    enabled: !!lang,
-    // retry: 3,
-    staleTime: Infinity,
-    gcTime: Infinity,
-    refetchOnMount: false,
-    refetchOnWindowFocus: false,
-  })
-}
 
 const fetchDeck = async (lang: string): Promise<Deck> => {
   let { data } = await supabase
@@ -68,7 +48,7 @@ const fetchDeck = async (lang: string): Promise<Deck> => {
   return deck
 }
 
-export function useDeck(deckLang: string): UseSBQuery<Deck> {
+export function useDeck(deckLang: string) {
   return useQuery({
     queryKey: ['user_deck', deckLang],
     queryFn: ({ queryKey }) => fetchDeck(queryKey[1]),
@@ -78,7 +58,7 @@ export function useDeck(deckLang: string): UseSBQuery<Deck> {
     gcTime: Infinity,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
-  })
+  }) as UseQueryResult<Deck>
 }
 
 export function useProfile() {
@@ -103,7 +83,7 @@ export function useProfile() {
   }) as UseQueryResult<Profile, PostgrestError>
 }
 
-export const useRecentReviewActivity = (): UseSBQuery<ReviewsCollated> => {
+export const useRecentReviewActivity = () => {
   return useQuery({
     queryKey: ['all-reviews'],
     queryFn: async () => {
@@ -122,5 +102,5 @@ export const useRecentReviewActivity = (): UseSBQuery<ReviewsCollated> => {
         keysInOrder: Object.keys(result),
       }
     },
-  })
+  }) as UseQueryResult<ReviewsCollated>
 }

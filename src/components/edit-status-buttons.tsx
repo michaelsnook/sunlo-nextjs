@@ -2,7 +2,7 @@ import { useQueryClient, useMutation } from '@tanstack/react-query'
 import supabase from 'lib/supabase-client'
 import { toast } from 'react-hot-toast'
 import { cn } from 'lib/utils'
-import { useDeckCards } from 'app/(app)/[lang]/api/preload-deck'
+import { useCard } from 'app/(app)/[lang]/api/preload-deck'
 
 const updateCardStatus = async ({ pid, status }) => {
   console.log(`update card status (pid),`, pid, status)
@@ -19,7 +19,7 @@ const updateCardStatus = async ({ pid, status }) => {
 
 export default function EditCardStatusButtons({ pid }) {
   const queryClient = useQueryClient()
-  const card = useDeckData()?.cards[pid]
+  const card = useCard(pid)?.data
   const updateStatus = useMutation({
     // mutationFn: status => editExistingCard(status, card.id)
     mutationFn: updateCardStatus,
@@ -29,6 +29,11 @@ export default function EditCardStatusButtons({ pid }) {
       queryClient.invalidateQueries({ queryKey: ['deck', card.lang, 'loaded'] })
     },
   })
+
+  if (card === undefined) return null // pending
+  // null should mean 404; {} should probably throw
+  if (!card || Object.keys(card)?.length === 0) return '404'
+
   const isLearned = card?.status === 'learned'
   const isActive = card?.status === 'active'
   const isSkipped = card?.status === 'skipped'
