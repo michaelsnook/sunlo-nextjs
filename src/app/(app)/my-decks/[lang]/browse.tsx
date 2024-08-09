@@ -8,7 +8,7 @@ import ShowError from 'components/show-error'
 import BigPhrase from 'components/big-phrase'
 import { useLang } from 'lib/hooks'
 import { SelectOption } from 'types/main'
-import { useLanguagePhrases } from 'app/(app)/[lang]/api/preload-language'
+import { useLanguagePhrases } from 'lib/preload-language'
 
 export default function Browse({ disable = [] }) {
   // TODO move this to URL state

@@ -9,9 +9,9 @@ import Card from 'components/card'
 import Browse from './browse'
 import Link from 'next/link'
 import { cn } from 'lib/utils'
-import { useLanguagePhrases } from 'app/(app)/[lang]/api/preload-language'
+import { useLanguagePhrases } from 'lib/preload-language'
 import { uuid } from 'types/main'
-import { useDeckQuery } from 'app/(app)/[lang]/api/preload-deck'
+import { useDeckQuery } from 'lib/preload-deck'
 
 const Empty = () => (
   <p className="my-4 text-base-content/70">🧄 No cards here 🥦 (yet)</p>

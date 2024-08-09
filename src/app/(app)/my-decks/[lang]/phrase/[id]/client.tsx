@@ -5,8 +5,8 @@ import EditCardStatusButtons from 'components/edit-status-buttons'
 import SectionTranslations from 'components/translations-section'
 import TinyPhrase from 'components/tiny-phrase'
 import Loading from 'components/loading'
-import { useCard } from 'app/(app)/[lang]/api/preload-deck'
-import { usePhrase } from 'app/(app)/[lang]/api/preload-language'
+import { useCard } from 'lib/preload-deck'
+import { usePhrase } from 'lib/preload-language'
 
 export default function Client({ pid }) {
   const phrase = usePhrase(pid)?.data

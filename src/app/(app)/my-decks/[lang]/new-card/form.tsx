@@ -18,7 +18,7 @@ import {
   SelectOption,
   uuid,
 } from 'types/main'
-import { useDeckQuery } from 'app/(app)/[lang]/api/preload-deck'
+import { useDeckQuery } from 'lib/preload-deck'
 import toast from 'react-hot-toast'
 
 export const SelectLanguageYouKnow = ({ onChange, disabledLang }) => {

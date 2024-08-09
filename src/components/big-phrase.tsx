@@ -12,11 +12,8 @@ import Link from 'next/link'
 import { cn, links } from 'lib/utils'
 import { useLang } from 'lib/hooks'
 import { pids } from 'types/main'
-import { useDeckCards, useDeckMeta } from 'app/(app)/[lang]/api/preload-deck'
-import {
-  useLanguagePhrases,
-  usePhrase,
-} from 'app/(app)/[lang]/api/preload-language'
+import { useDeckCards, useDeckMeta } from 'lib/preload-deck'
+import { useLanguagePhrases, usePhrase } from 'lib/preload-language'
 
 export const AddCardButtonsSection = ({ pid, onClose }) => {
   const queryClient = useQueryClient()

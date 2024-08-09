@@ -9,8 +9,8 @@ import { toast } from 'react-hot-toast'
 import { cn } from 'lib/utils'
 import { Tables, TablesInsert } from 'types/supabase'
 import { uuid } from 'types/main'
-import { useCard } from 'app/(app)/[lang]/api/preload-deck'
-import { usePhrase } from 'app/(app)/[lang]/api/preload-language'
+import { useCard } from 'lib/preload-deck'
+import { usePhrase } from 'lib/preload-language'
 
 const postReview = async ({
   card_id,
