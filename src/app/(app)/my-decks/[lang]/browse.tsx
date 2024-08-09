@@ -5,19 +5,20 @@ import { useState } from 'react'
 import Select from 'react-select'
 import Loading from 'components/loading'
 import ShowError from 'components/show-error'
-import { useLanguageDetails } from 'app/data/hooks'
 import BigPhrase from 'components/big-phrase'
 import { useLang } from 'lib/hooks'
 import { SelectOption } from 'types/main'
+import { useLanguagePhrases } from 'app/(app)/[lang]/api/preload-language'
 
 export default function Browse({ disable = [] }) {
+  // TODO move this to URL state
   const [activePhraseId, setActivePhraseId] = useState('')
   const lang = useLang()
-  const { data, error, isPending } = useLanguageDetails(lang)
+  const { data: phrases, isPending, error } = useLanguagePhrases()
   if (isPending) return <Loading />
   if (error) return <ShowError>{error.message}</ShowError>
 
-  if (!data.phrases?.length) {
+  if (!phrases?.length) {
     return (
       <p className="rounded-lg bg-primary/10 p-6">
         There are no phrases for this language 💩{' '}
@@ -31,10 +32,10 @@ export default function Browse({ disable = [] }) {
     )
   }
 
-  const options: Array<SelectOption> = data.phrases.map(phrase => {
+  const options: Array<SelectOption> = Object.keys(phrases).map(pid => {
     return {
-      value: phrase.id,
-      label: phrase.text,
+      value: phrases[pid].id,
+      label: phrases[pid].text,
     }
   })
   const handleChange = (option: SelectOption = null) => {
