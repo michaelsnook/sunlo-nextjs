@@ -1,9 +1,19 @@
-import { generateStaticParams } from 'app/language/[lang]/phrase/[id]/page'
+import { getAllPhraseDetails } from 'app/data/fetchers'
 import Client from './client'
 import Navbar from 'app/(app)/navbar'
 import languages from 'lib/languages'
 
-export { generateStaticParams }
+export async function generateStaticParams() {
+  let phrases = await getAllPhraseDetails()
+  return phrases.map(phrase => {
+    return phrase?.lang && phrase?.text && phrase?.id
+      ? {
+          lang: phrase.lang,
+          id: phrase.id,
+        }
+      : null
+  })
+}
 
 export default function Page({ params: { id, lang } }) {
   return (

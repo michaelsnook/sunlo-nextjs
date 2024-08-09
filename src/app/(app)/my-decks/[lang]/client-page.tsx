@@ -92,7 +92,7 @@ export default function ClientPage({ lang }) {
               key={pid}
               className="my-2"
             >
-              <Card status={deck.cards[pid].status} phrase={phrases[pid]} />
+              <Card status={deck.cards[pid]?.status} phrase={phrases[pid]} />
             </Link>
           ))
         )}

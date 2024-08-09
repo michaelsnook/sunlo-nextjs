@@ -1,5 +1,4 @@
 import supabase from 'lib/supabase-client'
-import type { Tables } from 'types/supabase'
 import type {
   UserCardInsert,
   PhraseCardInsert,
