@@ -43,7 +43,7 @@
     "clsx": "^2.1.1",
     "daisyui": "^4.12.10",
     "eslint": "^8.57.0",
-    "husky": "^8.0.3",
+    "husky": "^9.1.4",
     "internal-ip": "^7.0.0",
     "postcss": "^8.4.38",
     "prettier": "3.3.3",
