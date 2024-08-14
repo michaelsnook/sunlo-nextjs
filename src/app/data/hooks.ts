@@ -38,7 +38,7 @@ const fetchDeckPids = async (lang: string): Promise<DeckPids> => {
 
 export function usePidsByStatus(deckLang: string) {
   return useQuery({
-    queryKey: ['user_deck', deckLang],
+    queryKey: ['user', deckLang],
     queryFn: ({ queryKey }) => fetchDeckPids(queryKey[1]),
     enabled: !!deckLang,
     staleTime: 120_000,
@@ -50,7 +50,7 @@ export function usePidsByStatus(deckLang: string) {
 export function useProfile() {
   const { userId } = useAuth()
   return useQuery({
-    queryKey: ['user_profile'],
+    queryKey: ['user', 'profile'],
     queryFn: async (): Promise<Profile | null> => {
       const { data } = await supabase
         .from('user_profile')
@@ -71,7 +71,7 @@ export function useProfile() {
 
 export const useRecentReviewActivity = () => {
   return useQuery({
-    queryKey: ['all-reviews'],
+    queryKey: ['user', 'reviews'],
     queryFn: async () => {
       const { data, error } = await supabase
         .from('user_card_review_plus')

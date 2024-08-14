@@ -16,7 +16,7 @@ function useInsertDeck() {
     mutationFn: async (values: DeckInsert) => postInsertDeck(values),
     onSuccess: () => {
       // it's a fresh deck, so no need for optimistics
-      client.invalidateQueries({ queryKey: ['user_profile'] })
+      client.invalidateQueries({ queryKey: ['user', 'profile'] })
     },
   })
 }

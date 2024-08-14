@@ -49,7 +49,7 @@ function Form({ initialData, uid }: { initialData: ProfileInsert; uid: uuid }) {
     },
     onSuccess: () => {
       toast.success(`Successfully updated your profile`)
-      queryClient.invalidateQueries({ queryKey: ['user_profile'] })
+      queryClient.invalidateQueries({ queryKey: ['user', 'profile'] })
     },
   })
 
