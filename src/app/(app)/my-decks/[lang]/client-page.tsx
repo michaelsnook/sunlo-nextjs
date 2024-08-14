@@ -46,7 +46,7 @@ export default function ClientPage({ lang }) {
 
   if (error) return <ShowError>{error.message}</ShowError>
   if (isPendingA || isPendingB || isPendingC) return <Loading />
-  if (deck.pids.length === 0) return <BrandNew />
+  if (!(deck.pids?.length > 0)) return <BrandNew />
 
   // console.log(`deck data client page`, deckData)
   // at this point data is loaded, the deck is present, there are

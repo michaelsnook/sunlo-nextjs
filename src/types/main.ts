@@ -8,6 +8,7 @@ import {
 
 export type uuid = string
 export type pids = Array<uuid>
+export type lang = string // with length of 3
 
 export type SelectOption = { value: string; label: string }
 
@@ -84,13 +85,17 @@ export type ReviewInsert = TablesInsert<'user_card_review'>
 export type CardFull = CardMeta & {
   reviews?: Array<ReviewMeta>
 }
+export type DecksMap = {
+  [key: lang]: DeckMeta
+}
 
 // export type ProfilePublic = Tables<'public_profile'>
 export type ProfileRow = Tables<'user_profile'>
 export type ProfileInsert = TablesInsert<'user_profile'>
 export type ProfileMeta = ProfileRow // Tables<'profile_meta'>
 export type ProfileFull = ProfileMeta & {
-  decks: Array<DeckMeta>
+  decks: DecksMap
+  deckLanguages: Array<lang>
 }
 
 // for legacy hooks and such
