@@ -11,6 +11,7 @@ import type {
 import { mapArray, selects } from 'lib/utils'
 import supabase from 'lib/supabase-client'
 import { useLang } from 'lib/hooks'
+import { useAuth } from 'components/auth-context'
 
 async function fetchDeck(lang: string): Promise<DeckLoaded> {
   const { data } = await supabase
@@ -32,21 +33,20 @@ async function fetchDeck(lang: string): Promise<DeckLoaded> {
 export function useDeckQuery(
   {
     select = undefined,
-    lang: altLang,
+    lang = '',
   }: {
     select?: any
     lang?: string
   } = { select: undefined, lang: null }
 ) {
-  const paramLang = useLang()
-  const lang = altLang || paramLang
+  const backupLang = useLang()
+  const theLang = lang || backupLang
+  const { userId } = useAuth()
   return useQuery({
-    queryKey: ['user', lang],
-    queryFn: ({ queryKey }) => {
-      return fetchDeck(queryKey[1])
-    },
+    queryKey: ['user', theLang],
+    queryFn: async ({ queryKey }) => fetchDeck(queryKey[1]),
     select,
-    enabled: typeof lang === 'string' && lang.length === 3,
+    enabled: !!userId && theLang.length === 3,
     gcTime: 1_200_000,
     staleTime: 120_000,
     refetchOnWindowFocus: false,
