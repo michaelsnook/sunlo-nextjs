@@ -32,21 +32,19 @@ export async function fetchLanguage(lang: string): Promise<LanguageLoaded> {
 export function useLanguageQuery(
   {
     select = undefined,
-    lang: altLang,
+    lang = '',
   }: {
     select?: any
     lang?: string | null
   } = { select: undefined, lang: null }
 ) {
-  const paramLang = useLang()
-  const lang = altLang || paramLang
+  const backupLang = useLang()
+  const theLang = lang || backupLang
   return useQuery({
-    queryKey: ['language', lang, 'loaded'],
-    queryFn: () => {
-      return fetchLanguage(lang)
-    },
+    queryKey: ['language', theLang],
+    queryFn: async ({ queryKey }) => fetchLanguage(queryKey[1]),
     select,
-    enabled: typeof lang === 'string' && lang.length === 3,
+    enabled: theLang.length === 3,
     gcTime: 1_200_000,
     staleTime: 120_000,
     refetchOnWindowFocus: false,
