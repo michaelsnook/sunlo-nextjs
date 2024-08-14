@@ -137,7 +137,7 @@ export default function Client() {
           <CreateFirstDeckStep value={tempDeckToAdd} set={setTempDeckToAdd} />
 
           {tempLanguagePrimaryToUse &&
-          (tempDeckToAdd || profile.deck_stubs?.length > 0) &&
+          (tempDeckToAdd || profile.deckLanguages?.length > 0) &&
           tempUsernameToUse ? (
             <div className="my-6 flex flex-row-reverse items-center justify-around">
               <button
@@ -220,20 +220,20 @@ const SetPrimaryLanguageStep = ({ value, set }) => {
 }
 
 const CreateFirstDeckStep = ({ value, set }) => {
-  const { data } = useProfile()
-  const decks = data?.deck_stubs || []
+  const langs = useProfile()?.data?.deckLanguages
+
   const [closed, setClosed] = useState(true)
-  return closed && decks?.length ? (
+  return closed && langs.length ? (
     <Completed>
       <h2 className="h4 flex-none">
-        {!value && decks?.length > 0 ? (
+        {!value && langs.length > 0 ? (
           <>
             You&apos;re working on{' '}
             <Highlight>
-              {decks?.map(v => languages[v.lang]).join(', ')}
+              {langs.map(lang => languages[lang]).join(', ')}
             </Highlight>
           </>
-        ) : !value && !(decks?.length > 0) ? (
+        ) : !value && !(langs.length > 0) ? (
           <>Wait you have to learn something or what&apos;s the point</>
         ) : (
           <>
@@ -244,7 +244,7 @@ const CreateFirstDeckStep = ({ value, set }) => {
       </h2>
 
       <X
-        plus={!value && decks?.length > 0}
+        plus={!value && langs.length > 0}
         set={() => {
           set()
           setClosed(false)
@@ -254,12 +254,12 @@ const CreateFirstDeckStep = ({ value, set }) => {
   ) : (
     <form className="card-white mb-16">
       <h2 className="h2">
-        Create {decks?.length === 0 ? 'your first deck' : 'another deck'}
+        Create {langs.length === 0 ? 'your first deck' : 'another deck'}
       </h2>
-      {decks?.length > 0 ? (
+      {langs.length > 0 ? (
         <p className="py-2">
           FYI you&apos;re already learning{' '}
-          {decks?.map(v => languages[v.lang]).join(', ')}
+          {langs.map(lang => languages[lang]).join(', ')}
         </p>
       ) : null}
       <div className="flex flex-col">
@@ -274,13 +274,21 @@ const CreateFirstDeckStep = ({ value, set }) => {
           className="mb-6 rounded border bg-base-100 p-3 text-base-content"
         >
           <option value="">-- select one --</option>
-          {Object.keys(languages).map(k => (
-            <option key={`language-dropdown-option-${k}`} value={k}>
-              {languages[k]}
-            </option>
-          ))}
+          {Object.keys(languages).map(k => {
+            const isInLearningSet = langs.indexOf(k) >= 0 ? true : false
+            return (
+              <option
+                key={`language-dropdown-option-${k}`}
+                value={k}
+                disabled={isInLearningSet}
+                className={isInLearningSet ? 'bg-gray-500/20' : ''}
+              >
+                {languages[k]}
+              </option>
+            )
+          })}
         </select>
-        {decks?.length > 0 && !value ? (
+        {langs.length > 0 && !value ? (
           <a onClick={() => setClosed(true)} className="s-link">
             Skip this step
           </a>

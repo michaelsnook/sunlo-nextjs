@@ -5,6 +5,7 @@ import { useProfile } from 'app/data/hooks'
 import Loading from 'components/loading'
 import languages from 'lib/languages'
 import ShowError from 'components/show-error'
+import { DecksMap } from 'types/main'
 
 function OneDeck({ deck }) {
   return (
@@ -26,16 +27,17 @@ export default function ClientPage() {
   if (isPending) return <Loading />
   if (error) return <ShowError>{error.message}</ShowError>
 
-  const decks = data.deck_stubs
+  const decks: DecksMap = data.decks
+  const langs = data.deckLanguages
   return (
     <>
-      {decks.length ? (
+      {langs.length ? (
         <>
           <p>
-            You have {decks.length} active decks. Which one would you like to
+            You have {langs?.length} active decks. Which one would you like to
             work on today?
           </p>
-          {decks?.map(deck => <OneDeck key={deck.lang} deck={deck} />)}
+          {langs?.map(lang => <OneDeck key={lang} deck={decks[lang]} />)}
         </>
       ) : (
         <p className="my-6">

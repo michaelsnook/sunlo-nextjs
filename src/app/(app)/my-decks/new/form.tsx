@@ -28,8 +28,8 @@ export default function Form() {
     },
   })
 
-  const { data, error, isPending } = useProfile()
-  const decks = data?.deck_stubs
+  const { data, error } = useProfile()
+  const langs = data?.deckLanguages ?? []
 
   return (
     <div>
@@ -40,13 +40,7 @@ export default function Form() {
         <Select
           options={allLanguageOptions}
           isOptionDisabled={(option: { value: string; label: string }) =>
-            decks?.some(deck => {
-              return isPending
-                ? // while loading the list of decks, all options enabled
-                  false
-                : // otherwise, disable languages we're already learning
-                  deck.lang === option.value
-            })
+            langs.indexOf(option.value) >= 0
           }
           classNames={{
             control: () => 's-input',

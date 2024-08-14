@@ -57,11 +57,11 @@ export default function Client({ lang }) {
   if (isPending) return <Loading />
   if (error) return <ShowError>{error.message}</ShowError>
 
-  const deck = data?.deck_stubs?.find(d => d.lang === lang) || null
+  const deck = data?.decks[lang]
 
   return (
     <>
-      {deck === null ? (
+      {!deck ? (
         <p>
           Are you sure you&apos;re learning this language? To create a deck and{' '}
           <Link className="s-link" href="/my-decks/new">

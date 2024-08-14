@@ -2,9 +2,9 @@
 
 import { UseQueryResult, useQuery } from '@tanstack/react-query'
 import supabase from 'lib/supabase-client'
-import { Profile, ReviewsCollated, pids } from 'types/main'
+import { ProfileFull, ReviewsCollated, pids } from 'types/main'
 import { useAuth } from 'components/auth-context'
-import { collateArray } from 'lib/utils'
+import { collateArray, mapArray } from 'lib/utils'
 import { PostgrestError } from '@supabase/supabase-js'
 
 type DeckPids = {
@@ -50,23 +50,18 @@ export function usePidsByStatus(deckLang: string) {
 export function useProfile() {
   const { userId } = useAuth()
   return useQuery({
-    queryKey: ['user', 'profile'],
-    queryFn: async (): Promise<Profile | null> => {
+    queryKey: ['user', userId],
+    queryFn: async (): Promise<ProfileFull | null> => {
       const { data } = await supabase
         .from('user_profile')
-        .select(`*, deck_stubs:user_deck_plus(*)`)
-        .eq('uid', userId)
+        .select(`*, decks:user_deck_plus(*)`)
         .maybeSingle()
         .throwOnError()
-
-      return {
-        languages_spoken: [],
-        deck_stubs: [],
-        ...data,
-      }
+      const decksMap = mapArray(data?.decks, 'lang')
+      return { ...data, decks: decksMap, deckLanguages: Object.keys(decksMap) }
     },
-    enabled: userId ? true : false,
-  }) as UseQueryResult<Profile, PostgrestError>
+    enabled: !!userId,
+  }) as UseQueryResult<ProfileFull, PostgrestError>
 }
 
 export const useRecentReviewActivity = () => {

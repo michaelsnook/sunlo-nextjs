@@ -15,14 +15,11 @@ import { cn } from 'lib/utils'
 
 const Navlink = ({ href, children }) => {
   const pathname = usePathname()
-  return href !== pathname ? (
-    <Link href={href} className="link-hover">
+  const isActive = href === pathname
+  return (
+    <Link href={href} className={`nav-link ${isActive ? 'active' : ''}`}>
       {children}
     </Link>
-  ) : (
-    <a className="disabled border-l-4 border-base-content/50 pl-2 text-base-content/70">
-      {children}
-    </a>
   )
 }
 
@@ -72,14 +69,14 @@ const DeckMenu = () => {
   if (isPending) return null
   if (error) return <ShowError>{error.message}</ShowError>
 
-  const decks = data?.deck_stubs
+  const langs = data?.deckLanguages ?? []
   const menuData = {
     name: 'Learning decks',
     href: '/home',
-    links: decks?.map(deck => {
+    links: langs.map(lang => {
       return {
-        name: languages[deck.lang],
-        href: `/home/${deck.lang}`,
+        name: languages[lang],
+        href: `/home/${lang}`,
       }
     }),
   }
@@ -93,12 +90,14 @@ export default function Sidebar() {
   const pathname = usePathname()
   const router = useRouter()
 
-  const { data: profile, isPending, error } = useProfile()
+  const { data: profile, isLoading } = useProfile()
 
   // close the sidebar when the user navigates
+  /*
   useEffect(() => {
     setIsOpen(false)
   }, [pathname])
+  /**/
 
   return (
     <div id="sidebar-all">
@@ -123,7 +122,7 @@ export default function Sidebar() {
           <Garlic size={50} />
           Sunlo
         </span>
-        {isPending ? (
+        {isLoading ? (
           <Loading />
         ) : profile ? (
           <Navlink href="/profile">
