@@ -41,9 +41,9 @@ export function useDeckQuery(
   const paramLang = useLang()
   const lang = altLang || paramLang
   return useQuery({
-    queryKey: ['deck', lang, 'loaded'],
-    queryFn: () => {
-      return fetchDeck(lang)
+    queryKey: ['user', lang],
+    queryFn: ({ queryKey }) => {
+      return fetchDeck(queryKey[1])
     },
     select,
     enabled: typeof lang === 'string' && lang.length === 3,
@@ -59,6 +59,7 @@ export const useDeckMeta = (lang?: string) =>
     select: (data: DeckLoaded) => data.meta,
   }) as UseQueryResult<DeckMeta>
 
+// @TODO replace this with a memoized select on data.cards
 export const useDeckPids = (lang?: string) =>
   useDeckQuery({
     lang,

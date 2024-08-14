@@ -31,7 +31,7 @@ export default function ClientPage({ lang }) {
   const { data, isPending } = usePidsByStatus(lang)
 
   // @@TODO turn these into pids with filters, e.g.
-  // queryKey: ['deck', lang, 'pids', { filter }]
+  // queryKey: ['user', lang, 'pids', { filter }]
   // or just memoize it here...
   const reviewables: pids = useMemo(() => shuffle(data?.active), [data])
   const [cardIndex, setCardIndex] = useState(0)

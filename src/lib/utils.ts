@@ -59,6 +59,19 @@ export const selects = {
   card_full: () => `*, reviews:user_card_review_plus(*)` as const,
   deck_full: () => `*, cards:user_card_plus(${selects.card_full()})` as const,
   phrase_full: () => `*, translations:phrase_translation(*)` as const,
+  // @TODO this is v0.3 type of data packaging for SSR-land
+  phrase_fuller: () =>
+    `
+    id, text, lang,
+    translations:phrase_translation(id, text, lang),
+    phrase_from:phrase_relation!phrase_see_also_to_phrase_id_fkey(
+      id, from_phrase_id, phrase:phrase!phrase_see_also_from_phrase_id_fkey(id, text, lang)
+    ),
+    phrase_to:phrase_relation!phrase_see_also_from_phrase_id_fkey(
+      id, to_phrase_id, phrase:phrase!phrase_see_also_to_phrase_id_fkey(id, text, lang)
+    ),
+    card:user_card(id, user_deck_id, status)
+  ` as const,
   language_full: () =>
     `*, phrases:phrase_plus(${selects.phrase_full()})` as const,
 }

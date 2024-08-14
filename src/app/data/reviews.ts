@@ -13,13 +13,13 @@ export function useRecentReviews(lang: string) {
   }, [])
 
   return useQuery({
-    queryKey: ['reviews', lang, priorTime],
+    queryKey: ['user', 'reviews', lang, priorTime],
     queryFn: async ({ queryKey }) => {
       const { data } = await supabase
         .from('user_card_review_plus')
         .select(`id, created_at, card_id, score`)
         .eq('lang', lang)
-        .gt('created_at', queryKey[2])
+        .gt('created_at', queryKey[3])
         .throwOnError()
       return data
     },
