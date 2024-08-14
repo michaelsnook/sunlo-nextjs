@@ -17,10 +17,10 @@ const nextConfig = {
   images: { unoptimized: true },
   reactStrictMode: true,
   ...assetPrefixSpreadable,
-  typescript: {
+  /*typescript: {
     // Dangerously ignore typescript errors during production build
     // ignoreBuildErrors: true,
-  },
+  },*/
 }
 
 export default nextConfig
