@@ -625,6 +625,8 @@ export type Database = {
           cards_active: number | null
           cards_learned: number | null
           cards_skipped: number | null
+          count_reviews_7d: number | null
+          count_reviews_7d_positive: number | null
           created_at: string | null
           id: string | null
           lang: string | null
