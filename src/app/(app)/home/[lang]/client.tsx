@@ -3,33 +3,27 @@
 import ShowError from 'components/show-error'
 import { notFound } from 'next/navigation'
 import { useProfile } from 'app/data/hooks'
-import { useRecentReviews } from 'app/data/reviews'
 import Loading from 'components/loading'
 import languages from 'lib/languages'
 import Link from 'next/link'
+import { DeckMeta } from 'types/main'
 
-const RecentReviewsSummary = ({ lang }) => {
-  const { data, error, isPending } = useRecentReviews(lang)
-  if (isPending) return <Loading />
-  if (error) return <ShowError>{error.message}</ShowError>
-
-  const countReviews = data?.length
-  const countPositive = data?.filter(r => r.score > 0).length
-
+const RecentReviewsSummary = ({ deck }: { deck: DeckMeta }) => {
+  const { count_reviews_7d, count_reviews_7d_positive } = deck
   return (
     <div className="card-body bg-base-200 text-base-content">
       <div className="card-title">Review flash cards</div>
-      {countReviews > 5 &&
-        `You've been studying ${countReviews > 40 ? 'a lot!' : ' – '}`}{' '}
-      I see {countReviews} cards reviewed in the last week
-      {countPositive > 0 && ` and you remembered ${countPositive} of them`}.
-      Keep at it!
+      {count_reviews_7d > 5 &&
+        `You've been studying ${count_reviews_7d > 40 ? 'a lot!' : ' – '}`}{' '}
+      I see {count_reviews_7d} cards reviewed in the last week
+      {count_reviews_7d_positive > 0 &&
+        ` and you remembered ${count_reviews_7d_positive} of them`}
+      . Keep at it!
     </div>
   )
 }
 
 const CardsSummary = ({ deck }) => {
-  if (!deck) return <Loading />
   const { cards_active, cards_learned } = deck
   const cardsInDeck = cards_active + cards_learned
   const beHappy = cards_learned > 5
@@ -73,7 +67,7 @@ export default function Client({ lang }) {
         <div className="grid max-w-[44rem] gap-6">
           <div className="card glass">
             <figure>
-              <RecentReviewsSummary lang={lang} />
+              <RecentReviewsSummary deck={deck} />
             </figure>
             <div className="card-body">
               <Link href={`/review/${lang}`} className="btn btn-lg">
