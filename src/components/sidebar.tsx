@@ -6,7 +6,6 @@ import { Garlic } from 'components/garlic'
 import languages from 'lib/languages'
 import { usePathname, useRouter } from 'next/navigation'
 import { useProfile } from 'app/data/hooks'
-import Loading from 'components/loading'
 import ShowError from './show-error'
 import supabase from 'lib/supabase-client'
 import { toast } from 'react-hot-toast'
@@ -23,7 +22,7 @@ const Navlink = ({ href, children }) => {
   )
 }
 
-const staticMenu = {
+const staticMenuData = {
   name: 'Menu',
   links: [
     {
@@ -62,8 +61,6 @@ const GenericMenu = ({ menu }) => {
   )
 }
 
-const StaticMenu = () => <GenericMenu menu={staticMenu} />
-
 const DeckMenu = () => {
   const { data, isPending, error } = useProfile()
   if (isPending) return null
@@ -90,7 +87,7 @@ export default function Sidebar() {
   const pathname = usePathname()
   const router = useRouter()
 
-  const { data: profile, isLoading } = useProfile()
+  const username = useProfile()?.data?.username
 
   // close the sidebar when the user navigates
   /*
@@ -122,18 +119,19 @@ export default function Sidebar() {
           <Garlic size={50} />
           Sunlo
         </span>
-        {isLoading ? (
-          <Loading />
-        ) : profile ? (
-          <Navlink href="/profile">
-            <p className="flex flex-row gap-2">
-              <ProfileIcon /> {profile?.username}
-            </p>
-          </Navlink>
+        {username ? (
+          <>
+            <Navlink href="/profile">
+              <p className="flex flex-row gap-2">
+                <ProfileIcon /> {username}
+              </p>
+            </Navlink>
+
+            <DeckMenu />
+          </>
         ) : null}
 
-        <DeckMenu />
-        <StaticMenu />
+        <GenericMenu menu={staticMenuData} />
 
         {isAuth && (
           <p>
