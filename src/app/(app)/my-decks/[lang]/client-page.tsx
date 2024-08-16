@@ -81,12 +81,11 @@ export default function ClientPage({ lang }) {
         </a>
       </div>
       <div>
-        {tab === 'browse' ? (
+        {tab === 'browse' ?
           <Browse disable={deck.pids} />
-        ) : !(pidsByStatus[tab]?.length > 0) ? (
+        : !(pidsByStatus[tab]?.length > 0) ?
           <Empty />
-        ) : (
-          pidsByStatus[tab].map((pid: uuid) => (
+        : pidsByStatus[tab].map((pid: uuid) => (
             <Link
               href={`/my-decks/${lang}/phrase/${pid}`}
               key={pid}
@@ -95,7 +94,7 @@ export default function ClientPage({ lang }) {
               <Card status={deck.cards[pid]?.status} phrase={phrases[pid]} />
             </Link>
           ))
-        )}
+        }
       </div>
     </div>
   )

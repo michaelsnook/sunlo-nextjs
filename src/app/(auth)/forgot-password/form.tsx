@@ -26,14 +26,13 @@ export default function ForgotPasswordForm() {
 
   return (
     <>
-      {useRequestPasswordForm.isSuccess ? (
+      {useRequestPasswordForm.isSuccess ?
         <>
           <h1 className="h3 text-base-content/90">Check your email</h1>
           <p>We&apos;ve sent a password reset link to {yourEmail}.</p>
           <p>You can close this window.</p>
         </>
-      ) : (
-        <>
+      : <>
           <h1 className="h3 text-base-content/90">Request a password reset</h1>
           <form
             role="form"
@@ -80,7 +79,7 @@ export default function ForgotPasswordForm() {
             {useRequestPasswordForm.error?.message}
           </ShowError>
         </>
-      )}
+      }
     </>
   )
 }

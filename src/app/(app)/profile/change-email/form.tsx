@@ -25,10 +25,9 @@ export default function SetNewEmailForm() {
 
   return (
     <>
-      {changeEmail.isSuccess ? (
+      {changeEmail.isSuccess ?
         <SuccessfulSubmit />
-      ) : (
-        <>
+      : <>
           <h1 className="h3 text-base-content/90">Choose a new email</h1>
           <form role="form" onSubmit={changeEmail.mutate} className="form">
             <fieldset
@@ -74,7 +73,7 @@ export default function SetNewEmailForm() {
             Error requesting new email: {changeEmail.error?.message}
           </ShowError>
         </>
-      )}
+      }
     </>
   )
 }

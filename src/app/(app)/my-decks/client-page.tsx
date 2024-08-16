@@ -31,7 +31,7 @@ export default function ClientPage() {
   const langs = data.deckLanguages
   return (
     <>
-      {langs.length ? (
+      {langs.length ?
         <>
           <p>
             You have {langs?.length} active decks. Which one would you like to
@@ -39,14 +39,13 @@ export default function ClientPage() {
           </p>
           {langs?.map(lang => <OneDeck key={lang} deck={decks[lang]} />)}
         </>
-      ) : (
-        <p className="my-6">
+      : <p className="my-6">
           It looks like you&apos;re not learning any languages right now.{' '}
           <Link className="s-link" href="/my-decks/new">
             Let&apos;s get started!
           </Link>
         </p>
-      )}
+      }
     </>
   )
 }

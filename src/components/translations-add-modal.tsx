@@ -93,12 +93,14 @@ export default function AddTranslationsModal({
               className="btn btn-primary"
               disabled={addTranslation.isPending}
             >
-              {addTranslation.isPending ? <Loading /> : `Submit translation`}
+              {addTranslation.isPending ?
+                <Loading />
+              : `Submit translation`}
             </button>
             <ShowError show={!!addTranslation.error}>
-              {addTranslation.error?.['code'] === '23505'
-                ? `This translation already exists for this phrase`
-                : addTranslation.error?.message}
+              {addTranslation.error?.['code'] === '23505' ?
+                `This translation already exists for this phrase`
+              : addTranslation.error?.message}
             </ShowError>
           </fieldset>
         </form>

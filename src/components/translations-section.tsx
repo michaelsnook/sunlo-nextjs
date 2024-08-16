@@ -20,7 +20,7 @@ export default function SectionTranslations({ phrase }) {
           close={close}
         />
       </p>
-      {phrase.translations?.length > 0 ? (
+      {phrase.translations?.length > 0 ?
         <ul className="text-2xl font-bold">
           {phrase.translations.map(trans => (
             <li lang={trans.lang} key={`translation-${trans.id}`}>
@@ -28,14 +28,13 @@ export default function SectionTranslations({ phrase }) {
             </li>
           ))}
         </ul>
-      ) : (
-        <p className="text-base-content/70">
+      : <p className="text-base-content/70">
           There aren&apos;t any translations yet for this phrase,{' '}
           <a className="s-link" onClick={open}>
             you can be the first to add one.
           </a>
         </p>
-      )}
+      }
     </>
   )
 }

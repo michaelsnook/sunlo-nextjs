@@ -33,7 +33,7 @@ export default function Card({
         <div lang={phrase?.lang} className="mb-2 text-xl font-bold">
           <TinyPhrase {...phrase} />
         </div>
-        {phrase?.translations?.length > 0 ? (
+        {phrase?.translations?.length > 0 ?
           <ul>
             {phrase.translations.map(trans => (
               <li lang={trans.lang} key={`translation-${trans.id}`}>
@@ -41,12 +41,11 @@ export default function Card({
               </li>
             ))}
           </ul>
-        ) : (
-          <p className="italic text-base-content/80">
+        : <p className="italic text-base-content/80">
             There aren&apos;t any translations, sorry{' '}
             <span className="not-italic">😢</span>
           </p>
-        )}
+        }
       </div>
     </div>
   )

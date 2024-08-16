@@ -19,13 +19,12 @@ export default async function Page({ params: { lang } }) {
     <>
       <Navbar title={`${languages[lang]} (${lang})`}></Navbar>
       <main className="page-card">
-        {!language?.phrases?.length ? (
+        {!language?.phrases?.length ?
           <p>
             We don&apos;t have any phrases for you to learn {languages[lang]}{' '}
             yet. But you can be the first to add one!
           </p>
-        ) : (
-          <ul className="columns-1 gap-4 @lg:columns-2 @3xl:columns-3">
+        : <ul className="columns-1 gap-4 @lg:columns-2 @3xl:columns-3">
             {language.phrases.map(phrase => (
               <li key={`phrase-${phrase.id}`}>
                 <Link href={`/language/${lang}/phrase/${phrase.id}`}>
@@ -38,7 +37,7 @@ export default async function Page({ params: { lang } }) {
               </li>
             ))}
           </ul>
-        )}
+        }
       </main>
     </>
   )
