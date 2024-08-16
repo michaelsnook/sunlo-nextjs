@@ -28,8 +28,9 @@ export const getLanguageDetails = async (
   const language: Language = {
     lang: data.lang,
     name: data.name,
-    phrases: Array.isArray(data?.phrase)
-      ? data.phrase?.map(p => phrasePostFetch(p))
+    phrases:
+      Array.isArray(data?.phrase) ?
+        data.phrase?.map(p => phrasePostFetch(p))
       : [],
     deck: data?.user_deck[0],
   }

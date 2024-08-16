@@ -27,7 +27,7 @@ export default function PhraseCardSmall({
         {emoji}
         {text}
       </p>
-      {translations && translations?.length > 0 ? (
+      {translations && translations?.length > 0 ?
         <ul>
           {translations.map(trans => (
             <li lang={trans.lang} key={`translation-${trans.id}`}>
@@ -35,7 +35,7 @@ export default function PhraseCardSmall({
             </li>
           ))}
         </ul>
-      ) : null}
+      : null}
     </div>
   )
 }

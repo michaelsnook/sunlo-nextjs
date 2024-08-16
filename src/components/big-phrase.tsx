@@ -36,11 +36,11 @@ export const AddCardButtonsSection = ({ pid, onClose }) => {
   })
   return (
     <div className="my-6 flex gap-8 text-2xl">
-      {makeNewCard.isPending ? (
+      {makeNewCard.isPending ?
         <Loading />
-      ) : makeNewCard.error ? (
+      : makeNewCard.error ?
         <ShowError>{makeNewCard.error.message}</ShowError>
-      ) : makeNewCard.isSuccess ? (
+      : makeNewCard.isSuccess ?
         <p className="text-lg">
           This phrase is in your deck with status: &ldquo;
           {makeNewCard.data?.status}
@@ -49,8 +49,7 @@ export const AddCardButtonsSection = ({ pid, onClose }) => {
             Keep browsing.
           </a>
         </p>
-      ) : (
-        <>
+      : <>
           <button
             className={`btn btn-success btn-lg ${
               makeNewCard.isPending ? 'loading' : ''
@@ -70,7 +69,7 @@ export const AddCardButtonsSection = ({ pid, onClose }) => {
             ❌ Skip it
           </button>
         </>
-      )}
+      }
     </div>
   )
 }
@@ -104,57 +103,49 @@ export default function BigPhrase({ phrase_id: pid, onClose, noBox = false }) {
         'mb-4 w-full'
       )}
     >
-      {phrase && hasCard !== null ? (
+      {phrase && hasCard !== null ?
         <>
           <h2 lang={phrase.lang} className="h3 font-bold">
             <TinyPhrase text={phrase.text} />
           </h2>
           <SectionTranslations phrase={phrase} />
           <SectionSeeAlsos relations={relations} />
-          {hasCard ? (
+          {hasCard ?
             <EditCardStatusButtons pid={pid} />
-          ) : (
-            <AddCardButtonsSection pid={pid} onClose={onClose} />
-          )}
+          : <AddCardButtonsSection pid={pid} onClose={onClose} />}
         </>
-      ) : (
-        <>could not load this phrase</>
-      )}
+      : <>could not load this phrase</>}
     </div>
   )
 }
 
 export function SectionSeeAlsos({ relations }: { relations: pids }) {
   const phrases = useLanguagePhrases()?.data
-  return phrases === undefined ? (
-    <Loading />
-  ) : (
-    <>
-      <p className="mt-6 text-sm font-bold text-base-content/70">
-        Related phrases
-      </p>
-      {relations?.length ? (
-        <ul className="text-xl/9">
-          {relations.map(pid => {
-            // more extraneous null-guarding
-            const p = phrases[pid] ?? null
-            return (
-              p && (
-                <li key={pid}>
-                  <Link
-                    className="group rounded p-2 hover:bg-primary hover:text-white"
-                    href={links.deckPhrase(phrases[pid].lang, pid)}
-                  >
-                    <TinyPhrase {...phrases[pid]} />
-                  </Link>
-                </li>
+  return phrases === undefined ?
+      <Loading />
+    : <>
+        <p className="mt-6 text-sm font-bold text-base-content/70">
+          Related phrases
+        </p>
+        {relations?.length ?
+          <ul className="text-xl/9">
+            {relations.map(pid => {
+              // more extraneous null-guarding
+              const p = phrases[pid] ?? null
+              return (
+                p && (
+                  <li key={pid}>
+                    <Link
+                      className="group rounded p-2 hover:bg-primary hover:text-white"
+                      href={links.deckPhrase(phrases[pid].lang, pid)}
+                    >
+                      <TinyPhrase {...phrases[pid]} />
+                    </Link>
+                  </li>
+                )
               )
-            )
-          })}
-        </ul>
-      ) : (
-        <p className="mt-6">none. Add one?</p>
-      )}
-    </>
-  )
+            })}
+          </ul>
+        : <p className="mt-6">none. Add one?</p>}
+      </>
 }

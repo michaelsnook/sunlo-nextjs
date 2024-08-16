@@ -30,10 +30,9 @@ export default function SignupForm() {
 
   return (
     <div>
-      {submitSignup.isSuccess ? (
+      {submitSignup.isSuccess ?
         <SuccessfulSubmit />
-      ) : (
-        <>
+      : <>
           <h1 className="h3 text-base-content/90">Create your account</h1>
           <form role="form" onSubmit={submitSignup.mutate} className="form">
             <fieldset
@@ -102,7 +101,7 @@ export default function SignupForm() {
             </fieldset>
           </form>
         </>
-      )}
+      }
     </div>
   )
 }

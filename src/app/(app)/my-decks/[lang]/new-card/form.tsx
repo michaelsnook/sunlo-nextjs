@@ -25,9 +25,9 @@ export const SelectLanguageYouKnow = ({ onChange, disabledLang }) => {
   const { data, isPending } = useProfile()
   if (isPending) return <Loading />
   const languages_spoken = data?.languages_spoken || []
-  const selectOptions = !languages_spoken.length
-    ? allLanguageOptions
-    : [
+  const selectOptions =
+    !languages_spoken.length ? allLanguageOptions : (
+      [
         {
           label: 'Your langauges',
           options: makeLanguageOptions(languages_spoken),
@@ -39,6 +39,7 @@ export const SelectLanguageYouKnow = ({ onChange, disabledLang }) => {
           ),
         },
       ]
+    )
   return (
     <Select
       name="translationLang"
@@ -191,13 +192,13 @@ export default function AddCardPhraseForm({ defaultLang, cancel = null }) {
         </div>
       </div>
       <div className="flex justify-between">
-        {addCardPhrase.isPending ? (
+        {addCardPhrase.isPending ?
           <Loading />
-        ) : addCardPhrase.error ? (
+        : addCardPhrase.error ?
           <ShowError show={!!addCardPhrase.error}>
             {addCardPhrase.error?.message}
           </ShowError>
-        ) : addCardPhrase.isSuccess ? (
+        : addCardPhrase.isSuccess ?
           <div className="mb-4 rounded-lg border border-success bg-success/50 px-6 py-4 text-black">
             <p className="">
               Success! added this new phrase to your deck.{' '}
@@ -216,8 +217,7 @@ export default function AddCardPhraseForm({ defaultLang, cancel = null }) {
               .
             </p>
           </div>
-        ) : (
-          <>
+        : <>
             <button
               type="submit"
               className="btn btn-primary"
@@ -232,7 +232,7 @@ export default function AddCardPhraseForm({ defaultLang, cancel = null }) {
               Cancel
             </a>
           </>
-        )}
+        }
       </div>
     </form>
   )

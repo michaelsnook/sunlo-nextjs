@@ -8,9 +8,8 @@ if (!isProd) {
   internalHost = await internalIpV4()
 }
 
-const assetPrefixSpreadable = isProd
-  ? {}
-  : { assetPrefix: `http://${internalHost}:3000` }
+const assetPrefixSpreadable =
+  isProd ? {} : { assetPrefix: `http://${internalHost}:3000` }
 
 const nextConfig = {
   output: 'export',

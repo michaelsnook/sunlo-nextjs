@@ -6,8 +6,8 @@ import languages from 'lib/languages'
 export async function generateStaticParams() {
   let phrases = await getAllPhraseDetails()
   return phrases.map(phrase => {
-    return phrase?.lang && phrase?.text && phrase?.id
-      ? {
+    return phrase?.lang && phrase?.text && phrase?.id ?
+        {
           lang: phrase.lang,
           id: phrase.id,
         }

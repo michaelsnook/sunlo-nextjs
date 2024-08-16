@@ -12,24 +12,20 @@ export default function Client({ pid }) {
   const phrase = usePhrase(pid)?.data
   const card = useCard(pid)?.data
 
-  return !phrase ? (
-    <Loading />
-  ) : (
-    <main className="card-white">
-      {!phrase ? null : (
-        <>
-          <h2 lang={phrase.lang} className="h3 font-bold">
-            <TinyPhrase lang={phrase.lang} text={phrase.text} />
-          </h2>
-          <SectionTranslations phrase={phrase} />
-          <SectionSeeAlsos relations={phrase?.relation_pids} />
-          {card ? (
-            <EditCardStatusButtons pid={phrase?.id} />
-          ) : (
-            <AddCardButtonsSection pid={pid} onClose={() => {}} />
-          )}
-        </>
-      )}
-    </main>
-  )
+  return !phrase ?
+      <Loading />
+    : <main className="card-white">
+        {!phrase ? null : (
+          <>
+            <h2 lang={phrase.lang} className="h3 font-bold">
+              <TinyPhrase lang={phrase.lang} text={phrase.text} />
+            </h2>
+            <SectionTranslations phrase={phrase} />
+            <SectionSeeAlsos relations={phrase?.relation_pids} />
+            {card ?
+              <EditCardStatusButtons pid={phrase?.id} />
+            : <AddCardButtonsSection pid={pid} onClose={() => {}} />}
+          </>
+        )}
+      </main>
 }

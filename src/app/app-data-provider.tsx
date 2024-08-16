@@ -66,7 +66,9 @@ export function AppDataProvider({
   return (
     <LanguageContext.Provider value={langData}>
       <DeckContext.Provider value={deckData}>
-        {isLangPending || isDeckPending ? <Loading /> : children}
+        {isLangPending || isDeckPending ?
+          <Loading />
+        : children}
       </DeckContext.Provider>
     </LanguageContext.Provider>
   )

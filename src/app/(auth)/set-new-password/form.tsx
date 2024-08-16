@@ -27,57 +27,55 @@ export default function SetNewPasswordForm() {
     },
   })
 
-  return submitNewPassword.isSuccess ? (
-    <SuccessfulSubmit />
-  ) : !isAuth ? (
-    <InvalidLink />
-  ) : (
-    <>
-      <h1 className="h3 text-base-content/90">Choose a new password</h1>
-      <form role="form" onSubmit={submitNewPassword.mutate} className="form">
-        <fieldset
-          className="flex flex-col gap-y-4"
-          disabled={submitNewPassword.isPending}
-        >
-          <div>
-            <p>
-              <label htmlFor="password">New password</label>
-            </p>
-            <input
-              id="password"
-              name="password"
-              required={true}
-              //aria-invalid={
-              //  submitNewPassword.error?.errors?.password ? true : false
-              //}
-              className={cn(
-                //submitNewPassword.error?.errors?.password
-                //  ? 'border-error/60'
-                //  : '',
-                's-input'
-              )}
-              tabIndex={1}
-              type="password"
-              placeholder="new password"
-            />
-          </div>
-          <div className="flex flex-row justify-between">
-            <button
-              tabIndex={3}
-              className="btn btn-primary"
-              type="submit"
-              disabled={submitNewPassword.isPending}
-              aria-disabled={submitNewPassword.isPending}
-            >
-              Set new password
-            </button>
-          </div>
-        </fieldset>
-      </form>
-      <ShowError show={!!submitNewPassword.error}>
-        Error setting new password: {submitNewPassword.error?.message}
-      </ShowError>
-    </>
+  return (
+    submitNewPassword.isSuccess ? <SuccessfulSubmit />
+    : !isAuth ? <InvalidLink />
+    : <>
+        <h1 className="h3 text-base-content/90">Choose a new password</h1>
+        <form role="form" onSubmit={submitNewPassword.mutate} className="form">
+          <fieldset
+            className="flex flex-col gap-y-4"
+            disabled={submitNewPassword.isPending}
+          >
+            <div>
+              <p>
+                <label htmlFor="password">New password</label>
+              </p>
+              <input
+                id="password"
+                name="password"
+                required={true}
+                //aria-invalid={
+                //  submitNewPassword.error?.errors?.password ? true : false
+                //}
+                className={cn(
+                  //submitNewPassword.error?.errors?.password
+                  //  ? 'border-error/60'
+                  //  : '',
+                  's-input'
+                )}
+                tabIndex={1}
+                type="password"
+                placeholder="new password"
+              />
+            </div>
+            <div className="flex flex-row justify-between">
+              <button
+                tabIndex={3}
+                className="btn btn-primary"
+                type="submit"
+                disabled={submitNewPassword.isPending}
+                aria-disabled={submitNewPassword.isPending}
+              >
+                Set new password
+              </button>
+            </div>
+          </fieldset>
+        </form>
+        <ShowError show={!!submitNewPassword.error}>
+          Error setting new password: {submitNewPassword.error?.message}
+        </ShowError>
+      </>
   )
 }
 

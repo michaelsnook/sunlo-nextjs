@@ -44,11 +44,9 @@ const GenericMenu = ({ menu }) => {
   return (
     <div>
       <p className="my-4 font-bold">
-        {menu.href ? (
+        {menu.href ?
           <Navlink href={menu.href}>{menu.name}</Navlink>
-        ) : (
-          menu.name
-        )}
+        : menu.name}
       </p>
       <ul className="flex flex-col gap-2">
         {menu.links?.map(i => (
@@ -119,7 +117,7 @@ export default function Sidebar() {
           <Garlic size={50} />
           Sunlo
         </span>
-        {username ? (
+        {username ?
           <>
             <Navlink href="/profile">
               <p className="flex flex-row gap-2">
@@ -129,7 +127,7 @@ export default function Sidebar() {
 
             <DeckMenu />
           </>
-        ) : null}
+        : null}
 
         <GenericMenu menu={staticMenuData} />
 

@@ -55,7 +55,7 @@ export default function Client({ lang }) {
 
   return (
     <>
-      {!deck ? (
+      {!deck ?
         <p>
           Are you sure you&apos;re learning this language? To create a deck and{' '}
           <Link className="s-link" href="/my-decks/new">
@@ -63,8 +63,7 @@ export default function Client({ lang }) {
           </Link>
           .
         </p>
-      ) : (
-        <div className="grid max-w-[44rem] gap-6">
+      : <div className="grid max-w-[44rem] gap-6">
           <div className="card glass">
             <figure>
               <RecentReviewsSummary deck={deck} />
@@ -87,7 +86,7 @@ export default function Client({ lang }) {
             </div>
           </div>
         </div>
-      )}
+      }
     </>
   )
 }

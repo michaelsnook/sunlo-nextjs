@@ -7,8 +7,8 @@ import Navbar from 'app/(app)/navbar'
 export async function generateStaticParams() {
   let phrases = await getAllPhraseDetails()
   return phrases.map(phrase => {
-    return phrase?.lang && phrase?.text && phrase?.id
-      ? {
+    return phrase?.lang && phrase?.text && phrase?.id ?
+        {
           lang: phrase.lang,
           id: phrase.id,
         }
@@ -31,21 +31,19 @@ export default async function Page({ params: { lang, id } }) {
         <div>
           <h2 className="h2">Translations</h2>
           <ul>
-            {phrase?.translations?.length ? (
+            {phrase?.translations?.length ?
               phrase.translations.map(trans => (
                 <li key={`translation/${trans.id}`}>
                   <TinyPhrase {...trans} />
                 </li>
               ))
-            ) : (
-              <>OOPS! No translations for this phrase</>
-            )}
+            : <>OOPS! No translations for this phrase</>}
           </ul>
         </div>
         <div>
           <h2 className="h2 my-6">Related phrases</h2>
           <ul>
-            {phrase.see_also_phrases?.length ? (
+            {phrase.see_also_phrases?.length ?
               phrase.see_also_phrases.map(p => {
                 return (
                   <li key={`seeAlso/${p.id}`}>
@@ -53,11 +51,10 @@ export default async function Page({ params: { lang, id } }) {
                   </li>
                 )
               })
-            ) : (
-              <p className="italic text-base-content/70">
+            : <p className="italic text-base-content/70">
                 No related phrases to see here
               </p>
-            )}
+            }
           </ul>
         </div>
       </main>
