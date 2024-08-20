@@ -48,11 +48,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         // if we've logged out or no user comes back, we should remove user data from cache
         if (event === 'SIGNED_OUT' || typeof session?.user !== 'object') {
           setAuth({ ...blank, isPending: false })
-          queryClient.removeQueries({ queryKey: ['user_profile'] })
-          // the old one
-          queryClient.removeQueries({ queryKey: ['user_deck'] })
-          // the new one
-          queryClient.removeQueries({ queryKey: ['deck'] })
+          queryClient.resetQueries({ queryKey: ['user'] })
         } else {
           setAuth({
             isAuth: session?.user.role === 'authenticated',
@@ -62,7 +58,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           })
           // if for some reason the new user is a different user, remvoe cache
           if (session?.user.id !== auth.userId) {
-            queryClient.invalidateQueries()
+            queryClient.resetQueries({ queryKey: ['user'] })
           }
         }
       }

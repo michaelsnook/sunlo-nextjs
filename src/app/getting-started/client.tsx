@@ -33,7 +33,7 @@ export default function Client() {
   )
 
   const mainForm = useMutation({
-    mutationKey: ['user_profile'],
+    mutationKey: ['user', 'profile'],
     mutationFn: async () => {
       if (typeof userId !== 'string') throw new Error('No logged in user')
       if (
