@@ -1,4 +1,4 @@
-npx prettier --check .
-npm run lint
+pnpx prettier --check .
+pnpm lint
 
 echo '\n✅✅✅✅ Everything looks good! I am committing this now. ✅✅✅✅\n'
