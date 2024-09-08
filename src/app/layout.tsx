@@ -3,22 +3,23 @@ import { AuthProvider } from 'components/auth-context'
 import { Toaster } from 'react-hot-toast'
 import Sidebar from 'components/sidebar'
 import 'styles/globals.css'
+import { Metadata } from 'next'
 
-export const metadata = {
+export const metadata: Metadata = {
   image: `/images/sunlo-logo-color.png`,
   description: `Sunlo is a Social Language Learning App. Build a deck of flash cards, or help a friend learn phrases that will be useful from day one.`,
   title: `Sunlo, the Social Language Learning App`,
 }
 
 export const viewport = {
-  themeColor: '#663399',
+  themeColor: '#00264D',
   viewportFit: 'cover',
 }
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="flex min-h-screen flex-row bg-[hsl(210,100,15)] text-white">
+      <body className="flex min-h-screen flex-row bg-[#00264D] text-white">
         {/*
           This is the root of the layout. The flex, with 2 children
           a) Sidebar with fixed width, and b) and main content/app area. 
