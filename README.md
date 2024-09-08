@@ -44,7 +44,7 @@ This naming convention of using `*_plus` views may want to change in the future.
 If you are working with database migrations or sample data not suitable for the production database, you need to run Supabase locally, so you can follow [these instructions to run Supabase locally](https://supabase.com/docs/guides/getting-started/local-development#start-supabase-services) via Docker.
 
 ```bash
-npx supabase start
+pnpx supabase start
 ```
 
 The first time you run this it will download and build all the docker images for postgres, the postgrest server, the auth server, storage server, GraphQL API server, etc. After that, it will just start.
