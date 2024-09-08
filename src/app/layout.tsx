@@ -6,7 +6,7 @@ import 'styles/globals.css'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  image: `/images/sunlo-logo-color.png`,
+  openGraph: { images: [`/images/sunlo-logo-color.png`] },
   description: `Sunlo is a Social Language Learning App. Build a deck of flash cards, or help a friend learn phrases that will be useful from day one.`,
   title: `Sunlo, the Social Language Learning App`,
 }
