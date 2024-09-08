@@ -86,7 +86,7 @@ export default function Client() {
     onSuccess: data => {
       console.log(`Success! deck, profile`, data)
       toast.success('Success!')
-      queryClient.invalidateQueries({ queryKey: ['user_profile'] })
+      queryClient.invalidateQueries({ queryKey: ['user', 'profile'] })
     },
   })
 
